@@ -101,6 +101,17 @@
     				break;
     		}	
 
+    		$(".menu-icon-wrp").on("click", function() {
+    			$(".menu-popup, .menu-popup-closebtn").fadeIn();
+    			$(this).fadeOut();
+    		});
+
+    		$(".menu-popup-closebtn").on("click", function() {
+    			$(".menu-icon-wrp").fadeIn();
+    			$(this).fadeOut();
+    			$(".menu-popup").fadeOut();
+    		});
+
 	    },
 
 		manager: {
