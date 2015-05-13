@@ -6,6 +6,23 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: "Plumb-Black";
+  src: url('../fonts/Plumb-Black.eot');
+  src: local('â˜º'), url('../fonts/Plumb-Black.woff') format('woff'), url('../fonts/Plumb-Black.ttf') format('truetype'), url('../fonts/Plumb-Black.svg') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+canvas {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	overflow: hidden;
+}
+
 body {
 	margin: 0;
 	padding: 0;

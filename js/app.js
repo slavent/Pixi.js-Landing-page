@@ -1,40 +1,31 @@
 (function(window, $) {
 
+
+
 	// START: Pixi basic
-	var App = window.App || {};
+	window.App = window.App || {};
 
 	var $body = $("body"),
 		w_width = $(window).width(),
 		w_height = $(window).height(),
 		renderer = new PIXI.autoDetectRenderer(w_width, w_height, { transparent: true }),
-		stage = new PIXI.Container();
+		stage = new PIXI.Container(),
 
-		stage.alpha = 0;
+		slide1 = new PIXI.Container(),
+		slide2 = new PIXI.Container(),
+		slide3 = new PIXI.Container(),
+		slide4 = new PIXI.Container(),
+		slide5 = new PIXI.Container();
+
+		slide1.alpha = 0;
+		slide2.y = renderer.height,
+
+		update_slide_1 = false,
+		update_slide_2 = false,
+		update_slide_3 = false,
+		update_slide_4 = false,
+		update_slide_5 = false;
     // END: Pixi basic
-
-
-
-    // START: Web Font
-	window.WebFontConfig = {
-	    custom: {
-	        families: ["HelveticaNeueCyr-Light"],
-	        urls: ['css/style.css']
-	    },
-	    active: function() {
-	    	App.init();
-	    }
-	};
-
-	(function() {
-	    var wf = document.createElement('script');
-	    wf.src = ('https:' === document.location.protocol ? 'https' : 'http') +
-	        '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
-	    wf.type = 'text/javascript';
-	    wf.async = 'true';
-	    var s = document.getElementsByTagName('script')[0];
-	    s.parentNode.insertBefore(wf, s);
-	})();
-	// END: Web font
 
 
 
@@ -47,19 +38,21 @@
 
 		    function animate() {
 		    	// Slide 1
-		    	if( stage.alpha < 1 ) stage.alpha += 0.01;
+		    	if( slide1.alpha < 1 ) slide1.alpha += 0.01;
 		    	App.manager.slide_1.spinner.update();
 		    	App.manager.slide_1.slider.update();
+		    	App.manager.slide_1.update();
+		    	App.manager.slide_2.update();
 
 		        renderer.render(stage);
 		        requestAnimationFrame(animate);
 		    }			
 
-		  	App.bindEvents(1);
+		  	App.binder(1);
 		  	App.manager.slide_1.init();
 		},
 
-		bindEvents: function(slide_id) {
+		binder: function(slide_id) {
 			var $menu_icon = $(".menu-icon-wrp"),
 				$menu_popup = $(".menu-popup"),
 				$menu_close_btn = $(".menu-popup-closebtn");
@@ -78,27 +71,30 @@
     		switch(slide_id) {
     			case 1: 
  					$body.one("mousewheel", function() {
-				    	App.manager.slide_2();
+				    	App.manager.slide_2.init();
+				    	update_slide_1 = true;
+				    	update_slide_2 = true;
 				    });
     				break;
     			case 2: 
  					$body.one("mousewheel", function() {
-				    	App.manager.slide_3();
+				    	App.manager.slide_3.init();
+				    	
 				    });
     				break;
     			case 3: 
  					$body.one("mousewheel", function() {
-				    	App.manager.slide_4();
+				    	App.manager.slide_4.init();
 				    });
     				break;
     			case 4: 
  					$body.one("mousewheel", function() {
-				    	App.manager.slide_5();
+				    	App.manager.slide_5.init();
 				    });
     				break;
     			case 5: 
  					$body.one("mousewheel", function() {
-				    	App.manager.slide_4();
+				    	App.manager.slide_4.init();
 				    });
     				break;
     		}	
@@ -110,10 +106,18 @@
 			slide_1: {
 
 				init: function() {
+					console.log("Slide 1 init");
+
 					this.slider.init();
 					this.logo.init();
 					this.title.init();
 					this.spinner.init();
+
+					stage.addChild(slide1);
+				},
+
+				update: function() {
+					if( update_slide_1 == true && slide1.y < renderer.height) slide1.y -= 15 - Math.sin(Math.acos(0.1));
 				},
 
 				logo: {
@@ -125,7 +129,7 @@
 						logo.position.x = renderer.width / 2;
 						logo.position.y = renderer.height / 2;
 
-						stage.addChild(logo);
+						slide1.addChild(logo);
 					}
 				},
 
@@ -143,7 +147,7 @@
 						title.x = (renderer.width - title.width) / 2;	
 						title.y = ((renderer.height - title.height) / 2) + 180;
 
-						stage.addChild(title);
+						slide1.addChild(title);
 					}
 				},
 
@@ -172,7 +176,7 @@
 						vars.slide1_sprite = new PIXI.Sprite(vars.slide1_texture);
 						vars.slide1_sprite.width = renderer.width;
 						vars.slide1_sprite.height = renderer.height;
-						stage.addChild(vars.slide1_sprite);
+						slide1.addChild(vars.slide1_sprite);
 					},
 
 					makeSlide2: function() {
@@ -180,8 +184,10 @@
 
 						vars.slide2_texture = PIXI.Texture.fromImage("i/s1/slide_2.jpg");
 						vars.slide2_sprite = new PIXI.Sprite(vars.slide2_texture);
+						vars.slide2_sprite.width = renderer.width;
+						vars.slide2_sprite.height = renderer.height;
 						vars.slide2_sprite.alpha = 0;
-						stage.addChild(vars.slide2_sprite);
+						slide1.addChild(vars.slide2_sprite);
 					},
 
 					makeSlide3: function() {
@@ -189,8 +195,10 @@
 
 						vars.slide3_texture = PIXI.Texture.fromImage("i/s1/slide_3.jpg");
 						vars.slide3_sprite = new PIXI.Sprite(vars.slide3_texture);
+						vars.slide3_sprite.width = renderer.width;
+						vars.slide3_sprite.height = renderer.height;
 						vars.slide3_sprite.alpha = 0;
-						stage.addChild(vars.slide3_sprite);
+						slide1.addChild(vars.slide3_sprite);
 					},
 
 					makeNav: function() {
@@ -238,9 +246,9 @@
 							vars.next = 3;
 						});
 
-						stage.addChild(dot1);
-						stage.addChild(dot2);
-						stage.addChild(dot3);
+						slide1.addChild(dot1);
+						slide1.addChild(dot2);
+						slide1.addChild(dot3);
 					},
 
 					update: function() {
@@ -299,8 +307,8 @@
 						vars.spin2.buttonMode = true;
 						vars.spin2.interactive = true;
 
-						stage.addChild(vars.spin1);
-						stage.addChild(vars.spin2); 
+						slide1.addChild(vars.spin1);
+						slide1.addChild(vars.spin2); 
 					},
 
 					update: function() {
@@ -314,33 +322,174 @@
 				}
 			},
 
-			slide_2: function() {
-				console.log("Slide 2 start");
+			slide_2: {
 
-				App.bindEvents(3);
+				init: function() {
+					console.log("Slide 2 init");
+
+					this.title_1.init();
+					this.title_2.init();
+					this.title_3.init();
+					this.title_4.init();
+					this.info.init();
+					this.arrowDown.init();
+
+					stage.addChild(slide2);
+				},
+
+				update: function() {
+					if( update_slide_2 == true && slide2.y > 0) slide2.y -= 15 - Math.sin(Math.acos(0.1));
+				},
+
+				title_1: {
+					init: function() {
+						var style = {
+								font : '38px HelveticaNeueCyr-Light',
+							    fill : '#3c3c3c',
+							    align : "center",
+							    lineHeight : 40,
+							    padding : 50
+							},
+							title_1 = new PIXI.Text("ЛУЧШИЕ СТИЛИСТЫ РОССИИ\nПРЕДЛАГАЮТ ВАМ СОЗДАТЬ", style);
+
+						title_1.x = (renderer.width - title_1.width) / 2;	
+						title_1.y = ((renderer.height - title_1.height) / 2) - 140;
+
+						slide2.addChild(title_1);
+					}
+				},
+
+				title_2: {
+					init: function() {
+						var style = {
+								font : '52px HelveticaNeueCyr-Light',
+							    fill : '#fa6464',
+							    align : "center",
+							    lineHeight : 50,
+							    padding : 50
+							},
+							title_2 = new PIXI.Text("ПЕРСОНАЛЬНЫЙ", style);
+
+						title_2.x = (renderer.width - title_2.width) / 2;	
+						title_2.y = ((renderer.height - title_2.height) / 2) - 60;
+
+						slide2.addChild(title_2);
+					}
+				},
+
+				title_3: {
+					init: function() {
+						var style = {
+								font : 'bold 100px Plumb-Black',
+							    fill : '#fa6464',
+							    align : "center",
+							    lineHeight : 50,
+							    padding : 90
+							},
+							title_3 = new PIXI.Text("ИМИДЖ-ГАЙД", style);
+
+						title_3.x = (renderer.width - title_3.width) / 2;	
+						title_3.y = ((renderer.height - title_3.height) / 2) + 20;
+
+						slide2.addChild(title_3);
+					}
+				},
+
+				title_4: {
+					init: function() {
+						var style = {
+								font : '38px HelveticaNeueCyr-Light',
+							    fill : '#000',
+							    align : "center",
+							    lineHeight : 50,
+							    padding : 50
+							},
+							title_4 = new PIXI.Text("-ПОДОБНОЕ РУКОВОДСТВО\nПО ПРЕОБРАЖЕНИЮ", style);
+
+						title_4.x = (renderer.width - title_4.width) / 2;	
+						title_4.y = ((renderer.height - title_4.height) / 2) + 130;
+
+						slide2.addChild(title_4);
+					}
+				},
+
+				info: {
+					init: function() {
+						var style = {
+								font : '21px HelveticaNeueCyr-Light',
+							    fill : '#fa6464',
+							    align : "center",
+							    padding : 20
+							},
+							title = new PIXI.Text("Имидж-гайд – это ваша личная книга стиля. Десятки\nкрасочных иллюстраций, детальный разбор вашего\nгардероба и практические советы по улучшению\nвашего образа – все это на страницах\nперсонального имидж-гайда. ", style);
+
+						title.x = (renderer.width - title.width) / 2;	
+						title.y = ((renderer.height - title.height) / 2) + 250;
+
+						slide2.addChild(title);
+					}
+				},
+
+				arrowDown: {
+					init: function() {
+
+					}
+				}
+
 			},
 
-			slide_3: function() {
-				console.log("Slide 3 start");
+			slide_3: {
 
-				App.bindEvents(4);
+				init: function() {
+
+				}
+
 			},
 
-			slide_4: function() {
-				console.log("Slide 4 start");
+			slide_4: {
 
-				App.bindEvents(5);
+				init: function() {
+
+				}
+
 			},
 
-			slide_5: function() {
-				console.log("Slide 5 start");
+			slide_5: {
 
-				App.bindEvents(4);
+				init: function() {
+
+				}
+
 			}
-
 		}
 
 	}
 	// END: App
+
+
+
+	// START: Web Font
+	window.WebFontConfig = {
+	    custom: {
+	        families: ["HelveticaNeueCyr-Light", "Plumb-Black"],
+	        urls: ['css/style.css']
+	    },
+	    active: function() {
+	    	App.init();
+	    }
+	};
+
+	(function() {
+	    var wf = document.createElement('script');
+	    wf.src = ('https:' === document.location.protocol ? 'https' : 'http') +
+	        '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+	    wf.type = 'text/javascript';
+	    wf.async = 'true';
+	    var s = document.getElementsByTagName('script')[0];
+	    s.parentNode.insertBefore(wf, s);
+	})();
+	// END: Web font
+
+
 
 }(this, jQuery));
