@@ -8,6 +8,8 @@
 		w_height = $(window).height(),
 		renderer = new PIXI.autoDetectRenderer(w_width, w_height, { transparent: true }),
 		stage = new PIXI.Container();
+
+		stage.alpha = 0;
     // END: Pixi basic
 
 
@@ -45,7 +47,9 @@
 
 		    function animate() {
 		    	// Slide 1
+		    	if( stage.alpha < 1 ) stage.alpha += 0.01;
 		    	App.manager.slide_1.spinner.update();
+		    	App.manager.slide_1.slider.update();
 
 		        renderer.render(stage);
 		        requestAnimationFrame(animate);
@@ -106,25 +110,10 @@
 			slide_1: {
 
 				init: function() {
-					this.video.init();
+					this.slider.init();
 					this.logo.init();
 					this.title.init();
-					this.slider.init();
 					this.spinner.init();
-				},
-
-				video: {
-					init: function() {
-						var texture = PIXI.Texture.fromVideo("video.mp4"),
-							videoSprite = new PIXI.Sprite(texture);
-
-						videoSprite.width = renderer.width;
-						videoSprite.height = renderer.height;
-
-						stage.addChild(videoSprite, function() {
-							App.bindEvents(2);
-						});
-					}
 				},
 
 				logo: {
@@ -159,9 +148,49 @@
 				},
 
 				slider: {
+					vars: {
+						slide1_texture: 	null,
+						slide1_sprite: 		null,
+						slide2_texture: 	null,
+						slide2_sprite: 		null,
+						slide3_texture: 	null,
+						slide3_sprite: 		null,
+						next: 				0
+					},
 
 					init: function() {
+						this.makeSlide1();
+						this.makeSlide2();
+						this.makeSlide3();
 						this.makeNav();
+					},
+
+					makeSlide1: function() {
+						var vars = this.vars;
+
+						vars.slide1_texture = PIXI.Texture.fromVideo("i/s1/slide_1.mp4");
+						vars.slide1_sprite = new PIXI.Sprite(vars.slide1_texture);
+						vars.slide1_sprite.width = renderer.width;
+						vars.slide1_sprite.height = renderer.height;
+						stage.addChild(vars.slide1_sprite);
+					},
+
+					makeSlide2: function() {
+						vars = this.vars;
+
+						vars.slide2_texture = PIXI.Texture.fromImage("i/s1/slide_2.jpg");
+						vars.slide2_sprite = new PIXI.Sprite(vars.slide2_texture);
+						vars.slide2_sprite.alpha = 0;
+						stage.addChild(vars.slide2_sprite);
+					},
+
+					makeSlide3: function() {
+						vars = this.vars;
+
+						vars.slide3_texture = PIXI.Texture.fromImage("i/s1/slide_3.jpg");
+						vars.slide3_sprite = new PIXI.Sprite(vars.slide3_texture);
+						vars.slide3_sprite.alpha = 0;
+						stage.addChild(vars.slide3_sprite);
 					},
 
 					makeNav: function() {
@@ -170,52 +199,73 @@
 							dot2_texture = PIXI.Texture.fromImage("i/s1/dot.svg");
 							dot2 = new PIXI.Sprite(dot2_texture),
 							dot3_texture = PIXI.Texture.fromImage("i/s1/dot.svg");
-							dot3 = new PIXI.Sprite(dot3_texture);
+							dot3 = new PIXI.Sprite(dot3_texture)
+							vars = this.vars;
 
 						dot1.anchor.set(0.5);
 						dot1.position.x = renderer.width / 2 - 25;
 						dot1.position.y = renderer.height / 2 + 200;
 						dot1.buttonMode = true;
 						dot1.interactive = true;
-
 						dot1.on("click", function() {
 							this.texture = PIXI.Texture.fromImage("i/s1/dot_active.svg");
 							dot2.texture = PIXI.Texture.fromImage("i/s1/dot.svg");
 							dot3.texture = PIXI.Texture.fromImage("i/s1/dot.svg");
+							vars.next = 1;
 						});
-
-						
 
 						dot2.anchor.set(0.5);
 						dot2.position.x = renderer.width / 2 - 5;
 						dot2.position.y = renderer.height / 2 + 200;
 						dot2.buttonMode = true;
 						dot2.interactive = true;
-
 						dot2.on("click", function() {
 							this.texture = PIXI.Texture.fromImage("i/s1/dot_active.svg");
 							dot1.texture = PIXI.Texture.fromImage("i/s1/dot.svg");
 							dot3.texture = PIXI.Texture.fromImage("i/s1/dot.svg");
+							vars.next = 2;
 						});
-
-						
 
 						dot3.anchor.set(0.5);
 						dot3.position.x = renderer.width / 2 + 15;
 						dot3.position.y = renderer.height / 2 + 200;
 						dot3.buttonMode = true;
 						dot3.interactive = true;
-
 						dot3.on("click", function() {
 							this.texture = PIXI.Texture.fromImage("i/s1/dot_active.svg");
 							dot1.texture = PIXI.Texture.fromImage("i/s1/dot.svg");
 							dot2.texture = PIXI.Texture.fromImage("i/s1/dot.svg");
+							vars.next = 3;
 						});
 
 						stage.addChild(dot1);
 						stage.addChild(dot2);
 						stage.addChild(dot3);
-					}	
+					},
+
+					update: function() {
+						var vars = this.vars;
+
+						switch(vars.next) {
+							case 1: 
+								if( vars.slide1_sprite.alpha < 1 ) vars.slide1_sprite.alpha += 0.01;
+								if( vars.slide2_sprite.alpha > 0 ) vars.slide2_sprite.alpha -= 0.01;
+								if( vars.slide3_sprite.alpha > 0 ) vars.slide3_sprite.alpha -= 0.01;
+								break;
+
+							case 2: 
+								if( vars.slide1_sprite.alpha > 0 ) vars.slide1_sprite.alpha -= 0.01;
+								if( vars.slide2_sprite.alpha < 1 ) vars.slide2_sprite.alpha += 0.01;
+								if( vars.slide3_sprite.alpha > 0 ) vars.slide3_sprite.alpha -= 0.01;
+								break;
+
+							case 3: 
+								if( vars.slide1_sprite.alpha > 0 ) vars.slide1_sprite.alpha -= 0.01;
+								if( vars.slide2_sprite.alpha > 0 ) vars.slide2_sprite.alpha -= 0.01;
+								if( vars.slide3_sprite.alpha < 1 ) vars.slide3_sprite.alpha += 0.01;
+								break;
+						}
+					}
 
 				},
 
@@ -225,7 +275,8 @@
 						spin1: 			null,
 						spin2_texture: 	null,
 						spin2: 			null,
-						count: 			0
+						pos: 			0,
+						alpha: 			0
 					},
 
 					init: function() {
@@ -253,8 +304,11 @@
 					},
 
 					update: function() {
-						this.vars.count += 0.06;
-	    				this.vars.spin2.y += Math.sin(this.vars.count);
+						var vars = this.vars;
+
+						vars.pos += 0.06;
+	    				vars.spin2.y += Math.sin(vars.pos);
+	    				//vars.spin2.alpha += Math.sin(0.003);
 					}
 
 				}
