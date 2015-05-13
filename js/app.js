@@ -1,5 +1,6 @@
 (function(window, $) {
 
+	// SEE http://kuboid.net/games/tween/
 
 
 	// START: Pixi basic
