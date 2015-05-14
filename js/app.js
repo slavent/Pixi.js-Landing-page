@@ -1,31 +1,32 @@
 (function(window, $) {
 
-	// SEE http://kuboid.net/games/tween/
 
 
 	// START: Pixi basic
 	window.App = window.App || {};
 
 	var $body = $("body"),
+		$footer = $("footer"),
+		$main_menu = $(".main-menu"),
+		$menu_icon = $(".menu-icon-wrp"),
+		$menu_popup = $(".menu-popup"),
+		$menu_close_btn = $(".menu-popup-closebtn"),
+
 		w_width = $(window).width(),
 		w_height = $(window).height(),
 		renderer = new PIXI.autoDetectRenderer(w_width, w_height, { transparent: true }),
 		stage = new PIXI.Container(),
+		graphics = new PIXI.Graphics(),
 
 		slide1 = new PIXI.Container(),
 		slide2 = new PIXI.Container(),
 		slide3 = new PIXI.Container(),
 		slide4 = new PIXI.Container(),
-		slide5 = new PIXI.Container();
+		slide5 = new PIXI.Container(),
+		slide6 = new PIXI.Container(),
+		slide7 = new PIXI.Container(),
 
-		slide1.alpha = 0;
-		slide2.y = renderer.height,
-
-		update_slide_1 = false,
-		update_slide_2 = false,
-		update_slide_3 = false,
-		update_slide_4 = false,
-		update_slide_5 = false;
+		update_slide = false;
     // END: Pixi basic
 
 
@@ -34,29 +35,126 @@
 	App = {
 
 		init: function() {
+
 			$body.append(renderer.view);
 			requestAnimationFrame(animate);
 
 		    function animate() {
-		    	// Slide 1
+
+		    	// Render for Slide 1
 		    	if( slide1.alpha < 1 ) slide1.alpha += 0.01;
 		    	App.manager.slide_1.spinner.update();
 		    	App.manager.slide_1.slider.update();
+
+		    	// Render for Slide 2
+
+		    	// Render for Slide 3
+
+		    	// Render for Slide 4
+
+		    	// Render for Slide 5
+
+		    	// Render for Slide 6
+
+		    	// Render for Slide 7
+
+		    	// Render every slide 60 FPS
 		    	App.manager.slide_1.update();
 		    	App.manager.slide_2.update();
+		    	App.manager.slide_3.update();
+		    	App.manager.slide_4.update();
+		    	App.manager.slide_5.update();
+		    	App.manager.slide_6.update();
+		    	App.manager.slide_7.update();
 
 		        renderer.render(stage);
 		        requestAnimationFrame(animate);
+
 		    }			
 
-		  	App.binder(1);
+		    App.initScroll();
+		    App.initParams();
+		  	App.binder();
 		  	App.manager.slide_1.init();
+
 		},
 
-		binder: function(slide_id) {
-			var $menu_icon = $(".menu-icon-wrp"),
-				$menu_popup = $(".menu-popup"),
-				$menu_close_btn = $(".menu-popup-closebtn");
+		initScroll: function() {
+
+			var scroll = function() {
+
+    			if(App.manager.slide_1.vars.active == true) {
+
+    				App.manager.slide_2.init();
+		    		App.manager.slide_1.vars.active = false;
+		    		App.manager.slide_2.vars.active = true;
+
+    			} else if(App.manager.slide_2.vars.active == true) {
+
+    				App.manager.slide_3.init();
+		    		App.manager.slide_2.vars.active = false;
+		    		App.manager.slide_3.vars.active = true;
+
+    			} else if(App.manager.slide_3.vars.active == true) {
+
+    				App.manager.slide_4.init();
+		    		App.manager.slide_3.vars.active = false;
+		    		App.manager.slide_4.vars.active = true;
+
+    			} else if(App.manager.slide_4.vars.active == true) {
+
+    				App.manager.slide_5.init();
+		    		App.manager.slide_4.vars.active = false;
+		    		App.manager.slide_5.vars.active = true;
+
+    			} else if(App.manager.slide_5.vars.active == true) {
+
+    				App.manager.slide_6.init();
+		    		App.manager.slide_5.vars.active = false;
+		    		App.manager.slide_6.vars.active = true;
+
+    			} else if(App.manager.slide_6.vars.active == true) {
+
+    				App.manager.slide_7.init();
+		    		App.manager.slide_6.vars.active = false;
+		    		App.manager.slide_7.vars.active = true;
+
+    			} else if(App.manager.slide_7.vars.active == true) {
+
+    				App.manager.slide_6.init();
+		    		App.manager.slide_7.vars.active = false;
+		    		App.manager.slide_6.vars.active = true;
+
+    			}
+
+    			App.manager.slide_1.vars.update_val = 0;
+	    		App.manager.slide_2.vars.update_val = 0;
+	    		App.manager.slide_3.vars.update_val = 0;
+	    		App.manager.slide_4.vars.update_val = 0;
+	    		App.manager.slide_5.vars.update_val = 0;
+	    		App.manager.slide_6.vars.update_val = 0;
+	    		App.manager.slide_7.vars.update_val = 0;
+    			update_slide = true;
+		    	
+		    };
+
+		    $body.on("mousewheel", $.debounce(200, true, scroll));
+
+		},
+
+		initParams: function() {
+
+			slide1.alpha = 0;
+			slide2.y = renderer.height;
+			slide3.y = 2 * renderer.height;
+			slide4.y = 3 * renderer.height;
+			slide5.y = 4 * renderer.height;
+			slide6.y = 5 * renderer.height;
+			slide7.y = 6 * renderer.height;
+
+		},
+
+		binder: function() {
 
 			$menu_icon.on("click", function() {
     			$menu_popup.fadeIn();
@@ -68,43 +166,23 @@
     			$menu_popup.hide();
     		});
 
+    		$main_menu.children().on("click", function() {
+    			var ind = $(this).index();
+    			slide_id = ind;
 
-    		switch(slide_id) {
-    			case 1: 
- 					$body.one("mousewheel", function() {
-				    	App.manager.slide_2.init();
-				    	update_slide_1 = true;
-				    	update_slide_2 = true;
-				    });
-    				break;
-    			case 2: 
- 					$body.one("mousewheel", function() {
-				    	App.manager.slide_3.init();
-				    	
-				    });
-    				break;
-    			case 3: 
- 					$body.one("mousewheel", function() {
-				    	App.manager.slide_4.init();
-				    });
-    				break;
-    			case 4: 
- 					$body.one("mousewheel", function() {
-				    	App.manager.slide_5.init();
-				    });
-    				break;
-    			case 5: 
- 					$body.one("mousewheel", function() {
-				    	App.manager.slide_4.init();
-				    });
-    				break;
-    		}	
+    			return false;
+    		});
 
 	    },
 
 		manager: {
 
 			slide_1: {
+
+				vars: {
+					update_val: 0,
+					active: true
+				},
 
 				init: function() {
 					console.log("Slide 1 init");
@@ -118,7 +196,10 @@
 				},
 
 				update: function() {
-					if( update_slide_1 == true && slide1.y < renderer.height) slide1.y -= 15 - Math.sin(Math.acos(0.1));
+					if( update_slide == true && this.vars.update_val < renderer.height ) {
+						this.vars.update_val += 15 - Math.sin(Math.acos(0.1));
+						slide1.y -= 15 - Math.sin(Math.acos(0.1));
+					}
 				},
 
 				logo: {
@@ -325,21 +406,34 @@
 
 			slide_2: {
 
+				vars: {
+					update_val: 0,
+					active: false
+				},
+
 				init: function() {
 					console.log("Slide 2 init");
+
+					setTimeout(function() {
+						$main_menu.fadeIn(300);
+					}, 1500);
 
 					this.title_1.init();
 					this.title_2.init();
 					this.title_3.init();
 					this.title_4.init();
 					this.info.init();
+					this.border.init();
 					this.arrowDown.init();
 
 					stage.addChild(slide2);
 				},
 
 				update: function() {
-					if( update_slide_2 == true && slide2.y > 0) slide2.y -= 15 - Math.sin(Math.acos(0.1));
+					if( update_slide == true && this.vars.update_val < renderer.height ) {
+						this.vars.update_val += 15 - Math.sin(Math.acos(0.1));
+						slide2.y -= 15 - Math.sin(Math.acos(0.1));
+					}
 				},
 
 				title_1: {
@@ -405,7 +499,7 @@
 							    lineHeight : 50,
 							    padding : 50
 							},
-							title_4 = new PIXI.Text("-ПОДОБНОЕ РУКОВОДСТВО\nПО ПРЕОБРАЖЕНИЮ", style);
+							title_4 = new PIXI.Text("- ПОДОБНОЕ РУКОВОДСТВО\nПО ПРЕОБРАЖЕНИЮ", style);
 
 						title_4.x = (renderer.width - title_4.width) / 2;	
 						title_4.y = ((renderer.height - title_4.height) / 2) + 130;
@@ -431,6 +525,16 @@
 					}
 				},
 
+				border: {
+					init: function() {
+						graphics.lineStyle(3, 0xfa6464, 1);
+						graphics.beginFill(0x000000, 0);
+						graphics.drawRect( renderer.width/2 - 280 , renderer.height/2 + 150 , 560 , 170);
+
+						slide2.addChild(graphics);
+					}
+				},
+
 				arrowDown: {
 					init: function() {
 
@@ -441,15 +545,279 @@
 
 			slide_3: {
 
-				init: function() {
+				vars: {
+					update_val: 0,
+					active: false
+				},
 
-				}
+				init: function() {
+					console.log("Slide 3 init");
+
+					stage.addChild(slide3);
+				},
+
+				update: function() {
+					if( update_slide == true && this.vars.update_val < renderer.height ) {
+						this.vars.update_val += 15 - Math.sin(Math.acos(0.1));
+						slide3.y -= 15 - Math.sin(Math.acos(0.1));
+					}
+				},
 
 			},
 
 			slide_4: {
 
+				vars: {
+					update_val: 0,
+					active: false
+				},
+
 				init: function() {
+					console.log("Slide 4 init");
+
+					this.magazine.init();
+					this.titles.init();
+					this.prices.init();
+					this.time.init();
+					this.orderBtn.init();
+
+					stage.addChild(slide4);
+				},
+
+				update: function() {
+					if( update_slide == true && this.vars.update_val < renderer.height ) {
+						this.vars.update_val += 15 - Math.sin(Math.acos(0.1));
+						slide4.y -= 15 - Math.sin(Math.acos(0.1));
+					}
+				},
+
+				titles: {
+
+					init: function() {
+
+						(function() {
+							var style = {
+								font : '38px HelveticaNeueCyr-Light',
+							    fill : '#3c3c3c',
+							    align : "center",
+							    lineHeight : 40,
+							    padding : 50
+							},
+							title = new PIXI.Text("Стоимость базовой\nверсии", style);
+
+							title.x = (renderer.width - title.width) / 2;	
+							title.y = ((renderer.height - title.height) / 2) - 140;
+
+							slide4.addChild(title);
+						}());
+
+						(function() {
+							var style = {
+								font : '38px HelveticaNeueCyr-Light',
+							    fill : '#3c3c3c',
+							    align : "center",
+							    lineHeight : 40,
+							    padding : 50
+							},
+							title = new PIXI.Text("Срок изготовления", style);
+
+							title.x = (renderer.width - title.width) / 2;	
+							title.y = ((renderer.height - title.height) / 2) - 140;
+
+							slide4.addChild(title);
+						}());
+
+						(function() {
+							var style = {
+								font : '38px HelveticaNeueCyr-Light',
+							    fill : '#3c3c3c',
+							    align : "center",
+							    lineHeight : 40,
+							    padding : 50
+							},
+							title = new PIXI.Text("Стоимость за каждый\nдополнительный", style);
+
+							title.x = (renderer.width - title.width) / 2;	
+							title.y = ((renderer.height - title.height) / 2) - 140;
+
+							slide4.addChild(title);
+						}());
+
+						(function() {
+							var style = {
+								font : '38px HelveticaNeueCyr-Light',
+							    fill : '#3c3c3c',
+							    align : "center",
+							    lineHeight : 40,
+							    padding : 50
+							},
+							title = new PIXI.Text("Стиль, мероприятие или праздник", style);
+
+							title.x = (renderer.width - title.width) / 2;	
+							title.y = ((renderer.height - title.height) / 2) - 140;
+
+							slide4.addChild(title);
+						}());
+					}
+
+				},
+
+				prices: {
+
+					init: function() {
+
+						(function() {
+							var style = {
+								font : '38px HelveticaNeueCyr-Light',
+							    fill : '#3c3c3c',
+							    align : "center",
+							    lineHeight : 40,
+							    padding : 50
+							},
+							title = new PIXI.Text("299", style);
+
+							title.x = (renderer.width - title.width) / 2;	
+							title.y = ((renderer.height - title.height) / 2) - 140;
+
+							slide4.addChild(title);
+						}());
+
+						(function() {
+							var style = {
+								font : '38px HelveticaNeueCyr-Light',
+							    fill : '#3c3c3c',
+							    align : "center",
+							    lineHeight : 40,
+							    padding : 50
+							},
+							title = new PIXI.Text("РУБЛЕЙ", style);
+
+							title.x = (renderer.width - title.width) / 2;	
+							title.y = ((renderer.height - title.height) / 2) - 140;
+
+							slide4.addChild(title);
+						}());
+
+						(function() {
+							var style = {
+								font : '38px HelveticaNeueCyr-Light',
+							    fill : '#3c3c3c',
+							    align : "center",
+							    lineHeight : 40,
+							    padding : 50
+							},
+							title = new PIXI.Text("+999", style);
+
+							title.x = (renderer.width - title.width) / 2;	
+							title.y = ((renderer.height - title.height) / 2) - 140;
+
+							slide4.addChild(title);
+						}());
+
+						(function() {
+							var style = {
+								font : '38px HelveticaNeueCyr-Light',
+							    fill : '#3c3c3c',
+							    align : "center",
+							    lineHeight : 40,
+							    padding : 50
+							},
+							title = new PIXI.Text("РУБЛЕЙ", style);
+
+							title.x = (renderer.width - title.width) / 2;	
+							title.y = ((renderer.height - title.height) / 2) - 140;
+
+							slide4.addChild(title);
+						}());
+
+					}
+
+				},
+
+				time: {
+
+					init: function() {
+
+						(function() {
+							var style = {
+								font : '38px HelveticaNeueCyr-Light',
+							    fill : '#3c3c3c',
+							    align : "center",
+							    lineHeight : 40,
+							    padding : 50
+							},
+							title = new PIXI.Text("3", style);
+
+							title.x = (renderer.width - title.width) / 2;	
+							title.y = ((renderer.height - title.height) / 2) - 140;
+
+							slide4.addChild(title);
+						}());
+
+						(function() {
+							var style = {
+								font : '38px HelveticaNeueCyr-Light',
+							    fill : '#3c3c3c',
+							    align : "center",
+							    lineHeight : 40,
+							    padding : 50
+							},
+							title = new PIXI.Text("РАБОЧИХ\nДНЯ", style);
+
+							title.x = (renderer.width - title.width) / 2;	
+							title.y = ((renderer.height - title.height) / 2) - 140;
+
+							slide4.addChild(title);
+						}());
+
+					}
+
+				},
+
+				magazine: {
+
+					init: function() {
+
+						var magazine_texture = PIXI.Texture.fromImage("i/s4/magazine.png"),
+							magazine = new PIXI.Sprite(magazine_texture);
+
+						magazine.anchor.set(0.5);
+						magazine.position.x = renderer.width / 2;
+						magazine.position.y = renderer.height / 2;
+
+						slide4.addChild(magazine);
+
+					}
+
+				},
+
+				orderBtn: {
+
+					init: function() {
+
+						(function() {
+							var style = {
+								font : '38px HelveticaNeueCyr-Light',
+							    fill : '#3c3c3c',
+							    align : "center",
+							    lineHeight : 40,
+							    padding : 50
+							},
+							title = new PIXI.Text("Заказать", style);
+
+							title.x = (renderer.width - title.width) / 2;	
+							title.y = ((renderer.height - title.height) / 2) - 140;
+
+							slide4.addChild(title);
+						}());
+
+						graphics.lineStyle(3, 0xfa6464, 1);
+						graphics.beginFill(0x000000, 0);
+						graphics.drawRect( renderer.width/2 - 280 , renderer.height/2 + 150 , 560 , 170);
+
+						slide4.addChild(graphics);
+
+					}
 
 				}
 
@@ -457,7 +825,191 @@
 
 			slide_5: {
 
+				vars: {
+					update_val: 0,
+					active: false
+				},
+
 				init: function() {
+					console.log("Slide 5 init");
+
+					this.title.init();
+					this.btn.init();
+					this.info.init();
+
+					stage.addChild(slide5);
+				},
+
+				update: function() {
+					if( update_slide == true && this.vars.update_val < renderer.height ) {
+						this.vars.update_val += 15 - Math.sin(Math.acos(0.1));
+						slide5.y -= 15 - Math.sin(Math.acos(0.1));
+					}
+				}, 
+
+				title: {
+
+					init: function() {
+
+						(function() {
+							var style = {
+								font : '38px HelveticaNeueCyr-Light',
+							    fill : '#3c3c3c',
+							    align : "center",
+							    lineHeight : 40,
+							    padding : 50
+							},
+							title = new PIXI.Text("ЗАПОЛНИТЕ\nАНКЕТУ\nНА САЙТЕ", style);
+
+							title.x = (renderer.width - title.width) / 2;	
+							title.y = ((renderer.height - title.height) / 2) - 140;
+
+							slide5.addChild(title);
+						}());
+
+					}
+
+				},
+
+				btn: {
+
+					init: function() {
+
+						(function() {
+							var style = {
+								font : '38px HelveticaNeueCyr-Light',
+							    fill : '#3c3c3c',
+							    align : "center",
+							    lineHeight : 40,
+							    padding : 50
+							},
+							title = new PIXI.Text("ЗАПОЛНИТЬ", style);
+
+							title.x = (renderer.width - title.width) / 2;	
+							title.y = ((renderer.height - title.height) / 2) - 140;
+
+							slide5.addChild(title);
+						}());
+
+						graphics.lineStyle(3, 0xfa6464, 1);
+						graphics.beginFill(0x000000, 0);
+						graphics.drawRect( renderer.width/2 - 280 , renderer.height/2 + 150 , 560 , 170);
+
+						slide5.addChild(graphics);
+
+					}
+
+				},
+
+				info: {
+
+					init: function() {
+
+						(function() {
+							var style = {
+								font : '38px HelveticaNeueCyr-Light',
+							    fill : '#3c3c3c',
+							    align : "center",
+							    lineHeight : 40,
+							    padding : 50
+							},
+							title = new PIXI.Text("Стилисты “Модного приговора” получат Ваши данные,\nопределят Ваш цветотип, тип фигуры, овал лица\nи составят подробную инструкцию преображения!", style);
+
+							title.x = (renderer.width - title.width) / 2;	
+							title.y = ((renderer.height - title.height) / 2) - 140;
+
+							slide5.addChild(title);
+						}());
+
+						graphics.lineStyle(3, 0xfa6464, 1);
+						graphics.beginFill(0x000000, 0);
+						graphics.drawRect( renderer.width/2 - 280 , renderer.height/2 + 150 , 560 , 170);
+
+						slide5.addChild(graphics);
+
+					}
+
+				},
+
+				icon: {
+
+					init: function() {
+
+					}
+
+				}
+
+			},
+
+			slide_6: {
+
+				vars: {
+					update_val: 0,
+					active: false
+				},
+
+				init: function() {
+					console.log("Slide 6 init");
+
+					stage.addChild(slide6);
+				},
+
+				update: function() {
+					if( update_slide == true && this.vars.update_val < renderer.height ) {
+						this.vars.update_val += 15 - Math.sin(Math.acos(0.1));
+						slide6.y -= 15 - Math.sin(Math.acos(0.1));
+					}
+				}
+
+			},
+
+			slide_7: {
+
+				vars: {
+					update_val: 0,
+					active: false
+				},
+
+				init: function() {
+					console.log("Slide 7 init");
+
+					this.slider.init();
+					this.orderBtn.init();
+					this.footer.init();
+
+					stage.addChild(slide7);
+				},
+
+				update: function() {
+					if( update_slide == true && this.vars.update_val < renderer.height ) {
+						this.vars.update_val += 15 - Math.sin(Math.acos(0.1));
+						slide7.y -= 15 - Math.sin(Math.acos(0.1));
+					}
+				},
+
+				slider: {
+
+					init: function() {
+
+					}
+
+				},
+
+				orderBtn: {
+
+					init: function() {
+
+					}
+
+				},
+
+				footer: {
+
+					init: function() {
+
+						$footer.fadeIn();
+
+					}
 
 				}
 
