@@ -251,6 +251,30 @@
 						this.makeNav();
 					},
 
+					update: function() {
+						var vars = this.vars;
+
+						switch(vars.next) {
+							case 1: 
+								if( vars.slide1_sprite.alpha < 1 ) vars.slide1_sprite.alpha += 0.01;
+								if( vars.slide2_sprite.alpha > 0 ) vars.slide2_sprite.alpha -= 0.01;
+								if( vars.slide3_sprite.alpha > 0 ) vars.slide3_sprite.alpha -= 0.01;
+								break;
+
+							case 2: 
+								if( vars.slide1_sprite.alpha > 0 ) vars.slide1_sprite.alpha -= 0.01;
+								if( vars.slide2_sprite.alpha < 1 ) vars.slide2_sprite.alpha += 0.01;
+								if( vars.slide3_sprite.alpha > 0 ) vars.slide3_sprite.alpha -= 0.01;
+								break;
+
+							case 3: 
+								if( vars.slide1_sprite.alpha > 0 ) vars.slide1_sprite.alpha -= 0.01;
+								if( vars.slide2_sprite.alpha > 0 ) vars.slide2_sprite.alpha -= 0.01;
+								if( vars.slide3_sprite.alpha < 1 ) vars.slide3_sprite.alpha += 0.01;
+								break;
+						}
+					},
+
 					makeSlide1: function() {
 						var vars = this.vars;
 
@@ -331,30 +355,6 @@
 						slide1.addChild(dot1);
 						slide1.addChild(dot2);
 						slide1.addChild(dot3);
-					},
-
-					update: function() {
-						var vars = this.vars;
-
-						switch(vars.next) {
-							case 1: 
-								if( vars.slide1_sprite.alpha < 1 ) vars.slide1_sprite.alpha += 0.01;
-								if( vars.slide2_sprite.alpha > 0 ) vars.slide2_sprite.alpha -= 0.01;
-								if( vars.slide3_sprite.alpha > 0 ) vars.slide3_sprite.alpha -= 0.01;
-								break;
-
-							case 2: 
-								if( vars.slide1_sprite.alpha > 0 ) vars.slide1_sprite.alpha -= 0.01;
-								if( vars.slide2_sprite.alpha < 1 ) vars.slide2_sprite.alpha += 0.01;
-								if( vars.slide3_sprite.alpha > 0 ) vars.slide3_sprite.alpha -= 0.01;
-								break;
-
-							case 3: 
-								if( vars.slide1_sprite.alpha > 0 ) vars.slide1_sprite.alpha -= 0.01;
-								if( vars.slide2_sprite.alpha > 0 ) vars.slide2_sprite.alpha -= 0.01;
-								if( vars.slide3_sprite.alpha < 1 ) vars.slide3_sprite.alpha += 0.01;
-								break;
-						}
 					}
 
 				},
@@ -430,13 +430,16 @@
 				},
 
 				update: function() {
+
 					if( update_slide == true && this.vars.update_val < renderer.height ) {
 						this.vars.update_val += 15 - Math.sin(Math.acos(0.1));
 						slide2.y -= 15 - Math.sin(Math.acos(0.1));
 					}
+					
 				},
 
 				title_1: {
+
 					init: function() {
 						var style = {
 								font : '38px HelveticaNeueCyr-Light',
@@ -452,9 +455,11 @@
 
 						slide2.addChild(title_1);
 					}
+
 				},
 
 				title_2: {
+
 					init: function() {
 						var style = {
 								font : '52px HelveticaNeueCyr-Light',
@@ -470,9 +475,11 @@
 
 						slide2.addChild(title_2);
 					}
+
 				},
 
 				title_3: {
+
 					init: function() {
 						var style = {
 								font : 'bold 100px Plumb-Black',
@@ -488,9 +495,11 @@
 
 						slide2.addChild(title_3);
 					}
+
 				},
 
 				title_4: {
+
 					init: function() {
 						var style = {
 								font : '38px HelveticaNeueCyr-Light',
@@ -506,9 +515,11 @@
 
 						slide2.addChild(title_4);
 					}
+
 				},
 
 				info: {
+
 					init: function() {
 						var style = {
 								font : '21px HelveticaNeueCyr-Light',
@@ -523,9 +534,11 @@
 
 						slide2.addChild(title);
 					}
+
 				},
 
 				border: {
+
 					init: function() {
 						graphics.lineStyle(3, 0xfa6464, 1);
 						graphics.beginFill(0x000000, 0);
@@ -533,12 +546,15 @@
 
 						slide2.addChild(graphics);
 					}
+
 				},
 
 				arrowDown: {
+
 					init: function() {
 
 					}
+
 				}
 
 			},
