@@ -2,7 +2,7 @@
 
 
 
-	// START: Pixi basic
+	// START: Variables
 	window.App = window.App || {};
 
 	var $body = $("body"),
@@ -11,12 +11,12 @@
 		$menu_icon = $(".menu-icon-wrp"),
 		$menu_popup = $(".menu-popup"),
 		$menu_close_btn = $(".menu-popup-closebtn"),
+		$landing_nav = $(".landing-nav ul"),
 
 		w_width = $(window).width(),
 		w_height = $(window).height(),
 		renderer = new PIXI.autoDetectRenderer(w_width, w_height, { transparent: true }),
 		stage = new PIXI.Container(),
-		graphics = new PIXI.Graphics(),
 
 		slide1 = new PIXI.Container(),
 		slide2 = new PIXI.Container(),
@@ -26,8 +26,9 @@
 		slide6 = new PIXI.Container(),
 		slide7 = new PIXI.Container(),
 
-		update_slide = false;
-    // END: Pixi basic
+		update_slide = false,
+		active_slide = 1;
+    // END: Variables
 
 
 
@@ -53,92 +54,74 @@
 		    	// Render for Slide 4
 
 		    	// Render for Slide 5
+		    	App.manager.slide_5.spinner.update();
 
 		    	// Render for Slide 6
 
 		    	// Render for Slide 7
 
-		    	// Render every slide 60 FPS
-		    	App.manager.slide_1.update();
-		    	App.manager.slide_2.update();
-		    	App.manager.slide_3.update();
-		    	App.manager.slide_4.update();
-		    	App.manager.slide_5.update();
-		    	App.manager.slide_6.update();
-		    	App.manager.slide_7.update();
+		    	TWEEN.update();
 
 		        renderer.render(stage);
 		        requestAnimationFrame(animate);
 
 		    }			
 
-		    App.initScroll();
 		    App.initParams();
 		  	App.binder();
-		  	App.manager.slide_1.init();
+		  	App.initLandingNav(active_slide);
+		  	App.manager.init();
 
 		},
 
-		initScroll: function() {
+		initScroll: {
 
-			var scroll = function() {
+			scroll: function(event) {
 
-    			if(App.manager.slide_1.vars.active == true) {
+				// Detect direction of scroll
+				var ind,
+					start_pos = active_slide;
 
-    				App.manager.slide_2.init();
-		    		App.manager.slide_1.vars.active = false;
-		    		App.manager.slide_2.vars.active = true;
+				if(event.originalEvent.wheelDelta < 0) {
+					ind = -active_slide;
+					if(active_slide < 7) active_slide++;
+				} else {
+					ind = -active_slide + 2;
+					if(active_slide >= 1) active_slide--;
+				}
 
-    			} else if(App.manager.slide_2.vars.active == true) {
+				if(active_slide >= 1 && active_slide <= 7) {
 
-    				App.manager.slide_3.init();
-		    		App.manager.slide_2.vars.active = false;
-		    		App.manager.slide_3.vars.active = true;
+	    			var tween = new TWEEN.Tween({ x: 0, y:  -(start_pos-1) * renderer.height, rotation: 0 })
+						.to({ x: 0, y: ind * renderer.height, rotation: 90 }, 1000)
+						.easing( TWEEN.Easing.Cubic.InOut )
+						.onUpdate(function() {
+							stage.y = this.y;
+						}).start();
 
-    			} else if(App.manager.slide_3.vars.active == true) {
+					// Show menu
+					if(active_slide != 1) {
+						setTimeout(function() {
+							$main_menu.fadeIn(300);
+						}, 1500);
+					} else {
+						$main_menu.fadeOut();
+					}
 
-    				App.manager.slide_4.init();
-		    		App.manager.slide_3.vars.active = false;
-		    		App.manager.slide_4.vars.active = true;
+					// Show footer
+					if(active_slide == 7) {
+						$footer.fadeIn();
+					} else {
+						$footer.fadeOut();
+					}
+			    	
+			    	App.initLandingNav(active_slide);
 
-    			} else if(App.manager.slide_4.vars.active == true) {
+				}
 
-    				App.manager.slide_5.init();
-		    		App.manager.slide_4.vars.active = false;
-		    		App.manager.slide_5.vars.active = true;
+				console.log(active_slide);
 
-    			} else if(App.manager.slide_5.vars.active == true) {
-
-    				App.manager.slide_6.init();
-		    		App.manager.slide_5.vars.active = false;
-		    		App.manager.slide_6.vars.active = true;
-
-    			} else if(App.manager.slide_6.vars.active == true) {
-
-    				App.manager.slide_7.init();
-		    		App.manager.slide_6.vars.active = false;
-		    		App.manager.slide_7.vars.active = true;
-
-    			} else if(App.manager.slide_7.vars.active == true) {
-
-    				App.manager.slide_6.init();
-		    		App.manager.slide_7.vars.active = false;
-		    		App.manager.slide_6.vars.active = true;
-
-    			}
-
-    			App.manager.slide_1.vars.update_val = 0;
-	    		App.manager.slide_2.vars.update_val = 0;
-	    		App.manager.slide_3.vars.update_val = 0;
-	    		App.manager.slide_4.vars.update_val = 0;
-	    		App.manager.slide_5.vars.update_val = 0;
-	    		App.manager.slide_6.vars.update_val = 0;
-	    		App.manager.slide_7.vars.update_val = 0;
-    			update_slide = true;
-		    	
-		    };
-
-		    $body.on("mousewheel", $.debounce(200, true, scroll));
+		    }
 
 		},
 
@@ -154,7 +137,25 @@
 
 		},
 
+		initLandingNav: function(ind) {
+
+			ind--;
+			$landing_nav.children().removeClass("landing-nav-item-active");
+			$landing_nav.children().eq(ind).addClass("landing-nav-item-active");
+
+		},
+
 		binder: function() {
+
+			$body.on("mousewheel", $.debounce(200, true, App.initScroll.scroll));
+
+			$landing_nav.children().each(function() {
+    			$(this).on("click", function() {
+    				var ind = $(this).index() + 1;
+
+    				App.initScroll.scroll(ind);
+    			});
+    		});
 
 			$menu_icon.on("click", function() {
     			$menu_popup.fadeIn();
@@ -177,12 +178,17 @@
 
 		manager: {
 
-			slide_1: {
+			init: function() {
+				this.slide_1.init();
+			  	this.slide_2.init();
+			  	this.slide_3.init();
+			  	this.slide_4.init();
+			  	this.slide_5.init();
+			  	this.slide_6.init();
+			  	this.slide_7.init();
+			},
 
-				vars: {
-					update_val: 0,
-					active: true
-				},
+			slide_1: {
 
 				init: function() {
 					console.log("Slide 1 init");
@@ -196,10 +202,7 @@
 				},
 
 				update: function() {
-					if( update_slide == true && this.vars.update_val < renderer.height ) {
-						this.vars.update_val += 15 - Math.sin(Math.acos(0.1));
-						slide1.y -= 15 - Math.sin(Math.acos(0.1));
-					}
+					
 				},
 
 				logo: {
@@ -372,9 +375,9 @@
 					init: function() {
 						var vars = this.vars;
 
-						vars.spin1_texture = 	PIXI.Texture.fromImage("i/s1/spin1.svg"),
-						vars.spin1 = 			new PIXI.Sprite(vars.spin1_texture),
-						vars.spin2_texture = 	PIXI.Texture.fromImage("i/s1/spin2.svg"),
+						vars.spin1_texture = 	PIXI.Texture.fromImage("i/s1/spin1.svg");
+						vars.spin1 = 			new PIXI.Sprite(vars.spin1_texture);
+						vars.spin2_texture = 	PIXI.Texture.fromImage("i/s1/spin2.svg");
 						vars.spin2 = 			new PIXI.Sprite(vars.spin2_texture);
 
 						vars.spin1.anchor.set(0.5);
@@ -406,17 +409,8 @@
 
 			slide_2: {
 
-				vars: {
-					update_val: 0,
-					active: false
-				},
-
 				init: function() {
 					console.log("Slide 2 init");
-
-					setTimeout(function() {
-						$main_menu.fadeIn(300);
-					}, 1500);
 
 					this.title_1.init();
 					this.title_2.init();
@@ -430,11 +424,6 @@
 				},
 
 				update: function() {
-
-					if( update_slide == true && this.vars.update_val < renderer.height ) {
-						this.vars.update_val += 15 - Math.sin(Math.acos(0.1));
-						slide2.y -= 15 - Math.sin(Math.acos(0.1));
-					}
 					
 				},
 
@@ -540,6 +529,8 @@
 				border: {
 
 					init: function() {
+						var graphics = new PIXI.Graphics();
+
 						graphics.lineStyle(3, 0xfa6464, 1);
 						graphics.beginFill(0x000000, 0);
 						graphics.drawRect( renderer.width/2 - 280 , renderer.height/2 + 150 , 560 , 170);
@@ -561,11 +552,6 @@
 
 			slide_3: {
 
-				vars: {
-					update_val: 0,
-					active: false
-				},
-
 				init: function() {
 					console.log("Slide 3 init");
 
@@ -573,20 +559,12 @@
 				},
 
 				update: function() {
-					if( update_slide == true && this.vars.update_val < renderer.height ) {
-						this.vars.update_val += 15 - Math.sin(Math.acos(0.1));
-						slide3.y -= 15 - Math.sin(Math.acos(0.1));
-					}
+
 				},
 
 			},
 
 			slide_4: {
-
-				vars: {
-					update_val: 0,
-					active: false
-				},
 
 				init: function() {
 					console.log("Slide 4 init");
@@ -601,10 +579,7 @@
 				},
 
 				update: function() {
-					if( update_slide == true && this.vars.update_val < renderer.height ) {
-						this.vars.update_val += 15 - Math.sin(Math.acos(0.1));
-						slide4.y -= 15 - Math.sin(Math.acos(0.1));
-					}
+
 				},
 
 				titles: {
@@ -613,64 +588,54 @@
 
 						(function() {
 							var style = {
-								font : '38px HelveticaNeueCyr-Light',
+								font : '20px Myriad Pro',
 							    fill : '#3c3c3c',
-							    align : "center",
-							    lineHeight : 40,
+							    align : "left",
 							    padding : 50
 							},
 							title = new PIXI.Text("Стоимость базовой\nверсии", style);
 
-							title.x = (renderer.width - title.width) / 2;	
-							title.y = ((renderer.height - title.height) / 2) - 140;
+							title.x = (renderer.width - title.width) / 2 - 300;	
+							title.y = ((renderer.height - title.height) / 2) - 170;
 
 							slide4.addChild(title);
 						}());
 
 						(function() {
 							var style = {
-								font : '38px HelveticaNeueCyr-Light',
-							    fill : '#3c3c3c',
-							    align : "center",
-							    lineHeight : 40,
-							    padding : 50
+								font : '20px Myriad Pro',
+							    fill : '#3c3c3c'
 							},
 							title = new PIXI.Text("Срок изготовления", style);
 
-							title.x = (renderer.width - title.width) / 2;	
-							title.y = ((renderer.height - title.height) / 2) - 140;
+							title.x = (renderer.width - title.width) / 2 + 210;	
+							title.y = ((renderer.height - title.height) / 2) - 180;
 
 							slide4.addChild(title);
 						}());
 
 						(function() {
 							var style = {
-								font : '38px HelveticaNeueCyr-Light',
-							    fill : '#3c3c3c',
-							    align : "center",
-							    lineHeight : 40,
-							    padding : 50
+								font : '14px HelveticaNeueCyr-Light',
+							    fill : '#3c3c3c'
 							},
 							title = new PIXI.Text("Стоимость за каждый\nдополнительный", style);
 
-							title.x = (renderer.width - title.width) / 2;	
-							title.y = ((renderer.height - title.height) / 2) - 140;
+							title.x = (renderer.width - title.width) / 2 + 125;	
+							title.y = ((renderer.height - title.height) / 2) + 170;
 
 							slide4.addChild(title);
 						}());
 
 						(function() {
 							var style = {
-								font : '38px HelveticaNeueCyr-Light',
-							    fill : '#3c3c3c',
-							    align : "center",
-							    lineHeight : 40,
-							    padding : 50
+								font : '14px HelveticaNeueCyr-Light',
+							    fill : '#b48264'
 							},
 							title = new PIXI.Text("Стиль, мероприятие или праздник", style);
 
-							title.x = (renderer.width - title.width) / 2;	
-							title.y = ((renderer.height - title.height) / 2) - 140;
+							title.x = (renderer.width - title.width) / 2 + 165;	
+							title.y = ((renderer.height - title.height) / 2) + 197;
 
 							slide4.addChild(title);
 						}());
@@ -684,64 +649,52 @@
 
 						(function() {
 							var style = {
-								font : '38px HelveticaNeueCyr-Light',
-							    fill : '#3c3c3c',
-							    align : "center",
-							    lineHeight : 40,
-							    padding : 50
+								font : '120px Plumb-Black',
+							    fill : '#fa6464'
 							},
-							title = new PIXI.Text("299", style);
+							title = new PIXI.Text("2999", style);
 
-							title.x = (renderer.width - title.width) / 2;	
-							title.y = ((renderer.height - title.height) / 2) - 140;
+							title.x = (renderer.width - title.width) / 2 - 180;	
+							title.y = ((renderer.height - title.height) / 2) - 175;
 
 							slide4.addChild(title);
 						}());
 
 						(function() {
 							var style = {
-								font : '38px HelveticaNeueCyr-Light',
-							    fill : '#3c3c3c',
-							    align : "center",
-							    lineHeight : 40,
-							    padding : 50
+								font : '60px Plumb-Black',
+							    fill : '#fa6464'
 							},
 							title = new PIXI.Text("РУБЛЕЙ", style);
 
-							title.x = (renderer.width - title.width) / 2;	
-							title.y = ((renderer.height - title.height) / 2) - 140;
+							title.x = (renderer.width - title.width) / 2 - 220;	
+							title.y = ((renderer.height - title.height) / 2) - 100;
 
 							slide4.addChild(title);
 						}());
 
 						(function() {
 							var style = {
-								font : '38px HelveticaNeueCyr-Light',
-							    fill : '#3c3c3c',
-							    align : "center",
-							    lineHeight : 40,
-							    padding : 50
+								font : '80px Plumb-Black',
+							    fill : '#fa6464'
 							},
 							title = new PIXI.Text("+999", style);
 
-							title.x = (renderer.width - title.width) / 2;	
-							title.y = ((renderer.height - title.height) / 2) - 140;
+							title.x = (renderer.width - title.width) / 2 + 90;	
+							title.y = ((renderer.height - title.height) / 2) + 80;
 
 							slide4.addChild(title);
 						}());
 
 						(function() {
 							var style = {
-								font : '38px HelveticaNeueCyr-Light',
-							    fill : '#3c3c3c',
-							    align : "center",
-							    lineHeight : 40,
-							    padding : 50
+								font : '40px Plumb-Black',
+							    fill : '#fa6464'
 							},
 							title = new PIXI.Text("РУБЛЕЙ", style);
 
-							title.x = (renderer.width - title.width) / 2;	
-							title.y = ((renderer.height - title.height) / 2) - 140;
+							title.x = (renderer.width - title.width) / 2 + 130;	
+							title.y = ((renderer.height - title.height) / 2) + 130;
 
 							slide4.addChild(title);
 						}());
@@ -756,32 +709,26 @@
 
 						(function() {
 							var style = {
-								font : '38px HelveticaNeueCyr-Light',
-							    fill : '#3c3c3c',
-							    align : "center",
-							    lineHeight : 40,
-							    padding : 50
+								font : '100px Plumb-Black',
+							    fill : '#b48264'
 							},
 							title = new PIXI.Text("3", style);
 
-							title.x = (renderer.width - title.width) / 2;	
-							title.y = ((renderer.height - title.height) / 2) - 140;
+							title.x = (renderer.width - title.width) / 2 + 150;	
+							title.y = ((renderer.height - title.height) / 2) - 130;
 
 							slide4.addChild(title);
 						}());
 
 						(function() {
 							var style = {
-								font : '38px HelveticaNeueCyr-Light',
-							    fill : '#3c3c3c',
-							    align : "center",
-							    lineHeight : 40,
-							    padding : 50
+								font : '30px Plumb-Black',
+							    fill : '#b48264'
 							},
 							title = new PIXI.Text("РАБОЧИХ\nДНЯ", style);
 
-							title.x = (renderer.width - title.width) / 2;	
-							title.y = ((renderer.height - title.height) / 2) - 140;
+							title.x = (renderer.width - title.width) / 2 + 250;	
+							title.y = ((renderer.height - title.height) / 2) - 130;
 
 							slide4.addChild(title);
 						}());
@@ -813,23 +760,23 @@
 
 						(function() {
 							var style = {
-								font : '38px HelveticaNeueCyr-Light',
-							    fill : '#3c3c3c',
-							    align : "center",
-							    lineHeight : 40,
-							    padding : 50
+								font : '14px HelveticaNeueCyr-Light',
+							    fill : '#fa6464'
 							},
 							title = new PIXI.Text("Заказать", style);
 
 							title.x = (renderer.width - title.width) / 2;	
-							title.y = ((renderer.height - title.height) / 2) - 140;
+							title.y = ((renderer.height - title.height) / 2) + 260;
 
 							slide4.addChild(title);
 						}());
 
-						graphics.lineStyle(3, 0xfa6464, 1);
-						graphics.beginFill(0x000000, 0);
-						graphics.drawRect( renderer.width/2 - 280 , renderer.height/2 + 150 , 560 , 170);
+						var graphics = new PIXI.Graphics();
+
+						graphics.lineStyle(1, 0xfa6464, 1);
+						graphics.beginFill(0xFF00BB, 0);
+						graphics.drawRoundedRect(renderer.width/2-50, renderer.height/2+245, 100, 30, 1);
+						graphics.endFill();
 
 						slide4.addChild(graphics);
 
@@ -841,27 +788,36 @@
 
 			slide_5: {
 
-				vars: {
-					update_val: 0,
-					active: false
-				},
-
 				init: function() {
 					console.log("Slide 5 init");
 
+					this.notepade.init();
 					this.title.init();
 					this.btn.init();
 					this.info.init();
+					this.spinner.init();
 
 					stage.addChild(slide5);
 				},
 
 				update: function() {
-					if( update_slide == true && this.vars.update_val < renderer.height ) {
-						this.vars.update_val += 15 - Math.sin(Math.acos(0.1));
-						slide5.y -= 15 - Math.sin(Math.acos(0.1));
-					}
+
 				}, 
+
+				notepade: {
+
+					init: function() {
+						var notepade_texture = PIXI.Texture.fromImage("i/s5/notepade.png"),
+							notepade = new PIXI.Sprite(notepade_texture);
+
+						notepade.anchor.set(0.5);
+						notepade.position.x = renderer.width / 2 + 300;
+						notepade.position.y = renderer.height / 2 + 40;
+
+						slide5.addChild(notepade);
+					}
+
+				},
 
 				title: {
 
@@ -869,16 +825,15 @@
 
 						(function() {
 							var style = {
-								font : '38px HelveticaNeueCyr-Light',
-							    fill : '#3c3c3c',
+								font : '110px Plumb-Black',
+							    fill : '#fa6464',
 							    align : "center",
-							    lineHeight : 40,
-							    padding : 50
+							    lineHeight : 105
 							},
 							title = new PIXI.Text("ЗАПОЛНИТЕ\nАНКЕТУ\nНА САЙТЕ", style);
 
 							title.x = (renderer.width - title.width) / 2;	
-							title.y = ((renderer.height - title.height) / 2) - 140;
+							title.y = ((renderer.height - title.height) / 2);
 
 							slide5.addChild(title);
 						}());
@@ -892,26 +847,28 @@
 					init: function() {
 
 						(function() {
+							var graphics = new PIXI.Graphics();
+
+							graphics.lineStyle(0);
+							graphics.beginFill(0x3c3c3c, 1);
+							graphics.drawCircle(renderer.width/2 - 280, renderer.height/2 + 30, 60);
+							graphics.endFill();							
+
 							var style = {
-								font : '38px HelveticaNeueCyr-Light',
-							    fill : '#3c3c3c',
-							    align : "center",
-							    lineHeight : 40,
-							    padding : 50
+								font : '16px HelveticaNeueCyr-Light',
+							    fill : '#ffffff'
 							},
 							title = new PIXI.Text("ЗАПОЛНИТЬ", style);
 
-							title.x = (renderer.width - title.width) / 2;	
-							title.y = ((renderer.height - title.height) / 2) - 140;
+							title.x = (renderer.width - title.width) / 2 - 230;	
+							title.y = ((renderer.height - title.height) / 2) + 40;
+							title.anchor.x = 0.5;
+							title.anchor.y = 0.5;
+							title.rotation = -0.3;
 
-							slide5.addChild(title);
+							graphics.addChild(title);
+							slide5.addChild(graphics);
 						}());
-
-						graphics.lineStyle(3, 0xfa6464, 1);
-						graphics.beginFill(0x000000, 0);
-						graphics.drawRect( renderer.width/2 - 280 , renderer.height/2 + 150 , 560 , 170);
-
-						slide5.addChild(graphics);
 
 					}
 
@@ -923,23 +880,23 @@
 
 						(function() {
 							var style = {
-								font : '38px HelveticaNeueCyr-Light',
+								font : '16px HelveticaNeueCyr-Light',
 							    fill : '#3c3c3c',
-							    align : "center",
-							    lineHeight : 40,
-							    padding : 50
+							    align : "center"
 							},
 							title = new PIXI.Text("Стилисты “Модного приговора” получат Ваши данные,\nопределят Ваш цветотип, тип фигуры, овал лица\nи составят подробную инструкцию преображения!", style);
 
 							title.x = (renderer.width - title.width) / 2;	
-							title.y = ((renderer.height - title.height) / 2) - 140;
+							title.y = ((renderer.height - title.height) / 2) + 250;
 
 							slide5.addChild(title);
 						}());
 
-						graphics.lineStyle(3, 0xfa6464, 1);
+						var graphics = new PIXI.Graphics();
+
+						graphics.lineStyle(3, 0x3c3c3c, 1);
 						graphics.beginFill(0x000000, 0);
-						graphics.drawRect( renderer.width/2 - 280 , renderer.height/2 + 150 , 560 , 170);
+						graphics.drawRect( renderer.width/2 - 225 , renderer.height/2 + 200 , 450 , 100);
 
 						slide5.addChild(graphics);
 
@@ -947,9 +904,51 @@
 
 				},
 
-				icon: {
+				spinner: {
+
+					vars: {
+						spin1_texture: 	null,
+						spin1: 			null,
+						spin2_texture: 	null,
+						spin2: 			null,
+						pos: 			0,
+						alpha: 			0,
+						init: false
+					},
 
 					init: function() {
+						var vars = this.vars;
+
+						vars.init = true;
+						vars.spin1_texture = 	PIXI.Texture.fromImage("i/s5/spin1.svg");
+						vars.spin1 = 			new PIXI.Sprite(vars.spin1_texture);
+						vars.spin2_texture = 	PIXI.Texture.fromImage("i/s5/spin2.svg");
+						vars.spin2 = 			new PIXI.Sprite(vars.spin2_texture);
+
+						vars.spin1.anchor.set(0.5);
+						vars.spin1.position.x = renderer.width / 2 - 5;
+						vars.spin1.position.y = renderer.height / 2 + 350;
+						vars.spin1.buttonMode = true;
+						vars.spin1.interactive = true;
+
+						vars.spin2.anchor.set(0.5);
+						vars.spin2.position.x = renderer.width / 2 - 5;
+						vars.spin2.position.y = renderer.height / 2 + 345;
+						vars.spin2.buttonMode = true;
+						vars.spin2.interactive = true;
+
+						slide5.addChild(vars.spin1);
+						slide5.addChild(vars.spin2); 
+					},
+
+					update: function() {
+						var vars = this.vars;
+
+						if(vars.init == true) {
+							vars.pos += 0.06;
+		    				vars.spin2.y += Math.sin(vars.pos);
+		    				//vars.spin2.alpha += Math.sin(0.003);
+						}
 
 					}
 
@@ -959,11 +958,6 @@
 
 			slide_6: {
 
-				vars: {
-					update_val: 0,
-					active: false
-				},
-
 				init: function() {
 					console.log("Slide 6 init");
 
@@ -971,20 +965,12 @@
 				},
 
 				update: function() {
-					if( update_slide == true && this.vars.update_val < renderer.height ) {
-						this.vars.update_val += 15 - Math.sin(Math.acos(0.1));
-						slide6.y -= 15 - Math.sin(Math.acos(0.1));
-					}
+
 				}
 
 			},
 
 			slide_7: {
-
-				vars: {
-					update_val: 0,
-					active: false
-				},
 
 				init: function() {
 					console.log("Slide 7 init");
@@ -997,10 +983,7 @@
 				},
 
 				update: function() {
-					if( update_slide == true && this.vars.update_val < renderer.height ) {
-						this.vars.update_val += 15 - Math.sin(Math.acos(0.1));
-						slide7.y -= 15 - Math.sin(Math.acos(0.1));
-					}
+
 				},
 
 				slider: {
@@ -1022,8 +1005,6 @@
 				footer: {
 
 					init: function() {
-
-						$footer.fadeIn();
 
 					}
 
