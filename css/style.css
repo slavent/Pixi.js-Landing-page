@@ -99,11 +99,11 @@ body {
 }
 
 .menu-icon-wrp:hover .menu-icon-line:nth-child(1) {
-	left: -25px;
+	left: -15px;
 }
 
 .menu-icon-wrp:hover .menu-icon-line:nth-child(3) {
-	left: 25px;
+	left: 15px;
 }
 
 .menu-popup {
@@ -231,10 +231,15 @@ body {
 	height: 30px;
 	background: url(../i/s1/social_vk.png) 0 -34px no-repeat;
 	background-size: 100% auto;
+	transition: all .3s;
+	-webkit-transition: all .3s;
 }
 
 .social-item-vk:hover {
 	background-position: 0 0;
+	width: 36px;
+	height: 36px;
+	margin: -3px -3px -3px -3px;
 }
 
 .social-item-fb {
@@ -243,10 +248,15 @@ body {
 	height: 30px;
 	background: url(../i/s1/social_fb.png) 0 -34px no-repeat;
 	background-size: 100% auto;
+	transition: all .3s;
+	-webkit-transition: all .3s;
 }
 
 .social-item-fb:hover {
 	background-position: 0 0;
+	width: 36px;
+	height: 36px;
+	margin: -3px -3px -3px -3px;
 }
 
 .social-item-tw {
@@ -255,10 +265,15 @@ body {
 	height: 30px;
 	background: url(../i/s1/social_tw.png) 0 -34px no-repeat;
 	background-size: 100% auto;
+	transition: all .3s;
+	-webkit-transition: all .3s;
 }
 
 .social-item-tw:hover {
 	background-position: 0 0;
+	width: 36px;
+	height: 36px;
+	margin: -3px -3px -3px -3px;
 }
 
 .social-item-ok {
@@ -267,10 +282,15 @@ body {
 	height: 30px;
 	background: url(../i/s1/social_ok.png) 0 -34px no-repeat;
 	background-size: 100% auto;
+	transition: all .3s;
+	-webkit-transition: all .3s;
 }
 
 .social-item-ok:hover {
 	background-position: 0 0;
+	width: 36px;
+	height: 36px;
+	margin: -3px -3px -3px -3px;
 }
 
 .main-menu {
@@ -288,8 +308,8 @@ body {
 	-webkit-box-shadow: 0px 1px 3px 0px rgba(173, 173, 173, 0.75);
 	-moz-box-shadow:    0px 1px 3px 0px rgba(173, 173, 173, 0.75);
 	box-shadow:         0px 1px 3px 0px rgba(173, 173, 173, 0.75);
-	transition: all .3s;
-	-webkit-transition: all .3s;
+	transition: all .5s;
+	-webkit-transition: all .5s;
 }
 
 .main-menu ul {
@@ -312,17 +332,16 @@ body {
 	-webkit-transition: all .3s;
 }
 
-.main-menu-link:hover {
-	color: #fb8b8b;
+.main-menu-link-active, .main-menu-link:hover {
+	color: #fb8b8b !important;
 	text-decoration: underline;
 }
 
 footer {
-	display: none;
 	position: fixed;
 	left: 0;
 	right: 0;
-	bottom: 0;
+	bottom: -120px;
 	z-index: 50;
 	background: rgba(241, 100, 99, 0.9);
 	height: 120px;
@@ -331,6 +350,8 @@ footer {
 	color: #3c3c3c;	
 	font-family: "HelveticaNeueCyr-Light";
 	font-size: 14px;
+	transition: all .5s;
+	-webkit-transition: all .5s;
 }
 
 footer a {
@@ -380,9 +401,11 @@ footer a {
 .landing-nav {
 	position: fixed;
 	top: 50%;
-	right: 30px;
+	right: -100px;
 	margin: -246px 0 0;
 	z-index: 50;
+	transition: all 1s;
+	-webkit-transition: all 1s;
 }
 
 .landing-nav-item {

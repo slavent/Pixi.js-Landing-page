@@ -27,7 +27,7 @@
 		slide6 = new PIXI.Container(),
 		slide7 = new PIXI.Container(),
 
-		tween = new TWEEN.Tween({ x: 0, y: 0, rotation: 0 }),
+		tween_scroll = new TWEEN.Tween({ x: 0, y: 0, rotation: 0 }),
 
 		update_slide = false,
 		active_slide = 1;
@@ -46,7 +46,7 @@
 		    function animate() {
 
 		    	// Render for Slide 1
-		    	if( slide1.alpha < 1 ) slide1.alpha += 0.01;
+		    	//if( slide1.alpha < 1 ) slide1.alpha += 0.01;
 		    	App.manager.slide_1.spinner.update();
 		    	App.manager.slide_1.slider.update();
 
@@ -73,7 +73,7 @@
 
 		    App.initParams();
 		  	App.binder();
-		  	App.initLandingNav(active_slide);
+		  	App.initNav(active_slide);
 		  	App.manager.init();
 
 		},
@@ -115,30 +115,34 @@
 
 				if(active_slide >= 1 && active_slide <= 7) {
 
-	    			tween
+	    			tween_scroll
 						.to({ x: 0, y: delta * renderer.height, rotation: 0 }, 1000)
 						.easing( TWEEN.Easing.Cubic.InOut )
 						.onUpdate(function() {
 							stage.y = this.y;
-						}).start();
+						})
+						.onComplete(function() {
 
-					// Show menu
-					if(active_slide == 1) {
-						$main_menu.hide();
-						$menu_icon.show();
-					} else {
-						$main_menu.css({"top" : 0});
-						$menu_icon.hide();
-					}
+							// Show/hide menu
+							if(active_slide == 1) {
+								$main_menu.css({ "top" : -70 });
+								$menu_icon.show();
+							} else {
+								$main_menu.css({ "top" : 0 });
+								$menu_icon.hide();
+							}
 
-					// Show footer
-					if(active_slide == 7) {
-						$footer.fadeIn();
-					} else {
-						$footer.fadeOut();
-					}
-			    	
-			    	App.initLandingNav(active_slide);
+							// Show/hide footer
+							if(active_slide == 7) {
+								$footer.css({ "bottom" : 0 });
+							} else {
+								$footer.css({ "bottom" : -120 });
+							}
+					    	
+						})
+						.start();
+
+					App.initNav(active_slide);
 
 				}
 
@@ -148,7 +152,7 @@
 
 		initParams: function() {
 
-			slide1.alpha = 0;
+			//slide1.alpha = 0;
 			slide2.y = renderer.height;
 			slide3.y = 2 * renderer.height;
 			slide4.y = 3 * renderer.height;
@@ -156,13 +160,20 @@
 			slide6.y = 5 * renderer.height;
 			slide7.y = 6 * renderer.height;
 
+			setTimeout(function() {
+				$landing_nav.parent().css({ "right" : "30px" });
+			}, 3000);
+
 		},
 
-		initLandingNav: function(ind) {
+		initNav: function(ind) {
 
 			ind--;
 			$landing_nav.children().removeClass("landing-nav-item-active");
 			$landing_nav.children().eq(ind).addClass("landing-nav-item-active");
+
+			$main_menu.find("a").removeClass("main-menu-link-active");
+    		$main_menu.find("li").eq(ind).children().addClass("main-menu-link-active");
 
 		},
 
@@ -230,10 +241,6 @@
 					stage.addChild(slide1);
 				},
 
-				update: function() {
-					
-				},
-
 				logo: {
 					init: function() {
 						var logo_texture = PIXI.Texture.fromImage("i/s1/logo.svg"),
@@ -273,14 +280,31 @@
 						slide2_sprite: 		null,
 						slide3_texture: 	null,
 						slide3_sprite: 		null,
+						dot1_texture: 		null,
+						dot1: 				null,
+						dot2_texture: 		null,
+						dot2: 				null,
+						dot3_texture: 		null,
+						dot4: 				null,
+						timer: 				null,
 						next: 				0
 					},
 
 					init: function() {
+						var vars = this.vars;
+
 						this.makeSlide1();
 						this.makeSlide2();
 						this.makeSlide3();
 						this.makeNav();
+
+						vars.timer = setInterval(function() {
+							if( vars.next == 3 ) {
+								vars.next = 1;
+							} else {
+								vars.next++;
+							}
+						}, 7000);
 					},
 
 					update: function() {
@@ -318,7 +342,7 @@
 					},
 
 					makeSlide2: function() {
-						vars = this.vars;
+						var vars = this.vars;
 
 						vars.slide2_texture = PIXI.Texture.fromImage("i/s1/slide_2.jpg");
 						vars.slide2_sprite = new PIXI.Sprite(vars.slide2_texture);
@@ -329,7 +353,7 @@
 					},
 
 					makeSlide3: function() {
-						vars = this.vars;
+						var vars = this.vars;
 
 						vars.slide3_texture = PIXI.Texture.fromImage("i/s1/slide_3.jpg");
 						vars.slide3_sprite = new PIXI.Sprite(vars.slide3_texture);
@@ -340,13 +364,15 @@
 					},
 
 					makeNav: function() {
-						var dot1_texture = PIXI.Texture.fromImage("i/s1/dot_active.svg"),
-							dot1 = new PIXI.Sprite(dot1_texture),
-							dot2_texture = PIXI.Texture.fromImage("i/s1/dot.svg");
-							dot2 = new PIXI.Sprite(dot2_texture),
-							dot3_texture = PIXI.Texture.fromImage("i/s1/dot.svg");
-							dot3 = new PIXI.Sprite(dot3_texture)
-							vars = this.vars;
+						var vars = this.vars;
+
+						dot1_texture = PIXI.Texture.fromImage("i/s1/dot_active.svg");
+						dot1 = new PIXI.Sprite(dot1_texture);
+						dot2_texture = PIXI.Texture.fromImage("i/s1/dot.svg");
+						dot2 = new PIXI.Sprite(dot2_texture);
+						dot3_texture = PIXI.Texture.fromImage("i/s1/dot.svg");
+						dot3 = new PIXI.Sprite(dot3_texture);
+							
 
 						dot1.anchor.set(0.5);
 						dot1.position.x = renderer.width / 2 - 25;
@@ -354,6 +380,7 @@
 						dot1.buttonMode = true;
 						dot1.interactive = true;
 						dot1.on("click", function() {
+							clearInterval(vars.timer);
 							this.texture = PIXI.Texture.fromImage("i/s1/dot_active.svg");
 							dot2.texture = PIXI.Texture.fromImage("i/s1/dot.svg");
 							dot3.texture = PIXI.Texture.fromImage("i/s1/dot.svg");
@@ -366,6 +393,7 @@
 						dot2.buttonMode = true;
 						dot2.interactive = true;
 						dot2.on("click", function() {
+							clearInterval(vars.timer);
 							this.texture = PIXI.Texture.fromImage("i/s1/dot_active.svg");
 							dot1.texture = PIXI.Texture.fromImage("i/s1/dot.svg");
 							dot3.texture = PIXI.Texture.fromImage("i/s1/dot.svg");
@@ -378,6 +406,7 @@
 						dot3.buttonMode = true;
 						dot3.interactive = true;
 						dot3.on("click", function() {
+							clearInterval(vars.timer);
 							this.texture = PIXI.Texture.fromImage("i/s1/dot_active.svg");
 							dot1.texture = PIXI.Texture.fromImage("i/s1/dot.svg");
 							dot2.texture = PIXI.Texture.fromImage("i/s1/dot.svg");
@@ -394,8 +423,8 @@
 				spinner: {
 					vars: {
 						spin1_texture: 	null,
-						spin1: 			null,
 						spin2_texture: 	null,
+						spin1: 			null,
 						spin2: 			null,
 						pos: 			0,
 						alpha: 			0
@@ -404,22 +433,24 @@
 					init: function() {
 						var vars = this.vars;
 
-						vars.spin1_texture = 	PIXI.Texture.fromImage("i/s1/spin1.svg");
-						vars.spin1 = 			new PIXI.Sprite(vars.spin1_texture);
-						vars.spin2_texture = 	PIXI.Texture.fromImage("i/s1/spin2.svg");
-						vars.spin2 = 			new PIXI.Sprite(vars.spin2_texture);
+						vars.spin1_texture = PIXI.Texture.fromImage("i/s1/spin1.svg");
+						vars.spin1 = new PIXI.Sprite(vars.spin1_texture);
+						vars.spin2_texture = PIXI.Texture.fromImage("i/s1/spin2.svg");
+						vars.spin2 = new PIXI.Sprite(vars.spin2_texture);
 
 						vars.spin1.anchor.set(0.5);
 						vars.spin1.position.x = renderer.width / 2 - 5;
 						vars.spin1.position.y = renderer.height / 2 + 350;
 						vars.spin1.buttonMode = true;
 						vars.spin1.interactive = true;
+						vars.spin1.on("click", function() {
+							active_slide++;
+    						App.initScroll.scroll();
+						});
 
 						vars.spin2.anchor.set(0.5);
 						vars.spin2.position.x = renderer.width / 2 - 5;
 						vars.spin2.position.y = renderer.height / 2 + 345;
-						vars.spin2.buttonMode = true;
-						vars.spin2.interactive = true;
 
 						slide1.addChild(vars.spin1);
 						slide1.addChild(vars.spin2); 
@@ -430,7 +461,6 @@
 
 						vars.pos += 0.06;
 	    				vars.spin2.y += Math.sin(vars.pos);
-	    				//vars.spin2.alpha += Math.sin(0.003);
 					}
 
 				}
@@ -450,10 +480,6 @@
 					this.arrowDown.init();
 
 					stage.addChild(slide2);
-				},
-
-				update: function() {
-					
 				},
 
 				title_1: {
@@ -585,11 +611,7 @@
 					console.log("Slide 3 init");
 
 					stage.addChild(slide3);
-				},
-
-				update: function() {
-
-				},
+				}
 
 			},
 
@@ -605,10 +627,6 @@
 					this.orderBtn.init();
 
 					stage.addChild(slide4);
-				},
-
-				update: function() {
-
 				},
 
 				titles: {
@@ -829,10 +847,6 @@
 					stage.addChild(slide5);
 				},
 
-				update: function() {
-
-				}, 
-
 				notepade: {
 
 					init: function() {
@@ -957,22 +971,24 @@
 						var vars = this.vars;
 
 						vars.init = true;
-						vars.spin1_texture = 	PIXI.Texture.fromImage("i/s5/spin1.svg");
-						vars.spin1 = 			new PIXI.Sprite(vars.spin1_texture);
-						vars.spin2_texture = 	PIXI.Texture.fromImage("i/s5/spin2.svg");
-						vars.spin2 = 			new PIXI.Sprite(vars.spin2_texture);
+						vars.spin1_texture = PIXI.Texture.fromImage("i/s5/spin1.svg");
+						vars.spin1 = new PIXI.Sprite(vars.spin1_texture);
+						vars.spin2_texture = PIXI.Texture.fromImage("i/s5/spin2.svg");
+						vars.spin2 = new PIXI.Sprite(vars.spin2_texture);
 
 						vars.spin1.anchor.set(0.5);
 						vars.spin1.position.x = renderer.width / 2 - 5;
 						vars.spin1.position.y = renderer.height / 2 + 350;
 						vars.spin1.buttonMode = true;
 						vars.spin1.interactive = true;
+						vars.spin1.on("click", function() {
+							active_slide++;
+    						App.initScroll.scroll();
+						});
 
 						vars.spin2.anchor.set(0.5);
 						vars.spin2.position.x = renderer.width / 2 - 5;
 						vars.spin2.position.y = renderer.height / 2 + 345;
-						vars.spin2.buttonMode = true;
-						vars.spin2.interactive = true;
 
 						slide5.addChild(vars.spin1);
 						slide5.addChild(vars.spin2); 
@@ -999,10 +1015,6 @@
 					console.log("Slide 6 init");
 
 					stage.addChild(slide6);
-				},
-
-				update: function() {
-
 				}
 
 			},
@@ -1017,10 +1029,6 @@
 					this.footer.init();
 
 					stage.addChild(slide7);
-				},
-
-				update: function() {
-
 				},
 
 				slider: {
