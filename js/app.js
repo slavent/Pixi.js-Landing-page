@@ -10,6 +10,7 @@
 		$main_menu = $(".main-menu"),
 		$menu_icon = $(".menu-icon-wrp"),
 		$menu_popup = $(".menu-popup"),
+		$menu_popup_nav = $(".menu-popup-nav"),
 		$menu_close_btn = $(".menu-popup-closebtn"),
 		$landing_nav = $(".landing-nav ul"),
 
@@ -25,6 +26,8 @@
 		slide5 = new PIXI.Container(),
 		slide6 = new PIXI.Container(),
 		slide7 = new PIXI.Container(),
+
+		tween = new TWEEN.Tween({ x: 0, y: 0, rotation: 0 }),
 
 		update_slide = false,
 		active_slide = 1;
@@ -59,6 +62,7 @@
 		    	// Render for Slide 6
 
 		    	// Render for Slide 7
+		    	App.manager.slide_7.slider.update();
 
 		    	TWEEN.update();
 
@@ -79,38 +83,52 @@
 			scroll: function(event) {
 
 				// Detect direction of scroll
-				var ind,
-					start_pos = active_slide;
+				var delta;
 
-				if(event.originalEvent.wheelDelta < 0) {
-					ind = -active_slide;
-					if(active_slide < 7) active_slide++;
-				} else {
-					if( active_slide == 1 ) {
-						ind = -active_slide + 1;
+				if(event != undefined) {
+
+					// For scroll navigation
+					if(event.originalEvent.wheelDelta < 0) {
+						// scroll down
+						if(active_slide == 7) {
+							delta = -1 * active_slide + 1;
+						} else {
+							delta = -1 * active_slide;
+							active_slide++;
+						}
 					} else {
-						ind = -active_slide + 2;
+						// scroll top
+						if( active_slide == 1 ) {
+							delta = -1 * active_slide + 1;
+						} else {
+							delta = -1 * active_slide + 2;
+							active_slide--;
+						}
 					}
 
-					if(active_slide > 1) active_slide--;
+				} else {
+
+					// For click navigation
+					delta = -1 * active_slide + 1;
+
 				}
 
 				if(active_slide >= 1 && active_slide <= 7) {
 
-	    			var tween = new TWEEN.Tween({ x: 0, y:  -(start_pos-1) * renderer.height, rotation: 0 })
-						.to({ x: 0, y: ind * renderer.height, rotation: 90 }, 1000)
+	    			tween
+						.to({ x: 0, y: delta * renderer.height, rotation: 0 }, 1000)
 						.easing( TWEEN.Easing.Cubic.InOut )
 						.onUpdate(function() {
 							stage.y = this.y;
 						}).start();
 
 					// Show menu
-					if(active_slide != 1) {
-						setTimeout(function() {
-							$main_menu.fadeIn(300);
-						}, 1500);
+					if(active_slide == 1) {
+						$main_menu.hide();
+						$menu_icon.show();
 					} else {
-						$main_menu.fadeOut();
+						$main_menu.css({"top" : 0});
+						$menu_icon.hide();
 					}
 
 					// Show footer
@@ -154,9 +172,9 @@
 
 			$landing_nav.children().each(function() {
     			$(this).on("click", function() {
-    				var ind = $(this).index() + 1;
+    				active_slide = $(this).index() + 1;
 
-    				App.initScroll.scroll(ind);
+    				App.initScroll.scroll();
     			});
     		});
 
@@ -170,9 +188,17 @@
     			$menu_popup.hide();
     		});
 
-    		$main_menu.children().on("click", function() {
-    			var ind = $(this).index();
-    			slide_id = ind;
+    		$main_menu.find("li").on("click", function() {
+    			active_slide = $(this).index() + 1;
+    			App.initScroll.scroll();
+
+    			return false;
+    		});
+
+    		$menu_popup_nav.find("li").on("click", function() {
+    			active_slide = $(this).index() + 1;
+    			App.initScroll.scroll();
+    			$menu_popup.hide();
 
     			return false;
     		});
@@ -763,7 +789,7 @@
 
 						(function() {
 							var style = {
-								font : '14px HelveticaNeueCyr-Light',
+								font : '14px FiraSansRegular',
 							    fill : '#fa6464'
 							},
 							title = new PIXI.Text("Заказать", style);
@@ -850,27 +876,35 @@
 					init: function() {
 
 						(function() {
-							var graphics = new PIXI.Graphics();
+							var circle_texture = PIXI.Texture.fromImage("i/s5/circle.svg"),
+							circle = new PIXI.Sprite(circle_texture);
 
-							graphics.lineStyle(0);
-							graphics.beginFill(0x3c3c3c, 1);
-							graphics.drawCircle(renderer.width/2 - 280, renderer.height/2 + 30, 60);
-							graphics.endFill();							
+							circle.anchor.set(0.5);
+							circle.position.x = renderer.width / 2 - 280;
+							circle.position.y = renderer.height / 2 + 30;
+
+							circle.buttonMode = true;
+							circle.interactive = true;
+							circle.on("click", function() {
+								active_slide = 6;
+								App.initScroll.scroll();
+							});
+
 
 							var style = {
-								font : '16px HelveticaNeueCyr-Light',
+								font : '24px BebasRegular',
 							    fill : '#ffffff'
 							},
 							title = new PIXI.Text("ЗАПОЛНИТЬ", style);
 
-							title.x = (renderer.width - title.width) / 2 - 230;	
-							title.y = ((renderer.height - title.height) / 2) + 40;
+							title.x = (renderer.width - title.width) / 2 - 235;	
+							title.y = ((renderer.height - title.height) / 2) + 42;
 							title.anchor.x = 0.5;
 							title.anchor.y = 0.5;
 							title.rotation = -0.3;
 
-							graphics.addChild(title);
-							slide5.addChild(graphics);
+							slide5.addChild(circle);
+							slide5.addChild(title);
 						}());
 
 					}
@@ -991,8 +1025,158 @@
 
 				slider: {
 
-					init: function() {
+					vars: {
+						slide1_texture: 	null,
+						slide1_sprite: 		null,
+						slide2_texture: 	null,
+						slide2_sprite: 		null,
+						slide3_texture: 	null,
+						slide3_sprite: 		null,
+						active: 				1,
+						next_btn_texture: 	null,
+						next_btn_sprite: 	null,
+						prev_btn_texture: 	null,
+						prev_btn_sprite: 	null
+					},
 
+					init: function() {
+						this.makeSlide1();
+						this.makeSlide2();
+						this.makeSlide3();
+						this.makeNav();
+					},
+
+					update: function() {
+						var vars = this.vars;
+
+						switch(vars.active) {
+							case 1: 
+								if( vars.slide1_sprite.alpha < 1 ) vars.slide1_sprite.alpha += 0.01;
+								if( vars.slide2_sprite.alpha > 0 ) vars.slide2_sprite.alpha -= 0.01;
+								if( vars.slide3_sprite.alpha > 0 ) vars.slide3_sprite.alpha -= 0.01;
+								break;
+
+							case 2: 
+								if( vars.slide1_sprite.alpha > 0 ) vars.slide1_sprite.alpha -= 0.01;
+								if( vars.slide2_sprite.alpha < 1 ) vars.slide2_sprite.alpha += 0.01;
+								if( vars.slide3_sprite.alpha > 0 ) vars.slide3_sprite.alpha -= 0.01;
+								break;
+
+							case 3: 
+								if( vars.slide1_sprite.alpha > 0 ) vars.slide1_sprite.alpha -= 0.01;
+								if( vars.slide2_sprite.alpha > 0 ) vars.slide2_sprite.alpha -= 0.01;
+								if( vars.slide3_sprite.alpha < 1 ) vars.slide3_sprite.alpha += 0.01;
+								break;
+						}
+					},
+
+					makeSlide1: function() {
+						var vars = this.vars;
+
+						vars.slide1_texture = PIXI.Texture.fromImage("i/s1/slide_2.jpg");
+						vars.slide1_sprite = new PIXI.Sprite(vars.slide1_texture);
+						vars.slide1_sprite.width = renderer.width;
+						vars.slide1_sprite.height = renderer.height;
+						slide7.addChild(vars.slide1_sprite);
+
+						var style = {
+								font : '65px FiraSansRegular',
+							    fill : '#fff',
+							    lineHeight: 65,
+							    padding: 10,
+							    align : "center"
+							},
+							title = new PIXI.Text("Восхищенные\nвзгляды!", style);
+
+						title.x = (renderer.width - title.width) / 2;	
+						title.y = ((renderer.height - title.height) / 2);
+
+						slide7.addChild(title);
+					},
+
+					makeSlide2: function() {
+						vars = this.vars;
+
+						vars.slide2_texture = PIXI.Texture.fromImage("i/s1/slide_2.jpg");
+						vars.slide2_sprite = new PIXI.Sprite(vars.slide2_texture);
+						vars.slide2_sprite.width = renderer.width;
+						vars.slide2_sprite.height = renderer.height;
+						vars.slide2_sprite.alpha = 0;
+						slide7.addChild(vars.slide2_sprite);
+
+						var style = {
+								font : '65px FiraSansRegular',
+							    fill : '#fff',
+							    lineHeight: 65,
+							    padding: 10,
+							    align : "center"
+							},
+							title = new PIXI.Text("Восхищенные\nвзгляды!", style);
+
+						title.x = (renderer.width - title.width) / 2;	
+						title.y = ((renderer.height - title.height) / 2);
+
+						slide7.addChild(title);
+					},
+
+					makeSlide3: function() {
+						vars = this.vars;
+
+						vars.slide3_texture = PIXI.Texture.fromImage("i/s1/slide_3.jpg");
+						vars.slide3_sprite = new PIXI.Sprite(vars.slide3_texture);
+						vars.slide3_sprite.width = renderer.width;
+						vars.slide3_sprite.height = renderer.height;
+						vars.slide3_sprite.alpha = 0;
+						slide7.addChild(vars.slide3_sprite);
+
+						var style = {
+								font : '65px FiraSansRegular',
+							    fill : '#fff',
+							    lineHeight: 65,
+							    padding: 10,
+							    align : "center"
+							},
+							title = new PIXI.Text("Восхищенные\nвзгляды!", style);
+
+						title.x = (renderer.width - title.width) / 2;	
+						title.y = ((renderer.height - title.height) / 2);
+
+						slide7.addChild(title);
+					},
+
+					makeNav: function() {
+						vars = this.vars;
+
+						vars.prev_btn_texture = PIXI.Texture.fromImage("i/s7/nav_btn.svg");
+						vars.prev_btn_sprite = new PIXI.Sprite(vars.prev_btn_texture);
+						vars.prev_btn_sprite.width = 45;
+						vars.prev_btn_sprite.height = 45;
+						vars.prev_btn_sprite.x = renderer.width / 2 - 500;
+						vars.prev_btn_sprite.y = renderer.height / 2;
+						vars.prev_btn_sprite.buttonMode = true;
+						vars.prev_btn_sprite.interactive = true;
+						vars.prev_btn_sprite.on("click", function() {
+							if(vars.active > 1) vars.active--;
+						});
+
+						slide7.addChild(vars.prev_btn_sprite);						
+
+						vars.next_btn_texture = PIXI.Texture.fromImage("i/s7/nav_btn.svg");
+						vars.next_btn_sprite = new PIXI.Sprite(vars.next_btn_texture);
+						vars.next_btn_sprite.width = 45;
+						vars.next_btn_sprite.height = 45;
+						vars.next_btn_sprite.x = renderer.width / 2 + 500;
+						vars.next_btn_sprite.y = renderer.height / 2 + 20;
+						vars.next_btn_sprite.anchor.x = 0.5; 
+						vars.next_btn_sprite.anchor.y = 0.5; 
+						vars.next_btn_sprite.rotation = 3.14159265;
+						vars.next_btn_sprite.buttonMode = true;
+						vars.next_btn_sprite.interactive = true;
+						vars.next_btn_sprite.on("click", function() {
+							if(vars.active < 3) vars.active++;
+						});
+
+						slide7.addChild(vars.next_btn_sprite);
 					}
 
 				},
@@ -1000,6 +1184,27 @@
 				orderBtn: {
 
 					init: function() {
+
+						var style = {
+								font : '14px FiraSansRegular',
+							    fill : '#fff',
+							    align : "center"
+							},
+							title = new PIXI.Text("Заказать", style);
+
+						title.x = (renderer.width - title.width) / 2;	
+						title.y = ((renderer.height - title.height) / 2) + 260;
+
+
+						var graphics = new PIXI.Graphics();
+
+						graphics.lineStyle(1, 0xffffff, 1);
+						graphics.beginFill(0xffffff, 0);
+						graphics.drawRoundedRect(renderer.width/2-50, renderer.height/2+245, 100, 30, 1);
+						graphics.endFill();
+
+						graphics.addChild(title);
+						slide7.addChild(graphics);
 
 					}
 
@@ -1024,7 +1229,7 @@
 	// START: Web Font
 	window.WebFontConfig = {
 	    custom: {
-	        families: ["HelveticaNeueCyr-Light", "Plumb-Black"],
+	        families: ["HelveticaNeueCyr-Light", "Plumb-Black", "FiraSansMedium", "BebasRegular"],
 	        urls: ['css/style.css']
 	    },
 	    active: function() {

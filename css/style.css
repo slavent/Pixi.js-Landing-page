@@ -22,6 +22,22 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: "BebasRegular";
+  src: url('../fonts/BebasRegular.eot');
+  src: local('â˜º'), url('../fonts/BebasRegular.woff') format('woff'), url('../fonts/BebasRegular.ttf') format('truetype'), url('../fonts/BebasRegular.svg') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "FiraSansRegular";
+  src: url('../fonts/FiraSansRegular.eot');
+  src: local('â˜º'), url('../fonts/FiraSansRegular.woff') format('woff'), url('../fonts/FiraSansRegular.ttf') format('truetype'), url('../fonts/FiraSansRegular.svg') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
 canvas {
 	position: absolute;
 	top: 0;
@@ -127,6 +143,7 @@ body {
 .menu-popup-nav-item {
 	display: inline-block;
 	margin: 0 15px 20px 15px;
+	position: relative;
 }
 
 .menu-popup-nav-link {
@@ -142,7 +159,8 @@ body {
 	color: #fa6464;
 }
 
-.menu-popup-delimeter {
+.menu-popup-nav-item .menu-popup-nav-link:after {
+	content: "";
 	width: 8px;
 	height: 8px;
 	border-radius: 50%;
@@ -152,6 +170,14 @@ body {
 	background: #fa6464;
 	display: inline-block;
 	margin: 0 0 4px 0;
+	position: absolute;
+	top: 7px;
+	right: -20px;
+}
+
+.menu-popup-nav-item:nth-child(4) .menu-popup-nav-link:after,
+.menu-popup-nav-item:last-child .menu-popup-nav-link:after{
+	content: none;
 }
 
 .menu-popup-closebtn svg {
@@ -159,7 +185,7 @@ body {
 	height: 30px;
 	position: absolute;
 	top: 40px;
-	left: 40px;
+	right: 40px;
 	background: url(../i/s1/close.svg) no-repeat;
 	cursor: pointer;
 	transition: all .8s;
@@ -248,13 +274,12 @@ body {
 }
 
 .main-menu {
-	display: none;
 	position: fixed;
-	top: 0;
+	top: -70px;
 	left: 0;
 	right: 0;
 	z-index: 50;
-	background: #fff;
+	background: rgba(255, 255, 255, 0.8);
 	height: 70px;
 	border-bottom: 1px solid #6d6f71;
 	text-align: center;
@@ -263,6 +288,8 @@ body {
 	-webkit-box-shadow: 0px 1px 3px 0px rgba(173, 173, 173, 0.75);
 	-moz-box-shadow:    0px 1px 3px 0px rgba(173, 173, 173, 0.75);
 	box-shadow:         0px 1px 3px 0px rgba(173, 173, 173, 0.75);
+	transition: all .3s;
+	-webkit-transition: all .3s;
 }
 
 .main-menu ul {
@@ -353,7 +380,7 @@ footer a {
 .landing-nav {
 	position: fixed;
 	top: 50%;
-	right: 50px;
+	right: 30px;
 	margin: -246px 0 0;
 	z-index: 50;
 }
