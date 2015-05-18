@@ -86,8 +86,13 @@
 					ind = -active_slide;
 					if(active_slide < 7) active_slide++;
 				} else {
-					ind = -active_slide + 2;
-					if(active_slide >= 1) active_slide--;
+					if( active_slide == 1 ) {
+						ind = -active_slide + 1;
+					} else {
+						ind = -active_slide + 2;
+					}
+
+					if(active_slide > 1) active_slide--;
 				}
 
 				if(active_slide >= 1 && active_slide <= 7) {
@@ -118,8 +123,6 @@
 			    	App.initLandingNav(active_slide);
 
 				}
-
-				console.log(active_slide);
 
 		    }
 
