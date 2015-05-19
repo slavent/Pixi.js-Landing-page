@@ -529,6 +529,7 @@
 					title_1: {
 
 						element: null,
+						element_blur: null,
 
 						init: function() {
 
@@ -540,17 +541,21 @@
 								    padding : 50
 								};
 
+							this.element_blur = new PIXI.filters.BlurFilter();
+							this.element_blur.blur = 100;
+
 							this.element = new PIXI.Text("ЛУЧШИЕ СТИЛИСТЫ РОССИИ\nПРЕДЛАГАЮТ ВАМ СОЗДАТЬ", style);
 							this.element.x = (renderer.width - this.element.width) / 2;	
-							this.element.y = ((renderer.height - this.element.height) / 2) - 140;
-							this.element.alpha = 0;
+							this.element.y = renderer.height;
+							this.element.filters = [this.element_blur];
 
 							slide_container_2.addChild(this.element);
 
 						},
 
 						update: function() {
-							if( this.element.alpha < 1 ) this.element.alpha += 0.005;
+							if( this.element_blur.blur > 1 ) this.element_blur.blur -= 2;
+							if( this.element.y > (renderer.height / 2 - this.element.height / 2) - 130 ) this.element.y -= 20;
 						}
 
 					},
@@ -570,13 +575,14 @@
 								
 							this.element = new PIXI.Text("ПЕРСОНАЛЬНЫЙ", style);
 							this.element.x = (renderer.width - this.element.width) / 2;	
-							this.element.y = -100;
+							this.element.y = 0;
 
 							slide_container_2.addChild(this.element);
 						},
 
 						update: function() {
-							if( this.element.y < ((renderer.height - this.element.height) / 2) - 60 ) this.element.y += 5;
+							createjs.Tween.get(this.element)
+  								.to({ y: ((renderer.height - this.element.height) / 2) - 60 }, 1000, createjs.Ease.getPowInOut(4));
 						}
 
 					},
@@ -596,13 +602,14 @@
 
 							this.element = new PIXI.Text("ИМИДЖ-ГАЙД", style);
 							this.element.x = (renderer.width - this.element.width) / 2;	
-							this.element.y = ((renderer.height - this.element.height) / 2) + 20;
+							this.element.y = 0;
 
 							slide_container_2.addChild(this.element);
 						},
 
 						update: function() {
-
+							createjs.Tween.get(this.element)
+  								.to({ y: ((renderer.height - this.element.height) / 2) + 20 }, 1000, createjs.Ease.getPowInOut(4));
 						}
 
 					},
@@ -610,6 +617,7 @@
 					title_4: {
 
 						element: null,
+						element_blur: null,
 
 						init: function() {
 							var style = {
@@ -620,15 +628,20 @@
 								    padding : 50
 								};
 
+							this.element_blur = new PIXI.filters.BlurFilter();
+							this.element_blur.blur = 100;
+
 							this.element = new PIXI.Text("- ПОДОБНОЕ РУКОВОДСТВО\nПО ПРЕОБРАЖЕНИЮ", style);
 							this.element.x = (renderer.width - this.element.width) / 2;	
-							this.element.y = ((renderer.height - this.element.height) / 2) + 130;
+							this.element.y = renderer.height;
+							this.element.filters = [this.element_blur];
 
 							slide_container_2.addChild(this.element);
 						},
 
 						update: function() {
-
+							if( this.element_blur.blur > 1 ) this.element_blur.blur -= 2;
+							if( this.element.y > ((renderer.height - this.element.height) / 2) + 130 ) this.element.y -= 20;
 						}
 
 					},
