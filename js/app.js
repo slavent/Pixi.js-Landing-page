@@ -19,17 +19,14 @@
 		renderer = new PIXI.autoDetectRenderer(w_width, w_height, { transparent: true }),
 		stage = new PIXI.Container(),
 
-		slide1 = new PIXI.Container(),
-		slide2 = new PIXI.Container(),
-		slide3 = new PIXI.Container(),
-		slide4 = new PIXI.Container(),
-		slide5 = new PIXI.Container(),
-		slide6 = new PIXI.Container(),
-		slide7 = new PIXI.Container(),
+		slide_container_1 = null,
+		slide_container_2 = null,
+		slide_container_3 = null,
+		slide_container_4 = null,
+		slide_container_5 = null,
+		slide_container_6 = null,
+		slide_container_7 = null,
 
-		tween_scroll = new TWEEN.Tween({ x: 0, y: 0, rotation: 0 }),
-
-		update_slide = false,
 		active_slide = 1;
     // END: Variables
 
@@ -45,36 +42,54 @@
 
 		    function animate() {
 
-		    	// Render for Slide 1
-		    	//if( slide1.alpha < 1 ) slide1.alpha += 0.01;
-		    	App.manager.slide_1.spinner.update();
-		    	App.manager.slide_1.slider.update();
+		    	switch(active_slide) {
 
-		    	// Render for Slide 2
+		    		case 1: 
+		    			App.manager.slide_1.update();
 
-		    	// Render for Slide 3
+		    			break;
 
-		    	// Render for Slide 4
+		    		case 2: 
+		    			App.manager.slide_2.update();
+		    			
+		    			break;
 
-		    	// Render for Slide 5
-		    	App.manager.slide_5.spinner.update();
+		    		case 3: 
+		    			App.manager.slide_3.update();
+		    			
+		    			break;
 
-		    	// Render for Slide 6
+		    		case 4: 
+		    			App.manager.slide_4.update();
+		    			
+		    			break;
 
-		    	// Render for Slide 7
-		    	App.manager.slide_7.slider.update();
+		    		case 5: 
+		    			App.manager.slide_5.update();
+		    			
+		    			break;
 
-		    	TWEEN.update();
+		    		case 6: 
+		    			App.manager.slide_6.update();
+		    			
+		    			break;
+
+		    		case 7: 
+		    			App.manager.slide_7.update();
+		    			
+		    			break;
+
+		    	}
 
 		        renderer.render(stage);
 		        requestAnimationFrame(animate);
 
 		    }			
 
-		    App.initParams();
+		    App.initPult();
 		  	App.binder();
-		  	App.initNav(active_slide);
 		  	App.manager.init();
+		  	App.initNav(active_slide);
 
 		},
 
@@ -82,65 +97,55 @@
 
 			scroll: function(event) {
 
-				// Detect direction of scroll
-				var delta;
-
-				if(event != undefined) {
-
-					// For scroll navigation
-					if(event.originalEvent.wheelDelta < 0) {
-						// scroll down
-						if(active_slide == 7) {
-							delta = -1 * active_slide + 1;
-						} else {
-							delta = -1 * active_slide;
-							active_slide++;
-						}
-					} else {
-						// scroll top
-						if( active_slide == 1 ) {
-							delta = -1 * active_slide + 1;
-						} else {
-							delta = -1 * active_slide + 2;
-							active_slide--;
-						}
-					}
-
+				// For scroll navigation
+				if(event.originalEvent.wheelDelta < 0) {
+					// scroll down
+					active_slide++;
 				} else {
-
-					// For click navigation
-					delta = -1 * active_slide + 1;
-
+					// scroll top
+					active_slide--;
 				}
 
 				if(active_slide >= 1 && active_slide <= 7) {
 
-	    			tween_scroll
-						.to({ x: 0, y: delta * renderer.height, rotation: 0 }, 1000)
-						.easing( TWEEN.Easing.Cubic.InOut )
-						.onUpdate(function() {
-							stage.y = this.y;
-						})
-						.onComplete(function() {
+					switch (active_slide) {
 
-							// Show/hide menu
-							if(active_slide == 1) {
-								$main_menu.css({ "top" : -70 });
-								$menu_icon.show();
-							} else {
-								$main_menu.css({ "top" : 0 });
-								$menu_icon.hide();
-							}
+						case 1: 
+							App.manager.slide_2.destroy();
+							App.manager.slide_1.init();
+							break;
 
-							// Show/hide footer
-							if(active_slide == 7) {
-								$footer.css({ "bottom" : 0 });
-							} else {
-								$footer.css({ "bottom" : -120 });
-							}
-					    	
-						})
-						.start();
+						case 2: 
+							App.manager.slide_1.destroy();
+							App.manager.slide_2.init();
+							break;
+
+						case 3: 
+							App.manager.slide_2.destroy();
+							App.manager.slide_3.init();
+							break;
+
+						case 4: 
+							App.manager.slide_3.destroy();
+							App.manager.slide_4.init();
+							break;
+
+						case 5: 
+							App.manager.slide_4.destroy();
+							App.manager.slide_5.init();
+							break;
+
+						case 6: 
+							App.manager.slide_5.destroy();
+							App.manager.slide_6.init();
+							break;
+
+						case 7: 
+							App.manager.slide_6.destroy();
+							App.manager.slide_7.init();
+							break;
+
+					}
 
 					App.initNav(active_slide);
 
@@ -150,15 +155,7 @@
 
 		},
 
-		initParams: function() {
-
-			//slide1.alpha = 0;
-			slide2.y = renderer.height;
-			slide3.y = 2 * renderer.height;
-			slide4.y = 3 * renderer.height;
-			slide5.y = 4 * renderer.height;
-			slide6.y = 5 * renderer.height;
-			slide7.y = 6 * renderer.height;
+		initPult: function() {
 
 			setTimeout(function() {
 				$landing_nav.parent().css({ "right" : "30px" });
@@ -180,14 +177,6 @@
 		binder: function() {
 
 			$body.on("mousewheel", $.debounce(200, true, App.initScroll.scroll));
-
-			$landing_nav.children().each(function() {
-    			$(this).on("click", function() {
-    				active_slide = $(this).index() + 1;
-
-    				App.initScroll.scroll();
-    			});
-    		});
 
 			$menu_icon.on("click", function() {
     			$menu_popup.fadeIn();
@@ -219,13 +208,9 @@
 		manager: {
 
 			init: function() {
+
 				this.slide_1.init();
-			  	this.slide_2.init();
-			  	this.slide_3.init();
-			  	this.slide_4.init();
-			  	this.slide_5.init();
-			  	this.slide_6.init();
-			  	this.slide_7.init();
+
 			},
 
 			slide_1: {
@@ -233,237 +218,270 @@
 				init: function() {
 					console.log("Slide 1 init");
 
-					this.slider.init();
-					this.logo.init();
-					this.title.init();
-					this.spinner.init();
+					slide_container_1 = new PIXI.Container();
+					slide_container_1.y = -renderer.height;
+					slide_container_1.alpha = 0;
 
-					stage.addChild(slide1);
+					this.elems.slider.init();
+					this.elems.logo.init();
+					this.elems.title.init();
+					this.elems.spinner.init();
+
+					stage.addChild(slide_container_1);
+
+					createjs.Tween.get(slide_container_1)
+  						.to({ y: 0 }, 1000, createjs.Ease.getPowInOut(4));
+
 				},
 
-				logo: {
-					init: function() {
-						var logo_texture = PIXI.Texture.fromImage("i/s1/logo.svg"),
-							logo = new PIXI.Sprite(logo_texture);
+				destroy: function() {
 
-						logo.anchor.set(0.5);
-						logo.position.x = renderer.width / 2;
-						logo.position.y = renderer.height / 2;
+					console.log("Slide 1 destroy");
 
-						slide1.addChild(logo);
-					}
+					createjs.Tween.get(slide_container_1)
+  						.to({ y: -renderer.height }, 1000, createjs.Ease.getPowInOut(4))
+  						.call(function() {
+  							stage.removeChild(slide_container_1);
+  						});
+
 				},
 
-				title: {
-					init: function() {
-						var style = {
-								font : '38px HelveticaNeueCyr-Light',
-							    fill : '#fff',
-							    align : "center",
-							    lineHeight : 50,
-							    padding : 50
-							},
-							title = new PIXI.Text("ДОБРО ПОЖАЛОВАТЬ В ЛАБОРАТОРИЮ\nСТИЛЯ «МОДНОГО ПРИГОВОРА»!", style);
-
-						title.x = (renderer.width - title.width) / 2;	
-						title.y = ((renderer.height - title.height) / 2) + 180;
-
-						slide1.addChild(title);
-					}
+				update: function() {
+					if( slide_container_1.alpha < 1 ) slide_container_1.alpha += 0.05;
+			    	this.elems.spinner.update();
+			    	this.elems.slider.update();
 				},
 
-				slider: {
-					vars: {
-						slide1_texture: 	null,
-						slide1_sprite: 		null,
-						slide2_texture: 	null,
-						slide2_sprite: 		null,
-						slide3_texture: 	null,
-						slide3_sprite: 		null,
-						dot1_texture: 		null,
-						dot1: 				null,
-						dot2_texture: 		null,
-						dot2: 				null,
-						dot3_texture: 		null,
-						dot4: 				null,
-						timer: 				null,
-						next: 				0
-					},
+				elems: {
 
-					init: function() {
-						var vars = this.vars;
+					logo: {
 
-						this.makeSlide1();
-						this.makeSlide2();
-						this.makeSlide3();
-						this.makeNav();
+						init: function() {
+							var logo_texture = PIXI.Texture.fromImage("i/s1/logo.svg"),
+								logo = new PIXI.Sprite(logo_texture);
 
-						vars.timer = setInterval(function() {
-							if( vars.next == 3 ) {
-								vars.next = 1;
-							} else {
-								vars.next++;
-							}
-						}, 7000);
-					},
+							logo.anchor.set(0.5);
+							logo.position.x = renderer.width / 2;
+							logo.position.y = renderer.height / 2;
 
-					update: function() {
-						var vars = this.vars;
-
-						switch(vars.next) {
-							case 1: 
-								if( vars.slide1_sprite.alpha < 1 ) vars.slide1_sprite.alpha += 0.01;
-								if( vars.slide2_sprite.alpha > 0 ) vars.slide2_sprite.alpha -= 0.01;
-								if( vars.slide3_sprite.alpha > 0 ) vars.slide3_sprite.alpha -= 0.01;
-								break;
-
-							case 2: 
-								if( vars.slide1_sprite.alpha > 0 ) vars.slide1_sprite.alpha -= 0.01;
-								if( vars.slide2_sprite.alpha < 1 ) vars.slide2_sprite.alpha += 0.01;
-								if( vars.slide3_sprite.alpha > 0 ) vars.slide3_sprite.alpha -= 0.01;
-								break;
-
-							case 3: 
-								if( vars.slide1_sprite.alpha > 0 ) vars.slide1_sprite.alpha -= 0.01;
-								if( vars.slide2_sprite.alpha > 0 ) vars.slide2_sprite.alpha -= 0.01;
-								if( vars.slide3_sprite.alpha < 1 ) vars.slide3_sprite.alpha += 0.01;
-								break;
+							slide_container_1.addChild(logo);
 						}
 					},
 
-					makeSlide1: function() {
-						var vars = this.vars;
+					title: {
+						init: function() {
+							var style = {
+									font : '38px HelveticaNeueCyr-Light',
+								    fill : '#fff',
+								    align : "center",
+								    lineHeight : 50,
+								    padding : 50
+								},
+								title = new PIXI.Text("ДОБРО ПОЖАЛОВАТЬ В ЛАБОРАТОРИЮ\nСТИЛЯ «МОДНОГО ПРИГОВОРА»!", style);
 
-						vars.slide1_texture = PIXI.Texture.fromVideo("i/s1/slide_1.mp4");
-						vars.slide1_sprite = new PIXI.Sprite(vars.slide1_texture);
-						vars.slide1_sprite.width = renderer.width;
-						vars.slide1_sprite.height = renderer.height;
-						slide1.addChild(vars.slide1_sprite);
+							title.x = (renderer.width - title.width) / 2;	
+							title.y = ((renderer.height - title.height) / 2) + 180;
+
+							slide_container_1.addChild(title);
+						}
 					},
 
-					makeSlide2: function() {
-						var vars = this.vars;
+					slider: {
+						vars: {
+							slide_container_1_texture: 	null,
+							slide_container_1_sprite: 		null,
+							slide_container_2_texture: 	null,
+							slide_container_2_sprite: 		null,
+							slide_container_3_texture: 	null,
+							slide_container_3_sprite: 		null,
+							dot1_texture: 		null,
+							dot1: 				null,
+							dot2_texture: 		null,
+							dot2: 				null,
+							dot3_texture: 		null,
+							dot4: 				null,
+							timer: 				null,
+							next: 				0
+						},
 
-						vars.slide2_texture = PIXI.Texture.fromImage("i/s1/slide_2.jpg");
-						vars.slide2_sprite = new PIXI.Sprite(vars.slide2_texture);
-						vars.slide2_sprite.width = renderer.width;
-						vars.slide2_sprite.height = renderer.height;
-						vars.slide2_sprite.alpha = 0;
-						slide1.addChild(vars.slide2_sprite);
+						init: function() {
+							var vars = this.vars;
+
+							this.makeslide_container_1();
+							this.makeslide_container_2();
+							this.makeslide_container_3();
+							this.makeNav();
+
+							vars.timer = setInterval(function() {
+								if( vars.next == 3 ) {
+									vars.next = 1;
+								} else {
+									vars.next++;
+								}
+							}, 7000);
+						},
+
+						update: function() {
+							var vars = this.vars;
+
+							switch(vars.next) {
+								case 1: 
+									if( vars.slide_container_1_sprite.alpha < 1 ) vars.slide_container_1_sprite.alpha += 0.01;
+									if( vars.slide_container_2_sprite.alpha > 0 ) vars.slide_container_2_sprite.alpha -= 0.01;
+									if( vars.slide_container_3_sprite.alpha > 0 ) vars.slide_container_3_sprite.alpha -= 0.01;
+									break;
+
+								case 2: 
+									if( vars.slide_container_1_sprite.alpha > 0 ) vars.slide_container_1_sprite.alpha -= 0.01;
+									if( vars.slide_container_2_sprite.alpha < 1 ) vars.slide_container_2_sprite.alpha += 0.01;
+									if( vars.slide_container_3_sprite.alpha > 0 ) vars.slide_container_3_sprite.alpha -= 0.01;
+									break;
+
+								case 3: 
+									if( vars.slide_container_1_sprite.alpha > 0 ) vars.slide_container_1_sprite.alpha -= 0.01;
+									if( vars.slide_container_2_sprite.alpha > 0 ) vars.slide_container_2_sprite.alpha -= 0.01;
+									if( vars.slide_container_3_sprite.alpha < 1 ) vars.slide_container_3_sprite.alpha += 0.01;
+									break;
+							}
+						},
+
+						makeslide_container_1: function() {
+							var vars = this.vars;
+
+							vars.slide_container_1_texture = PIXI.Texture.fromVideo("i/s1/slide_1.mp4");
+							vars.slide_container_1_sprite = new PIXI.Sprite(vars.slide_container_1_texture);
+							vars.slide_container_1_sprite.width = renderer.width;
+							vars.slide_container_1_sprite.height = renderer.height;
+							slide_container_1.addChild(vars.slide_container_1_sprite);
+						},
+
+						makeslide_container_2: function() {
+							var vars = this.vars;
+
+							vars.slide_container_2_texture = PIXI.Texture.fromImage("i/s1/slide_2.jpg");
+							vars.slide_container_2_sprite = new PIXI.Sprite(vars.slide_container_2_texture);
+							vars.slide_container_2_sprite.width = renderer.width;
+							vars.slide_container_2_sprite.height = renderer.height;
+							vars.slide_container_2_sprite.alpha = 0;
+							slide_container_1.addChild(vars.slide_container_2_sprite);
+						},
+
+						makeslide_container_3: function() {
+							var vars = this.vars;
+
+							vars.slide_container_3_texture = PIXI.Texture.fromImage("i/s1/slide_3.jpg");
+							vars.slide_container_3_sprite = new PIXI.Sprite(vars.slide_container_3_texture);
+							vars.slide_container_3_sprite.width = renderer.width;
+							vars.slide_container_3_sprite.height = renderer.height;
+							vars.slide_container_3_sprite.alpha = 0;
+							slide_container_1.addChild(vars.slide_container_3_sprite);
+						},
+
+						makeNav: function() {
+							var vars = this.vars;
+
+							dot1_texture = PIXI.Texture.fromImage("i/s1/dot_active.svg");
+							dot1 = new PIXI.Sprite(dot1_texture);
+							dot2_texture = PIXI.Texture.fromImage("i/s1/dot.svg");
+							dot2 = new PIXI.Sprite(dot2_texture);
+							dot3_texture = PIXI.Texture.fromImage("i/s1/dot.svg");
+							dot3 = new PIXI.Sprite(dot3_texture);
+								
+
+							dot1.anchor.set(0.5);
+							dot1.position.x = renderer.width / 2 - 25;
+							dot1.position.y = renderer.height / 2 + 200;
+							dot1.buttonMode = true;
+							dot1.interactive = true;
+							dot1.on("click", function() {
+								clearInterval(vars.timer);
+								this.texture = PIXI.Texture.fromImage("i/s1/dot_active.svg");
+								dot2.texture = PIXI.Texture.fromImage("i/s1/dot.svg");
+								dot3.texture = PIXI.Texture.fromImage("i/s1/dot.svg");
+								vars.next = 1;
+							});
+
+							dot2.anchor.set(0.5);
+							dot2.position.x = renderer.width / 2 - 5;
+							dot2.position.y = renderer.height / 2 + 200;
+							dot2.buttonMode = true;
+							dot2.interactive = true;
+							dot2.on("click", function() {
+								clearInterval(vars.timer);
+								this.texture = PIXI.Texture.fromImage("i/s1/dot_active.svg");
+								dot1.texture = PIXI.Texture.fromImage("i/s1/dot.svg");
+								dot3.texture = PIXI.Texture.fromImage("i/s1/dot.svg");
+								vars.next = 2;
+							});
+
+							dot3.anchor.set(0.5);
+							dot3.position.x = renderer.width / 2 + 15;
+							dot3.position.y = renderer.height / 2 + 200;
+							dot3.buttonMode = true;
+							dot3.interactive = true;
+							dot3.on("click", function() {
+								clearInterval(vars.timer);
+								this.texture = PIXI.Texture.fromImage("i/s1/dot_active.svg");
+								dot1.texture = PIXI.Texture.fromImage("i/s1/dot.svg");
+								dot2.texture = PIXI.Texture.fromImage("i/s1/dot.svg");
+								vars.next = 3;
+							});
+
+							slide_container_1.addChild(dot1);
+							slide_container_1.addChild(dot2);
+							slide_container_1.addChild(dot3);
+						}
+
 					},
 
-					makeSlide3: function() {
-						var vars = this.vars;
+					spinner: {
 
-						vars.slide3_texture = PIXI.Texture.fromImage("i/s1/slide_3.jpg");
-						vars.slide3_sprite = new PIXI.Sprite(vars.slide3_texture);
-						vars.slide3_sprite.width = renderer.width;
-						vars.slide3_sprite.height = renderer.height;
-						vars.slide3_sprite.alpha = 0;
-						slide1.addChild(vars.slide3_sprite);
-					},
+						vars: {
+							spin1_texture: 	null,
+							spin2_texture: 	null,
+							spin1: 			null,
+							spin2: 			null,
+							pos: 			0,
+							alpha: 			0
+						},
 
-					makeNav: function() {
-						var vars = this.vars;
+						init: function() {
+							var vars = this.vars;
 
-						dot1_texture = PIXI.Texture.fromImage("i/s1/dot_active.svg");
-						dot1 = new PIXI.Sprite(dot1_texture);
-						dot2_texture = PIXI.Texture.fromImage("i/s1/dot.svg");
-						dot2 = new PIXI.Sprite(dot2_texture);
-						dot3_texture = PIXI.Texture.fromImage("i/s1/dot.svg");
-						dot3 = new PIXI.Sprite(dot3_texture);
-							
+							vars.spin1_texture = PIXI.Texture.fromImage("i/s1/spin1.svg");
+							vars.spin1 = new PIXI.Sprite(vars.spin1_texture);
+							vars.spin2_texture = PIXI.Texture.fromImage("i/s1/spin2.svg");
+							vars.spin2 = new PIXI.Sprite(vars.spin2_texture);
 
-						dot1.anchor.set(0.5);
-						dot1.position.x = renderer.width / 2 - 25;
-						dot1.position.y = renderer.height / 2 + 200;
-						dot1.buttonMode = true;
-						dot1.interactive = true;
-						dot1.on("click", function() {
-							clearInterval(vars.timer);
-							this.texture = PIXI.Texture.fromImage("i/s1/dot_active.svg");
-							dot2.texture = PIXI.Texture.fromImage("i/s1/dot.svg");
-							dot3.texture = PIXI.Texture.fromImage("i/s1/dot.svg");
-							vars.next = 1;
-						});
+							vars.spin1.anchor.set(0.5);
+							vars.spin1.position.x = renderer.width / 2 - 5;
+							vars.spin1.position.y = renderer.height / 2 + 350;
+							vars.spin1.buttonMode = true;
+							vars.spin1.interactive = true;
+							vars.spin1.on("click", function() {
+								active_slide++;
+	    						App.initScroll.scroll();
+							});
 
-						dot2.anchor.set(0.5);
-						dot2.position.x = renderer.width / 2 - 5;
-						dot2.position.y = renderer.height / 2 + 200;
-						dot2.buttonMode = true;
-						dot2.interactive = true;
-						dot2.on("click", function() {
-							clearInterval(vars.timer);
-							this.texture = PIXI.Texture.fromImage("i/s1/dot_active.svg");
-							dot1.texture = PIXI.Texture.fromImage("i/s1/dot.svg");
-							dot3.texture = PIXI.Texture.fromImage("i/s1/dot.svg");
-							vars.next = 2;
-						});
+							vars.spin2.anchor.set(0.5);
+							vars.spin2.position.x = renderer.width / 2 - 5;
+							vars.spin2.position.y = renderer.height / 2 + 345;
 
-						dot3.anchor.set(0.5);
-						dot3.position.x = renderer.width / 2 + 15;
-						dot3.position.y = renderer.height / 2 + 200;
-						dot3.buttonMode = true;
-						dot3.interactive = true;
-						dot3.on("click", function() {
-							clearInterval(vars.timer);
-							this.texture = PIXI.Texture.fromImage("i/s1/dot_active.svg");
-							dot1.texture = PIXI.Texture.fromImage("i/s1/dot.svg");
-							dot2.texture = PIXI.Texture.fromImage("i/s1/dot.svg");
-							vars.next = 3;
-						});
+							slide_container_1.addChild(vars.spin1);
+							slide_container_1.addChild(vars.spin2); 
+						},
 
-						slide1.addChild(dot1);
-						slide1.addChild(dot2);
-						slide1.addChild(dot3);
-					}
+						update: function() {
+							var vars = this.vars;
 
-				},
+							vars.pos += 0.06;
+		    				vars.spin2.y += Math.sin(vars.pos);
+						}
 
-				spinner: {
-					vars: {
-						spin1_texture: 	null,
-						spin2_texture: 	null,
-						spin1: 			null,
-						spin2: 			null,
-						pos: 			0,
-						alpha: 			0
-					},
-
-					init: function() {
-						var vars = this.vars;
-
-						vars.spin1_texture = PIXI.Texture.fromImage("i/s1/spin1.svg");
-						vars.spin1 = new PIXI.Sprite(vars.spin1_texture);
-						vars.spin2_texture = PIXI.Texture.fromImage("i/s1/spin2.svg");
-						vars.spin2 = new PIXI.Sprite(vars.spin2_texture);
-
-						vars.spin1.anchor.set(0.5);
-						vars.spin1.position.x = renderer.width / 2 - 5;
-						vars.spin1.position.y = renderer.height / 2 + 350;
-						vars.spin1.buttonMode = true;
-						vars.spin1.interactive = true;
-						vars.spin1.on("click", function() {
-							active_slide++;
-    						App.initScroll.scroll();
-						});
-
-						vars.spin2.anchor.set(0.5);
-						vars.spin2.position.x = renderer.width / 2 - 5;
-						vars.spin2.position.y = renderer.height / 2 + 345;
-
-						slide1.addChild(vars.spin1);
-						slide1.addChild(vars.spin2); 
-					},
-
-					update: function() {
-						var vars = this.vars;
-
-						vars.pos += 0.06;
-	    				vars.spin2.y += Math.sin(vars.pos);
 					}
 
 				}
+
 			},
 
 			slide_2: {
@@ -471,133 +489,206 @@
 				init: function() {
 					console.log("Slide 2 init");
 
-					this.title_1.init();
-					this.title_2.init();
-					this.title_3.init();
-					this.title_4.init();
-					this.info.init();
-					this.border.init();
-					this.arrowDown.init();
+					slide_container_2 = new PIXI.Container();
 
-					stage.addChild(slide2);
-				},
+					this.elems.title_1.init();
+					this.elems.title_2.init();
+					this.elems.title_3.init();
+					this.elems.title_4.init();
+					this.elems.info.init();
+					this.elems.border.init();
+					this.elems.arrowDown.init();
 
-				title_1: {
-
-					init: function() {
-						var style = {
-								font : '38px HelveticaNeueCyr-Light',
-							    fill : '#3c3c3c',
-							    align : "center",
-							    lineHeight : 40,
-							    padding : 50
-							},
-							title_1 = new PIXI.Text("ЛУЧШИЕ СТИЛИСТЫ РОССИИ\nПРЕДЛАГАЮТ ВАМ СОЗДАТЬ", style);
-
-						title_1.x = (renderer.width - title_1.width) / 2;	
-						title_1.y = ((renderer.height - title_1.height) / 2) - 140;
-
-						slide2.addChild(title_1);
-					}
+					stage.addChild(slide_container_2);
 
 				},
 
-				title_2: {
+				destroy: function() {
 
-					init: function() {
-						var style = {
-								font : '52px HelveticaNeueCyr-Light',
-							    fill : '#fa6464',
-							    align : "center",
-							    lineHeight : 50,
-							    padding : 50
-							},
-							title_2 = new PIXI.Text("ПЕРСОНАЛЬНЫЙ", style);
+					console.log("Slide 2 destroy");
 
-						title_2.x = (renderer.width - title_2.width) / 2;	
-						title_2.y = ((renderer.height - title_2.height) / 2) - 60;
-
-						slide2.addChild(title_2);
-					}
+					stage.removeChild(slide_container_2);
 
 				},
 
-				title_3: {
+				update: function() {
 
-					init: function() {
-						var style = {
-								font : 'bold 100px Plumb-Black',
-							    fill : '#fa6464',
-							    align : "center",
-							    lineHeight : 50,
-							    padding : 90
-							},
-							title_3 = new PIXI.Text("ИМИДЖ-ГАЙД", style);
+					this.elems.title_1.update();
+					this.elems.title_2.update();
+					this.elems.title_3.update();
+					this.elems.title_4.update();
+					this.elems.info.update();
+					this.elems.border.update();
+					this.elems.arrowDown.update();
 
-						title_3.x = (renderer.width - title_3.width) / 2;	
-						title_3.y = ((renderer.height - title_3.height) / 2) + 20;
-
-						slide2.addChild(title_3);
-					}
 
 				},
 
-				title_4: {
+				elems: {
 
-					init: function() {
-						var style = {
-								font : '38px HelveticaNeueCyr-Light',
-							    fill : '#000',
-							    align : "center",
-							    lineHeight : 50,
-							    padding : 50
-							},
-							title_4 = new PIXI.Text("- ПОДОБНОЕ РУКОВОДСТВО\nПО ПРЕОБРАЖЕНИЮ", style);
+					title_1: {
 
-						title_4.x = (renderer.width - title_4.width) / 2;	
-						title_4.y = ((renderer.height - title_4.height) / 2) + 130;
+						element: null,
 
-						slide2.addChild(title_4);
-					}
+						init: function() {
 
-				},
+							var style = {
+									font : '38px HelveticaNeueCyr-Light',
+								    fill : '#3c3c3c',
+								    align : "center",
+								    lineHeight : 40,
+								    padding : 50
+								};
 
-				info: {
+							this.element = new PIXI.Text("ЛУЧШИЕ СТИЛИСТЫ РОССИИ\nПРЕДЛАГАЮТ ВАМ СОЗДАТЬ", style);
+							this.element.x = (renderer.width - this.element.width) / 2;	
+							this.element.y = ((renderer.height - this.element.height) / 2) - 140;
+							this.element.alpha = 0;
 
-					init: function() {
-						var style = {
-								font : '21px HelveticaNeueCyr-Light',
-							    fill : '#fa6464',
-							    align : "center",
-							    padding : 20
-							},
-							title = new PIXI.Text("Имидж-гайд – это ваша личная книга стиля. Десятки\nкрасочных иллюстраций, детальный разбор вашего\nгардероба и практические советы по улучшению\nвашего образа – все это на страницах\nперсонального имидж-гайда. ", style);
+							slide_container_2.addChild(this.element);
 
-						title.x = (renderer.width - title.width) / 2;	
-						title.y = ((renderer.height - title.height) / 2) + 250;
+						},
 
-						slide2.addChild(title);
-					}
+						update: function() {
+							if( this.element.alpha < 1 ) this.element.alpha += 0.005;
+						}
 
-				},
+					},
 
-				border: {
+					title_2: {
 
-					init: function() {
-						var graphics = new PIXI.Graphics();
+						element: null,
 
-						graphics.lineStyle(3, 0xfa6464, 1);
-						graphics.beginFill(0x000000, 0);
-						graphics.drawRect( renderer.width/2 - 280 , renderer.height/2 + 150 , 560 , 170);
+						init: function() {
+							var style = {
+									font : '52px HelveticaNeueCyr-Light',
+								    fill : '#fa6464',
+								    align : "center",
+								    lineHeight : 50,
+								    padding : 50
+								};
+								
+							this.element = new PIXI.Text("ПЕРСОНАЛЬНЫЙ", style);
+							this.element.x = (renderer.width - this.element.width) / 2;	
+							this.element.y = -100;
 
-						slide2.addChild(graphics);
-					}
+							slide_container_2.addChild(this.element);
+						},
 
-				},
+						update: function() {
+							if( this.element.y < ((renderer.height - this.element.height) / 2) - 60 ) this.element.y += 5;
+						}
 
-				arrowDown: {
+					},
 
-					init: function() {
+					title_3: {
+
+						element: null,
+
+						init: function() {
+							var style = {
+									font : 'bold 100px Plumb-Black',
+								    fill : '#fa6464',
+								    align : "center",
+								    lineHeight : 50,
+								    padding : 90
+								};
+
+							this.element = new PIXI.Text("ИМИДЖ-ГАЙД", style);
+							this.element.x = (renderer.width - this.element.width) / 2;	
+							this.element.y = ((renderer.height - this.element.height) / 2) + 20;
+
+							slide_container_2.addChild(this.element);
+						},
+
+						update: function() {
+
+						}
+
+					},
+
+					title_4: {
+
+						element: null,
+
+						init: function() {
+							var style = {
+									font : '38px HelveticaNeueCyr-Light',
+								    fill : '#000',
+								    align : "center",
+								    lineHeight : 50,
+								    padding : 50
+								};
+
+							this.element = new PIXI.Text("- ПОДОБНОЕ РУКОВОДСТВО\nПО ПРЕОБРАЖЕНИЮ", style);
+							this.element.x = (renderer.width - this.element.width) / 2;	
+							this.element.y = ((renderer.height - this.element.height) / 2) + 130;
+
+							slide_container_2.addChild(this.element);
+						},
+
+						update: function() {
+
+						}
+
+					},
+
+					info: {
+
+						element: null,
+
+						init: function() {
+							var style = {
+									font : '21px HelveticaNeueCyr-Light',
+								    fill : '#fa6464',
+								    align : "center",
+								    padding : 20
+								};
+
+							this.element = new PIXI.Text("Имидж-гайд – это ваша личная книга стиля. Десятки\nкрасочных иллюстраций, детальный разбор вашего\nгардероба и практические советы по улучшению\nвашего образа – все это на страницах\nперсонального имидж-гайда. ", style);
+							this.element.x = (renderer.width - this.element.width) / 2;	
+							this.element.y = ((renderer.height - this.element.height) / 2) + 250;
+
+							slide_container_2.addChild(this.element);
+						},
+
+						update: function() {
+
+						}
+
+					},
+
+					border: {
+
+						element: null,
+
+						init: function() {
+							this.element = new PIXI.Graphics();
+
+							this.element.lineStyle(3, 0xfa6464, 1);
+							this.element.beginFill(0x000000, 0);
+							this.element.drawRect( renderer.width/2 - 280 , renderer.height/2 + 150 , 560 , 170);
+
+							slide_container_2.addChild(this.element);
+						},
+
+						update: function() {
+
+						}
+
+					},
+
+					arrowDown: {
+
+						element: null,
+
+						init: function() {
+
+						},
+
+						update: function() {
+
+						}
 
 					}
 
@@ -607,225 +698,387 @@
 
 			slide_3: {
 
-				init: function() {
+				init: function(active) {
+
 					console.log("Slide 3 init");
 
-					stage.addChild(slide3);
+					slide_container_3 = new PIXI.Container();
+
+					stage.addChild(slide_container_3);
+
+				},
+
+				destroy: function() {
+
+					console.log("Slide 3 destroy");
+
+					stage.removeChild(slide_container_3);
+
+				},
+
+				update: function() {
+
+				},
+
+				elems: {
+
+
+
 				}
 
 			},
 
 			slide_4: {
 
-				init: function() {
+				init: function(active) {
+
 					console.log("Slide 4 init");
 
-					this.magazine.init();
-					this.titles.init();
-					this.prices.init();
-					this.time.init();
-					this.orderBtn.init();
+					slide_container_4 = new PIXI.Container();
 
-					stage.addChild(slide4);
-				},
+					this.elems.magazine.init();
+					this.elems.title_1.init();
+					this.elems.title_2.init();
+					this.elems.title_3.init();
+					this.elems.title_4.init();
+					this.elems.price_1.init();
+					this.elems.price_2.init();
+					this.elems.price_3.init();
+					this.elems.price_4.init();
+					this.elems.time_1.init();
+					this.elems.time_2.init();
+					this.elems.orderBtn.init();
 
-				titles: {
-
-					init: function() {
-
-						(function() {
-							var style = {
-								font : '20px Myriad Pro',
-							    fill : '#3c3c3c',
-							    align : "left",
-							    padding : 50
-							},
-							title = new PIXI.Text("Стоимость базовой\nверсии", style);
-
-							title.x = (renderer.width - title.width) / 2 - 300;	
-							title.y = ((renderer.height - title.height) / 2) - 170;
-
-							slide4.addChild(title);
-						}());
-
-						(function() {
-							var style = {
-								font : '20px Myriad Pro',
-							    fill : '#3c3c3c'
-							},
-							title = new PIXI.Text("Срок изготовления", style);
-
-							title.x = (renderer.width - title.width) / 2 + 210;	
-							title.y = ((renderer.height - title.height) / 2) - 180;
-
-							slide4.addChild(title);
-						}());
-
-						(function() {
-							var style = {
-								font : '14px HelveticaNeueCyr-Light',
-							    fill : '#3c3c3c'
-							},
-							title = new PIXI.Text("Стоимость за каждый\nдополнительный", style);
-
-							title.x = (renderer.width - title.width) / 2 + 125;	
-							title.y = ((renderer.height - title.height) / 2) + 170;
-
-							slide4.addChild(title);
-						}());
-
-						(function() {
-							var style = {
-								font : '14px HelveticaNeueCyr-Light',
-							    fill : '#b48264'
-							},
-							title = new PIXI.Text("Стиль, мероприятие или праздник", style);
-
-							title.x = (renderer.width - title.width) / 2 + 165;	
-							title.y = ((renderer.height - title.height) / 2) + 197;
-
-							slide4.addChild(title);
-						}());
-					}
+					stage.addChild(slide_container_4);
 
 				},
 
-				prices: {
+				destroy: function() {
 
-					init: function() {
+					console.log("Slide 4 destroy");
 
-						(function() {
-							var style = {
-								font : '120px Plumb-Black',
-							    fill : '#fa6464'
-							},
-							title = new PIXI.Text("2999", style);
-
-							title.x = (renderer.width - title.width) / 2 - 180;	
-							title.y = ((renderer.height - title.height) / 2) - 175;
-
-							slide4.addChild(title);
-						}());
-
-						(function() {
-							var style = {
-								font : '60px Plumb-Black',
-							    fill : '#fa6464'
-							},
-							title = new PIXI.Text("РУБЛЕЙ", style);
-
-							title.x = (renderer.width - title.width) / 2 - 220;	
-							title.y = ((renderer.height - title.height) / 2) - 100;
-
-							slide4.addChild(title);
-						}());
-
-						(function() {
-							var style = {
-								font : '80px Plumb-Black',
-							    fill : '#fa6464'
-							},
-							title = new PIXI.Text("+999", style);
-
-							title.x = (renderer.width - title.width) / 2 + 90;	
-							title.y = ((renderer.height - title.height) / 2) + 80;
-
-							slide4.addChild(title);
-						}());
-
-						(function() {
-							var style = {
-								font : '40px Plumb-Black',
-							    fill : '#fa6464'
-							},
-							title = new PIXI.Text("РУБЛЕЙ", style);
-
-							title.x = (renderer.width - title.width) / 2 + 130;	
-							title.y = ((renderer.height - title.height) / 2) + 130;
-
-							slide4.addChild(title);
-						}());
-
-					}
+					stage.removeChild(slide_container_4);
 
 				},
 
-				time: {
+				update: function() {
 
-					init: function() {
-
-						(function() {
-							var style = {
-								font : '100px Plumb-Black',
-							    fill : '#b48264'
-							},
-							title = new PIXI.Text("3", style);
-
-							title.x = (renderer.width - title.width) / 2 + 150;	
-							title.y = ((renderer.height - title.height) / 2) - 130;
-
-							slide4.addChild(title);
-						}());
-
-						(function() {
-							var style = {
-								font : '30px Plumb-Black',
-							    fill : '#b48264'
-							},
-							title = new PIXI.Text("РАБОЧИХ\nДНЯ", style);
-
-							title.x = (renderer.width - title.width) / 2 + 250;	
-							title.y = ((renderer.height - title.height) / 2) - 130;
-
-							slide4.addChild(title);
-						}());
-
-					}
+					this.elems.magazine.update();
+					this.elems.title_1.update();
+					this.elems.title_2.update();
+					this.elems.title_3.update();
+					this.elems.title_4.update();
+					this.elems.price_1.update();
+					this.elems.price_2.update();
+					this.elems.price_3.update();
+					this.elems.price_4.update();
+					this.elems.time_1.update();
+					this.elems.time_2.update();
+					this.elems.orderBtn.update();
 
 				},
 
-				magazine: {
+				elems: {
 
-					init: function() {
+					title_1: {
 
-						var magazine_texture = PIXI.Texture.fromImage("i/s4/magazine.png"),
-							magazine = new PIXI.Sprite(magazine_texture);
+						element: null,
 
-						magazine.anchor.set(0.5);
-						magazine.position.x = renderer.width / 2;
-						magazine.position.y = renderer.height / 2;
+						init: function() {
+							var style = {
+									font : '20px Myriad Pro',
+								    fill : '#3c3c3c',
+								    align : "left",
+								    padding : 50
+								};
 
-						slide4.addChild(magazine);
+							this.element = new PIXI.Text("Стоимость базовой\nверсии", style);
 
-					}
+							this.element.x = (renderer.width - this.element.width) / 2 - 300;	
+							this.element.y = ((renderer.height - this.element.height) / 2) - 170;
 
-				},
+							slide_container_4.addChild(this.element);
+						},
 
-				orderBtn: {
+						update: function() {
 
-					init: function() {
+						}
 
-						(function() {
+					},
+
+					title_2: {
+
+						element: null,
+
+						init: function() {
+							var style = {
+									font : '20px Myriad Pro',
+								    fill : '#3c3c3c'
+								};
+
+							this.element = new PIXI.Text("Срок изготовления", style);
+
+							this.element.x = (renderer.width - this.element.width) / 2 + 210;	
+							this.element.y = ((renderer.height - this.element.height) / 2) - 180;
+
+							slide_container_4.addChild(this.element);
+						},
+
+						update: function() {
+
+						}
+
+					},
+
+					title_3: {
+
+						element: null,
+
+						init: function() {
+							var style = {
+									font : '14px HelveticaNeueCyr-Light',
+								    fill : '#3c3c3c'
+								};
+
+							this.element = new PIXI.Text("Стоимость за каждый\nдополнительный", style);
+
+							this.element.x = (renderer.width - this.element.width) / 2 + 125;	
+							this.element.y = ((renderer.height - this.element.height) / 2) + 170;
+
+							slide_container_4.addChild(this.element);
+						},
+
+						update: function() {
+
+						}
+
+					},
+
+					title_4: {
+
+						element: null,
+
+						init: function() {
+							var style = {
+									font : '14px HelveticaNeueCyr-Light',
+								    fill : '#b48264'
+								};
+
+							this.element = new PIXI.Text("Стиль, мероприятие или праздник", style);
+
+							this.element.x = (renderer.width - this.element.width) / 2 + 165;	
+							this.element.y = ((renderer.height - this.element.height) / 2) + 197;
+
+							slide_container_4.addChild(this.element);
+						},
+
+						update: function() {
+
+						}
+
+					},
+
+					price_1: {
+
+						element: null,
+
+						init: function() {
+							var style = {
+									font : '120px Plumb-Black',
+								    fill : '#fa6464'
+								};
+
+							this.element = new PIXI.Text("2999", style);
+
+							this.element.x = (renderer.width - this.element.width) / 2 - 180;	
+							this.element.y = ((renderer.height - this.element.height) / 2) - 175;
+
+							slide_container_4.addChild(this.element);
+						},
+
+						update: function() {
+							
+						}
+
+					},
+
+					price_2: {
+
+						element: null,
+
+						init: function() {
+							var style = {
+									font : '60px Plumb-Black',
+								    fill : '#fa6464'
+								};
+
+							this.element = new PIXI.Text("РУБЛЕЙ", style);
+
+							this.element.x = (renderer.width - this.element.width) / 2 - 220;	
+							this.element.y = ((renderer.height - this.element.height) / 2) - 100;
+
+							slide_container_4.addChild(this.element);
+						},
+
+						update: function() {
+							
+						}
+
+					},
+
+					price_3: {
+
+						element: null,
+
+						init: function() {
+							var style = {
+									font : '80px Plumb-Black',
+								    fill : '#fa6464'
+								};
+
+							this.element = new PIXI.Text("+999", style);
+
+							this.element.x = (renderer.width - this.element.width) / 2 + 90;	
+							this.element.y = ((renderer.height - this.element.height) / 2) + 80;
+
+							slide_container_4.addChild(this.element);
+						},
+
+						update: function() {
+							
+						}
+
+					},
+
+					price_4: {
+
+						element: null,
+
+						init: function() {
+							var style = {
+									font : '40px Plumb-Black',
+								    fill : '#fa6464'
+								};
+
+							this.element = new PIXI.Text("РУБЛЕЙ", style);
+
+							this.element.x = (renderer.width - this.element.width) / 2 + 130;	
+							this.element.y = ((renderer.height - this.element.height) / 2) + 130;
+
+							slide_container_4.addChild(this.element);
+						},
+
+						update: function() {
+							
+						}
+
+					},
+
+					time_1: {
+
+						element: null,
+
+						init: function() {
+							var style = {
+									font : '100px Plumb-Black',
+								    fill : '#b48264'
+								};
+
+							this.element = new PIXI.Text("3", style);
+
+							this.element.x = (renderer.width - this.element.width) / 2 + 150;	
+							this.element.y = ((renderer.height - this.element.height) / 2) - 130;
+
+							slide_container_4.addChild(this.element);
+						},
+
+						update: function() {
+							
+						}
+
+					},
+
+					time_2: {
+
+						element: null,
+
+						init: function() {
+							var style = {
+									font : '30px Plumb-Black',
+								    fill : '#b48264'
+								};
+
+							this.element = new PIXI.Text("РАБОЧИХ\nДНЯ", style);
+
+							this.element.x = (renderer.width - this.element.width) / 2 + 250;	
+							this.element.y = ((renderer.height - this.element.height) / 2) - 130;
+
+							slide_container_4.addChild(this.element);
+						},
+
+						update: function() {
+							
+						}
+
+					},
+
+					magazine: {
+
+						element: null,
+
+						init: function() {
+
+							var texture = PIXI.Texture.fromImage("i/s4/magazine.png");
+
+							this.element = new PIXI.Sprite(texture);
+
+							this.element.anchor.set(0.5);
+							this.element.position.x = renderer.width / 2;
+							this.element.position.y = renderer.height / 2;
+
+							slide_container_4.addChild(this.element);
+
+						},
+
+						update: function() {
+							
+						}
+
+					},
+
+					orderBtn: {
+
+						element: null,
+						element_2: null,
+
+						init: function() {
+
 							var style = {
 								font : '14px FiraSansRegular',
 							    fill : '#fa6464'
-							},
-							title = new PIXI.Text("Заказать", style);
+							};
 
-							title.x = (renderer.width - title.width) / 2;	
-							title.y = ((renderer.height - title.height) / 2) + 260;
+							this.element = new PIXI.Text("Заказать", style);
 
-							slide4.addChild(title);
-						}());
+							this.element.x = (renderer.width - this.element.width) / 2;	
+							this.element.y = ((renderer.height - this.element.height) / 2) + 260;
 
-						var graphics = new PIXI.Graphics();
+							slide_container_4.addChild(this.element);
 
-						graphics.lineStyle(1, 0xfa6464, 1);
-						graphics.beginFill(0xFF00BB, 0);
-						graphics.drawRoundedRect(renderer.width/2-50, renderer.height/2+245, 100, 30, 1);
-						graphics.endFill();
+							this.element_2 = new PIXI.Graphics();
 
-						slide4.addChild(graphics);
+							this.element_2.lineStyle(1, 0xfa6464, 1);
+							this.element_2.beginFill(0xFF00BB, 0);
+							this.element_2.drawRoundedRect(renderer.width/2-50, renderer.height/2+245, 100, 30, 1);
+							this.element_2.endFill();
+
+							slide_container_4.addChild(this.element_2);
+
+						},
+
+						update: function() {
+							
+						}
 
 					}
 
@@ -835,71 +1088,107 @@
 
 			slide_5: {
 
-				init: function() {
+				init: function(active) {
+
 					console.log("Slide 5 init");
 
-					this.notepade.init();
-					this.title.init();
-					this.btn.init();
-					this.info.init();
-					this.spinner.init();
+					slide_container_5 = new PIXI.Container();
 
-					stage.addChild(slide5);
-				},
+					this.elems.notepade.init();
+					this.elems.title.init();
+					this.elems.btn.init();
+					this.elems.info.init();
+					this.elems.spinner.init();
 
-				notepade: {
-
-					init: function() {
-						var notepade_texture = PIXI.Texture.fromImage("i/s5/notepade.png"),
-							notepade = new PIXI.Sprite(notepade_texture);
-
-						notepade.anchor.set(0.5);
-						notepade.position.x = renderer.width / 2 + 300;
-						notepade.position.y = renderer.height / 2 + 40;
-
-						slide5.addChild(notepade);
-					}
+					stage.addChild(slide_container_5);
 
 				},
 
-				title: {
+				destroy: function() {
 
-					init: function() {
+					console.log("Slide 5 destroy");
 
-						(function() {
+					stage.removeChild(slide_container_5);
+
+				},
+
+				update: function() {
+
+					this.elems.notepade.update();
+					this.elems.title.update();
+					this.elems.btn.update();
+					this.elems.info.update();
+					this.elems.spinner.update();
+
+				},
+
+				elems: {
+
+					notepade: {
+
+						element: null,
+
+						init: function() {
+							var texture = PIXI.Texture.fromImage("i/s5/notepade.png");
+
+							this.element = new PIXI.Sprite(texture);
+							this.element.anchor.set(0.5);
+							this.element.position.x = renderer.width / 2 + 300;
+							this.element.position.y = renderer.height / 2 + 40;
+
+							slide_container_5.addChild(this.element);
+						},
+
+						update: function() {
+
+						}
+
+					},
+
+					title: {
+
+						element: null,
+
+						init: function() {
+
 							var style = {
-								font : '110px Plumb-Black',
-							    fill : '#fa6464',
-							    align : "center",
-							    lineHeight : 105
-							},
-							title = new PIXI.Text("ЗАПОЛНИТЕ\nАНКЕТУ\nНА САЙТЕ", style);
+									font : '110px Plumb-Black',
+								    fill : '#fa6464',
+								    align : "center",
+								    lineHeight : 105
+								};
 
-							title.x = (renderer.width - title.width) / 2;	
-							title.y = ((renderer.height - title.height) / 2);
+							this.element = new PIXI.Text("ЗАПОЛНИТЕ\nАНКЕТУ\nНА САЙТЕ", style);
 
-							slide5.addChild(title);
-						}());
+							this.element.x = (renderer.width - this.element.width) / 2;	
+							this.element.y = ((renderer.height - this.element.height) / 2);
 
-					}
+							slide_container_5.addChild(this.element);
 
-				},
+						},
 
-				btn: {
+						update: function() {
 
-					init: function() {
+						}
 
-						(function() {
-							var circle_texture = PIXI.Texture.fromImage("i/s5/circle.svg"),
-							circle = new PIXI.Sprite(circle_texture);
+					},
 
-							circle.anchor.set(0.5);
-							circle.position.x = renderer.width / 2 - 280;
-							circle.position.y = renderer.height / 2 + 30;
+					btn: {
 
-							circle.buttonMode = true;
-							circle.interactive = true;
-							circle.on("click", function() {
+						element: null,
+						element_2: null,
+
+						init: function() {
+
+							var texture = PIXI.Texture.fromImage("i/s5/circle.svg");
+
+							this.element = new PIXI.Sprite(texture);
+							this.element.anchor.set(0.5);
+							this.element.position.x = renderer.width / 2 - 280;
+							this.element.position.y = renderer.height / 2 + 30;
+							this.element.buttonMode = true;
+							this.element.interactive = true;
+							this.element.on("click", function() {
 								active_slide = 6;
 								App.initScroll.scroll();
 							});
@@ -908,319 +1197,391 @@
 							var style = {
 								font : '24px BebasRegular',
 							    fill : '#ffffff'
-							},
-							title = new PIXI.Text("ЗАПОЛНИТЬ", style);
+							};
 
-							title.x = (renderer.width - title.width) / 2 - 235;	
-							title.y = ((renderer.height - title.height) / 2) + 42;
-							title.anchor.x = 0.5;
-							title.anchor.y = 0.5;
-							title.rotation = -0.3;
+							this.element_2 = new PIXI.Text("ЗАПОЛНИТЬ", style);
+							this.element_2.x = (renderer.width - this.element_2.width) / 2 - 235;	
+							this.element_2.y = ((renderer.height - this.element_2.height) / 2) + 42;
+							this.element_2.anchor.x = 0.5;
+							this.element_2.anchor.y = 0.5;
+							this.element_2.rotation = -0.3;
 
-							slide5.addChild(circle);
-							slide5.addChild(title);
-						}());
+							slide_container_5.addChild(this.element);
+							slide_container_5.addChild(this.element_2);
 
-					}
+						},
 
-				},
+						update: function() {
 
-				info: {
+						}
 
-					init: function() {
+					},
 
-						(function() {
+					info: {
+
+						element: null,
+						element_2: null,
+
+						init: function() {
+
 							var style = {
 								font : '16px HelveticaNeueCyr-Light',
 							    fill : '#3c3c3c',
 							    align : "center"
-							},
-							title = new PIXI.Text("Стилисты “Модного приговора” получат Ваши данные,\nопределят Ваш цветотип, тип фигуры, овал лица\nи составят подробную инструкцию преображения!", style);
+							};
 
-							title.x = (renderer.width - title.width) / 2;	
-							title.y = ((renderer.height - title.height) / 2) + 250;
+							this.element = new PIXI.Text("Стилисты “Модного приговора” получат Ваши данные,\nопределят Ваш цветотип, тип фигуры, овал лица\nи составят подробную инструкцию преображения!", style);
 
-							slide5.addChild(title);
-						}());
+							this.element.x = (renderer.width - this.element.width) / 2;	
+							this.element.y = ((renderer.height - this.element.height) / 2) + 250;
 
-						var graphics = new PIXI.Graphics();
+							slide_container_5.addChild(this.element);
 
-						graphics.lineStyle(3, 0x3c3c3c, 1);
-						graphics.beginFill(0x000000, 0);
-						graphics.drawRect( renderer.width/2 - 225 , renderer.height/2 + 200 , 450 , 100);
+							this.element_2 = new PIXI.Graphics();
 
-						slide5.addChild(graphics);
+							this.element_2.lineStyle(3, 0x3c3c3c, 1);
+							this.element_2.beginFill(0x000000, 0);
+							this.element_2.drawRect( renderer.width/2 - 225 , renderer.height/2 + 200 , 450 , 100);
 
-					}
+							slide_container_5.addChild(this.element_2);
 
-				},
+						},
 
-				spinner: {
+						update: function() {
 
-					vars: {
-						spin1_texture: 	null,
-						spin1: 			null,
-						spin2_texture: 	null,
-						spin2: 			null,
-						pos: 			0,
-						alpha: 			0,
-						init: false
+						}
+
 					},
 
-					init: function() {
-						var vars = this.vars;
+					spinner: {
 
-						vars.init = true;
-						vars.spin1_texture = PIXI.Texture.fromImage("i/s5/spin1.svg");
-						vars.spin1 = new PIXI.Sprite(vars.spin1_texture);
-						vars.spin2_texture = PIXI.Texture.fromImage("i/s5/spin2.svg");
-						vars.spin2 = new PIXI.Sprite(vars.spin2_texture);
+						vars: {
+							spin1_texture: 	null,
+							spin1: 			null,
+							spin2_texture: 	null,
+							spin2: 			null,
+							pos: 			0,
+							alpha: 			0,
+							init: false
+						},
 
-						vars.spin1.anchor.set(0.5);
-						vars.spin1.position.x = renderer.width / 2 - 5;
-						vars.spin1.position.y = renderer.height / 2 + 350;
-						vars.spin1.buttonMode = true;
-						vars.spin1.interactive = true;
-						vars.spin1.on("click", function() {
-							active_slide++;
-    						App.initScroll.scroll();
-						});
+						init: function() {
+							var vars = this.vars;
 
-						vars.spin2.anchor.set(0.5);
-						vars.spin2.position.x = renderer.width / 2 - 5;
-						vars.spin2.position.y = renderer.height / 2 + 345;
+							vars.init = true;
+							vars.spin1_texture = PIXI.Texture.fromImage("i/s5/spin1.svg");
+							vars.spin1 = new PIXI.Sprite(vars.spin1_texture);
+							vars.spin2_texture = PIXI.Texture.fromImage("i/s5/spin2.svg");
+							vars.spin2 = new PIXI.Sprite(vars.spin2_texture);
 
-						slide5.addChild(vars.spin1);
-						slide5.addChild(vars.spin2); 
-					},
+							vars.spin1.anchor.set(0.5);
+							vars.spin1.position.x = renderer.width / 2 - 5;
+							vars.spin1.position.y = renderer.height / 2 + 350;
+							vars.spin1.buttonMode = true;
+							vars.spin1.interactive = true;
+							vars.spin1.on("click", function() {
+								active_slide++;
+	    						App.initScroll.scroll();
+							});
 
-					update: function() {
-						var vars = this.vars;
+							vars.spin2.anchor.set(0.5);
+							vars.spin2.position.x = renderer.width / 2 - 5;
+							vars.spin2.position.y = renderer.height / 2 + 345;
 
-						if(vars.init == true) {
-							vars.pos += 0.06;
-		    				vars.spin2.y += Math.sin(vars.pos);
-		    				//vars.spin2.alpha += Math.sin(0.003);
+							slide_container_5.addChild(vars.spin1);
+							slide_container_5.addChild(vars.spin2); 
+						},
+
+						update: function() {
+							var vars = this.vars;
+
+							if(vars.init == true) {
+								vars.pos += 0.06;
+			    				vars.spin2.y += Math.sin(vars.pos);
+			    				//vars.spin2.alpha += Math.sin(0.003);
+							}
+
 						}
 
 					}
 
-				}
+				},
 
 			},
 
 			slide_6: {
 
-				init: function() {
+				init: function(active) {
+
 					console.log("Slide 6 init");
 
-					stage.addChild(slide6);
+					slide_container_6 = new PIXI.Container();
+
+					stage.addChild(slide_container_6);
+
+				},
+
+				destroy: function() {
+
+					console.log("Slide 6 destroy");
+
+					stage.removeChild(slide_container_6);
+
+				},
+
+				update: function() {
+
+
+
+				},
+
+				elems: {
+
+
+
 				}
 
 			},
 
 			slide_7: {
 
-				init: function() {
+				init: function(active) {
+
 					console.log("Slide 7 init");
 
-					this.slider.init();
-					this.orderBtn.init();
-					this.footer.init();
+					slide_container_7 = new PIXI.Container();
 
-					stage.addChild(slide7);
+					this.elems.slider.init();
+					this.elems.orderBtn.init();
+					this.elems.footer.init();
+
+					stage.addChild(slide_container_7);
+
 				},
 
-				slider: {
+				destroy: function() {
 
-					vars: {
-						slide1_texture: 	null,
-						slide1_sprite: 		null,
-						slide2_texture: 	null,
-						slide2_sprite: 		null,
-						slide3_texture: 	null,
-						slide3_sprite: 		null,
-						active: 				1,
-						next_btn_texture: 	null,
-						next_btn_sprite: 	null,
-						prev_btn_texture: 	null,
-						prev_btn_sprite: 	null
-					},
+					console.log("Slide 7 destroy");
 
-					init: function() {
-						this.makeSlide1();
-						this.makeSlide2();
-						this.makeSlide3();
-						this.makeNav();
-					},
+					stage.removeChild(slide_container_7);
 
-					update: function() {
-						var vars = this.vars;
+				},
 
-						switch(vars.active) {
-							case 1: 
-								if( vars.slide1_sprite.alpha < 1 ) vars.slide1_sprite.alpha += 0.01;
-								if( vars.slide2_sprite.alpha > 0 ) vars.slide2_sprite.alpha -= 0.01;
-								if( vars.slide3_sprite.alpha > 0 ) vars.slide3_sprite.alpha -= 0.01;
-								break;
+				update: function() {
 
-							case 2: 
-								if( vars.slide1_sprite.alpha > 0 ) vars.slide1_sprite.alpha -= 0.01;
-								if( vars.slide2_sprite.alpha < 1 ) vars.slide2_sprite.alpha += 0.01;
-								if( vars.slide3_sprite.alpha > 0 ) vars.slide3_sprite.alpha -= 0.01;
-								break;
+					this.elems.slider.update();
+					this.elems.orderBtn.update();
+					this.elems.footer.update();
 
-							case 3: 
-								if( vars.slide1_sprite.alpha > 0 ) vars.slide1_sprite.alpha -= 0.01;
-								if( vars.slide2_sprite.alpha > 0 ) vars.slide2_sprite.alpha -= 0.01;
-								if( vars.slide3_sprite.alpha < 1 ) vars.slide3_sprite.alpha += 0.01;
-								break;
+				},
+
+				elems: {
+
+					slider: {
+
+						vars: {
+							slide_container_1_texture: 	null,
+							slide_container_1_sprite: 		null,
+							slide_container_2_texture: 	null,
+							slide_container_2_sprite: 		null,
+							slide_container_3_texture: 	null,
+							slide_container_3_sprite: 		null,
+							active: 				1,
+							next_btn_texture: 	null,
+							next_btn_sprite: 	null,
+							prev_btn_texture: 	null,
+							prev_btn_sprite: 	null
+						},
+
+						init: function() {
+							this.makeslide_container_1();
+							this.makeslide_container_2();
+							this.makeslide_container_3();
+							this.makeNav();
+						},
+
+						update: function() {
+							var vars = this.vars;
+
+							switch(vars.active) {
+								case 1: 
+									if( vars.slide_container_1_sprite.alpha < 1 ) vars.slide_container_1_sprite.alpha += 0.01;
+									if( vars.slide_container_2_sprite.alpha > 0 ) vars.slide_container_2_sprite.alpha -= 0.01;
+									if( vars.slide_container_3_sprite.alpha > 0 ) vars.slide_container_3_sprite.alpha -= 0.01;
+									break;
+
+								case 2: 
+									if( vars.slide_container_1_sprite.alpha > 0 ) vars.slide_container_1_sprite.alpha -= 0.01;
+									if( vars.slide_container_2_sprite.alpha < 1 ) vars.slide_container_2_sprite.alpha += 0.01;
+									if( vars.slide_container_3_sprite.alpha > 0 ) vars.slide_container_3_sprite.alpha -= 0.01;
+									break;
+
+								case 3: 
+									if( vars.slide_container_1_sprite.alpha > 0 ) vars.slide_container_1_sprite.alpha -= 0.01;
+									if( vars.slide_container_2_sprite.alpha > 0 ) vars.slide_container_2_sprite.alpha -= 0.01;
+									if( vars.slide_container_3_sprite.alpha < 1 ) vars.slide_container_3_sprite.alpha += 0.01;
+									break;
+							}
+						},
+
+						makeslide_container_1: function() {
+							var vars = this.vars;
+
+							vars.slide_container_1_texture = PIXI.Texture.fromImage("i/s1/slide_2.jpg");
+							vars.slide_container_1_sprite = new PIXI.Sprite(vars.slide_container_1_texture);
+							vars.slide_container_1_sprite.width = renderer.width;
+							vars.slide_container_1_sprite.height = renderer.height;
+							slide_container_7.addChild(vars.slide_container_1_sprite);
+
+							var style = {
+									font : '65px FiraSansRegular',
+								    fill : '#fff',
+								    lineHeight: 65,
+								    padding: 10,
+								    align : "center"
+								},
+								title = new PIXI.Text("Восхищенные\nвзгляды!", style);
+
+							title.x = (renderer.width - title.width) / 2;	
+							title.y = ((renderer.height - title.height) / 2);
+
+							slide_container_7.addChild(title);
+						},
+
+						makeslide_container_2: function() {
+							vars = this.vars;
+
+							vars.slide_container_2_texture = PIXI.Texture.fromImage("i/s1/slide_2.jpg");
+							vars.slide_container_2_sprite = new PIXI.Sprite(vars.slide_container_2_texture);
+							vars.slide_container_2_sprite.width = renderer.width;
+							vars.slide_container_2_sprite.height = renderer.height;
+							vars.slide_container_2_sprite.alpha = 0;
+							slide_container_7.addChild(vars.slide_container_2_sprite);
+
+							var style = {
+									font : '65px FiraSansRegular',
+								    fill : '#fff',
+								    lineHeight: 65,
+								    padding: 10,
+								    align : "center"
+								},
+								title = new PIXI.Text("Восхищенные\nвзгляды!", style);
+
+							title.x = (renderer.width - title.width) / 2;	
+							title.y = ((renderer.height - title.height) / 2);
+
+							slide_container_7.addChild(title);
+						},
+
+						makeslide_container_3: function() {
+							vars = this.vars;
+
+							vars.slide_container_3_texture = PIXI.Texture.fromImage("i/s1/slide_3.jpg");
+							vars.slide_container_3_sprite = new PIXI.Sprite(vars.slide_container_3_texture);
+							vars.slide_container_3_sprite.width = renderer.width;
+							vars.slide_container_3_sprite.height = renderer.height;
+							vars.slide_container_3_sprite.alpha = 0;
+							slide_container_7.addChild(vars.slide_container_3_sprite);
+
+							var style = {
+									font : '65px FiraSansRegular',
+								    fill : '#fff',
+								    lineHeight: 65,
+								    padding: 10,
+								    align : "center"
+								},
+								title = new PIXI.Text("Восхищенные\nвзгляды!", style);
+
+							title.x = (renderer.width - title.width) / 2;	
+							title.y = ((renderer.height - title.height) / 2);
+
+							slide_container_7.addChild(title);
+						},
+
+						makeNav: function() {
+							vars = this.vars;
+
+							vars.prev_btn_texture = PIXI.Texture.fromImage("i/s7/nav_btn.svg");
+							vars.prev_btn_sprite = new PIXI.Sprite(vars.prev_btn_texture);
+							vars.prev_btn_sprite.width = 45;
+							vars.prev_btn_sprite.height = 45;
+							vars.prev_btn_sprite.x = renderer.width / 2 - 500;
+							vars.prev_btn_sprite.y = renderer.height / 2;
+							vars.prev_btn_sprite.buttonMode = true;
+							vars.prev_btn_sprite.interactive = true;
+							vars.prev_btn_sprite.on("click", function() {
+								if(vars.active > 1) vars.active--;
+							});
+
+							slide_container_7.addChild(vars.prev_btn_sprite);						
+
+							vars.next_btn_texture = PIXI.Texture.fromImage("i/s7/nav_btn.svg");
+							vars.next_btn_sprite = new PIXI.Sprite(vars.next_btn_texture);
+							vars.next_btn_sprite.width = 45;
+							vars.next_btn_sprite.height = 45;
+							vars.next_btn_sprite.x = renderer.width / 2 + 500;
+							vars.next_btn_sprite.y = renderer.height / 2 + 20;
+							vars.next_btn_sprite.anchor.x = 0.5; 
+							vars.next_btn_sprite.anchor.y = 0.5; 
+							vars.next_btn_sprite.rotation = 3.14159265;
+							vars.next_btn_sprite.buttonMode = true;
+							vars.next_btn_sprite.interactive = true;
+							vars.next_btn_sprite.on("click", function() {
+								if(vars.active < 3) vars.active++;
+							});
+
+							slide_container_7.addChild(vars.next_btn_sprite);
 						}
+
 					},
 
-					makeSlide1: function() {
-						var vars = this.vars;
+					orderBtn: {
 
-						vars.slide1_texture = PIXI.Texture.fromImage("i/s1/slide_2.jpg");
-						vars.slide1_sprite = new PIXI.Sprite(vars.slide1_texture);
-						vars.slide1_sprite.width = renderer.width;
-						vars.slide1_sprite.height = renderer.height;
-						slide7.addChild(vars.slide1_sprite);
+						element: null,
+						element_2: null,
 
-						var style = {
-								font : '65px FiraSansRegular',
-							    fill : '#fff',
-							    lineHeight: 65,
-							    padding: 10,
-							    align : "center"
-							},
-							title = new PIXI.Text("Восхищенные\nвзгляды!", style);
+						init: function() {
 
-						title.x = (renderer.width - title.width) / 2;	
-						title.y = ((renderer.height - title.height) / 2);
+							var style = {
+									font : '14px FiraSansRegular',
+								    fill : '#fff',
+								    align : "center"
+								};
 
-						slide7.addChild(title);
+							this.element = new PIXI.Text("Заказать", style);
+							this.element.x = (renderer.width - this.element.width) / 2;	
+							this.element.y = ((renderer.height - this.element.height) / 2) + 260;
+
+
+							this.element_2 = new PIXI.Graphics();
+
+							this.element_2.lineStyle(1, 0xffffff, 1);
+							this.element_2.beginFill(0xffffff, 0);
+							this.element_2.drawRoundedRect(renderer.width/2-50, renderer.height/2+245, 100, 30, 1);
+							this.element_2.endFill();
+
+							slide_container_7.addChild(this.element);
+							slide_container_7.addChild(this.element_2);
+
+						},
+
+						update: function() {
+
+						}
+
 					},
 
-					makeSlide2: function() {
-						vars = this.vars;
+					footer: {
 
-						vars.slide2_texture = PIXI.Texture.fromImage("i/s1/slide_2.jpg");
-						vars.slide2_sprite = new PIXI.Sprite(vars.slide2_texture);
-						vars.slide2_sprite.width = renderer.width;
-						vars.slide2_sprite.height = renderer.height;
-						vars.slide2_sprite.alpha = 0;
-						slide7.addChild(vars.slide2_sprite);
+						element: null,
 
-						var style = {
-								font : '65px FiraSansRegular',
-							    fill : '#fff',
-							    lineHeight: 65,
-							    padding: 10,
-							    align : "center"
-							},
-							title = new PIXI.Text("Восхищенные\nвзгляды!", style);
+						init: function() {
 
-						title.x = (renderer.width - title.width) / 2;	
-						title.y = ((renderer.height - title.height) / 2);
+						},
 
-						slide7.addChild(title);
-					},
+						update: function() {
 
-					makeSlide3: function() {
-						vars = this.vars;
-
-						vars.slide3_texture = PIXI.Texture.fromImage("i/s1/slide_3.jpg");
-						vars.slide3_sprite = new PIXI.Sprite(vars.slide3_texture);
-						vars.slide3_sprite.width = renderer.width;
-						vars.slide3_sprite.height = renderer.height;
-						vars.slide3_sprite.alpha = 0;
-						slide7.addChild(vars.slide3_sprite);
-
-						var style = {
-								font : '65px FiraSansRegular',
-							    fill : '#fff',
-							    lineHeight: 65,
-							    padding: 10,
-							    align : "center"
-							},
-							title = new PIXI.Text("Восхищенные\nвзгляды!", style);
-
-						title.x = (renderer.width - title.width) / 2;	
-						title.y = ((renderer.height - title.height) / 2);
-
-						slide7.addChild(title);
-					},
-
-					makeNav: function() {
-						vars = this.vars;
-
-						vars.prev_btn_texture = PIXI.Texture.fromImage("i/s7/nav_btn.svg");
-						vars.prev_btn_sprite = new PIXI.Sprite(vars.prev_btn_texture);
-						vars.prev_btn_sprite.width = 45;
-						vars.prev_btn_sprite.height = 45;
-						vars.prev_btn_sprite.x = renderer.width / 2 - 500;
-						vars.prev_btn_sprite.y = renderer.height / 2;
-						vars.prev_btn_sprite.buttonMode = true;
-						vars.prev_btn_sprite.interactive = true;
-						vars.prev_btn_sprite.on("click", function() {
-							if(vars.active > 1) vars.active--;
-						});
-
-						slide7.addChild(vars.prev_btn_sprite);						
-
-						vars.next_btn_texture = PIXI.Texture.fromImage("i/s7/nav_btn.svg");
-						vars.next_btn_sprite = new PIXI.Sprite(vars.next_btn_texture);
-						vars.next_btn_sprite.width = 45;
-						vars.next_btn_sprite.height = 45;
-						vars.next_btn_sprite.x = renderer.width / 2 + 500;
-						vars.next_btn_sprite.y = renderer.height / 2 + 20;
-						vars.next_btn_sprite.anchor.x = 0.5; 
-						vars.next_btn_sprite.anchor.y = 0.5; 
-						vars.next_btn_sprite.rotation = 3.14159265;
-						vars.next_btn_sprite.buttonMode = true;
-						vars.next_btn_sprite.interactive = true;
-						vars.next_btn_sprite.on("click", function() {
-							if(vars.active < 3) vars.active++;
-						});
-
-						slide7.addChild(vars.next_btn_sprite);
-					}
-
-				},
-
-				orderBtn: {
-
-					init: function() {
-
-						var style = {
-								font : '14px FiraSansRegular',
-							    fill : '#fff',
-							    align : "center"
-							},
-							title = new PIXI.Text("Заказать", style);
-
-						title.x = (renderer.width - title.width) / 2;	
-						title.y = ((renderer.height - title.height) / 2) + 260;
-
-
-						var graphics = new PIXI.Graphics();
-
-						graphics.lineStyle(1, 0xffffff, 1);
-						graphics.beginFill(0xffffff, 0);
-						graphics.drawRoundedRect(renderer.width/2-50, renderer.height/2+245, 100, 30, 1);
-						graphics.endFill();
-
-						graphics.addChild(title);
-						slide7.addChild(graphics);
-
-					}
-
-				},
-
-				footer: {
-
-					init: function() {
+						}
 
 					}
 
