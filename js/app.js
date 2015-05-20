@@ -37,6 +37,8 @@
 
 		init: function() {
 
+			createjs.Ticker.setFPS(60);
+
 			$body.append(renderer.view);
 			requestAnimationFrame(animate);
 
@@ -111,8 +113,10 @@
 					switch (active_slide) {
 
 						case 1: 
+							setTimeout(function() {
+								App.manager.slide_1.init();
+							}, 2000);
 							App.manager.slide_2.destroy();
-							App.manager.slide_1.init();
 							break;
 
 						case 2: 
@@ -122,7 +126,9 @@
 
 						case 3: 
 							App.manager.slide_2.destroy();
-							App.manager.slide_3.init();
+							setTimeout(function() {
+								App.manager.slide_3.init();
+							}, 2000);
 							break;
 
 						case 4: 
@@ -219,7 +225,6 @@
 					console.log("Slide 1 init");
 
 					slide_container_1 = new PIXI.Container();
-					slide_container_1.y = -renderer.height;
 					slide_container_1.alpha = 0;
 
 					this.elems.slider.init();
@@ -230,7 +235,7 @@
 					stage.addChild(slide_container_1);
 
 					createjs.Tween.get(slide_container_1)
-  						.to({ y: 0 }, 1000, createjs.Ease.getPowInOut(4));
+  						.to({ alpha: 1 }, 500, createjs.Ease.getPowInOut(4));
 
 				},
 
@@ -239,7 +244,7 @@
 					console.log("Slide 1 destroy");
 
 					createjs.Tween.get(slide_container_1)
-  						.to({ y: -renderer.height }, 1000, createjs.Ease.getPowInOut(4))
+  						.to({ alpha: 0 }, 1000, createjs.Ease.getPowInOut(4))
   						.call(function() {
   							stage.removeChild(slide_container_1);
   						});
@@ -247,7 +252,6 @@
 				},
 
 				update: function() {
-					if( slide_container_1.alpha < 1 ) slide_container_1.alpha += 0.05;
 			    	this.elems.spinner.update();
 			    	this.elems.slider.update();
 				},
@@ -348,7 +352,8 @@
 						makeslide_container_1: function() {
 							var vars = this.vars;
 
-							vars.slide_container_1_texture = PIXI.Texture.fromVideo("i/s1/slide_1.mp4");
+							// vars.slide_container_1_texture = PIXI.Texture.fromVideo("i/s1/slide_1.mp4");
+							vars.slide_container_1_texture = PIXI.Texture.fromImage("i/s1/slide_2.jpg");
 							vars.slide_container_1_sprite = new PIXI.Sprite(vars.slide_container_1_texture);
 							vars.slide_container_1_sprite.width = renderer.width;
 							vars.slide_container_1_sprite.height = renderer.height;
@@ -507,7 +512,15 @@
 
 					console.log("Slide 2 destroy");
 
-					stage.removeChild(slide_container_2);
+					this.elems.title_1.destroy();
+					this.elems.title_2.destroy();
+					this.elems.title_3.destroy();
+					this.elems.title_4.destroy();
+					this.elems.info.destroy();
+					this.elems.border.destroy();
+					this.elems.arrowDown.destroy();
+
+					//stage.removeChild(slide_container_2);
 
 				},
 
@@ -520,7 +533,6 @@
 					this.elems.info.update();
 					this.elems.border.update();
 					this.elems.arrowDown.update();
-
 
 				},
 
@@ -542,21 +554,31 @@
 								};
 
 							this.element_blur = new PIXI.filters.BlurFilter();
-							this.element_blur.blur = 100;
+							this.element_blur.blurX = 150;
 
 							this.element = new PIXI.Text("ЛУЧШИЕ СТИЛИСТЫ РОССИИ\nПРЕДЛАГАЮТ ВАМ СОЗДАТЬ", style);
 							this.element.x = (renderer.width - this.element.width) / 2;	
-							this.element.y = renderer.height;
+							this.element.y = -this.element.height;
 							this.element.filters = [this.element_blur];
 
 							slide_container_2.addChild(this.element);
 
+							createjs.Tween.get(this.element)
+								.wait(2000)
+  								.to({ y: (renderer.height / 2 - this.element.height / 2) - 130 }, 300, createjs.Ease.quadOut());
+
 						},
 
 						update: function() {
-							if( this.element_blur.blur > 1 ) this.element_blur.blur -= 2;
-							if( this.element.y > (renderer.height / 2 - this.element.height / 2) - 130 ) this.element.y -= 20;
-						}
+							if( this.element_blur.blur > 0 ) this.element_blur.blur -= 1.4;
+							if( this.element_blur.blur == 0 ) this.element.filters = null;
+ 						},
+
+ 						destroy: function() {
+ 							createjs.Tween.get(this.element)
+								.wait(500)
+  								.to({ y: -this.element.height }, 300, createjs.Ease.quadOut());
+ 						}
 
 					},
 
@@ -575,14 +597,25 @@
 								
 							this.element = new PIXI.Text("ПЕРСОНАЛЬНЫЙ", style);
 							this.element.x = (renderer.width - this.element.width) / 2;	
-							this.element.y = 0;
+							this.element.y = -this.element.height;
+							this.element.resolution = 2;
 
 							slide_container_2.addChild(this.element);
+
+							createjs.Tween.get(this.element)
+								.wait(1200)
+  								.to({ y: ((renderer.height - this.element.height) / 2) - 60 }, 500, createjs.Ease.linear());
+
 						},
 
 						update: function() {
+							
+						},
+
+						destroy: function() {
 							createjs.Tween.get(this.element)
-  								.to({ y: ((renderer.height - this.element.height) / 2) - 60 }, 1000, createjs.Ease.getPowInOut(4));
+								.wait(1000)
+  								.to({ y: -this.element.height }, 500, createjs.Ease.linear());
 						}
 
 					},
@@ -602,14 +635,24 @@
 
 							this.element = new PIXI.Text("ИМИДЖ-ГАЙД", style);
 							this.element.x = (renderer.width - this.element.width) / 2;	
-							this.element.y = 0;
+							this.element.y = -this.element.height;
 
 							slide_container_2.addChild(this.element);
+
+							createjs.Tween.get(this.element)
+								.wait(1000)
+  								.to({ y: ((renderer.height - this.element.height) / 2) + 80 }, 500, createjs.Ease.linear())
+  								.to({ y: ((renderer.height - this.element.height) / 2) + 20 }, 200, createjs.Ease.linear());
 						},
 
 						update: function() {
+							
+						},
+
+						destroy: function() {
 							createjs.Tween.get(this.element)
-  								.to({ y: ((renderer.height - this.element.height) / 2) + 20 }, 1000, createjs.Ease.getPowInOut(4));
+								.wait(1200)
+  								.to({ y: -this.element.height }, 500, createjs.Ease.linear());
 						}
 
 					},
@@ -622,33 +665,45 @@
 						init: function() {
 							var style = {
 									font : '38px HelveticaNeueCyr-Light',
-								    fill : '#000',
+								    fill : '#3c3c3c',
 								    align : "center",
 								    lineHeight : 50,
 								    padding : 50
 								};
 
 							this.element_blur = new PIXI.filters.BlurFilter();
-							this.element_blur.blur = 100;
+							this.element_blur.blurX = 150;
 
-							this.element = new PIXI.Text("- ПОДОБНОЕ РУКОВОДСТВО\nПО ПРЕОБРАЖЕНИЮ", style);
+							this.element = new PIXI.Text("- ПОДРОБНОЕ РУКОВОДСТВО\nПО ПРЕОБРАЖЕНИЮ", style);
 							this.element.x = (renderer.width - this.element.width) / 2;	
 							this.element.y = renderer.height;
 							this.element.filters = [this.element_blur];
 
 							slide_container_2.addChild(this.element);
+
+							createjs.Tween.get(this.element)
+								.wait(2000)
+  								.to({ y: (renderer.height / 2 - this.element.height / 2) + 130 }, 300, createjs.Ease.quadOut());
+
 						},
 
 						update: function() {
-							if( this.element_blur.blur > 1 ) this.element_blur.blur -= 2;
-							if( this.element.y > ((renderer.height - this.element.height) / 2) + 130 ) this.element.y -= 20;
-						}
+							if( this.element_blur.blur > 0 ) this.element_blur.blur -= 1.3;
+							if( this.element_blur.blur == 0 ) this.element.filters = null;
+ 						},
+
+ 						destroy: function() {
+ 							createjs.Tween.get(this.element)
+								.wait(500)
+  								.to({ y: renderer.height }, 300, createjs.Ease.quadOut());
+ 						}
 
 					},
 
 					info: {
 
 						element: null,
+						element_blur: null,
 
 						init: function() {
 							var style = {
@@ -658,15 +713,30 @@
 								    padding : 20
 								};
 
+							this.element_blur = new PIXI.filters.BlurFilter();
+							this.element_blur.blur = 0;
+
 							this.element = new PIXI.Text("Имидж-гайд – это ваша личная книга стиля. Десятки\nкрасочных иллюстраций, детальный разбор вашего\nгардероба и практические советы по улучшению\nвашего образа – все это на страницах\nперсонального имидж-гайда. ", style);
-							this.element.x = (renderer.width - this.element.width) / 2;	
+							this.element.x = renderer.width;	
 							this.element.y = ((renderer.height - this.element.height) / 2) + 250;
+							this.element.filters = [this.element_blur];
+							this.element.resolution = 2;
 
 							slide_container_2.addChild(this.element);
+
+							createjs.Tween.get(this.element)
+								.wait(2500)
+  								.to({ x: (renderer.width - this.element.width) / 2 }, 500, createjs.Ease.quadOut());
+
 						},
 
 						update: function() {
 
+						},
+
+						destroy: function() {
+							createjs.Tween.get(this.element)
+  								.to({ x: renderer.width }, 500, createjs.Ease.quadOut());
 						}
 
 					},
@@ -680,13 +750,22 @@
 
 							this.element.lineStyle(3, 0xfa6464, 1);
 							this.element.beginFill(0x000000, 0);
-							this.element.drawRect( renderer.width/2 - 280 , renderer.height/2 + 150 , 560 , 170);
+							this.element.drawRect( -560 , renderer.height/2 + 150 , 560 , 170);
 
 							slide_container_2.addChild(this.element);
+
+							createjs.Tween.get(this.element)
+								.wait(2500)
+  								.to({ x: renderer.width/2 + 280 }, 500, createjs.Ease.quadOut());
 						},
 
 						update: function() {
 
+						},
+
+						destroy: function() {
+							createjs.Tween.get(this.element)
+  								.to({ x: -560 }, 500, createjs.Ease.quadOut());
 						}
 
 					},
@@ -700,6 +779,10 @@
 						},
 
 						update: function() {
+
+						},
+
+						destroy: function() {
 
 						}
 
@@ -717,6 +800,12 @@
 
 					slide_container_3 = new PIXI.Container();
 
+					this.elems.menu.init();
+					this.elems.pic.init();
+					this.elems.btn.init();
+					this.elems.title_1.init();
+					this.elems.title_2.init();
+
 					stage.addChild(slide_container_3);
 
 				},
@@ -725,7 +814,13 @@
 
 					console.log("Slide 3 destroy");
 
-					stage.removeChild(slide_container_3);
+					this.elems.menu.destroy();
+					this.elems.pic.destroy();
+					this.elems.btn.destroy();
+					this.elems.title_1.destroy();
+					this.elems.title_2.destroy();
+
+					//stage.removeChild(slide_container_3);
 
 				},
 
@@ -735,7 +830,175 @@
 
 				elems: {
 
+					menu: {
 
+						element: null,
+
+						init: function() {
+
+							/*var boxes = [
+								{ url: "http://lorempixel.com/400/400/", x: 0, y: 0, width: 0, height: 0 },
+								{ url: "http://lorempixel.com/400/400/", x: 0, y: 0, width: 0, height: 0 },
+								{ url: "http://lorempixel.com/400/400/", x: 0, y: 0, width: 0, height: 0 },
+								{ url: "http://lorempixel.com/400/400/", x: 0, y: 0, width: 0, height: 0 },
+								{ url: "http://lorempixel.com/400/400/", x: 0, y: 0, width: 0, height: 0 },
+								{ url: "http://lorempixel.com/400/400/", x: 0, y: 0, width: 0, height: 0 }
+							];*/
+
+							this.element = new PIXI.Container();
+							this.element.y = -renderer.height;
+
+							var r_square_texture = PIXI.Texture.fromImage("http://lorempixel.com/400/400/"),
+								r_square = new PIXI.Sprite(r_square_texture);
+
+							r_square.height = renderer.height / 3;
+							r_square.width = renderer.height / 3;
+							r_square.position.x = 0;
+							r_square.position.y = 0;
+							r_square.buttonMode = true;
+							r_square.interactive = true;
+							r_square.on("mouseover", function() {
+								console.log("over");
+							});
+							r_square.on("mouseout", function() {
+								console.log("out");
+							});
+
+							var t_square_texture = PIXI.Texture.fromImage("http://lorempixel.com/400/400/"),
+								t_square = new PIXI.Sprite(t_square_texture);
+
+							t_square.height = renderer.height / 3;
+							t_square.width = renderer.height / 3;
+							t_square.position.x = t_square.height;
+							t_square.position.y = 0;
+
+							var s_square_texture = PIXI.Texture.fromImage("http://lorempixel.com/400/400/"),
+								s_square = new PIXI.Sprite(s_square_texture);
+
+							s_square.height = renderer.height / 3;
+							s_square.width = renderer.height / 3;
+							s_square.position.x = 0;
+							s_square.position.y = (renderer.height / 3) * 1;
+
+							var c_square_texture = PIXI.Texture.fromImage("http://lorempixel.com/400/400/"),
+								c_square = new PIXI.Sprite(c_square_texture);
+
+							c_square.height = renderer.height / 3;
+							c_square.width = renderer.height / 3;
+							c_square.position.x = c_square.height;
+							c_square.position.y = (renderer.height / 3) * 1;
+
+							var m_square_texture = PIXI.Texture.fromImage("http://lorempixel.com/400/400/"),
+								m_square = new PIXI.Sprite(m_square_texture);
+
+							m_square.height = renderer.height / 3;
+							m_square.width = renderer.height / 3;
+							m_square.position.x = 0;
+							m_square.position.y = (renderer.height / 3) * 2;
+
+							var p_square_texture = PIXI.Texture.fromImage("http://lorempixel.com/400/400/"),
+								p_square = new PIXI.Sprite(p_square_texture);
+
+							p_square.height = renderer.height / 3;
+							p_square.width = renderer.height / 3;
+							p_square.position.x = p_square.height;
+							p_square.position.y = (renderer.height / 3) * 2;
+
+							
+							this.element.addChild(r_square);
+							this.element.addChild(t_square);
+							this.element.addChild(s_square);
+							this.element.addChild(c_square);
+							this.element.addChild(m_square);
+							this.element.addChild(p_square);
+							slide_container_3.addChild(this.element);
+
+							createjs.Tween.get(this.element)
+  								.to({ y: 0 }, 500, createjs.Ease.getPowInOut(4));
+
+						},
+
+						update: function() {
+
+						},
+
+						destroy: function() {
+
+						}
+
+					},
+
+					pic: {
+
+						element: null,
+
+						init: function() {
+
+						},
+
+						update: function() {
+
+						},
+
+						destroy: function() {
+
+						}
+
+					},
+
+					btn: {
+
+						element: null,
+
+						init: function() {
+
+						},
+
+						update: function() {
+
+						},
+
+						destroy: function() {
+
+						}
+
+					},
+
+					title_1: {
+
+						element: null,
+
+						init: function() {
+
+						},
+
+						update: function() {
+
+						},
+
+						destroy: function() {
+
+						}
+
+					},
+
+					title_2: {
+
+						element: null,
+
+						init: function() {
+
+						},
+
+						update: function() {
+
+						},
+
+						destroy: function() {
+
+						}
+
+					}
 
 				}
 
