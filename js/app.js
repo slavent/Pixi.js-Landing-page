@@ -952,7 +952,7 @@
 
 
 							createjs.Tween.get(this.element)
-  								.to({ y: 0 }, 500, createjs.Ease.getPowInOut(4));
+  								.to({ y: 0 }, 2000, createjs.Ease.getPowInOut(4));
 
 						},
 
@@ -962,7 +962,7 @@
 
 						destroy: function() {
 							createjs.Tween.get(this.element)
-  								.to({ y: -renderer.height }, 500, createjs.Ease.getPowInOut(4));
+  								.to({ y: -renderer.height }, 2000, createjs.Ease.getPowInOut(4));
 						}
 
 					},
@@ -1133,14 +1133,14 @@
 
 							this.element = new PIXI.Text("Стоимость базовой\nверсии", style);
 
-							this.element.x = (renderer.width - this.element.width) / 2 - 300;	
+							this.element.x = (renderer.width - this.element.width) / 2 - 350;	
 							this.element.y = -renderer.height;
 
 							slide_container_5.addChild(this.element);
 
 							createjs.Tween.get(this.element)
 								.wait(2000)
-  								.to({ y: ((renderer.height - this.element.height) / 2) - 170 }, 500, createjs.Ease.quadOut());
+  								.to({ y: ((renderer.height - this.element.height) / 2) - 220 }, 500, createjs.Ease.quadOut());
 
 						},
 
@@ -1163,14 +1163,14 @@
 
 							this.element = new PIXI.Text("Срок изготовления", style);
 
-							this.element.x = (renderer.width - this.element.width) / 2 + 210;	
+							this.element.x = (renderer.width - this.element.width) / 2 + 260;	
 							this.element.y = -renderer.height;
 
 							slide_container_5.addChild(this.element);
 
 							createjs.Tween.get(this.element)
 								.wait(1500)
-  								.to({ y: ((renderer.height - this.element.height) / 2) - 180 }, 500, createjs.Ease.quadOut());	
+  								.to({ y: ((renderer.height - this.element.height) / 2) - 230 }, 500, createjs.Ease.quadOut());	
 
 						},
 
@@ -1194,14 +1194,14 @@
 
 							this.element = new PIXI.Text("Стоимость за каждый\nдополнительный", style);
 
-							this.element.x = (renderer.width - this.element.width) / 2 + 125;	
+							this.element.x = (renderer.width - this.element.width) / 2 + 175;	
 							this.element.y = -renderer.height;
 
 							slide_container_5.addChild(this.element);
 
 							createjs.Tween.get(this.element)
 								.wait(700)
-  								.to({ y: ((renderer.height - this.element.height) / 2) + 170 }, 500, createjs.Ease.quadOut());	
+  								.to({ y: ((renderer.height - this.element.height) / 2) + 220 }, 500, createjs.Ease.quadOut());	
 
 						},
 
@@ -1225,14 +1225,14 @@
 
 							this.element = new PIXI.Text("Стиль, мероприятие или праздник", style);
 
-							this.element.x = (renderer.width - this.element.width) / 2 + 165;	
+							this.element.x = (renderer.width - this.element.width) / 2 + 215;	
 							this.element.y = -renderer.height;
 
 							slide_container_5.addChild(this.element);
 
 							createjs.Tween.get(this.element)
 								.wait(500)
-  								.to({ y: ((renderer.height - this.element.height) / 2) + 197 }, 500, createjs.Ease.quadOut());	
+  								.to({ y: ((renderer.height - this.element.height) / 2) + 247 }, 500, createjs.Ease.quadOut());	
 
 						},
 
@@ -1257,14 +1257,14 @@
 
 							this.element = new PIXI.Text("2999", style);
 
-							this.element.x = (renderer.width - this.element.width) / 2 - 180;	
+							this.element.x = (renderer.width - this.element.width) / 2 - 230;	
 							this.element.y = -renderer.height;
 
 							slide_container_5.addChild(this.element);
 
 							createjs.Tween.get(this.element)
 								.wait(1700)
-  								.to({ y: ((renderer.height - this.element.height) / 2) - 175 }, 500, createjs.Ease.quadOut());
+  								.to({ y: ((renderer.height - this.element.height) / 2) - 225 }, 500, createjs.Ease.quadOut());
 
 						},
 
@@ -1289,14 +1289,14 @@
 
 							this.element = new PIXI.Text("РУБЛЕЙ", style);
 
-							this.element.x = (renderer.width - this.element.width) / 2 - 220;	
+							this.element.x = (renderer.width - this.element.width) / 2 - 270;	
 							this.element.y = -renderer.height;
 
 							slide_container_5.addChild(this.element);
 
 							createjs.Tween.get(this.element)
 								.wait(1700)
-  								.to({ y: ((renderer.height - this.element.height) / 2) - 100 }, 500, createjs.Ease.quadOut());
+  								.to({ y: ((renderer.height - this.element.height) / 2) - 150 }, 500, createjs.Ease.quadOut());
 
 						},
 
@@ -1321,14 +1321,14 @@
 
 							this.element = new PIXI.Text("+999", style);
 
-							this.element.x = (renderer.width - this.element.width) / 2 + 90;	
+							this.element.x = (renderer.width - this.element.width) / 2 + 140;	
 							this.element.y = -renderer.height;
 
 							slide_container_5.addChild(this.element);
 
 							createjs.Tween.get(this.element)
 								.wait(1000)
-  								.to({ y: ((renderer.height - this.element.height) / 2) + 80 }, 500, createjs.Ease.quadOut());
+  								.to({ y: ((renderer.height - this.element.height) / 2) + 130 }, 500, createjs.Ease.quadOut());
 
 						},
 
@@ -1353,14 +1353,14 @@
 
 							this.element = new PIXI.Text("РУБЛЕЙ", style);
 
-							this.element.x = (renderer.width - this.element.width) / 2 + 130;	
+							this.element.x = (renderer.width - this.element.width) / 2 + 180;	
 							this.element.y = -renderer.height;
 
 							slide_container_5.addChild(this.element);
 
 							createjs.Tween.get(this.element)
 								.wait(1000)
-  								.to({ y: ((renderer.height - this.element.height) / 2) + 130 }, 500, createjs.Ease.quadOut());
+  								.to({ y: ((renderer.height - this.element.height) / 2) + 180 }, 500, createjs.Ease.quadOut());
 
 						},
 
@@ -1385,14 +1385,14 @@
 
 							this.element = new PIXI.Text("3", style);
 
-							this.element.x = (renderer.width - this.element.width) / 2 + 150;	
+							this.element.x = (renderer.width - this.element.width) / 2 + 200;	
 							this.element.y = -renderer.height;
 
 							slide_container_5.addChild(this.element);
 
 							createjs.Tween.get(this.element)
 								.wait(1300)
-  								.to({ y: ((renderer.height - this.element.height) / 2) - 130 }, 500, createjs.Ease.quadOut());
+  								.to({ y: ((renderer.height - this.element.height) / 2) - 180 }, 500, createjs.Ease.quadOut());
 
 						},
 
@@ -1417,14 +1417,14 @@
 
 							this.element = new PIXI.Text("РАБОЧИХ\nДНЯ", style);
 
-							this.element.x = (renderer.width - this.element.width) / 2 + 250;	
+							this.element.x = (renderer.width - this.element.width) / 2 + 300;	
 							this.element.y = -renderer.height;
 
 							slide_container_5.addChild(this.element);
 
 							createjs.Tween.get(this.element)
 								.wait(1300)
-  								.to({ y: ((renderer.height - this.element.height) / 2) - 130 }, 500, createjs.Ease.quadOut());
+  								.to({ y: ((renderer.height - this.element.height) / 2) - 180 }, 500, createjs.Ease.quadOut());
 
 						},
 
@@ -1473,23 +1473,24 @@
 						init: function() {
 
 							var style = {
-								font : '14px FiraSansRegular',
+								font : '18px FiraSansRegular',
 							    fill : '#fa6464'
 							};
 
 							this.element = new PIXI.Text("Заказать", style);
 
 							this.element.x = (renderer.width - this.element.width) / 2;	
-							this.element.y = ((renderer.height - this.element.height) / 2) + 260;
+							this.element.y = ((renderer.height - this.element.height) / 2) + 312;
+							this.resolution = 2;
 							this.element.alpha = 0;
 
 							slide_container_5.addChild(this.element);
 
 							this.element_2 = new PIXI.Graphics();
 
-							this.element_2.lineStyle(1, 0xfa6464, 1);
+							this.element_2.lineStyle(3, 0xfa6464, 1);
 							this.element_2.beginFill(0xFF00BB, 0);
-							this.element_2.drawRoundedRect(renderer.width/2-50, renderer.height/2+245, 100, 30, 1);
+							this.element_2.drawRoundedRect(renderer.width/2-60, renderer.height/2+295, 120, 35, 1);
 							this.element_2.endFill();
 							this.element_2.alpha = 0;
 
