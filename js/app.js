@@ -26,7 +26,9 @@
 		slide_container_5 = null,
 		slide_container_6 = null,
 		slide_container_7 = null,
-		slide_container_8 = null,
+
+		scroll_top = null,
+		scroll_down = null,
 
 		active_slide = 1;
     // END: Variables
@@ -48,42 +50,37 @@
 		    	switch(active_slide) {
 
 		    		case 1: 
-		    			App.manager.slide_1.update();
+		    			App.managerService.slide_1.update();
 
 		    			break;
 
 		    		case 2: 
-		    			App.manager.slide_2.update();
+		    			App.managerService.slide_2.update();
 		    			
 		    			break;
 
 		    		case 3: 
-		    			App.manager.slide_3.update();
+		    			App.managerService.slide_3.update();
 		    			
 		    			break;
 
 		    		case 4: 
-		    			App.manager.slide_4.update();
+		    			App.managerService.slide_4.update();
 		    			
 		    			break;
 
 		    		case 5: 
-		    			App.manager.slide_5.update();
+		    			App.managerService.slide_5.update();
 		    			
 		    			break;
 
 		    		case 6: 
-		    			App.manager.slide_6.update();
+		    			App.managerService.slide_6.update();
 		    			
 		    			break;
 
 		    		case 7: 
-		    			App.manager.slide_7.update();
-		    			
-		    			break;
-
-		    		case 8: 
-		    			App.manager.slide_8.update();
+		    			App.managerService.slide_7.update();
 		    			
 		    			break;
 
@@ -92,26 +89,33 @@
 		        renderer.render(stage);
 		        requestAnimationFrame(animate);
 
-		    }			
+		    }	
 
-		    App.initPult();
-		  	App.binder();
-		  	App.manager.init();
-		  	App.initNav(active_slide);
+		    setTimeout(function() {
+				$landing_nav.parent().css({ "right" : "30px" });
+			}, 3000);		
+
+		  	App.bindService();
+		  	App.managerService.init();
+		  	App.navService(active_slide);
 
 		},
 
-		initScroll: {
+		mousewheelService: {
 
-			scroll: function(event) {
+			init: function(event) {
 
 				// For scroll navigation
 				if(event.originalEvent.wheelDelta < 0) {
 					// scroll down
-					active_slide++;
+					scroll_down = true;
+					scroll_top = false;
+					if( active_slide < 7 ) active_slide++;
 				} else {
 					// scroll top
-					active_slide--;
+					scroll_down = false;
+					scroll_top = true;
+					if( active_slide > 1 ) active_slide--;
 				}
 
 				if(active_slide >= 1 && active_slide <= 7) {
@@ -119,62 +123,101 @@
 					switch (active_slide) {
 
 						case 1: 
-							setTimeout(function() {
-								App.manager.slide_1.init();
-							}, 2000);
-							App.manager.slide_2.destroy();
+							if( scroll_top == true ) {
+								App.managerService.slide_2.destroy()
+								setTimeout(function() {
+									App.managerService.slide_1.init();
+								}, 1500);
+							}
 							break;
 
 						case 2: 
-							App.manager.slide_1.destroy();
-							App.manager.slide_2.init();
+							if( scroll_top == true ) {
+								App.managerService.slide_3.destroy();
+								setTimeout(function() {
+									App.managerService.slide_2.init();
+								}, 1500);
+							}
+							if( scroll_down == true ) {
+								App.managerService.slide_1.destroy();
+								setTimeout(function() {
+									App.managerService.slide_2.init();
+								}, 500);
+							}
 							break;
 
 						case 3: 
-							App.manager.slide_2.destroy();
-							setTimeout(function() {
-								App.manager.slide_3.init();
-							}, 2000);
+							if( scroll_top == true ) {
+								App.managerService.slide_4.destroy();
+								setTimeout(function() {
+									App.managerService.slide_3.init();
+								}, 1500);
+							}
+							if( scroll_down == true ) {
+								App.managerService.slide_2.destroy();
+								setTimeout(function() {
+									App.managerService.slide_3.init();
+								}, 1500);
+							}
 							break;
 
 						case 4: 
-							App.manager.slide_3.destroy();
-							setTimeout(function() {
-								App.manager.slide_4.init();
-							}, 2000);
+							if( scroll_top == true ) {
+								App.managerService.slide_5.destroy();
+								setTimeout(function() {
+									App.managerService.slide_4.init();
+								}, 1500);
+							}
+							if( scroll_down == true ) {
+								App.managerService.slide_3.destroy();
+								setTimeout(function() {
+									App.managerService.slide_4.init();
+								}, 1500);
+							}
 							break;
 
 						case 5: 
-							App.manager.slide_4.destroy();
-							setTimeout(function() {
-								App.manager.slide_5.init();
-							}, 2000);
+							if( scroll_top == true ) {
+								App.managerService.slide_6.destroy();
+								setTimeout(function() {
+									App.managerService.slide_5.init();
+								}, 1500);
+							}
+							if( scroll_down == true ) {
+								App.managerService.slide_4.destroy();
+								setTimeout(function() {
+									App.managerService.slide_5.init();
+								}, 1500);
+							}
 							break;
 
 						case 6: 
-							App.manager.slide_5.destroy();
-							setTimeout(function() {
-								App.manager.slide_6.init();
-							}, 2000);
+							if( scroll_top == true ) {
+								App.managerService.slide_7.destroy();
+								setTimeout(function() {
+									App.managerService.slide_6.init();
+								}, 1000);
+							}
+							if( scroll_down == true ) {
+								App.managerService.slide_5.destroy();
+								setTimeout(function() {
+									App.managerService.slide_6.init();
+								}, 1000);
+							}
 							break;
 
 						case 7: 
-							App.manager.slide_6.destroy();
-							setTimeout(function() {
-								App.manager.slide_7.init();
-							}, 2000);
-							break;
-
-						case 8: 
-							App.manager.slide_7.destroy();
-							setTimeout(function() {
-								App.manager.slide_8.init();
-							}, 2000);
+							if( scroll_down == true ) {
+								App.managerService.slide_6.destroy();
+								setTimeout(function() {
+									App.managerService.slide_7.init();
+								}, 1500);
+							}
 							break;
 
 					}
 
-					App.initNav(active_slide);
+					App.navService(active_slide);
 
 				}
 
@@ -182,15 +225,7 @@
 
 		},
 
-		initPult: function() {
-
-			setTimeout(function() {
-				$landing_nav.parent().css({ "right" : "30px" });
-			}, 3000);
-
-		},
-
-		initNav: function(ind) {
+		navService: function(ind) {
 
 			ind--;
 			$landing_nav.children().removeClass("landing-nav-item-active");
@@ -201,9 +236,9 @@
 
 		},
 
-		binder: function() {
+		bindService: function() {
 
-			$body.on("mousewheel", $.debounce(200, true, App.initScroll.scroll));
+			$body.on("mousewheel", $.debounce(200, true, App.mousewheelService.init));
 
 			$menu_icon.on("click", function() {
     			$menu_popup.fadeIn();
@@ -217,14 +252,14 @@
 
     		$main_menu.find("li").on("click", function() {
     			active_slide = $(this).index() + 1;
-    			App.initScroll.scroll();
+    			App.mousewheelService.init();
 
     			return false;
     		});
 
     		$menu_popup_nav.find("li").on("click", function() {
     			active_slide = $(this).index() + 1;
-    			App.initScroll.scroll();
+    			App.mousewheelService.init();
     			$menu_popup.hide();
 
     			return false;
@@ -232,7 +267,7 @@
 
 	    },
 
-		manager: {
+		managerService: {
 
 			init: function() {
 
@@ -258,6 +293,9 @@
 					createjs.Tween.get(slide_container_1)
   						.to({ alpha: 1 }, 500, createjs.Ease.getPowInOut(4));
 
+  					$main_menu.css({ "top" : -70 });
+  					$menu_icon.show();
+
 				},
 
 				destroy: function() {
@@ -269,6 +307,11 @@
   						.call(function() {
   							stage.removeChild(slide_container_1);
   						});
+
+  					setTimeout(function() {
+  						$main_menu.css({ "top" : 0 });
+  					}, 2000);
+  					$menu_icon.hide();
 
 				},
 
@@ -486,7 +529,7 @@
 							vars.spin1.interactive = true;
 							vars.spin1.on("click", function() {
 								active_slide++;
-	    						App.initScroll.scroll();
+	    						App.mousewheelService.init();
 							});
 
 							vars.spin2.anchor.set(0.5);
@@ -873,7 +916,7 @@
 
 							function moveHoverBox(x, y) {
 								createjs.Tween.get(hover_box)
-  									.to({ x: x , y: y }, 500, createjs.Ease.getPowInOut(4));
+  									.to({ x: x , y: y }, 200, createjs.Ease.getPowInOut(4));
 							}
 
 							this.element = new PIXI.Container();
@@ -1453,14 +1496,14 @@
 							slide_container_5.addChild(this.element);
 
 							createjs.Tween.get(this.element)
-  								.to({ y: renderer.height / 2 }, 500, createjs.Ease.quadOut());
+  								.to({ y: renderer.height / 2 }, 2000, createjs.Ease.getPowInOut(4));
 
 						},
 
 						destroy: function() {
 							createjs.Tween.get(this.element)
 								.wait(1300)
-  								.to({ y: renderer.height*2 }, 500, createjs.Ease.quadOut());
+  								.to({ y: renderer.height*2 }, 2000, createjs.Ease.getPowInOut(4));
 						}
 
 					},
@@ -1552,7 +1595,7 @@
 				},
 
 				update: function() {
-
+					this.elems.spinner.update();
 				},
 
 				elems: {
@@ -1751,30 +1794,46 @@
 							vars.spin1.anchor.set(0.5);
 							vars.spin1.position.x = renderer.width / 2 - 5;
 							vars.spin1.position.y = renderer.height / 2 + 350;
+							vars.spin1.alpha = 0;
 							vars.spin1.buttonMode = true;
 							vars.spin1.interactive = true;
 							vars.spin1.on("click", function() {
 								active_slide++;
-	    						App.initScroll.scroll();
+	    						App.mousewheelService.init();
 							});
 
 							vars.spin2.anchor.set(0.5);
 							vars.spin2.position.x = renderer.width / 2 - 5;
 							vars.spin2.position.y = renderer.height / 2 + 345;
+							vars.spin2.alpha = 0;
 
 							slide_container_6.addChild(vars.spin1);
 							slide_container_6.addChild(vars.spin2); 
 						},
 
-						destroy: function() {
+						update: function() {
 							var vars = this.vars;
 
 							if(vars.init == true) {
 								vars.pos += 0.06;
 			    				vars.spin2.y += Math.sin(vars.pos);
-			    				//vars.spin2.alpha += Math.sin(0.003);
 							}
 
+							if( vars.spin1 != null ) {
+								if( vars.spin1.alpha < 1 ) vars.spin1.alpha += 0.01;
+							}
+							
+							if( vars.spin2 != null ) {
+								if( vars.spin2.alpha < 1 ) vars.spin2.alpha += 0.01;
+							}
+
+						},
+
+						destroy: function() {
+							var vars = this.vars;
+
+							slide_container_6.removeChild(vars.spin1);
+							slide_container_6.removeChild(vars.spin2);
 						}
 
 					}
@@ -1791,6 +1850,10 @@
 
 					slide_container_7 = new PIXI.Container();
 
+					//this.elems.slider.init();
+					this.elems.orderBtn.init();
+					this.elems.footer.init();
+
 					stage.addChild(slide_container_7);
 
 				},
@@ -1805,43 +1868,7 @@
 
 				update: function() {
 
-				},
-
-				elems: {
-
-
-
-				}
-
-			},
-
-			slide_8: {
-
-				init: function(active) {
-
-					console.log("Slide 8 init");
-
-					slide_container_8 = new PIXI.Container();
-
-					this.elems.slider.init();
-					this.elems.orderBtn.init();
-					this.elems.footer.init();
-
-					stage.addChild(slide_container_8);
-
-				},
-
-				destroy: function() {
-
-					console.log("Slide 8 destroy");
-
-					stage.removeChild(slide_container_8);
-
-				},
-
-				update: function() {
-
-					this.elems.slider.update();
+					//this.elems.slider.update();
 					this.elems.orderBtn.update();
 					this.elems.footer.update();
 
@@ -1903,7 +1930,7 @@
 							vars.slide_container_1_sprite = new PIXI.Sprite(vars.slide_container_1_texture);
 							vars.slide_container_1_sprite.width = renderer.width;
 							vars.slide_container_1_sprite.height = renderer.height;
-							slide_container_8.addChild(vars.slide_container_1_sprite);
+							slide_container_7.addChild(vars.slide_container_1_sprite);
 
 							var style = {
 									font : '65px FiraSansRegular',
@@ -1917,7 +1944,7 @@
 							title.x = (renderer.width - title.width) / 2;	
 							title.y = ((renderer.height - title.height) / 2);
 
-							slide_container_8.addChild(title);
+							slide_container_7.addChild(title);
 						},
 
 						makeslide_container_2: function() {
@@ -1928,7 +1955,7 @@
 							vars.slide_container_2_sprite.width = renderer.width;
 							vars.slide_container_2_sprite.height = renderer.height;
 							vars.slide_container_2_sprite.alpha = 0;
-							slide_container_8.addChild(vars.slide_container_2_sprite);
+							slide_container_7.addChild(vars.slide_container_2_sprite);
 
 							var style = {
 									font : '65px FiraSansRegular',
@@ -1942,7 +1969,7 @@
 							title.x = (renderer.width - title.width) / 2;	
 							title.y = ((renderer.height - title.height) / 2);
 
-							slide_container_8.addChild(title);
+							slide_container_7.addChild(title);
 						},
 
 						makeslide_container_3: function() {
@@ -1953,7 +1980,7 @@
 							vars.slide_container_3_sprite.width = renderer.width;
 							vars.slide_container_3_sprite.height = renderer.height;
 							vars.slide_container_3_sprite.alpha = 0;
-							slide_container_8.addChild(vars.slide_container_3_sprite);
+							slide_container_7.addChild(vars.slide_container_3_sprite);
 
 							var style = {
 									font : '65px FiraSansRegular',
@@ -1967,7 +1994,7 @@
 							title.x = (renderer.width - title.width) / 2;	
 							title.y = ((renderer.height - title.height) / 2);
 
-							slide_container_8.addChild(title);
+							slide_container_7.addChild(title);
 						},
 
 						makeNav: function() {
@@ -1985,7 +2012,7 @@
 								if(vars.active > 1) vars.active--;
 							});
 
-							slide_container_8.addChild(vars.prev_btn_sprite);						
+							slide_container_7.addChild(vars.prev_btn_sprite);						
 
 							vars.next_btn_texture = PIXI.Texture.fromImage("i/s7/nav_btn.svg");
 							vars.next_btn_sprite = new PIXI.Sprite(vars.next_btn_texture);
@@ -2002,7 +2029,7 @@
 								if(vars.active < 3) vars.active++;
 							});
 
-							slide_container_8.addChild(vars.next_btn_sprite);
+							slide_container_7.addChild(vars.next_btn_sprite);
 						}
 
 					},
@@ -2032,8 +2059,8 @@
 							this.element_2.drawRoundedRect(renderer.width/2-50, renderer.height/2+245, 100, 30, 1);
 							this.element_2.endFill();
 
-							slide_container_8.addChild(this.element);
-							slide_container_8.addChild(this.element_2);
+							slide_container_7.addChild(this.element);
+							slide_container_7.addChild(this.element_2);
 
 						},
 
