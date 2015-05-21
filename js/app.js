@@ -26,6 +26,7 @@
 		slide_container_5 = null,
 		slide_container_6 = null,
 		slide_container_7 = null,
+		slide_container_8 = null,
 
 		active_slide = 1;
     // END: Variables
@@ -81,6 +82,11 @@
 		    			
 		    			break;
 
+		    		case 8: 
+		    			App.manager.slide_8.update();
+		    			
+		    			break;
+
 		    	}
 
 		        renderer.render(stage);
@@ -133,22 +139,37 @@
 
 						case 4: 
 							App.manager.slide_3.destroy();
-							App.manager.slide_4.init();
+							setTimeout(function() {
+								App.manager.slide_4.init();
+							}, 2000);
 							break;
 
 						case 5: 
 							App.manager.slide_4.destroy();
-							App.manager.slide_5.init();
+							setTimeout(function() {
+								App.manager.slide_5.init();
+							}, 2000);
 							break;
 
 						case 6: 
 							App.manager.slide_5.destroy();
-							App.manager.slide_6.init();
+							setTimeout(function() {
+								App.manager.slide_6.init();
+							}, 2000);
 							break;
 
 						case 7: 
 							App.manager.slide_6.destroy();
-							App.manager.slide_7.init();
+							setTimeout(function() {
+								App.manager.slide_7.init();
+							}, 2000);
+							break;
+
+						case 8: 
+							App.manager.slide_7.destroy();
+							setTimeout(function() {
+								App.manager.slide_8.init();
+							}, 2000);
 							break;
 
 					}
@@ -794,7 +815,7 @@
 
 			slide_3: {
 
-				init: function(active) {
+				init: function() {
 
 					console.log("Slide 3 init");
 
@@ -836,82 +857,99 @@
 
 						init: function() {
 
-							/*var boxes = [
-								{ url: "http://lorempixel.com/400/400/", x: 0, y: 0, width: 0, height: 0 },
-								{ url: "http://lorempixel.com/400/400/", x: 0, y: 0, width: 0, height: 0 },
-								{ url: "http://lorempixel.com/400/400/", x: 0, y: 0, width: 0, height: 0 },
-								{ url: "http://lorempixel.com/400/400/", x: 0, y: 0, width: 0, height: 0 },
-								{ url: "http://lorempixel.com/400/400/", x: 0, y: 0, width: 0, height: 0 },
-								{ url: "http://lorempixel.com/400/400/", x: 0, y: 0, width: 0, height: 0 }
-							];*/
+							var boxes = [
+								{ url: "http://lorempixel.com/400/400/", x: 0, y: 0, width: 0, height: 0, symbol: "Р" },
+								{ url: "http://lorempixel.com/400/400/", x: 0, y: 0, width: 0, height: 0, symbol: "Т" },
+								{ url: "http://lorempixel.com/400/400/", x: 0, y: 0, width: 0, height: 0, symbol: "С" },
+								{ url: "http://lorempixel.com/400/400/", x: 0, y: 0, width: 0, height: 0, symbol: "Ц" },
+								{ url: "http://lorempixel.com/400/400/", x: 0, y: 0, width: 0, height: 0, symbol: "М" },
+								{ url: "http://lorempixel.com/400/400/", x: 0, y: 0, width: 0, height: 0, symbol: "П" }
+							],
+								hover_box = new PIXI.Graphics();
+
+							hover_box.lineStyle(1, 0xfa6464, 0);
+							hover_box.beginFill(0xfa6464, 0.9);
+							hover_box.drawRect(0, 0, renderer.height / 3, renderer.height / 3);
+
+							function moveHoverBox(x, y) {
+								createjs.Tween.get(hover_box)
+  									.to({ x: x , y: y }, 500, createjs.Ease.getPowInOut(4));
+							}
 
 							this.element = new PIXI.Container();
 							this.element.y = -renderer.height;
 
-							var r_square_texture = PIXI.Texture.fromImage("http://lorempixel.com/400/400/"),
-								r_square = new PIXI.Sprite(r_square_texture);
+							var that_element = this.element;
+							for(var i = 0; i < boxes.length; i++) {
 
-							r_square.height = renderer.height / 3;
-							r_square.width = renderer.height / 3;
-							r_square.position.x = 0;
-							r_square.position.y = 0;
-							r_square.buttonMode = true;
-							r_square.interactive = true;
-							r_square.on("mouseover", function() {
-								console.log("over");
-							});
-							r_square.on("mouseout", function() {
-								console.log("out");
-							});
+								var box_texture = PIXI.Texture.fromImage(boxes[i].url),
+									box = new PIXI.Sprite(box_texture),
+									style = {
+										font : '90px Myriad Pro',
+									    fill : '#3c3c3c',
+									    align : "center"
+									},
+									symbol = new PIXI.Text(boxes[i].symbol, style),
+									symbol_border = new PIXI.Graphics();
 
-							var t_square_texture = PIXI.Texture.fromImage("http://lorempixel.com/400/400/"),
-								t_square = new PIXI.Sprite(t_square_texture);
+								symbol.position.x = (renderer.height / 3) / 2;
+								symbol.position.y = (renderer.height / 3) / 2 - 80;
 
-							t_square.height = renderer.height / 3;
-							t_square.width = renderer.height / 3;
-							t_square.position.x = t_square.height;
-							t_square.position.y = 0;
+								symbol_border.lineStyle(3, 0x3c3c3c, 1);
+								symbol_border.beginFill(0xfa6464, 0);
+								symbol_border.drawRect( (renderer.height / 3) / 2 - 20 , (renderer.height / 3) / 2 - 85 , 100 , 100 );
 
-							var s_square_texture = PIXI.Texture.fromImage("http://lorempixel.com/400/400/"),
-								s_square = new PIXI.Sprite(s_square_texture);
+								box.addChild(symbol_border);
+								box.addChild(symbol);
 
-							s_square.height = renderer.height / 3;
-							s_square.width = renderer.height / 3;
-							s_square.position.x = 0;
-							s_square.position.y = (renderer.height / 3) * 1;
+								box.height = renderer.height / 3;
+								box.width = renderer.height / 3;
 
-							var c_square_texture = PIXI.Texture.fromImage("http://lorempixel.com/400/400/"),
-								c_square = new PIXI.Sprite(c_square_texture);
+								if( i % 2 ) {
+									box.position.x = renderer.height / 3;
+								} else {
+									box.position.x = 0;
+								}
 
-							c_square.height = renderer.height / 3;
-							c_square.width = renderer.height / 3;
-							c_square.position.x = c_square.height;
-							c_square.position.y = (renderer.height / 3) * 1;
+								switch(i) {
+									case 0: 
+										box.position.y = 0;
+										break;
 
-							var m_square_texture = PIXI.Texture.fromImage("http://lorempixel.com/400/400/"),
-								m_square = new PIXI.Sprite(m_square_texture);
+									case 1: 
+										box.position.y = 0;
+										break;
 
-							m_square.height = renderer.height / 3;
-							m_square.width = renderer.height / 3;
-							m_square.position.x = 0;
-							m_square.position.y = (renderer.height / 3) * 2;
+									case 2: 
+										box.position.y = (renderer.height / 3);
+										break;
 
-							var p_square_texture = PIXI.Texture.fromImage("http://lorempixel.com/400/400/"),
-								p_square = new PIXI.Sprite(p_square_texture);
+									case 3:
+										box.position.y = (renderer.height / 3);
+										break;
 
-							p_square.height = renderer.height / 3;
-							p_square.width = renderer.height / 3;
-							p_square.position.x = p_square.height;
-							p_square.position.y = (renderer.height / 3) * 2;
+									case 4: 
+										box.position.y = (renderer.height / 3) * 2;
+										break;
 
-							
-							this.element.addChild(r_square);
-							this.element.addChild(t_square);
-							this.element.addChild(s_square);
-							this.element.addChild(c_square);
-							this.element.addChild(m_square);
-							this.element.addChild(p_square);
+									case 5:
+										box.position.y = (renderer.height / 3) * 2;
+										break;
+								}
+								
+								box.buttonMode = true;
+								box.interactive = true;
+								box.on("mouseover", function() {
+									moveHoverBox( this.position.x, this.position.y );
+								});
+
+								that_element.addChild(box);
+
+							}
+
+							this.element.addChild(hover_box);
 							slide_container_3.addChild(this.element);
+
 
 							createjs.Tween.get(this.element)
   								.to({ y: 0 }, 500, createjs.Ease.getPowInOut(4));
@@ -923,7 +961,8 @@
 						},
 
 						destroy: function() {
-
+							createjs.Tween.get(this.element)
+  								.to({ y: -renderer.height }, 500, createjs.Ease.getPowInOut(4));
 						}
 
 					},
@@ -1006,11 +1045,35 @@
 
 			slide_4: {
 
-				init: function(active) {
+				init: function() {
 
 					console.log("Slide 4 init");
 
-					slide_container_4 = new PIXI.Container();
+				},
+
+				destroy: function() {
+
+					console.log("Slide 4 destroy");
+
+				},
+
+				update: function() {
+
+				},
+
+				elems: {
+
+				}
+
+			},
+
+			slide_5: {
+
+				init: function(active) {
+
+					console.log("Slide 5 init");
+
+					slide_container_5 = new PIXI.Container();
 
 					this.elems.magazine.init();
 					this.elems.title_1.init();
@@ -1025,32 +1088,32 @@
 					this.elems.time_2.init();
 					this.elems.orderBtn.init();
 
-					stage.addChild(slide_container_4);
+					stage.addChild(slide_container_5);
 
 				},
 
 				destroy: function() {
 
-					console.log("Slide 4 destroy");
+					console.log("Slide 5 destroy");
 
-					stage.removeChild(slide_container_4);
+					this.elems.magazine.destroy();
+					this.elems.title_1.destroy();
+					this.elems.title_2.destroy();
+					this.elems.title_3.destroy();
+					this.elems.title_4.destroy();
+					this.elems.price_1.destroy();
+					this.elems.price_2.destroy();
+					this.elems.price_3.destroy();
+					this.elems.price_4.destroy();
+					this.elems.time_1.destroy();
+					this.elems.time_2.destroy();
+					this.elems.orderBtn.destroy();
+
+					//stage.removeChild(slide_container_5);
 
 				},
 
 				update: function() {
-
-					this.elems.magazine.update();
-					this.elems.title_1.update();
-					this.elems.title_2.update();
-					this.elems.title_3.update();
-					this.elems.title_4.update();
-					this.elems.price_1.update();
-					this.elems.price_2.update();
-					this.elems.price_3.update();
-					this.elems.price_4.update();
-					this.elems.time_1.update();
-					this.elems.time_2.update();
-					this.elems.orderBtn.update();
 
 				},
 
@@ -1071,13 +1134,19 @@
 							this.element = new PIXI.Text("Стоимость базовой\nверсии", style);
 
 							this.element.x = (renderer.width - this.element.width) / 2 - 300;	
-							this.element.y = ((renderer.height - this.element.height) / 2) - 170;
+							this.element.y = -renderer.height;
 
-							slide_container_4.addChild(this.element);
+							slide_container_5.addChild(this.element);
+
+							createjs.Tween.get(this.element)
+								.wait(2000)
+  								.to({ y: ((renderer.height - this.element.height) / 2) - 170 }, 500, createjs.Ease.quadOut());
+
 						},
 
-						update: function() {
-
+						destroy: function() {
+							createjs.Tween.get(this.element)
+  								.to({ y: -renderer.height }, 500, createjs.Ease.quadOut());
 						}
 
 					},
@@ -1095,13 +1164,20 @@
 							this.element = new PIXI.Text("Срок изготовления", style);
 
 							this.element.x = (renderer.width - this.element.width) / 2 + 210;	
-							this.element.y = ((renderer.height - this.element.height) / 2) - 180;
+							this.element.y = -renderer.height;
 
-							slide_container_4.addChild(this.element);
+							slide_container_5.addChild(this.element);
+
+							createjs.Tween.get(this.element)
+								.wait(1500)
+  								.to({ y: ((renderer.height - this.element.height) / 2) - 180 }, 500, createjs.Ease.quadOut());	
+
 						},
 
-						update: function() {
-
+						destroy: function() {
+							createjs.Tween.get(this.element)
+								.wait(600)
+  								.to({ y: -renderer.height }, 500, createjs.Ease.quadOut());	
 						}
 
 					},
@@ -1119,13 +1195,20 @@
 							this.element = new PIXI.Text("Стоимость за каждый\nдополнительный", style);
 
 							this.element.x = (renderer.width - this.element.width) / 2 + 125;	
-							this.element.y = ((renderer.height - this.element.height) / 2) + 170;
+							this.element.y = -renderer.height;
 
-							slide_container_4.addChild(this.element);
+							slide_container_5.addChild(this.element);
+
+							createjs.Tween.get(this.element)
+								.wait(700)
+  								.to({ y: ((renderer.height - this.element.height) / 2) + 170 }, 500, createjs.Ease.quadOut());	
+
 						},
 
-						update: function() {
-
+						destroy: function() {
+							createjs.Tween.get(this.element)
+								.wait(1600)
+  								.to({ y: -renderer.height }, 500, createjs.Ease.quadOut());	
 						}
 
 					},
@@ -1143,13 +1226,20 @@
 							this.element = new PIXI.Text("Стиль, мероприятие или праздник", style);
 
 							this.element.x = (renderer.width - this.element.width) / 2 + 165;	
-							this.element.y = ((renderer.height - this.element.height) / 2) + 197;
+							this.element.y = -renderer.height;
 
-							slide_container_4.addChild(this.element);
+							slide_container_5.addChild(this.element);
+
+							createjs.Tween.get(this.element)
+								.wait(500)
+  								.to({ y: ((renderer.height - this.element.height) / 2) + 197 }, 500, createjs.Ease.quadOut());	
+
 						},
 
-						update: function() {
-
+						destroy: function() {
+							createjs.Tween.get(this.element)
+								.wait(2000)
+  								.to({ y: -renderer.height }, 500, createjs.Ease.quadOut());	
 						}
 
 					},
@@ -1159,6 +1249,7 @@
 						element: null,
 
 						init: function() {
+
 							var style = {
 									font : '120px Plumb-Black',
 								    fill : '#fa6464'
@@ -1167,13 +1258,20 @@
 							this.element = new PIXI.Text("2999", style);
 
 							this.element.x = (renderer.width - this.element.width) / 2 - 180;	
-							this.element.y = ((renderer.height - this.element.height) / 2) - 175;
+							this.element.y = -renderer.height;
 
-							slide_container_4.addChild(this.element);
+							slide_container_5.addChild(this.element);
+
+							createjs.Tween.get(this.element)
+								.wait(1700)
+  								.to({ y: ((renderer.height - this.element.height) / 2) - 175 }, 500, createjs.Ease.quadOut());
+
 						},
 
-						update: function() {
-							
+						destroy: function() {
+							createjs.Tween.get(this.element)
+								.wait(300)
+  								.to({ y: -renderer.height }, 500, createjs.Ease.quadOut());	
 						}
 
 					},
@@ -1183,6 +1281,7 @@
 						element: null,
 
 						init: function() {
+
 							var style = {
 									font : '60px Plumb-Black',
 								    fill : '#fa6464'
@@ -1191,13 +1290,20 @@
 							this.element = new PIXI.Text("РУБЛЕЙ", style);
 
 							this.element.x = (renderer.width - this.element.width) / 2 - 220;	
-							this.element.y = ((renderer.height - this.element.height) / 2) - 100;
+							this.element.y = -renderer.height;
 
-							slide_container_4.addChild(this.element);
+							slide_container_5.addChild(this.element);
+
+							createjs.Tween.get(this.element)
+								.wait(1700)
+  								.to({ y: ((renderer.height - this.element.height) / 2) - 100 }, 500, createjs.Ease.quadOut());
+
 						},
 
-						update: function() {
-							
+						destroy: function() {
+							createjs.Tween.get(this.element)
+								.wait(300)
+  								.to({ y: -renderer.height }, 500, createjs.Ease.quadOut());
 						}
 
 					},
@@ -1207,6 +1313,7 @@
 						element: null,
 
 						init: function() {
+
 							var style = {
 									font : '80px Plumb-Black',
 								    fill : '#fa6464'
@@ -1215,13 +1322,20 @@
 							this.element = new PIXI.Text("+999", style);
 
 							this.element.x = (renderer.width - this.element.width) / 2 + 90;	
-							this.element.y = ((renderer.height - this.element.height) / 2) + 80;
+							this.element.y = -renderer.height;
 
-							slide_container_4.addChild(this.element);
+							slide_container_5.addChild(this.element);
+
+							createjs.Tween.get(this.element)
+								.wait(1000)
+  								.to({ y: ((renderer.height - this.element.height) / 2) + 80 }, 500, createjs.Ease.quadOut());
+
 						},
 
-						update: function() {
-							
+						destroy: function() {
+							createjs.Tween.get(this.element)
+								.wait(1300)
+  								.to({ y: -renderer.height }, 500, createjs.Ease.quadOut());
 						}
 
 					},
@@ -1231,6 +1345,7 @@
 						element: null,
 
 						init: function() {
+
 							var style = {
 									font : '40px Plumb-Black',
 								    fill : '#fa6464'
@@ -1239,13 +1354,20 @@
 							this.element = new PIXI.Text("РУБЛЕЙ", style);
 
 							this.element.x = (renderer.width - this.element.width) / 2 + 130;	
-							this.element.y = ((renderer.height - this.element.height) / 2) + 130;
+							this.element.y = -renderer.height;
 
-							slide_container_4.addChild(this.element);
+							slide_container_5.addChild(this.element);
+
+							createjs.Tween.get(this.element)
+								.wait(1000)
+  								.to({ y: ((renderer.height - this.element.height) / 2) + 130 }, 500, createjs.Ease.quadOut());
+
 						},
 
-						update: function() {
-							
+						destroy: function() {
+							createjs.Tween.get(this.element)
+								.wait(1300)
+  								.to({ y: -renderer.height }, 500, createjs.Ease.quadOut());
 						}
 
 					},
@@ -1255,6 +1377,7 @@
 						element: null,
 
 						init: function() {
+
 							var style = {
 									font : '100px Plumb-Black',
 								    fill : '#b48264'
@@ -1263,13 +1386,20 @@
 							this.element = new PIXI.Text("3", style);
 
 							this.element.x = (renderer.width - this.element.width) / 2 + 150;	
-							this.element.y = ((renderer.height - this.element.height) / 2) - 130;
+							this.element.y = -renderer.height;
 
-							slide_container_4.addChild(this.element);
+							slide_container_5.addChild(this.element);
+
+							createjs.Tween.get(this.element)
+								.wait(1300)
+  								.to({ y: ((renderer.height - this.element.height) / 2) - 130 }, 500, createjs.Ease.quadOut());
+
 						},
 
-						update: function() {
-							
+						destroy: function() {
+							createjs.Tween.get(this.element)
+								.wait(1000)
+  								.to({ y: -renderer.height }, 500, createjs.Ease.quadOut());
 						}
 
 					},
@@ -1279,6 +1409,7 @@
 						element: null,
 
 						init: function() {
+
 							var style = {
 									font : '30px Plumb-Black',
 								    fill : '#b48264'
@@ -1287,13 +1418,20 @@
 							this.element = new PIXI.Text("РАБОЧИХ\nДНЯ", style);
 
 							this.element.x = (renderer.width - this.element.width) / 2 + 250;	
-							this.element.y = ((renderer.height - this.element.height) / 2) - 130;
+							this.element.y = -renderer.height;
 
-							slide_container_4.addChild(this.element);
+							slide_container_5.addChild(this.element);
+
+							createjs.Tween.get(this.element)
+								.wait(1300)
+  								.to({ y: ((renderer.height - this.element.height) / 2) - 130 }, 500, createjs.Ease.quadOut());
+
 						},
 
-						update: function() {
-							
+						destroy: function() {
+							createjs.Tween.get(this.element)
+								.wait(1000)
+  								.to({ y: -renderer.height }, 500, createjs.Ease.quadOut());
 						}
 
 					},
@@ -1310,14 +1448,19 @@
 
 							this.element.anchor.set(0.5);
 							this.element.position.x = renderer.width / 2;
-							this.element.position.y = renderer.height / 2;
+							this.element.position.y = renderer.height*2;
 
-							slide_container_4.addChild(this.element);
+							slide_container_5.addChild(this.element);
+
+							createjs.Tween.get(this.element)
+  								.to({ y: renderer.height / 2 }, 500, createjs.Ease.quadOut());
 
 						},
 
-						update: function() {
-							
+						destroy: function() {
+							createjs.Tween.get(this.element)
+								.wait(2000)
+  								.to({ y: renderer.height*2 }, 500, createjs.Ease.quadOut());
 						}
 
 					},
@@ -1339,7 +1482,7 @@
 							this.element.x = (renderer.width - this.element.width) / 2;	
 							this.element.y = ((renderer.height - this.element.height) / 2) + 260;
 
-							slide_container_4.addChild(this.element);
+							slide_container_5.addChild(this.element);
 
 							this.element_2 = new PIXI.Graphics();
 
@@ -1348,11 +1491,11 @@
 							this.element_2.drawRoundedRect(renderer.width/2-50, renderer.height/2+245, 100, 30, 1);
 							this.element_2.endFill();
 
-							slide_container_4.addChild(this.element_2);
+							slide_container_5.addChild(this.element_2);
 
 						},
 
-						update: function() {
+						destroy: function() {
 							
 						}
 
@@ -1362,13 +1505,13 @@
 
 			},
 
-			slide_5: {
+			slide_6: {
 
 				init: function(active) {
 
-					console.log("Slide 5 init");
+					console.log("Slide 6 init");
 
-					slide_container_5 = new PIXI.Container();
+					slide_container_6 = new PIXI.Container();
 
 					this.elems.notepade.init();
 					this.elems.title.init();
@@ -1376,25 +1519,25 @@
 					this.elems.info.init();
 					this.elems.spinner.init();
 
-					stage.addChild(slide_container_5);
+					stage.addChild(slide_container_6);
 
 				},
 
 				destroy: function() {
 
-					console.log("Slide 5 destroy");
+					console.log("Slide 6 destroy");
 
-					stage.removeChild(slide_container_5);
+					this.elems.notepade.destroy();
+					this.elems.title.destroy();
+					this.elems.btn.destroy();
+					this.elems.info.destroy();
+					this.elems.spinner.destroy();
+
+					stage.removeChild(slide_container_6);
 
 				},
 
 				update: function() {
-
-					this.elems.notepade.update();
-					this.elems.title.update();
-					this.elems.btn.update();
-					this.elems.info.update();
-					this.elems.spinner.update();
 
 				},
 
@@ -1412,10 +1555,10 @@
 							this.element.position.x = renderer.width / 2 + 300;
 							this.element.position.y = renderer.height / 2 + 40;
 
-							slide_container_5.addChild(this.element);
+							slide_container_6.addChild(this.element);
 						},
 
-						update: function() {
+						destroy: function() {
 
 						}
 
@@ -1439,11 +1582,11 @@
 							this.element.x = (renderer.width - this.element.width) / 2;	
 							this.element.y = ((renderer.height - this.element.height) / 2);
 
-							slide_container_5.addChild(this.element);
+							slide_container_6.addChild(this.element);
 
 						},
 
-						update: function() {
+						destroy: function() {
 
 						}
 
@@ -1465,7 +1608,7 @@
 							this.element.buttonMode = true;
 							this.element.interactive = true;
 							this.element.on("click", function() {
-								active_slide = 6;
+								active_slide = 7;
 								App.initScroll.scroll();
 							});
 
@@ -1482,12 +1625,12 @@
 							this.element_2.anchor.y = 0.5;
 							this.element_2.rotation = -0.3;
 
-							slide_container_5.addChild(this.element);
-							slide_container_5.addChild(this.element_2);
+							slide_container_6.addChild(this.element);
+							slide_container_6.addChild(this.element_2);
 
 						},
 
-						update: function() {
+						destroy: function() {
 
 						}
 
@@ -1511,7 +1654,7 @@
 							this.element.x = (renderer.width - this.element.width) / 2;	
 							this.element.y = ((renderer.height - this.element.height) / 2) + 250;
 
-							slide_container_5.addChild(this.element);
+							slide_container_6.addChild(this.element);
 
 							this.element_2 = new PIXI.Graphics();
 
@@ -1519,11 +1662,11 @@
 							this.element_2.beginFill(0x000000, 0);
 							this.element_2.drawRect( renderer.width/2 - 225 , renderer.height/2 + 200 , 450 , 100);
 
-							slide_container_5.addChild(this.element_2);
+							slide_container_6.addChild(this.element_2);
 
 						},
 
-						update: function() {
+						destroy: function() {
 
 						}
 
@@ -1564,11 +1707,11 @@
 							vars.spin2.position.x = renderer.width / 2 - 5;
 							vars.spin2.position.y = renderer.height / 2 + 345;
 
-							slide_container_5.addChild(vars.spin1);
-							slide_container_5.addChild(vars.spin2); 
+							slide_container_6.addChild(vars.spin1);
+							slide_container_6.addChild(vars.spin2); 
 						},
 
-						update: function() {
+						destroy: function() {
 							var vars = this.vars;
 
 							if(vars.init == true) {
@@ -1585,29 +1728,27 @@
 
 			},
 
-			slide_6: {
+			slide_7: {
 
 				init: function(active) {
 
-					console.log("Slide 6 init");
+					console.log("Slide 7 init");
 
-					slide_container_6 = new PIXI.Container();
+					slide_container_7 = new PIXI.Container();
 
-					stage.addChild(slide_container_6);
+					stage.addChild(slide_container_7);
 
 				},
 
 				destroy: function() {
 
-					console.log("Slide 6 destroy");
+					console.log("Slide 7 destroy");
 
-					stage.removeChild(slide_container_6);
+					stage.removeChild(slide_container_7);
 
 				},
 
 				update: function() {
-
-
 
 				},
 
@@ -1619,27 +1760,27 @@
 
 			},
 
-			slide_7: {
+			slide_8: {
 
 				init: function(active) {
 
-					console.log("Slide 7 init");
+					console.log("Slide 8 init");
 
-					slide_container_7 = new PIXI.Container();
+					slide_container_8 = new PIXI.Container();
 
 					this.elems.slider.init();
 					this.elems.orderBtn.init();
 					this.elems.footer.init();
 
-					stage.addChild(slide_container_7);
+					stage.addChild(slide_container_8);
 
 				},
 
 				destroy: function() {
 
-					console.log("Slide 7 destroy");
+					console.log("Slide 8 destroy");
 
-					stage.removeChild(slide_container_7);
+					stage.removeChild(slide_container_8);
 
 				},
 
@@ -1707,7 +1848,7 @@
 							vars.slide_container_1_sprite = new PIXI.Sprite(vars.slide_container_1_texture);
 							vars.slide_container_1_sprite.width = renderer.width;
 							vars.slide_container_1_sprite.height = renderer.height;
-							slide_container_7.addChild(vars.slide_container_1_sprite);
+							slide_container_8.addChild(vars.slide_container_1_sprite);
 
 							var style = {
 									font : '65px FiraSansRegular',
@@ -1721,7 +1862,7 @@
 							title.x = (renderer.width - title.width) / 2;	
 							title.y = ((renderer.height - title.height) / 2);
 
-							slide_container_7.addChild(title);
+							slide_container_8.addChild(title);
 						},
 
 						makeslide_container_2: function() {
@@ -1732,7 +1873,7 @@
 							vars.slide_container_2_sprite.width = renderer.width;
 							vars.slide_container_2_sprite.height = renderer.height;
 							vars.slide_container_2_sprite.alpha = 0;
-							slide_container_7.addChild(vars.slide_container_2_sprite);
+							slide_container_8.addChild(vars.slide_container_2_sprite);
 
 							var style = {
 									font : '65px FiraSansRegular',
@@ -1746,7 +1887,7 @@
 							title.x = (renderer.width - title.width) / 2;	
 							title.y = ((renderer.height - title.height) / 2);
 
-							slide_container_7.addChild(title);
+							slide_container_8.addChild(title);
 						},
 
 						makeslide_container_3: function() {
@@ -1757,7 +1898,7 @@
 							vars.slide_container_3_sprite.width = renderer.width;
 							vars.slide_container_3_sprite.height = renderer.height;
 							vars.slide_container_3_sprite.alpha = 0;
-							slide_container_7.addChild(vars.slide_container_3_sprite);
+							slide_container_8.addChild(vars.slide_container_3_sprite);
 
 							var style = {
 									font : '65px FiraSansRegular',
@@ -1771,7 +1912,7 @@
 							title.x = (renderer.width - title.width) / 2;	
 							title.y = ((renderer.height - title.height) / 2);
 
-							slide_container_7.addChild(title);
+							slide_container_8.addChild(title);
 						},
 
 						makeNav: function() {
@@ -1789,7 +1930,7 @@
 								if(vars.active > 1) vars.active--;
 							});
 
-							slide_container_7.addChild(vars.prev_btn_sprite);						
+							slide_container_8.addChild(vars.prev_btn_sprite);						
 
 							vars.next_btn_texture = PIXI.Texture.fromImage("i/s7/nav_btn.svg");
 							vars.next_btn_sprite = new PIXI.Sprite(vars.next_btn_texture);
@@ -1806,7 +1947,7 @@
 								if(vars.active < 3) vars.active++;
 							});
 
-							slide_container_7.addChild(vars.next_btn_sprite);
+							slide_container_8.addChild(vars.next_btn_sprite);
 						}
 
 					},
@@ -1836,8 +1977,8 @@
 							this.element_2.drawRoundedRect(renderer.width/2-50, renderer.height/2+245, 100, 30, 1);
 							this.element_2.endFill();
 
-							slide_container_7.addChild(this.element);
-							slide_container_7.addChild(this.element_2);
+							slide_container_8.addChild(this.element);
+							slide_container_8.addChild(this.element_2);
 
 						},
 
