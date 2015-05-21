@@ -580,7 +580,7 @@
 							this.element = new PIXI.Text("ЛУЧШИЕ СТИЛИСТЫ РОССИИ\nПРЕДЛАГАЮТ ВАМ СОЗДАТЬ", style);
 							this.element.x = (renderer.width - this.element.width) / 2;	
 							this.element.y = -this.element.height;
-							this.element.filters = [this.element_blur];
+							//this.element.filters = [this.element_blur];
 
 							slide_container_2.addChild(this.element);
 
@@ -591,8 +591,8 @@
 						},
 
 						update: function() {
-							if( this.element_blur.blur > 0 ) this.element_blur.blur -= 1.4;
-							if( this.element_blur.blur == 0 ) this.element.filters = null;
+							//if( this.element_blur.blur > 0 ) this.element_blur.blur -= 1.4;
+							//if( this.element_blur.blur == 0 ) this.element.filters = null;
  						},
 
  						destroy: function() {
@@ -698,7 +698,7 @@
 							this.element = new PIXI.Text("- ПОДРОБНОЕ РУКОВОДСТВО\nПО ПРЕОБРАЖЕНИЮ", style);
 							this.element.x = (renderer.width - this.element.width) / 2;	
 							this.element.y = renderer.height;
-							this.element.filters = [this.element_blur];
+							//this.element.filters = [this.element_blur];
 
 							slide_container_2.addChild(this.element);
 
@@ -709,8 +709,8 @@
 						},
 
 						update: function() {
-							if( this.element_blur.blur > 0 ) this.element_blur.blur -= 1.3;
-							if( this.element_blur.blur == 0 ) this.element.filters = null;
+							//if( this.element_blur.blur > 0 ) this.element_blur.blur -= 1.3;
+							//if( this.element_blur.blur == 0 ) this.element.filters = null;
  						},
 
  						destroy: function() {
@@ -771,13 +771,13 @@
 
 							this.element.lineStyle(3, 0xfa6464, 1);
 							this.element.beginFill(0x000000, 0);
-							this.element.drawRect( -560 , renderer.height/2 + 150 , 560 , 170);
+							this.element.drawRect( -600 , renderer.height/2 + 150 , 560 , 170);
 
 							slide_container_2.addChild(this.element);
 
 							createjs.Tween.get(this.element)
 								.wait(2500)
-  								.to({ x: renderer.width/2 + 280 }, 500, createjs.Ease.quadOut());
+  								.to({ x: renderer.width/2 + 320 }, 500, createjs.Ease.quadOut());
 						},
 
 						update: function() {
@@ -1114,7 +1114,7 @@
 				},
 
 				update: function() {
-
+					this.elems.orderBtn.update();
 				},
 
 				elems: {
@@ -1176,7 +1176,7 @@
 
 						destroy: function() {
 							createjs.Tween.get(this.element)
-								.wait(600)
+								.wait(500)
   								.to({ y: -renderer.height }, 500, createjs.Ease.quadOut());	
 						}
 
@@ -1207,7 +1207,7 @@
 
 						destroy: function() {
 							createjs.Tween.get(this.element)
-								.wait(1600)
+								.wait(1400)
   								.to({ y: -renderer.height }, 500, createjs.Ease.quadOut());	
 						}
 
@@ -1238,7 +1238,7 @@
 
 						destroy: function() {
 							createjs.Tween.get(this.element)
-								.wait(2000)
+								.wait(1600)
   								.to({ y: -renderer.height }, 500, createjs.Ease.quadOut());	
 						}
 
@@ -1334,7 +1334,7 @@
 
 						destroy: function() {
 							createjs.Tween.get(this.element)
-								.wait(1300)
+								.wait(1000)
   								.to({ y: -renderer.height }, 500, createjs.Ease.quadOut());
 						}
 
@@ -1366,7 +1366,7 @@
 
 						destroy: function() {
 							createjs.Tween.get(this.element)
-								.wait(1300)
+								.wait(1000)
   								.to({ y: -renderer.height }, 500, createjs.Ease.quadOut());
 						}
 
@@ -1398,7 +1398,7 @@
 
 						destroy: function() {
 							createjs.Tween.get(this.element)
-								.wait(1000)
+								.wait(700)
   								.to({ y: -renderer.height }, 500, createjs.Ease.quadOut());
 						}
 
@@ -1430,7 +1430,7 @@
 
 						destroy: function() {
 							createjs.Tween.get(this.element)
-								.wait(1000)
+								.wait(700)
   								.to({ y: -renderer.height }, 500, createjs.Ease.quadOut());
 						}
 
@@ -1459,7 +1459,7 @@
 
 						destroy: function() {
 							createjs.Tween.get(this.element)
-								.wait(2000)
+								.wait(1300)
   								.to({ y: renderer.height*2 }, 500, createjs.Ease.quadOut());
 						}
 
@@ -1481,6 +1481,7 @@
 
 							this.element.x = (renderer.width - this.element.width) / 2;	
 							this.element.y = ((renderer.height - this.element.height) / 2) + 260;
+							this.element.alpha = 0;
 
 							slide_container_5.addChild(this.element);
 
@@ -1490,13 +1491,25 @@
 							this.element_2.beginFill(0xFF00BB, 0);
 							this.element_2.drawRoundedRect(renderer.width/2-50, renderer.height/2+245, 100, 30, 1);
 							this.element_2.endFill();
+							this.element_2.alpha = 0;
 
 							slide_container_5.addChild(this.element_2);
 
 						},
 
 						destroy: function() {
-							
+							this.element.alpha = 0;
+							this.element_2.alpha = 0;
+						},
+
+						update: function() {
+							if( this.element != null ) {
+								if(this.element.alpha < 1) this.element.alpha += 0.005;
+							}
+
+							if( this.element_2 != null ) {
+								if(this.element_2.alpha < 1) this.element_2.alpha += 0.005;
+							}
 						}
 
 					}
@@ -1533,7 +1546,7 @@
 					this.elems.info.destroy();
 					this.elems.spinner.destroy();
 
-					stage.removeChild(slide_container_6);
+					//stage.removeChild(slide_container_6);
 
 				},
 
@@ -1548,18 +1561,26 @@
 						element: null,
 
 						init: function() {
+
 							var texture = PIXI.Texture.fromImage("i/s5/notepade.png");
 
 							this.element = new PIXI.Sprite(texture);
 							this.element.anchor.set(0.5);
 							this.element.position.x = renderer.width / 2 + 300;
-							this.element.position.y = renderer.height / 2 + 40;
+							this.element.position.y = -renderer.height;
 
 							slide_container_6.addChild(this.element);
+
+							createjs.Tween.get(this.element)
+								.wait(1500)
+		  						.to({ y: renderer.height / 2 + 40 }, 3000, createjs.Ease.getPowInOut(4));
+
+
 						},
 
 						destroy: function() {
-
+							createjs.Tween.get(this.element)
+		  						.to({ y: -renderer.height }, 3000, createjs.Ease.getPowInOut(4));
 						}
 
 					},
@@ -1580,14 +1601,19 @@
 							this.element = new PIXI.Text("ЗАПОЛНИТЕ\nАНКЕТУ\nНА САЙТЕ", style);
 
 							this.element.x = (renderer.width - this.element.width) / 2;	
-							this.element.y = ((renderer.height - this.element.height) / 2);
+							this.element.y = -renderer.height;
 
 							slide_container_6.addChild(this.element);
+
+							createjs.Tween.get(this.element)
+		  						.to({ y: ((renderer.height - this.element.height) / 2) }, 3000, createjs.Ease.getPowInOut(4));
 
 						},
 
 						destroy: function() {
-
+							createjs.Tween.get(this.element)
+								.wait(1000)
+		  						.to({ y: -renderer.height }, 1000, createjs.Ease.getPowInOut(4));
 						}
 
 					},
@@ -1604,7 +1630,7 @@
 							this.element = new PIXI.Sprite(texture);
 							this.element.anchor.set(0.5);
 							this.element.position.x = renderer.width / 2 - 280;
-							this.element.position.y = renderer.height / 2 + 30;
+							this.element.position.y = -renderer.height;
 							this.element.buttonMode = true;
 							this.element.interactive = true;
 							this.element.on("click", function() {
@@ -1620,7 +1646,7 @@
 
 							this.element_2 = new PIXI.Text("ЗАПОЛНИТЬ", style);
 							this.element_2.x = (renderer.width - this.element_2.width) / 2 - 235;	
-							this.element_2.y = ((renderer.height - this.element_2.height) / 2) + 42;
+							this.element_2.y = -renderer.height;
 							this.element_2.anchor.x = 0.5;
 							this.element_2.anchor.y = 0.5;
 							this.element_2.rotation = -0.3;
@@ -1628,10 +1654,24 @@
 							slide_container_6.addChild(this.element);
 							slide_container_6.addChild(this.element_2);
 
+							createjs.Tween.get(this.element)
+								.wait(500)
+		  						.to({ y: ((renderer.height - this.element_2.height) / 2) + 42 }, 1000, createjs.Ease.getPowInOut(4));
+
+		  					createjs.Tween.get(this.element_2)
+								.wait(700)
+		  						.to({ y: renderer.height / 2 + 30 }, 1000, createjs.Ease.getPowInOut(4));
+
 						},
 
 						destroy: function() {
+							createjs.Tween.get(this.element)
+								.wait(700)
+		  						.to({ y: -renderer.height }, 1000, createjs.Ease.getPowInOut(4));
 
+		  					createjs.Tween.get(this.element_2)
+								.wait(1000)
+		  						.to({ y: -renderer.height }, 1000, createjs.Ease.getPowInOut(4));
 						}
 
 					},
@@ -1651,7 +1691,7 @@
 
 							this.element = new PIXI.Text("Стилисты “Модного приговора” получат Ваши данные,\nопределят Ваш цветотип, тип фигуры, овал лица\nи составят подробную инструкцию преображения!", style);
 
-							this.element.x = (renderer.width - this.element.width) / 2;	
+							this.element.x = renderer.width + 10;	
 							this.element.y = ((renderer.height - this.element.height) / 2) + 250;
 
 							slide_container_6.addChild(this.element);
@@ -1660,14 +1700,28 @@
 
 							this.element_2.lineStyle(3, 0x3c3c3c, 1);
 							this.element_2.beginFill(0x000000, 0);
-							this.element_2.drawRect( renderer.width/2 - 225 , renderer.height/2 + 200 , 450 , 100);
+							this.element_2.drawRect( -600 , renderer.height/2 + 200 , 450 , 100);
 
 							slide_container_6.addChild(this.element_2);
+
+							createjs.Tween.get(this.element)
+								.wait(1500)
+		  						.to({ x: (renderer.width - this.element.width) / 2 }, 1000, createjs.Ease.getPowInOut(4));
+
+		  					createjs.Tween.get(this.element_2)
+								.wait(1500)
+		  						.to({ x: renderer.width/2 + 380 }, 1000, createjs.Ease.getPowInOut(4));
 
 						},
 
 						destroy: function() {
+							createjs.Tween.get(this.element)
+								.wait(1000)
+		  						.to({ x: renderer.width + 60 }, 1000, createjs.Ease.getPowInOut(4));
 
+		  					createjs.Tween.get(this.element_2)
+								.wait(1000)
+		  						.to({ x: -600 }, 1000, createjs.Ease.getPowInOut(4));
 						}
 
 					},
