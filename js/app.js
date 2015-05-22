@@ -16,7 +16,7 @@
 
 		w_width = $(window).width(),
 		w_height = $(window).height(),
-		renderer = new PIXI.autoDetectRenderer(w_width, w_height, { transparent: true }),
+		renderer = new PIXI.CanvasRenderer(w_width, w_height, { transparent: true }),
 		stage = new PIXI.Container(),
 
 		slide_container_1 = null,
@@ -255,6 +255,7 @@
 			$body.one("mousewheel", $.debounce(200, true, App.mousewheelService.init));
 
 			setInterval(function() {
+				$body.unbind("mousewheel");
 				$body.one("mousewheel", $.debounce(200, true, App.mousewheelService.init));
 			}, SLIDE_ANIMATION_TIME);
 
@@ -827,14 +828,10 @@
 								    padding : 20
 								};
 
-							this.element_blur = new PIXI.filters.BlurFilter();
-							this.element_blur.blur = 0;
 
 							this.element = new PIXI.Text("Имидж-гайд – это ваша личная книга стиля. Десятки\nкрасочных иллюстраций, детальный разбор вашего\nгардероба и практические советы по улучшению\nвашего образа – все это на страницах\nперсонального имидж-гайда. ", style);
 							this.element.x = renderer.width;	
 							this.element.y = ((renderer.height - this.element.height) / 2) + 250;
-							this.element.filters = [this.element_blur];
-							this.element.resolution = 2;
 
 							slide_container_2.addChild(this.element);
 
