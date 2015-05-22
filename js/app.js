@@ -27,8 +27,8 @@
 		slide_container_6 = null,
 		slide_container_7 = null,
 
-		scroll_top = null,
-		scroll_down = null,
+		scroll_top = false,
+		scroll_down = false,
 
 		active_slide = 1,
 
@@ -111,14 +111,16 @@
 				if(event) {
 					if(event.originalEvent.wheelDelta < 0) {
 						// scroll down
+						if( active_slide == 7 ) return;
+						if( active_slide < 7 ) active_slide++;
 						scroll_down = true;
 						scroll_top = false;
-						if( active_slide < 7 ) active_slide++;
 					} else {
 						// scroll top
+						if( active_slide == 1 ) return;
+						if( active_slide > 1 ) active_slide--;
 						scroll_down = false;
 						scroll_top = true;
-						if( active_slide > 1 ) active_slide--;
 					}
 				}
 
@@ -1789,8 +1791,8 @@
 						},
 
 						destroy: function() {
-							this.element.alpha = 0;
-							this.element_2.alpha = 0;
+							slide_container_5.removeChild(this.element);
+							slide_container_5.removeChild(this.element_2);
 						},
 
 						update: function() {
