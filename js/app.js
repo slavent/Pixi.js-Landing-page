@@ -139,7 +139,7 @@
 								destroySlides();
 								setTimeout(function() {
 									App.managerService.slide_1.init();
-								}, 1500);
+								}, 1000);
 							}
 							break;
 
@@ -148,7 +148,7 @@
 								destroySlides();
 								setTimeout(function() {
 									App.managerService.slide_2.init();
-								}, 1500);
+								}, 1000);
 							}
 							if( scroll_down == true ) {
 								destroySlides();
@@ -163,13 +163,13 @@
 								destroySlides();
 								setTimeout(function() {
 									App.managerService.slide_3.init();
-								}, 1500);
+								}, 1000);
 							}
 							if( scroll_down == true ) {
 								destroySlides();
 								setTimeout(function() {
 									App.managerService.slide_3.init();
-								}, 1500);
+								}, 1000);
 							}
 							break;
 
@@ -178,13 +178,13 @@
 								destroySlides();
 								setTimeout(function() {
 									App.managerService.slide_4.init();
-								}, 1500);
+								}, 1000);
 							}
 							if( scroll_down == true ) {
 								destroySlides();
 								setTimeout(function() {
 									App.managerService.slide_4.init();
-								}, 1500);
+								}, 1000);
 							}
 							break;
 
@@ -193,13 +193,13 @@
 								destroySlides();
 								setTimeout(function() {
 									App.managerService.slide_5.init();
-								}, 1500);
+								}, 1000);
 							}
 							if( scroll_down == true ) {
 								destroySlides();
 								setTimeout(function() {
 									App.managerService.slide_5.init();
-								}, 1500);
+								}, 1000);
 							}
 							break;
 
@@ -223,7 +223,7 @@
 								destroySlides();
 								setTimeout(function() {
 									App.managerService.slide_7.init();
-								}, 1500);
+								}, 1000);
 							}
 							break;
 
@@ -272,7 +272,6 @@
     		$menu_popup_nav.find("li").on("click", function() {
     			active_slide = $(this).index() + 1;
     			App.mousewheelService.init();
-    			$menu_popup.hide();
 
     			return false;
     		});
@@ -303,10 +302,11 @@
 					stage.addChild(slide_container_1);
 
 					createjs.Tween.get(slide_container_1)
-  						.to({ alpha: 1 }, 500, createjs.Ease.getPowInOut(4));
-
-  					$main_menu.css({ "top" : -70 });
-  					$menu_icon.show();
+  						.to({ alpha: 1 }, 500, createjs.Ease.getPowInOut(4))
+  						.call(function() {
+  							$main_menu.css({ "top" : -70 });
+  							$menu_icon.show();
+  						});
 
 				},
 
@@ -317,13 +317,14 @@
 					createjs.Tween.get(slide_container_1)
   						.to({ alpha: 0 }, 1000, createjs.Ease.getPowInOut(4))
   						.call(function() {
-  							stage.removeChild(slide_container_1);
-  						});
+  							slide_container_1 = null;
 
-  					setTimeout(function() {
-  						$main_menu.css({ "top" : 0 });
-  					}, 2000);
-  					$menu_icon.hide();
+  							setTimeout(function() {
+		  						$main_menu.css({ "top" : 0 });
+		  					}, 2000);
+		  					$menu_icon.hide();
+		  					$menu_popup.hide();
+  						});
 
 				},
 
@@ -596,6 +597,7 @@
 					this.elems.border.destroy();
 					this.elems.arrowDown.destroy();
 
+					slide_container_2 = null;
 					//stage.removeChild(slide_container_2);
 
 				},
@@ -937,6 +939,7 @@
 					this.elems.title_1.destroy();
 					this.elems.title_2.destroy();
 
+					slide_container_3 = null;
 					//stage.removeChild(slide_container_3);
 
 				},
@@ -1179,6 +1182,8 @@
 
 					console.log("Slide 4 destroy");
 
+					slide_container_4 = null;
+
 				},
 
 				update: function() {
@@ -1233,6 +1238,7 @@
 					this.elems.time_2.destroy();
 					this.elems.orderBtn.destroy();
 
+					slide_container_5 = null;
 					//stage.removeChild(slide_container_5);
 
 				},
@@ -1735,6 +1741,7 @@
 					this.elems.info.destroy();
 					this.elems.spinner.destroy();
 
+					slide_container_6 = null;
 					//stage.removeChild(slide_container_6);
 
 				},
@@ -2032,7 +2039,8 @@
 
 					console.log("Slide 7 destroy");
 
-					stage.removeChild(slide_container_7);
+					slide_container_7 = null;
+					//stage.removeChild(slide_container_7);
 
 				},
 
