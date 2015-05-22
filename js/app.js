@@ -2124,10 +2124,13 @@
 					console.log("Slide 7 init");
 
 					slide_container_7 = new PIXI.Container();
+					slide_container_7.alpha = 0;
 
-					//this.elems.slider.init();
+					this.elems.slider.init();
 					this.elems.orderBtn.init();
 					this.elems.footer.init();
+
+					$footer.css({ "bottom" : 0 });
 
 					stage.addChild(slide_container_7);
 
@@ -2138,13 +2141,19 @@
 					console.log("Slide 7 destroy");
 
 					slide_container_7 = null;
+
+					$footer.css({ "bottom" : -120 });
 					//stage.removeChild(slide_container_7);
 
 				},
 
 				update: function() {
 
-					//this.elems.slider.update();
+					if( slide_container_7 != null ) {
+						if( slide_container_7.alpha < 1 ) slide_container_7.alpha += 0.05;
+					}
+
+					this.elems.slider.update();
 					this.elems.orderBtn.update();
 					this.elems.footer.update();
 
@@ -2178,25 +2187,28 @@
 						update: function() {
 							var vars = this.vars;
 
-							switch(vars.active) {
-								case 1: 
-									if( vars.slide_container_1_sprite.alpha < 1 ) vars.slide_container_1_sprite.alpha += 0.01;
-									if( vars.slide_container_2_sprite.alpha > 0 ) vars.slide_container_2_sprite.alpha -= 0.01;
-									if( vars.slide_container_3_sprite.alpha > 0 ) vars.slide_container_3_sprite.alpha -= 0.01;
-									break;
+							if( vars.slide_container_1_sprite != null && vars.slide_container_2_sprite != null && vars.slide_container_3_sprite != null ) {
+								switch(vars.active) {
+									case 1: 
+										if( vars.slide_container_1_sprite.alpha < 1 ) vars.slide_container_1_sprite.alpha += 0.01;
+										if( vars.slide_container_2_sprite.alpha > 0 ) vars.slide_container_2_sprite.alpha -= 0.01;
+										if( vars.slide_container_3_sprite.alpha > 0 ) vars.slide_container_3_sprite.alpha -= 0.01;
+										break;
 
-								case 2: 
-									if( vars.slide_container_1_sprite.alpha > 0 ) vars.slide_container_1_sprite.alpha -= 0.01;
-									if( vars.slide_container_2_sprite.alpha < 1 ) vars.slide_container_2_sprite.alpha += 0.01;
-									if( vars.slide_container_3_sprite.alpha > 0 ) vars.slide_container_3_sprite.alpha -= 0.01;
-									break;
+									case 2: 
+										if( vars.slide_container_1_sprite.alpha > 0 ) vars.slide_container_1_sprite.alpha -= 0.01;
+										if( vars.slide_container_2_sprite.alpha < 1 ) vars.slide_container_2_sprite.alpha += 0.01;
+										if( vars.slide_container_3_sprite.alpha > 0 ) vars.slide_container_3_sprite.alpha -= 0.01;
+										break;
 
-								case 3: 
-									if( vars.slide_container_1_sprite.alpha > 0 ) vars.slide_container_1_sprite.alpha -= 0.01;
-									if( vars.slide_container_2_sprite.alpha > 0 ) vars.slide_container_2_sprite.alpha -= 0.01;
-									if( vars.slide_container_3_sprite.alpha < 1 ) vars.slide_container_3_sprite.alpha += 0.01;
-									break;
+									case 3: 
+										if( vars.slide_container_1_sprite.alpha > 0 ) vars.slide_container_1_sprite.alpha -= 0.01;
+										if( vars.slide_container_2_sprite.alpha > 0 ) vars.slide_container_2_sprite.alpha -= 0.01;
+										if( vars.slide_container_3_sprite.alpha < 1 ) vars.slide_container_3_sprite.alpha += 0.01;
+										break;
+								}
 							}
+							
 						},
 
 						makeslide_container_1: function() {
