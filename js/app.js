@@ -30,7 +30,9 @@
 		scroll_top = null,
 		scroll_down = null,
 
-		active_slide = 1;
+		active_slide = 1,
+
+		SLIDE_ANIMATION_TIME = 4000;
     // END: Variables
 
 
@@ -250,7 +252,11 @@
 
 		bindService: function() {
 
-			$body.on("mousewheel", $.debounce(200, true, App.mousewheelService.init));
+			$body.one("mousewheel", $.debounce(200, true, App.mousewheelService.init));
+
+			setInterval(function() {
+				$body.one("mousewheel", $.debounce(200, true, App.mousewheelService.init));
+			}, SLIDE_ANIMATION_TIME);
 
 			$menu_icon.on("click", function() {
     			$menu_popup.fadeIn();
@@ -968,15 +974,16 @@
 								{ url: "http://lorempixel.com/400/400/", x: 0, y: 0, width: 0, height: 0, symbol: "М" },
 								{ url: "http://lorempixel.com/400/400/", x: 0, y: 0, width: 0, height: 0, symbol: "П" }
 							],
-								hover_box = new PIXI.Graphics();
+								hover_box = new PIXI.Graphics(),
+								box_height = (renderer.height - $main_menu.height()) / 3;
 
 							hover_box.lineStyle(1, 0xfa6464, 0);
 							hover_box.beginFill(0xfa6464, 0.9);
-							hover_box.drawRect(0, 0, renderer.height / 3, renderer.height / 3);
+							hover_box.drawRect(0, 0, box_height, box_height);
 
 							function moveHoverBox(x, y) {
 								createjs.Tween.get(hover_box)
-  									.to({ x: x , y: y }, 200, createjs.Ease.getPowInOut(4));
+  									.to({ x: x, y: y }, 200, createjs.Ease.getPowInOut(4));
 							}
 
 							this.element = new PIXI.Container();
@@ -995,21 +1002,21 @@
 									symbol = new PIXI.Text(boxes[i].symbol, style),
 									symbol_border = new PIXI.Graphics();
 
-								symbol.position.x = (renderer.height / 3) / 2;
-								symbol.position.y = (renderer.height / 3) / 2 - 80;
+								symbol.position.x = box_height / 2 + 20;
+								symbol.position.y = box_height / 2 - 50;
 
 								symbol_border.lineStyle(3, 0x3c3c3c, 1);
 								symbol_border.beginFill(0xfa6464, 0);
-								symbol_border.drawRect( (renderer.height / 3) / 2 - 20 , (renderer.height / 3) / 2 - 85 , 100 , 100 );
+								symbol_border.drawRect( (box_height) / 2, (box_height) / 2 - 55, 100, 100 );
 
 								box.addChild(symbol_border);
 								box.addChild(symbol);
 
-								box.height = renderer.height / 3;
-								box.width = renderer.height / 3;
+								box.height = box_height;
+								box.width = box_height;
 
 								if( i % 2 ) {
-									box.position.x = renderer.height / 3;
+									box.position.x = box_height;
 								} else {
 									box.position.x = 0;
 								}
@@ -1024,19 +1031,19 @@
 										break;
 
 									case 2: 
-										box.position.y = (renderer.height / 3);
+										box.position.y = box_height;
 										break;
 
 									case 3:
-										box.position.y = (renderer.height / 3);
+										box.position.y = box_height;
 										break;
 
 									case 4: 
-										box.position.y = (renderer.height / 3) * 2;
+										box.position.y = box_height * 2;
 										break;
 
 									case 5:
-										box.position.y = (renderer.height / 3) * 2;
+										box.position.y = box_height * 2;
 										break;
 								}
 								
@@ -1044,6 +1051,26 @@
 								box.interactive = true;
 								box.on("mouseover", function() {
 									moveHoverBox( this.position.x, this.position.y );
+
+									hover_box.children = [];
+
+									var style = {
+											font : '90px Myriad Pro',
+										    fill : '#ffffff',
+										    align : "center"
+										},
+										symbol = new PIXI.Text(this.children[1].text, style),
+										symbol_border = new PIXI.Graphics();
+
+									symbol.position.x = box_height / 2 + 20;
+									symbol.position.y = box_height / 2 - 50;
+
+									symbol_border.lineStyle(3, 0xffffff, 1);
+									symbol_border.beginFill(0xfa6464, 0);
+									symbol_border.drawRect( (box_height) / 2, (box_height) / 2 - 55, 100, 100 );
+									hover_box.addChild(symbol);
+									hover_box.addChild(symbol_border);
+
 								});
 
 								that_element.addChild(box);
@@ -1055,7 +1082,7 @@
 
 
 							createjs.Tween.get(this.element)
-  								.to({ y: 0 }, this.anim_params.speed, createjs.Ease.getPowInOut(4));
+  								.to({ y: $main_menu.height() }, this.anim_params.speed, createjs.Ease.getPowInOut(4));
 
 						},
 
@@ -1066,6 +1093,78 @@
 						destroy: function() {
 							createjs.Tween.get(this.element)
   								.to({ y: -renderer.height }, this.anim_params.speed, createjs.Ease.getPowInOut(4));
+						},
+
+						scene_1: {
+
+							init: function() {
+
+							},
+
+							destroy: function() {
+
+							}
+
+						},
+
+						scene_2: {
+
+							init: function() {
+
+							},
+
+							destroy: function() {
+								
+							}
+
+						},
+
+						scene_3: {
+
+							init: function() {
+
+							},
+
+							destroy: function() {
+								
+							}
+
+						},
+
+						scene_4: {
+
+							init: function() {
+
+							},
+
+							destroy: function() {
+								
+							}
+
+						},
+
+						scene_5: {
+
+							init: function() {
+
+							},
+
+							destroy: function() {
+								
+							}
+
+						},
+
+						scene_6: {
+
+							init: function() {
+
+							},
+
+							destroy: function() {
+								
+							}
+
 						}
 
 					},
