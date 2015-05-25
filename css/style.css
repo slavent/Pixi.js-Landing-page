@@ -425,3 +425,61 @@ footer a {
 	color: #ff7d7a;
 	cursor: pointer;
 }*/
+
+.hyde-menu {
+	position: fixed;
+	top: -100%;
+	left: 0;
+	height: 100%;
+	z-index: 50;
+	width: 40%;
+	transition: all .5s;
+	-webkit-transition: all .5s;
+}
+
+.hyde-menu.active {
+	top: 70px;
+}
+
+.hyde-menu-item {
+	display: inline-block;
+	vertical-align: middle;
+	text-align: center;
+	width: 50%;
+	height: 33.3333%;
+	float: left;
+	font-size: 0;
+	background: url("http://lorempixel.com/300/300/") no-repeat;
+	background-size: 100% 100%;
+	position: relative;
+}
+
+.hyde-menu-item.active {
+	background: rgba(250, 100, 100, 0.89);
+	cursor: pointer;
+}
+
+.hyde-menu-symbol {
+	color: #3c3c3c;
+	font-family: HelveticaNeueCyr-Light;
+	font-size: 70px;
+	line-height: 1;
+	text-transform: uppercase;
+	border: 3px solid #3c3c3c;
+	width: 90px;
+	height: 90px;
+	box-sizing: border-box;
+	padding: 10px 0 0;
+	margin: -110px 0 0 -45px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	z-index: 50;
+}
+
+
+.hyde-menu-item.active .hyde-menu-symbol {
+	color: #fff;
+	border-color: #fff;
+	z-index: 70;
+}

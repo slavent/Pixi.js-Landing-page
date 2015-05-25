@@ -13,6 +13,7 @@
 		$menu_popup_nav = $(".menu-popup-nav"),
 		$menu_close_btn = $(".menu-popup-closebtn"),
 		$landing_nav = $(".landing-nav ul"),
+		$hyde_menu = $(".hyde-menu"),
 
 		w_width = $(window).width(),
 		w_height = $(window).height(),
@@ -30,7 +31,11 @@
 		scroll_top = false,
 		scroll_down = false,
 
+		main_timer = null,
+		timer_slide_3 = null,
+
 		active_slide = 1,
+		step = 0,
 
 		SLIDE_ANIMATION_TIME = 4000;
     // END: Variables
@@ -136,6 +141,8 @@
 
 				if(active_slide >= 1 && active_slide <= 7) {
 
+					console.log("Active slide: " + active_slide);
+
 					switch (active_slide) {
 
 						case 1: 
@@ -173,7 +180,7 @@
 								destroySlides();
 								setTimeout(function() {
 									App.managerService.slide_3.init();
-								}, 1000);
+								}, 2000);
 							}
 							break;
 
@@ -256,7 +263,7 @@
 
 			$body.one("mousewheel", $.debounce(200, true, App.mousewheelService.init));
 
-			setInterval(function() {
+			main_timer = setInterval(function() {
 				$body.unbind("mousewheel");
 				$body.one("mousewheel", $.debounce(200, true, App.mousewheelService.init));
 			}, SLIDE_ANIMATION_TIME);
@@ -920,17 +927,76 @@
 
 				init: function() {
 
-					console.log("Slide 3 init");
+					App.managerService.slide_3.scroll(step);
 
-					slide_container_3 = new PIXI.Container();
+					clearInterval(main_timer);
 
-					this.elems.menu.init();
-					this.elems.pic.init();
-					this.elems.btn.init();
-					this.elems.title_1.init();
-					this.elems.title_2.init();
+					timer_slide_3 = setInterval(function() {
+						$body.unbind("mousewheel");
+						$body.one("mousewheel", $.debounce(200, true, App.managerService.slide_3.scroll));
+					}, 500);
 
-					stage.addChild(slide_container_3);
+				},
+
+				scroll: function() {
+
+					if( step != 6 ) {
+						step++;
+					} else {
+						active_slide++;
+						App.mousewheelService.init();
+
+						clearInterval(timer_slide_3);						
+						App.bindService(); // for start timer
+
+						return false;
+					}
+
+					$hyde_menu.children().removeClass("active").eq(step-1).addClass("active");
+
+					switch(step) {
+						case 1: 
+						console.log("Slide 3 init");
+
+						slide_container_3 = new PIXI.Container();
+
+						this.elems.menu.init();
+						this.elems.pic.init();
+						this.elems.btn.init();
+						this.elems.title_1.init();
+						this.elems.title_2.init();
+						this.elems.menu.scene_1.init();
+
+						stage.addChild(slide_container_3);
+
+						break;
+
+						case 2:
+							App.managerService.slide_3.elems.menu.scene_1.destroy();
+							App.managerService.slide_3.elems.menu.scene_2.init();
+							break;
+
+						case 3:
+							App.managerService.slide_3.elems.menu.scene_2.destroy();
+							App.managerService.slide_3.elems.menu.scene_3.init();
+							break;
+
+						case 4: 
+							App.managerService.slide_3.elems.menu.scene_3.destroy();
+							App.managerService.slide_3.elems.menu.scene_4.init();
+							break;
+
+						case 5:
+							App.managerService.slide_3.elems.menu.scene_4.destroy();
+							App.managerService.slide_3.elems.menu.scene_5.init();
+							break;
+
+						case 6:
+							App.managerService.slide_3.elems.menu.scene_5.destroy();
+							App.managerService.slide_3.elems.menu.scene_6.init();
+							break;
+
+					}
 
 				},
 
@@ -944,8 +1010,7 @@
 					this.elems.title_1.destroy();
 					this.elems.title_2.destroy();
 
-					slide_container_3 = null;
-					//stage.removeChild(slide_container_3);
+					stage.removeChild(slide_container_3);
 
 				},
 
@@ -964,125 +1029,7 @@
 						},
 
 						init: function() {
-
-							var boxes = [
-								{ url: "http://lorempixel.com/400/400/", x: 0, y: 0, width: 0, height: 0, symbol: "Р" },
-								{ url: "http://lorempixel.com/400/400/", x: 0, y: 0, width: 0, height: 0, symbol: "Т" },
-								{ url: "http://lorempixel.com/400/400/", x: 0, y: 0, width: 0, height: 0, symbol: "С" },
-								{ url: "http://lorempixel.com/400/400/", x: 0, y: 0, width: 0, height: 0, symbol: "Ц" },
-								{ url: "http://lorempixel.com/400/400/", x: 0, y: 0, width: 0, height: 0, symbol: "М" },
-								{ url: "http://lorempixel.com/400/400/", x: 0, y: 0, width: 0, height: 0, symbol: "П" }
-							],
-								hover_box = new PIXI.Graphics(),
-								box_height = (renderer.height - $main_menu.height()) / 3;
-
-							hover_box.lineStyle(1, 0xfa6464, 0);
-							hover_box.beginFill(0xfa6464, 0.9);
-							hover_box.drawRect(0, 0, box_height, box_height);
-
-							function moveHoverBox(x, y) {
-								createjs.Tween.get(hover_box)
-  									.to({ x: x, y: y }, 200, createjs.Ease.getPowInOut(4));
-							}
-
-							this.element = new PIXI.Container();
-							this.element.y = -renderer.height;
-
-							var that_element = this.element;
-							for(var i = 0; i < boxes.length; i++) {
-
-								var box_texture = PIXI.Texture.fromImage(boxes[i].url),
-									box = new PIXI.Sprite(box_texture),
-									style = {
-										font : '90px Myriad Pro',
-									    fill : '#3c3c3c',
-									    align : "center"
-									},
-									symbol = new PIXI.Text(boxes[i].symbol, style),
-									symbol_border = new PIXI.Graphics();
-
-								symbol.position.x = box_height / 2 + 20;
-								symbol.position.y = box_height / 2 - 50;
-
-								symbol_border.lineStyle(3, 0x3c3c3c, 1);
-								symbol_border.beginFill(0xfa6464, 0);
-								symbol_border.drawRect( (box_height) / 2, (box_height) / 2 - 55, 100, 100 );
-
-								box.addChild(symbol_border);
-								box.addChild(symbol);
-
-								box.height = box_height;
-								box.width = box_height;
-
-								if( i % 2 ) {
-									box.position.x = box_height;
-								} else {
-									box.position.x = 0;
-								}
-
-								switch(i) {
-									case 0: 
-										box.position.y = 0;
-										break;
-
-									case 1: 
-										box.position.y = 0;
-										break;
-
-									case 2: 
-										box.position.y = box_height;
-										break;
-
-									case 3:
-										box.position.y = box_height;
-										break;
-
-									case 4: 
-										box.position.y = box_height * 2;
-										break;
-
-									case 5:
-										box.position.y = box_height * 2;
-										break;
-								}
-								
-								box.buttonMode = true;
-								box.interactive = true;
-								box.on("mouseover", function() {
-									moveHoverBox( this.position.x, this.position.y );
-
-									hover_box.children = [];
-
-									var style = {
-											font : '90px Myriad Pro',
-										    fill : '#ffffff',
-										    align : "center"
-										},
-										symbol = new PIXI.Text(this.children[1].text, style),
-										symbol_border = new PIXI.Graphics();
-
-									symbol.position.x = box_height / 2 + 20;
-									symbol.position.y = box_height / 2 - 50;
-
-									symbol_border.lineStyle(3, 0xffffff, 1);
-									symbol_border.beginFill(0xfa6464, 0);
-									symbol_border.drawRect( (box_height) / 2, (box_height) / 2 - 55, 100, 100 );
-									hover_box.addChild(symbol);
-									hover_box.addChild(symbol_border);
-
-								});
-
-								that_element.addChild(box);
-
-							}
-
-							this.element.addChild(hover_box);
-							slide_container_3.addChild(this.element);
-
-
-							createjs.Tween.get(this.element)
-  								.to({ y: $main_menu.height() }, this.anim_params.speed, createjs.Ease.getPowInOut(4));
-
+							$hyde_menu.addClass("active").css({ "height" : $(window).height() - $main_menu.height() });
 						},
 
 						update: function() {
@@ -1090,78 +1037,132 @@
 						},
 
 						destroy: function() {
-							createjs.Tween.get(this.element)
-  								.to({ y: -renderer.height }, this.anim_params.speed, createjs.Ease.getPowInOut(4));
+							$hyde_menu.removeClass("active");
 						},
 
 						scene_1: {
 
-							init: function() {
+							el: null,
 
+							init: function() {
+								console.log("Scene 1 init");
+
+								var texture = PIXI.Texture.fromImage("i/s3/1/wears.jpg");
+
+								this.el = new PIXI.Sprite(texture);
+								this.el.position.x = renderer.width / 2;
+								this.el.position.y = renderer.height / 2 - 150;
+
+								slide_container_3.addChild(this.el);
 							},
 
 							destroy: function() {
-
+								slide_container_3.removeChild(this.el);
 							}
 
 						},
 
 						scene_2: {
 
-							init: function() {
+							el: null,
 
+							init: function() {
+								console.log("Scene 2 init");
+								var texture = PIXI.Texture.fromImage("i/s3/1/wears.jpg");
+
+								this.el = new PIXI.Sprite(texture);
+								this.el.position.x = renderer.width / 2;
+								this.el.position.y = renderer.height / 2 - 150;
+
+								slide_container_3.addChild(this.el);
 							},
 
 							destroy: function() {
-								
+								slide_container_3.removeChild(this.el);
 							}
 
 						},
 
 						scene_3: {
 
-							init: function() {
+							el: null,
 
+							init: function() {
+								console.log("Scene 3 init");
+								var texture = PIXI.Texture.fromImage("i/s3/1/wears.jpg");
+
+								this.el = new PIXI.Sprite(texture);
+								this.el.position.x = renderer.width / 2;
+								this.el.position.y = renderer.height / 2 - 150;
+
+								slide_container_3.addChild(this.el);
 							},
 
 							destroy: function() {
-								
+								slide_container_3.removeChild(this.el);
 							}
 
 						},
 
 						scene_4: {
 
-							init: function() {
+							el: null,
 
+							init: function() {
+								console.log("Scene 4 init");
+								var texture = PIXI.Texture.fromImage("i/s3/1/wears.jpg");
+
+								this.el = new PIXI.Sprite(texture);
+								this.el.position.x = renderer.width / 2;
+								this.el.position.y = renderer.height / 2 - 150;
+
+								slide_container_3.addChild(this.el);
 							},
 
 							destroy: function() {
-								
+								slide_container_3.removeChild(this.el);
 							}
 
 						},
 
 						scene_5: {
 
-							init: function() {
+							el: null,
 
+							init: function() {
+								console.log("Scene 5 init");
+								var texture = PIXI.Texture.fromImage("i/s3/1/wears.jpg");
+
+								this.el = new PIXI.Sprite(texture);
+								this.el.position.x = renderer.width / 2;
+								this.el.position.y = renderer.height / 2 - 150;
+
+								slide_container_3.addChild(this.el);
 							},
 
 							destroy: function() {
-								
+								slide_container_3.removeChild(this.el);
 							}
 
 						},
 
 						scene_6: {
 
-							init: function() {
+							el: null,
 
+							init: function() {
+								console.log("Scene 6 init");
+								var texture = PIXI.Texture.fromImage("i/s3/1/wears.jpg");
+
+								this.el = new PIXI.Sprite(texture);
+								this.el.position.x = renderer.width / 2;
+								this.el.position.y = renderer.height / 2 - 150;
+
+								slide_container_3.addChild(this.el);
 							},
 
 							destroy: function() {
-								
+								slide_container_3.removeChild(this.el);
 							}
 
 						}
@@ -2140,10 +2141,9 @@
 
 					console.log("Slide 7 destroy");
 
-					slide_container_7 = null;
-
 					$footer.css({ "bottom" : -120 });
-					//stage.removeChild(slide_container_7);
+
+					stage.removeChild(slide_container_7);
 
 				},
 
@@ -2165,16 +2165,19 @@
 
 						vars: {
 							slide_container_1_texture: 	null,
-							slide_container_1_sprite: 		null,
+							slide_container_1_sprite: 	null,
 							slide_container_2_texture: 	null,
-							slide_container_2_sprite: 		null,
+							slide_container_2_sprite: 	null,
 							slide_container_3_texture: 	null,
-							slide_container_3_sprite: 		null,
-							active: 				1,
-							next_btn_texture: 	null,
-							next_btn_sprite: 	null,
-							prev_btn_texture: 	null,
-							prev_btn_sprite: 	null
+							slide_container_3_sprite: 	null,
+							active: 					1,
+							next_btn_texture: 			null,
+							next_btn_sprite: 			null,
+							prev_btn_texture: 			null,
+							prev_btn_sprite: 			null,
+							title_1: 					null,
+							title_2: 					null,
+							title_3: 					null
 						},
 
 						init: function() {
@@ -2190,21 +2193,48 @@
 							if( vars.slide_container_1_sprite != null && vars.slide_container_2_sprite != null && vars.slide_container_3_sprite != null ) {
 								switch(vars.active) {
 									case 1: 
-										if( vars.slide_container_1_sprite.alpha < 1 ) vars.slide_container_1_sprite.alpha += 0.01;
-										if( vars.slide_container_2_sprite.alpha > 0 ) vars.slide_container_2_sprite.alpha -= 0.01;
-										if( vars.slide_container_3_sprite.alpha > 0 ) vars.slide_container_3_sprite.alpha -= 0.01;
+										if( vars.slide_container_1_sprite.alpha < 1 ) {
+											vars.slide_container_1_sprite.alpha += 0.01;
+											vars.title_1.alpha += 0.01;
+										}
+										if( vars.slide_container_2_sprite.alpha > 0 ) {
+											vars.slide_container_2_sprite.alpha -= 0.01;
+											vars.title_2.alpha -= 0.01;
+										}
+										if( vars.slide_container_3_sprite.alpha > 0 ) {
+											vars.slide_container_3_sprite.alpha -= 0.01;
+											vars.title_3.alpha -= 0.01;
+										}
 										break;
 
 									case 2: 
-										if( vars.slide_container_1_sprite.alpha > 0 ) vars.slide_container_1_sprite.alpha -= 0.01;
-										if( vars.slide_container_2_sprite.alpha < 1 ) vars.slide_container_2_sprite.alpha += 0.01;
-										if( vars.slide_container_3_sprite.alpha > 0 ) vars.slide_container_3_sprite.alpha -= 0.01;
+										if( vars.slide_container_1_sprite.alpha > 0 ) {
+											vars.slide_container_1_sprite.alpha -= 0.01;
+											vars.title_1.alpha -= 0.01;
+										}
+										if( vars.slide_container_2_sprite.alpha < 1 ) {
+											vars.slide_container_2_sprite.alpha += 0.01;
+											vars.title_2.alpha += 0.01;
+										}
+										if( vars.slide_container_3_sprite.alpha > 0 ) {
+											vars.slide_container_3_sprite.alpha -= 0.01;
+											vars.title_3.alpha -= 0.01;
+										}
 										break;
 
 									case 3: 
-										if( vars.slide_container_1_sprite.alpha > 0 ) vars.slide_container_1_sprite.alpha -= 0.01;
-										if( vars.slide_container_2_sprite.alpha > 0 ) vars.slide_container_2_sprite.alpha -= 0.01;
-										if( vars.slide_container_3_sprite.alpha < 1 ) vars.slide_container_3_sprite.alpha += 0.01;
+										if( vars.slide_container_1_sprite.alpha > 0 ) {
+											vars.slide_container_1_sprite.alpha -= 0.01;
+											vars.title_1.alpha -= 0.01;
+										}
+										if( vars.slide_container_2_sprite.alpha > 0 ) {
+											vars.slide_container_2_sprite.alpha -= 0.01;
+											vars.title_2.alpha -= 0.01;
+										}
+										if( vars.slide_container_3_sprite.alpha < 1 ) {
+											vars.slide_container_3_sprite.alpha += 0.01;
+											vars.title_3.alpha += 0.01;
+										}
 										break;
 								}
 							}
@@ -2226,13 +2256,13 @@
 								    lineHeight: 65,
 								    padding: 10,
 								    align : "center"
-								},
-								title = new PIXI.Text("Восхищенные\nвзгляды!", style);
+								};
 
-							title.x = (renderer.width - title.width) / 2;	
-							title.y = ((renderer.height - title.height) / 2);
+							vars.title_1 = new PIXI.Text("Восхищенные\nвзгляды!", style);
+							vars.title_1.x = (renderer.width - vars.title_1.width) / 2;	
+							vars.title_1.y = ((renderer.height - vars.title_1.height) / 2);
 
-							slide_container_7.addChild(title);
+							slide_container_7.addChild(vars.title_1);
 						},
 
 						makeslide_container_2: function() {
@@ -2251,13 +2281,14 @@
 								    lineHeight: 65,
 								    padding: 10,
 								    align : "center"
-								},
-								title = new PIXI.Text("Восхищенные\nвзгляды!", style);
+								};
 
-							title.x = (renderer.width - title.width) / 2;	
-							title.y = ((renderer.height - title.height) / 2);
+							vars.title_2 = new PIXI.Text("Красивый\nдизайн!", style);
+							vars.title_2.x = (renderer.width - vars.title_2.width) / 2;	
+							vars.title_2.y = ((renderer.height - vars.title_2.height) / 2);
+							vars.title_2.alpha = 0;
 
-							slide_container_7.addChild(title);
+							slide_container_7.addChild(vars.title_2);
 						},
 
 						makeslide_container_3: function() {
@@ -2276,13 +2307,14 @@
 								    lineHeight: 65,
 								    padding: 10,
 								    align : "center"
-								},
-								title = new PIXI.Text("Восхищенные\nвзгляды!", style);
+								};
 
-							title.x = (renderer.width - title.width) / 2;	
-							title.y = ((renderer.height - title.height) / 2);
+							vars.title_3 = new PIXI.Text("Игоровой\nпроцесс!", style);
+							vars.title_3.x = (renderer.width - vars.title_3.width) / 2;	
+							vars.title_3.y = ((renderer.height - vars.title_3.height) / 2);
+							vars.title_3.alpha = 0;
 
-							slide_container_7.addChild(title);
+							slide_container_7.addChild(vars.title_3);
 						},
 
 						makeNav: function() {
@@ -2298,6 +2330,7 @@
 							vars.prev_btn_sprite.interactive = true;
 							vars.prev_btn_sprite.on("click", function() {
 								if(vars.active > 1) vars.active--;
+								else vars.active = 3;
 							});
 
 							slide_container_7.addChild(vars.prev_btn_sprite);						
@@ -2315,6 +2348,7 @@
 							vars.next_btn_sprite.interactive = true;
 							vars.next_btn_sprite.on("click", function() {
 								if(vars.active < 3) vars.active++;
+								else vars.active = 1;
 							});
 
 							slide_container_7.addChild(vars.next_btn_sprite);
