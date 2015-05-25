@@ -938,12 +938,17 @@
 
 				},
 
-				scroll: function() {
+				scroll: function(event) {
 
 					if( step != 6 ) {
 						step++;
 					} else {
-						active_slide++;
+						if(event.originalEvent.wheelDelta < 0) {
+							active_slide++;
+						} else {
+							active_slide--;
+						}
+						
 						App.mousewheelService.init();
 
 						clearInterval(timer_slide_3);						
@@ -952,8 +957,6 @@
 						return false;
 					}
 
-					$hyde_menu.children().removeClass("active").eq(step-1).addClass("active");
-
 					switch(step) {
 						case 1: 
 						console.log("Slide 3 init");
@@ -961,10 +964,6 @@
 						slide_container_3 = new PIXI.Container();
 
 						this.elems.menu.init();
-						this.elems.pic.init();
-						this.elems.btn.init();
-						this.elems.title_1.init();
-						this.elems.title_2.init();
 						this.elems.menu.scene_1.init();
 
 						stage.addChild(slide_container_3);
@@ -998,19 +997,19 @@
 
 					}
 
+					$hyde_menu.children().removeClass("active").eq(step-1).addClass("active");
+
 				},
 
 				destroy: function() {
-
 					console.log("Slide 3 destroy");
 
 					this.elems.menu.destroy();
-					this.elems.pic.destroy();
-					this.elems.btn.destroy();
-					this.elems.title_1.destroy();
-					this.elems.title_2.destroy();
+
+					step = 0;
 
 					stage.removeChild(slide_container_3);
+					slide_container_3 = null;
 
 				},
 
@@ -1168,102 +1167,6 @@
 						}
 
 					},
-
-					pic: {
-
-						element: null,
-
-						anim_params: {
-							speed: 300,
-							init_wait: 2000,
-							destroy_wait: 500
-						},
-
-						init: function() {
-
-						},
-
-						update: function() {
-
-						},
-
-						destroy: function() {
-
-						}
-
-					},
-
-					btn: {
-
-						element: null,
-
-						anim_params: {
-							speed: 300,
-							init_wait: 2000,
-							destroy_wait: 500
-						},
-
-						init: function() {
-
-						},
-
-						update: function() {
-
-						},
-
-						destroy: function() {
-
-						}
-
-					},
-
-					title_1: {
-
-						element: null,
-
-						anim_params: {
-							speed: 300,
-							init_wait: 2000,
-							destroy_wait: 500
-						},
-
-						init: function() {
-
-						},
-
-						update: function() {
-
-						},
-
-						destroy: function() {
-
-						}
-
-					},
-
-					title_2: {
-
-						element: null,
-
-						anim_params: {
-							speed: 300,
-							init_wait: 2000,
-							destroy_wait: 500
-						},
-
-						init: function() {
-
-						},
-
-						update: function() {
-
-						},
-
-						destroy: function() {
-
-						}
-
-					}
 
 				}
 
