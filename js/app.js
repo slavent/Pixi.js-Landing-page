@@ -37,7 +37,7 @@
 		active_slide = 1,
 		step = 0,
 
-		SLIDE_ANIMATION_TIME = 4000;
+		SLIDE_ANIMATION_TIME = 3000;
     // END: Variables
 
 
@@ -174,13 +174,13 @@
 								destroySlides();
 								setTimeout(function() {
 									App.managerService.slide_3.init();
-								}, 1000);
+								}, 500);
 							}
 							if( scroll_down == true ) {
 								destroySlides();
 								setTimeout(function() {
 									App.managerService.slide_3.init();
-								}, 2000);
+								}, 500);
 							}
 							break;
 
@@ -189,13 +189,13 @@
 								destroySlides();
 								setTimeout(function() {
 									App.managerService.slide_4.init();
-								}, 1000);
+								}, 500);
 							}
 							if( scroll_down == true ) {
 								destroySlides();
 								setTimeout(function() {
 									App.managerService.slide_4.init();
-								}, 1000);
+								}, 500);
 							}
 							break;
 
@@ -204,13 +204,13 @@
 								destroySlides();
 								setTimeout(function() {
 									App.managerService.slide_5.init();
-								}, 1000);
+								}, 500);
 							}
 							if( scroll_down == true ) {
 								destroySlides();
 								setTimeout(function() {
 									App.managerService.slide_5.init();
-								}, 1000);
+								}, 500);
 							}
 							break;
 
@@ -219,13 +219,13 @@
 								destroySlides();
 								setTimeout(function() {
 									App.managerService.slide_6.init();
-								}, 1000);
+								}, 0);
 							}
 							if( scroll_down == true ) {
 								destroySlides();
 								setTimeout(function() {
 									App.managerService.slide_6.init();
-								}, 1000);
+								}, 0);
 							}
 							break;
 
@@ -234,7 +234,7 @@
 								destroySlides();
 								setTimeout(function() {
 									App.managerService.slide_7.init();
-								}, 1000);
+								}, 1400);
 							}
 							break;
 
@@ -337,7 +337,7 @@
 
   							setTimeout(function() {
 		  						$main_menu.css({ "top" : 0 });
-		  					}, 2000);
+		  					}, 1000);
 		  					$menu_icon.hide();
 		  					$menu_popup.hide();
   						});
@@ -639,8 +639,8 @@
 
 						anim_params: {
 							speed: 300,
-							init_wait: 2000,
-							destroy_wait: 500
+							init_wait: 900,
+							destroy_wait: 200
 						},
 
 						init: function() {
@@ -688,8 +688,8 @@
 
 						anim_params: {
 							speed: 500,
-							init_wait: 1200,
-							destroy_wait: 1000
+							init_wait: 500,
+							destroy_wait: 300
 						},
 
 						init: function() {
@@ -733,8 +733,8 @@
 						anim_params: {
 							speed: 500,
 							speed2: 200,
-							init_wait: 1000,
-							destroy_wait: 1200
+							init_wait: 200,
+							destroy_wait: 500
 						},
 
 						init: function() {
@@ -777,8 +777,8 @@
 
 						anim_params: {
 							speed: 300,
-							init_wait: 2000,
-							destroy_wait: 500
+							init_wait: 900,
+							destroy_wait: 200
 						},
 
 						init: function() {
@@ -826,7 +826,7 @@
 
 						anim_params: {
 							speed: 500,
-							init_wait: 2500,
+							init_wait: 1100,
 						},
 
 						init: function() {
@@ -867,7 +867,7 @@
 
 						anim_params: {
 							speed: 500,
-							init_wait: 2500,
+							init_wait: 1100,
 						},
 
 						init: function() {
@@ -934,7 +934,7 @@
 					timer_slide_3 = setInterval(function() {
 						$body.unbind("mousewheel");
 						$body.one("mousewheel", $.debounce(200, true, App.managerService.slide_3.scroll));
-					}, 500);
+					}, 200);
 
 				},
 
@@ -1257,7 +1257,7 @@
 
 						anim_params: {
 							speed: 500,
-							init_wait: 2000,
+							init_wait: 1400,
 						},
 
 						init: function() {
@@ -1295,7 +1295,7 @@
 						anim_params: {
 							speed: 500,
 							init_wait: 1500,
-							destroy_wait: 500
+							destroy_wait: 600
 						},
 
 						init: function() {
@@ -1331,7 +1331,7 @@
 
 						anim_params: {
 							speed: 500,
-							init_wait: 700,
+							init_wait: 200,
 							destroy_wait: 1400
 						},
 
@@ -1368,7 +1368,7 @@
 
 						anim_params: {
 							speed: 500,
-							init_wait: 500,
+							init_wait: 0,
 							destroy_wait: 1600
 						},
 
@@ -1405,8 +1405,8 @@
 
 						anim_params: {
 							speed: 500,
-							init_wait: 1700,
-							destroy_wait: 300
+							init_wait: 1200,
+							destroy_wait: 200
 						},
 
 						init: function() {
@@ -1443,8 +1443,8 @@
 
 						anim_params: {
 							speed: 500,
-							init_wait: 1700,
-							destroy_wait: 300
+							init_wait: 1000,
+							destroy_wait: 400
 						},
 
 						init: function() {
@@ -1481,7 +1481,7 @@
 
 						anim_params: {
 							speed: 500,
-							init_wait: 1000,
+							init_wait: 600,
 							destroy_wait: 1000
 						},
 
@@ -1519,8 +1519,8 @@
 
 						anim_params: {
 							speed: 500,
-							init_wait: 1000,
-							destroy_wait: 1000
+							init_wait: 400,
+							destroy_wait: 1200
 						},
 
 						init: function() {
@@ -1557,8 +1557,8 @@
 
 						anim_params: {
 							speed: 500,
-							init_wait: 1300,
-							destroy_wait: 700
+							init_wait: 800,
+							destroy_wait: 800
 						},
 
 						init: function() {
@@ -1595,8 +1595,8 @@
 
 						anim_params: {
 							speed: 500,
-							init_wait: 1300,
-							destroy_wait: 700
+							init_wait: 800,
+							destroy_wait: 800
 						},
 
 						init: function() {
@@ -1632,8 +1632,8 @@
 						element: null,
 
 						anim_params: {
-							speed: 2000,
-							destroy_wait: 1300
+							speed: 1000,
+							destroy_wait: 1000
 						},
 
 						init: function() {
@@ -1760,7 +1760,7 @@
 
 						anim_params: {
 							speed: 3000,
-							init_wait: 1500
+							init_wait: 0
 						},
 
 						init: function() {
@@ -1793,9 +1793,9 @@
 						element: null,
 
 						anim_params: {
-							speed: 3000,
+							speed: 2000,
 							speed2: 1000,
-							destroy_wait: 1000
+							destroy_wait: 400
 						},
 
 						init: function() {
@@ -1834,10 +1834,10 @@
 
 						anim_params: {
 							speed: 1000,
-							init_wait: 500,
-							init_wait2: 700,
-							destroy_wait: 700,
-							destroy_wait2: 1000
+							init_wait: 0,
+							init_wait2: 200,
+							destroy_wait: 60,
+							destroy_wait2: 800
 						},
 
 						init: function() {
@@ -1900,8 +1900,8 @@
 
 						anim_params: {
 							speed: 1000,
-							init_wait: 1500,
-							destroy_wait: 1000
+							init_wait: 600,
+							destroy_wait: 0
 						},
 
 						init: function() {
