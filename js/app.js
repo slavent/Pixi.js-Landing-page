@@ -1342,6 +1342,30 @@
 
 						init: function() {
 
+							var slides = [
+								{ url: "i/s1/slide_2.jpg" },
+								{ url: "i/s1/slide_2.jpg" },
+								{ url: "i/s1/slide_2.jpg" }
+							];
+
+							var Slide = function(url) {
+
+								this.texture = PIXI.Texture.fromImage(url);
+								this.sprite = new PIXI.Sprite(this.texture);
+								this.sprite.width = renderer.width;
+								this.sprite.height = renderer.height - 250 - 70;
+								this.sprite.position.x = 0;
+								this.sprite.position.y = 70;
+
+								return this.sprite;
+
+							}
+
+							for(var i = 0; i < slides.length; i++) {
+								var slide = new Slide(slides[i].url);
+								
+								slide_container_4.addChild(slide);
+							}
 
 						},
 
