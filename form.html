@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/minimal/minimal.css">
+	<link rel="stylesheet" href="css/ion.rangeSlider.css">
+	<link rel="stylesheet" href="css/ion.rangeSlider.skinFlat.css">
+</head>
+<body>
+
+	<div class="anketa-wrp">
+
+		<form action="" class="anketa">
+
+			<div class="anketa-title">Анкета</div>
+
+			<div class="anketa-row">
+				<div class="anketa-label">Имя Фамилия<span>*</span></div>
+				<div class="anketa-val">
+					<input type="text" name="" class="anketa-input">
+				</div>	
+			</div>
+
+			<div class="anketa-row">
+				<div class="anketa-label">E-mail<span>*</span></div>
+				<div class="anketa-val">
+					<input type="text" name="" class="anketa-input anketa-input_size_small">
+				</div>
+			</div>
+
+			<div class="anketa-row">
+				<div class="anketa-label">Телефон<span>*</span></div>
+				<div class="anketa-val">
+					<input type="text" name="" class="anketa-input anketa-input_size_small" placeholder="+7 905 336 73 44">
+				</div>
+			</div>
+
+			<div class="anketa-row">
+				<div class="anketa-label">Ваш возраст<span>*</span></div>
+				<div class="anketa-val">
+					<input type="text" class="age-range" value="" data-min="10" data-max="100" />
+				</div>
+			</div>
+
+			<div class="anketa-row">
+				<div class="anketa-label">Выберите сезон<span>*</span></div>
+				<div class="anketa-val">
+					<div class="anketa-season anketa-season_selected">Зима</div>
+					<div class="anketa-season">Весна</div>
+					<div class="anketa-season">Лето</div>
+					<div class="anketa-season">Осень</div>
+					<input type="hidden" name="">
+				</div>
+			</div>
+
+			<div class="anketa-row">
+				<div class="anketa-label"></div>
+				<div class="anketa-val no-icon">
+					<input type="checkbox" class="icheckbox_minimal">
+					<span class="agreement-text">Я принимаю условия <a href="">пользовательского соглашения</a></span>
+				</div>
+			</div>
+
+			<div class="anketa-row">
+				<div class="anketa-label"></div>
+				<div class="anketa-val no-icon">
+					<button class="anketa-btn">Далее</button>
+				</div>
+			</div>
+
+
+
+		</form>
+	</div>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+	<script src="js/libs/icheck.js"></script>
+	<script src="http://67uh.com/tmpl/js/libs/ion.rangeSlider.min.js"></script>
+	<script>
+	$(function() {
+
+		$("input").iCheck({
+			checkboxClass: 'icheckbox_minimal',
+			radioClass: 'iradio_minimal-red',
+			increaseArea: '20%' // optional
+		});
+
+	  	$(".anketa-season").on("click", function() {
+	  		$(".anketa-season").removeClass("anketa-season_selected");
+	  		$(this).addClass("anketa-season_selected");
+	  	});
+
+	  	$(".age-range").ionRangeSlider();
+
+	});
+	</script>
+	
+</body>
+</html>

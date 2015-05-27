@@ -477,9 +477,158 @@ footer a {
 	z-index: 50;
 }
 
-
 .hyde-menu-item.active .hyde-menu-symbol {
 	color: #fff;
 	border-color: #fff;
 	z-index: 70;
+}
+
+.anketa-wrp {
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	font-size: 0;
+}
+
+.anketa-wrp:after {
+	content: "";
+	display: inline-block;
+	height: 100%;
+	width: 1px;
+	vertical-align: middle;
+}
+
+.anketa {
+	display: inline-block;
+	vertical-align: middle;
+	width: 100%;
+	margin: 0 -10px 0 0;
+	text-align: center;
+}
+
+.anketa-row {
+	margin: 0 0 20px 0;
+}
+
+.anketa-label {
+	font-family: FiraSansRegular;
+	font-size: 16px;
+	color: #3c3c3c;
+	display: inline-block;
+	vertical-align: middle;
+	width: 45%;
+	text-align: right;
+}
+
+.anketa-val {
+	display: inline-block;
+	vertical-align: middle;
+	width: 54%;
+	margin: 0 0 0 10px;
+	padding: 0 0 0 25px;
+	text-align: left;
+	box-sizing: border-box;
+	position: relative;
+}
+
+.anketa-input {
+	width: 300px;
+	height: 35px;
+	border: 2px solid #373127;
+	font-family: FiraSansRegular;
+	font-size: 14px;
+	padding: 0 10px;
+	color: #3c3c3c;
+	outline: none;
+}
+
+.anketa-input_size_small {
+	width: 200px;
+}
+
+.anketa-val:before {
+	content: "";
+	position: absolute;
+	top: 50%;
+	left: 0;
+	width: 14px;
+	height: 14px;
+	margin: -7px 0 0;
+	background: url(data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSLQodC70L7QuV8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCIKCSB3aWR0aD0iNjYuNjY3cHgiIGhlaWdodD0iNjYuNjY3cHgiIHZpZXdCb3g9IjAgMCA2Ni42NjcgNjYuNjY3IiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCA2Ni42NjcgNjYuNjY3IiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPGc+Cgk8ZGVmcz4KCQk8cmVjdCBpZD0iU1ZHSURfMV8iIHk9IjAiIHdpZHRoPSI2Ni42NjciIGhlaWdodD0iNjYuNjY3Ii8+Cgk8L2RlZnM+Cgk8Y2xpcFBhdGggaWQ9IlNWR0lEXzJfIj4KCQk8dXNlIHhsaW5rOmhyZWY9IiNTVkdJRF8xXyIgIG92ZXJmbG93PSJ2aXNpYmxlIi8+Cgk8L2NsaXBQYXRoPgoJPHBhdGggY2xpcC1wYXRoPSJ1cmwoI1NWR0lEXzJfKSIgZmlsbD0iI0NGQjNBMiIgZD0iTTMzLjI1OCwyMS41MmMxLjMyMiwwLDIuMzkzLTAuMzUsMy4xODMtMS4wMzkKCQljMC44MjEtMC43MTUsMS4yMzgtMS42ODMsMS4yMzgtMi44NzhjMC0xLjE5My0wLjQxNi0yLjE2Mi0xLjIzNy0yLjg3OGMtMC43OTEtMC42OS0xLjg2My0xLjAzOS0zLjE4NC0xLjAzOQoJCWMtMS4yNDgsMC0yLjI5OCwwLjM0Ni0zLjEyLDEuMDI4Yy0wLjg2NCwwLjcxNi0xLjMwMSwxLjY4Ny0xLjMwMSwyLjg4OWMwLDEuMjAyLDAuNDM4LDIuMTc1LDEuMzAxLDIuODg5CgkJQzMwLjk1OSwyMS4xNzQsMzIuMDA5LDIxLjUyLDMzLjI1OCwyMS41MiIvPgoJPHBvbHlnb24gY2xpcC1wYXRoPSJ1cmwoI1NWR0lEXzJfKSIgZmlsbD0iI0NGQjNBMiIgcG9pbnRzPSIzNi43MjEsNDguOTc5IDM2LjcyMSwyNS4wMyAyNi4yMTUsMjUuMDMgMjYuMjE1LDI5LjAzMiAyOS45NDUsMjkuMDMyIAoJCTI5Ljk0NSw0OC45NzkgMjYuMjE1LDQ4Ljk3OSAyNi4yMTUsNTIuOTgxIDQwLjQ1Miw1Mi45ODEgNDAuNDUyLDQ4Ljk3OSAJIi8+Cgk8cGF0aCBjbGlwLXBhdGg9InVybCgjU1ZHSURfMl8pIiBmaWxsPSIjQ0ZCM0EyIiBkPSJNMzMuMzMzLDMuNzA0YzE2LjMzOCwwLDI5LjYzLDEzLjI5MiwyOS42MywyOS42MjkKCQljMCwxNi4zMzgtMTMuMjkyLDI5LjYzLTI5LjYzLDI5LjYzcy0yOS42My0xMy4yOTItMjkuNjMtMjkuNjNDMy43MDMsMTYuOTk2LDE2Ljk5NSwzLjcwNCwzMy4zMzMsMy43MDQgTTMzLjMzMywwCgkJQzE0LjkyMywwLDAsMTQuOTI0LDAsMzMuMzMzYzAsMTguNDEsMTQuOTIzLDMzLjMzNCwzMy4zMzMsMzMuMzM0czMzLjMzMy0xNC45MjQsMzMuMzMzLTMzLjMzNEM2Ni42NjYsMTQuOTI0LDUxLjc0MywwLDMzLjMzMywwIi8+CjwvZz4KPC9zdmc+);
+	background-size: 100% 100%;
+}
+
+.anketa-val.no-icon:before {
+	content: none;
+}
+
+.anketa-season {
+	display: inline-block;
+	border: 2px solid #3c3c3c;
+	margin: 0 12px 0 0;
+	padding: 0 10px;
+	font-family: FiraSansRegular;
+	font-size: 18px;
+	line-height: 24px;
+	transition: all .1s;
+	-webkit-transition: all .1s;
+}
+
+.anketa-season:hover {
+	cursor: pointer;
+	border-color: #ff7d7a;
+	color: #fff;
+	background: #ff7d7a;
+}
+
+.anketa-season_selected {
+	color: #fff;
+	background: #ff7d7a;
+	border-color: #ff7d7a;
+}
+
+.agreement-text {
+	font-size: 12px;
+	font-family: FiraSansRegular;
+	padding: 0 0 0 15px;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.agreement-text a {
+	color: #cfb3a2;
+	text-decoration: none;
+}
+
+.agreement-text a:hover {
+	text-decoration: underline;
+}
+
+.anketa-title {
+	font-size: 60px;
+	font-family: FiraSansRegular;
+	text-align: center;
+	margin: 0 0 15px 137px;
+}
+
+.anketa-btn {
+	border: 1px solid #ff7d7a;
+	color: #ff7d7a;
+	font-size: 18px;
+	border-radius: 20px;
+	background: none;
+	padding: 2px 50px;
+	margin: 20px 0 0;
+	outline: none;
+	font-family: FiraSansRegular;
+	transition: all .3s;
+	-webkit-transition: all .3s;
+}
+
+.anketa-btn:hover {
+	background: #ff7d7a;
+	color: #fff;
+	cursor: pointer;
 }

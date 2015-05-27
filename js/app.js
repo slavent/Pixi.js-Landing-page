@@ -29,7 +29,7 @@
 		slide_container_7 = null,
 
 		scroll_top = false,
-		scroll_down = false,
+		scroll_down = true,
 
 		main_timer = null,
 		timer_slide_3 = null,
@@ -98,9 +98,9 @@
 
 		    }	
 
-		    setTimeout(function() {
+		    /*setTimeout(function() {
 				$landing_nav.parent().css({ "right" : "30px" });
-			}, 3000);		
+			}, 3000);*/	
 
 		  	App.bindService();
 		  	App.managerService.init();
@@ -288,6 +288,7 @@
     		$menu_popup_nav.find("li").on("click", function() {
     			active_slide = $(this).index() + 1;
     			App.mousewheelService.init();
+    			$menu_popup.hide();
 
     			return false;
     		});
