@@ -288,6 +288,19 @@
     			$anketa.fadeIn();
     		});
 
+    		// For Anketa additional plugins
+    		$("input").iCheck({
+				checkboxClass: "icheckbox_minimal",
+				increaseArea: "20%"
+			});
+
+		  	$(".anketa-season").on("click", function() {
+		  		$(".anketa-season").removeClass("anketa-season_selected");
+		  		$(this).addClass("anketa-season_selected");
+		  	});
+
+		  	$(".age-range").ionRangeSlider();
+
 	    },
 
 		managerService: {
@@ -929,11 +942,13 @@
 
 					timer_slide_3 = setInterval(function() {
 						$body.one("mousewheel", App.managerService.slide_3.scroll);
-					}, 200);
+					}, SLIDE_ANIMATION_TIME);
 
 				},
 
 				scroll: function(event) {
+
+					console.log(step);
 
 					if( step != 6 ) {
 						step++;
@@ -961,8 +976,8 @@
 
 						slide_container_3 = new PIXI.Container();
 
-						this.elems.menu.init();
-						this.elems.menu.scene_1.init();
+						App.managerService.slide_3.elems.menu.init();
+						App.managerService.slide_3.elems.menu.scene_1.init();
 
 						stage.addChild(slide_container_3);
 
@@ -1178,11 +1193,23 @@
 
 					slide_container_4 = new PIXI.Container();
 
+					this.elems.bg.init();
+					this.elems.title.init();
+					this.elems.info.init();
+					this.elems.slider.init();
+
+					stage.addChild(slide_container_4);
+
 				},
 
 				destroy: function() {
 
 					console.log("Slide 4 destroy");
+
+					this.elems.bg.destroy();
+					this.elems.title.destroy();
+					this.elems.info.destroy();
+					this.elems.slider.destroy();
 
 					slide_container_4 = null;
 
@@ -1193,6 +1220,140 @@
 				},
 
 				elems: {
+
+					bg: {
+
+						anim_params: {
+							speed: 300
+						},
+
+						el: null,
+
+						init: function() {
+
+							this.el = new PIXI.Graphics();
+							this.el.lineStyle(2, 0x0000FF, 0);
+							this.el.beginFill(0xff7d7a, 1);
+							this.el.drawRect(0, 0, renderer.width, 250);
+							this.el.y = renderer.height;
+
+							slide_container_4.addChild(this.el);
+
+							createjs.Tween.get(this.el)
+  								.to({ y: renderer.height - 250 }, this.anim_params.speed, createjs.Ease.getPowInOut(4));
+
+						},
+
+						destroy: function() {
+
+							createjs.Tween.get(this.el)
+  								.to({ y: renderer.height}, this.anim_params.speed, createjs.Ease.getPowInOut(4));
+
+						}
+
+					},
+
+					title: {
+
+						anim_params: {
+							speed: 500,
+							init_wait: 400,
+							destroy_wait: 200
+						},
+
+						el: null,
+
+						init: function() {
+
+							var style = {
+									font : "30px HelveticaNeueCyr-Light",
+								    fill : "#ff7d7a"
+								};
+
+							this.el = new PIXI.Text("Выберите стиль", style);
+							this.el.anchor.x = .5;
+							this.el.anchor.y = .5;
+							this.el.x = renderer.width / 2;
+							this.el.y = -100;
+
+							slide_container_4.addChild(this.el);
+
+							createjs.Tween.get(this.el)
+								.wait(this.anim_params.init_wait)
+  								.to({ y: 120 }, this.anim_params.speed, createjs.Ease.getPowInOut(4));
+
+						},
+
+						destroy: function() {
+
+							createjs.Tween.get(this.el)
+								.wait(this.anim_params.destroy_wait)
+  								.to({ y: -100 }, this.anim_params.speed, createjs.Ease.getPowInOut(4));
+
+						}
+
+					},
+
+					info: {
+
+						anim_params: {
+							speed: 500,
+							init_wait: 200,
+							destroy_wait: 400
+						},
+
+						el: null,
+
+						init: function() {
+
+							var style = {
+									font : "16px HelveticaNeueCyr-Light",
+								    fill : "#3c3c3c",
+								    align: "center"
+								};
+
+							this.el = new PIXI.Text("Хотите стать более женственной, спортивной, строгой или утонченной? Специально\nдля вас, учитывая особенности вашей внешности, профессиональные стилисты\nсоставят пять комплектов одежды в выбранном стиле.", style);
+							this.el.anchor.x = .5;
+							this.el.anchor.y = .5;
+							this.el.x = renderer.width / 2;
+							this.el.y = -100;
+
+							slide_container_4.addChild(this.el);
+
+							createjs.Tween.get(this.el)
+								.wait(this.anim_params.init_wait)
+  								.to({ y: 180 }, this.anim_params.speed, createjs.Ease.getPowInOut(4));
+
+						},
+
+						destroy: function() {
+
+							createjs.Tween.get(this.el)
+								.wait(this.anim_params.destroy_wait)
+  								.to({ y: -100 }, this.anim_params.speed, createjs.Ease.getPowInOut(4));
+
+						}
+
+					},
+
+					slider: {
+
+						el: null,
+
+						init: function() {
+
+
+						},
+
+						destroy: function() {
+
+						},
+
+						update: function() {
+
+						}
+
+					}
 
 				}
 
