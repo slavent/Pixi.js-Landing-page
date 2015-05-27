@@ -928,8 +928,7 @@
 					clearInterval(main_timer);
 
 					timer_slide_3 = setInterval(function() {
-						$body.unbind("mousewheel");
-						$body.one("mousewheel", $.debounce(200, true, App.managerService.slide_3.scroll));
+						$body.one("mousewheel", App.managerService.slide_3.scroll);
 					}, 200);
 
 				},
