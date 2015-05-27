@@ -11,9 +11,11 @@
 		$menu_icon = $(".menu-icon-wrp"),
 		$menu_popup = $(".menu-popup"),
 		$menu_popup_nav = $(".menu-popup-nav"),
-		$menu_close_btn = $(".menu-popup-closebtn"),
+		$menu_close_btn = $(".popup-closebtn"),
 		$landing_nav = $(".landing-nav ul"),
 		$hyde_menu = $(".hyde-menu"),
+		$anketa = $(".anketa"),
+		$order_btn = $(".order-btn"),
 
 		w_width = $(window).width(),
 		w_height = $(window).height(),
@@ -276,10 +278,13 @@
     		$menu_close_btn.on("click", function() {
     			$menu_icon.fadeIn();
     			$menu_popup.hide();
+    			$anketa.hide();
     		});
 
     		$main_menu.find("li").on("click", function() {
     			active_slide = $(this).index() + 1;
+    			if(active_slide == 1) scroll_top = true;
+    			
     			App.mousewheelService.init();
 
     			return false;
@@ -287,10 +292,15 @@
 
     		$menu_popup_nav.find("li").on("click", function() {
     			active_slide = $(this).index() + 1;
-    			App.mousewheelService.init();
     			$menu_popup.hide();
 
+    			App.mousewheelService.init();
+
     			return false;
+    		});
+
+    		$order_btn.on("click", function() {
+    			$anketa.fadeIn();
     		});
 
 	    },
@@ -1664,50 +1674,20 @@
 
 					orderBtn: {
 
-						element: null,
-						element_2: null,
-
 						init: function() {
 
-							var style = {
-								font : '18px FiraSansRegular',
-							    fill : '#fa6464'
-							};
-
-							this.element = new PIXI.Text("Заказать", style);
-
-							this.element.x = (renderer.width - this.element.width) / 2;	
-							this.element.y = ((renderer.height - this.element.height) / 2) + 312;
-							this.resolution = 2;
-							this.element.alpha = 0;
-
-							slide_container_5.addChild(this.element);
-
-							this.element_2 = new PIXI.Graphics();
-
-							this.element_2.lineStyle(3, 0xfa6464, 1);
-							this.element_2.beginFill(0xFF00BB, 0);
-							this.element_2.drawRoundedRect(renderer.width/2-60, renderer.height/2+295, 120, 35, 1);
-							this.element_2.endFill();
-							this.element_2.alpha = 0;
-
-							slide_container_5.addChild(this.element_2);
+							$order_btn.addClass("active");
 
 						},
 
 						destroy: function() {
-							slide_container_5.removeChild(this.element);
-							slide_container_5.removeChild(this.element_2);
+							
+							$order_btn.removeClass("active");
+
 						},
 
 						update: function() {
-							if( this.element != null ) {
-								if(this.element.alpha < 1) this.element.alpha += 0.005;
-							}
 
-							if( this.element_2 != null ) {
-								if(this.element_2.alpha < 1) this.element_2.alpha += 0.005;
-							}
 						}
 
 					}
@@ -1852,8 +1832,7 @@
 							this.element.buttonMode = true;
 							this.element.interactive = true;
 							this.element.on("click", function() {
-								active_slide = 7;
-								App.initScroll.scroll();
+								$anketa.fadeIn();
 							});
 
 
@@ -2035,8 +2014,6 @@
 					this.elems.orderBtn.init();
 					this.elems.footer.init();
 
-					$footer.css({ "bottom" : 0 });
-
 					stage.addChild(slide_container_7);
 
 				},
@@ -2045,7 +2022,8 @@
 
 					console.log("Slide 7 destroy");
 
-					$footer.css({ "bottom" : -120 });
+					this.elems.orderBtn.destroy();
+					this.elems.footer.destroy();
 
 					stage.removeChild(slide_container_7);
 
@@ -2262,31 +2240,15 @@
 
 					orderBtn: {
 
-						element: null,
-						element_2: null,
-
 						init: function() {
 
-							var style = {
-									font : '14px FiraSansRegular',
-								    fill : '#fff',
-								    align : "center"
-								};
+							$order_btn.addClass("active").addClass("white");
 
-							this.element = new PIXI.Text("Заказать", style);
-							this.element.x = (renderer.width - this.element.width) / 2;	
-							this.element.y = ((renderer.height - this.element.height) / 2) + 260;
+						},
 
+						destroy: function() {
 
-							this.element_2 = new PIXI.Graphics();
-
-							this.element_2.lineStyle(1, 0xffffff, 1);
-							this.element_2.beginFill(0xffffff, 0);
-							this.element_2.drawRoundedRect(renderer.width/2-50, renderer.height/2+245, 100, 30, 1);
-							this.element_2.endFill();
-
-							slide_container_7.addChild(this.element);
-							slide_container_7.addChild(this.element_2);
+							$order_btn.removeClass("active").removeClass("white");
 
 						},
 
@@ -2301,6 +2263,14 @@
 						element: null,
 
 						init: function() {
+
+							$footer.addClass("active");
+
+						},
+
+						destroy: function() {
+
+							$footer.removeClass("active");
 
 						},
 

@@ -180,7 +180,7 @@ body {
 	content: none;
 }
 
-.menu-popup-closebtn svg {
+.popup-closebtn svg {
 	width: 30px;
 	height: 30px;
 	position: absolute;
@@ -193,7 +193,7 @@ body {
 	fill: #EC6466;
 }
 
-.menu-popup-closebtn svg:hover {
+.popup-closebtn svg:hover {
 	moz-transform: rotate(180deg);
     -ms-transform: rotate(180deg);
     -webkit-transform: rotate(180deg);
@@ -326,6 +326,10 @@ footer {
 	-webkit-transition: all .5s;
 }
 
+footer.active {
+	bottom: 0;
+}
+
 footer a {
 	color: #3c3c3c;
 }
@@ -420,12 +424,6 @@ footer a {
 	color: #ff7d7a;
 }
 
-/*.landing-nav-item:hover {
-	border-color: #ff7d7a;
-	color: #ff7d7a;
-	cursor: pointer;
-}*/
-
 .hyde-menu {
 	position: fixed;
 	top: -100%;
@@ -483,16 +481,19 @@ footer a {
 	z-index: 70;
 }
 
-.anketa-wrp {
+.anketa {
+	display: none;
 	position: absolute;
 	top: 0;
 	left: 0;
 	bottom: 0;
 	right: 0;
 	font-size: 0;
+	background: #fff;
+	z-index: 100;
 }
 
-.anketa-wrp:after {
+.anketa:after {
 	content: "";
 	display: inline-block;
 	height: 100%;
@@ -500,7 +501,7 @@ footer a {
 	vertical-align: middle;
 }
 
-.anketa {
+.anketa-wrp {
 	display: inline-block;
 	vertical-align: middle;
 	width: 100%;
@@ -630,5 +631,43 @@ footer a {
 .anketa-btn:hover {
 	background: #ff7d7a;
 	color: #fff;
+	cursor: pointer;
+}
+
+.order-btn {
+	border: 2px solid #ff7d7a;
+	font-size: 18px;
+	color: #ff7d7a;
+	width: 150px;
+	height: 35px;
+	background: #fff;
+	position: fixed;
+	left: 50%;
+	bottom: -100px;
+	z-index: 70;
+	margin: 0 0 0 -75px;
+	outline: none;
+	transition: all .3s;
+	-webkit-transition: all .3s;
+}
+
+.order-btn.active {
+	bottom: 100px;
+}
+
+.order-btn.white {
+	border-color: #fff;
+	color: #fff;
+	background: none;
+	bottom: 200px;
+}
+
+.order-btn.white:hover {
+	background: none;
+}
+
+.order-btn:hover {
+	color: #fff;
+	background: #ff7d7a;
 	cursor: pointer;
 }
