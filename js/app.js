@@ -100,10 +100,6 @@
 
 		    }	
 
-		    /*setTimeout(function() {
-				$landing_nav.parent().css({ "right" : "30px" });
-			}, 3000);*/	
-
 		  	App.bindService();
 		  	App.managerService.init();
 		  	App.navService(active_slide);
@@ -145,11 +141,12 @@
 
 					console.log("Active slide: " + active_slide);
 
+					destroySlides();
+
 					switch (active_slide) {
 
 						case 1: 
 							if( scroll_top == true ) {
-								destroySlides();
 								setTimeout(function() {
 									App.managerService.slide_1.init();
 								}, 1000);
@@ -158,13 +155,11 @@
 
 						case 2: 
 							if( scroll_top == true ) {
-								destroySlides();
 								setTimeout(function() {
 									App.managerService.slide_2.init();
 								}, 1000);
 							}
 							if( scroll_down == true ) {
-								destroySlides();
 								setTimeout(function() {
 									App.managerService.slide_2.init();
 								}, 500);
@@ -173,13 +168,11 @@
 
 						case 3: 
 							if( scroll_top == true ) {
-								destroySlides();
 								setTimeout(function() {
 									App.managerService.slide_3.init();
 								}, 500);
 							}
 							if( scroll_down == true ) {
-								destroySlides();
 								setTimeout(function() {
 									App.managerService.slide_3.init();
 								}, 500);
@@ -188,13 +181,11 @@
 
 						case 4: 
 							if( scroll_top == true ) {
-								destroySlides();
 								setTimeout(function() {
 									App.managerService.slide_4.init();
 								}, 500);
 							}
 							if( scroll_down == true ) {
-								destroySlides();
 								setTimeout(function() {
 									App.managerService.slide_4.init();
 								}, 500);
@@ -203,13 +194,11 @@
 
 						case 5: 
 							if( scroll_top == true ) {
-								destroySlides();
 								setTimeout(function() {
 									App.managerService.slide_5.init();
 								}, 500);
 							}
 							if( scroll_down == true ) {
-								destroySlides();
 								setTimeout(function() {
 									App.managerService.slide_5.init();
 								}, 500);
@@ -218,13 +207,11 @@
 
 						case 6: 
 							if( scroll_top == true ) {
-								destroySlides();
 								setTimeout(function() {
 									App.managerService.slide_6.init();
 								}, 0);
 							}
 							if( scroll_down == true ) {
-								destroySlides();
 								setTimeout(function() {
 									App.managerService.slide_6.init();
 								}, 0);
@@ -233,7 +220,6 @@
 
 						case 7: 
 							if( scroll_down == true ) {
-								destroySlides();
 								setTimeout(function() {
 									App.managerService.slide_7.init();
 								}, 1400);
@@ -263,11 +249,10 @@
 
 		bindService: function() {
 
-			$body.one("mousewheel", $.debounce(200, true, App.mousewheelService.init));
+			$body.one("mousewheel", App.mousewheelService.init);
 
 			main_timer = setInterval(function() {
-				$body.unbind("mousewheel");
-				$body.one("mousewheel", $.debounce(200, true, App.mousewheelService.init));
+				$body.one("mousewheel", App.mousewheelService.init);
 			}, SLIDE_ANIMATION_TIME);
 
 			$menu_icon.on("click", function() {
@@ -284,7 +269,7 @@
     		$main_menu.find("li").on("click", function() {
     			active_slide = $(this).index() + 1;
     			if(active_slide == 1) scroll_top = true;
-    			
+
     			App.mousewheelService.init();
 
     			return false;
@@ -624,8 +609,8 @@
 					this.elems.border.destroy();
 					this.elems.arrowDown.destroy();
 
-					slide_container_2 = null;
 					//stage.removeChild(slide_container_2);
+					slide_container_2 = null;
 
 				},
 
@@ -963,7 +948,10 @@
 						App.mousewheelService.init();
 
 						clearInterval(timer_slide_3);						
-						App.bindService(); // for start timer
+
+						main_timer = setInterval(function() {
+							$body.one("mousewheel", App.mousewheelService.init);
+						}, SLIDE_ANIMATION_TIME);
 
 						return false;
 					}
@@ -1055,7 +1043,7 @@
 							el: null,
 
 							init: function() {
-								console.log("Scene 1 init");
+								//console.log("Scene 1 init");
 
 								var texture = PIXI.Texture.fromImage("i/s3/1/wears.jpg");
 
@@ -1077,7 +1065,7 @@
 							el: null,
 
 							init: function() {
-								console.log("Scene 2 init");
+								//console.log("Scene 2 init");
 								var texture = PIXI.Texture.fromImage("i/s3/1/wears.jpg");
 
 								this.el = new PIXI.Sprite(texture);
@@ -1098,7 +1086,7 @@
 							el: null,
 
 							init: function() {
-								console.log("Scene 3 init");
+								//console.log("Scene 3 init");
 								var texture = PIXI.Texture.fromImage("i/s3/1/wears.jpg");
 
 								this.el = new PIXI.Sprite(texture);
@@ -1119,7 +1107,7 @@
 							el: null,
 
 							init: function() {
-								console.log("Scene 4 init");
+								//console.log("Scene 4 init");
 								var texture = PIXI.Texture.fromImage("i/s3/1/wears.jpg");
 
 								this.el = new PIXI.Sprite(texture);
@@ -1140,7 +1128,7 @@
 							el: null,
 
 							init: function() {
-								console.log("Scene 5 init");
+								//console.log("Scene 5 init");
 								var texture = PIXI.Texture.fromImage("i/s3/1/wears.jpg");
 
 								this.el = new PIXI.Sprite(texture);
@@ -1161,7 +1149,7 @@
 							el: null,
 
 							init: function() {
-								console.log("Scene 6 init");
+								//console.log("Scene 6 init");
 								var texture = PIXI.Texture.fromImage("i/s3/1/wears.jpg");
 
 								this.el = new PIXI.Sprite(texture);
@@ -1188,6 +1176,8 @@
 				init: function() {
 
 					console.log("Slide 4 init");
+
+					slide_container_4 = new PIXI.Container();
 
 				},
 
@@ -2026,6 +2016,7 @@
 					this.elems.footer.destroy();
 
 					stage.removeChild(slide_container_7);
+					slide_container_7 = null;
 
 				},
 
