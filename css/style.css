@@ -175,7 +175,7 @@ body {
 	right: -20px;
 }
 
-.menu-popup-nav-item:nth-child(4) .menu-popup-nav-link:after,
+.menu-popup-nav-item:nth-child(5) .menu-popup-nav-link:after,
 .menu-popup-nav-item:last-child .menu-popup-nav-link:after{
 	content: none;
 }
@@ -354,7 +354,7 @@ footer a {
 	vertical-align: middle;
 	width: 38px;
 	height: 70px;
-	background: url(../i/s7/f_logo.png) 0 0 no-repeat;
+	background: url(../i/s8/f_logo.png) 0 0 no-repeat;
 }
 
 .support {
@@ -490,7 +490,7 @@ footer a {
 	right: 0;
 	font-size: 0;
 	background: #fff;
-	z-index: 100;
+	z-index: 60;
 }
 
 .anketa:after {

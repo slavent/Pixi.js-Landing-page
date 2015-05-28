@@ -29,6 +29,7 @@
 		slide_container_5 = null,
 		slide_container_6 = null,
 		slide_container_7 = null,
+		slide_container_8 = null,
 
 		scroll_top = false,
 		scroll_down = true,
@@ -93,6 +94,11 @@
 		    			
 		    			break;
 
+		    		case 8: 
+		    			App.managerService.slide_8.update();
+		    			
+		    			break;
+
 		    	}
 
 		        renderer.render(stage);
@@ -114,8 +120,8 @@
 				if(event) {
 					if(event.originalEvent.wheelDelta < 0) {
 						// scroll down
-						if( active_slide == 7 ) return;
-						if( active_slide < 7 ) active_slide++;
+						if( active_slide == 8 ) return;
+						if( active_slide < 8 ) active_slide++;
 						scroll_down = true;
 						scroll_top = false;
 					} else {
@@ -135,9 +141,10 @@
 					if( slide_container_5 != null ) App.managerService.slide_5.destroy();
 					if( slide_container_6 != null ) App.managerService.slide_6.destroy();
 					if( slide_container_7 != null ) App.managerService.slide_7.destroy();
+					if( slide_container_8 != null ) App.managerService.slide_8.destroy();
 				}
 
-				if(active_slide >= 1 && active_slide <= 7) {
+				if(active_slide >= 1 && active_slide <= 8) {
 
 					console.log("Active slide: " + active_slide);
 
@@ -183,12 +190,12 @@
 							if( scroll_top == true ) {
 								setTimeout(function() {
 									App.managerService.slide_4.init();
-								}, 500);
+								}, 1000);
 							}
 							if( scroll_down == true ) {
 								setTimeout(function() {
 									App.managerService.slide_4.init();
-								}, 500);
+								}, 0);
 							}
 							break;
 
@@ -209,19 +216,31 @@
 							if( scroll_top == true ) {
 								setTimeout(function() {
 									App.managerService.slide_6.init();
-								}, 0);
+								}, 500);
 							}
 							if( scroll_down == true ) {
 								setTimeout(function() {
 									App.managerService.slide_6.init();
-								}, 0);
+								}, 500);
 							}
 							break;
 
 						case 7: 
+							if( scroll_top == true ) {
+								setTimeout(function() {
+									App.managerService.slide_7.init();
+								}, 1000);
+							}
 							if( scroll_down == true ) {
 								setTimeout(function() {
 									App.managerService.slide_7.init();
+								}, 1000);
+							}
+							break;
+						case 8: 
+							if( scroll_down == true ) {
+								setTimeout(function() {
+									App.managerService.slide_8.init();
 								}, 1400);
 							}
 							break;
@@ -239,6 +258,7 @@
 		navService: function(ind) {
 
 			ind--;
+
 			$landing_nav.children().removeClass("landing-nav-item-active");
 			$landing_nav.children().eq(ind).addClass("landing-nav-item-active");
 
@@ -264,7 +284,6 @@
     		$menu_close_btn.on("click", function() {
     			$menu_icon.fadeIn();
     			$menu_popup.hide();
-    			$anketa.hide();
     		});
 
     		$main_menu.find("li").on("click", function() {
@@ -2290,18 +2309,13 @@
 
 			slide_7: {
 
-				init: function(active) {
+				init: function() {
 
 					console.log("Slide 7 init");
 
 					slide_container_7 = new PIXI.Container();
-					slide_container_7.alpha = 0;
 
-					this.elems.slider.init();
-					this.elems.orderBtn.init();
-					this.elems.footer.init();
-
-					stage.addChild(slide_container_7);
+					$anketa.fadeIn();
 
 				},
 
@@ -2309,18 +2323,55 @@
 
 					console.log("Slide 7 destroy");
 
-					this.elems.orderBtn.destroy();
-					this.elems.footer.destroy();
+					$anketa.fadeOut();
 
-					stage.removeChild(slide_container_7);
 					slide_container_7 = null;
 
 				},
 
 				update: function() {
 
-					if( slide_container_7 != null ) {
-						if( slide_container_7.alpha < 1 ) slide_container_7.alpha += 0.05;
+				},
+
+				elems: {
+
+				}
+
+			},
+
+			slide_8: {
+
+				init: function(active) {
+
+					console.log("Slide 8 init");
+
+					slide_container_8 = new PIXI.Container();
+					slide_container_8.alpha = 0;
+
+					this.elems.slider.init();
+					this.elems.orderBtn.init();
+					this.elems.footer.init();
+
+					stage.addChild(slide_container_8);
+
+				},
+
+				destroy: function() {
+
+					console.log("Slide 8 destroy");
+
+					this.elems.orderBtn.destroy();
+					this.elems.footer.destroy();
+
+					stage.removeChild(slide_container_8);
+					slide_container_8 = null;
+
+				},
+
+				update: function() {
+
+					if( slide_container_8 != null ) {
+						if( slide_container_8.alpha < 1 ) slide_container_8.alpha += 0.05;
 					}
 
 					this.elems.slider.update();
@@ -2418,7 +2469,7 @@
 							vars.slide_container_1_sprite = new PIXI.Sprite(vars.slide_container_1_texture);
 							vars.slide_container_1_sprite.width = renderer.width;
 							vars.slide_container_1_sprite.height = renderer.height;
-							slide_container_7.addChild(vars.slide_container_1_sprite);
+							slide_container_8.addChild(vars.slide_container_1_sprite);
 
 							var style = {
 									font : '65px FiraSansRegular',
@@ -2432,7 +2483,7 @@
 							vars.title_1.x = (renderer.width - vars.title_1.width) / 2;	
 							vars.title_1.y = ((renderer.height - vars.title_1.height) / 2);
 
-							slide_container_7.addChild(vars.title_1);
+							slide_container_8.addChild(vars.title_1);
 						},
 
 						makeslide_container_2: function() {
@@ -2443,7 +2494,7 @@
 							vars.slide_container_2_sprite.width = renderer.width;
 							vars.slide_container_2_sprite.height = renderer.height;
 							vars.slide_container_2_sprite.alpha = 0;
-							slide_container_7.addChild(vars.slide_container_2_sprite);
+							slide_container_8.addChild(vars.slide_container_2_sprite);
 
 							var style = {
 									font : '65px FiraSansRegular',
@@ -2458,7 +2509,7 @@
 							vars.title_2.y = ((renderer.height - vars.title_2.height) / 2);
 							vars.title_2.alpha = 0;
 
-							slide_container_7.addChild(vars.title_2);
+							slide_container_8.addChild(vars.title_2);
 						},
 
 						makeslide_container_3: function() {
@@ -2469,7 +2520,7 @@
 							vars.slide_container_3_sprite.width = renderer.width;
 							vars.slide_container_3_sprite.height = renderer.height;
 							vars.slide_container_3_sprite.alpha = 0;
-							slide_container_7.addChild(vars.slide_container_3_sprite);
+							slide_container_8.addChild(vars.slide_container_3_sprite);
 
 							var style = {
 									font : '65px FiraSansRegular',
@@ -2484,13 +2535,13 @@
 							vars.title_3.y = ((renderer.height - vars.title_3.height) / 2);
 							vars.title_3.alpha = 0;
 
-							slide_container_7.addChild(vars.title_3);
+							slide_container_8.addChild(vars.title_3);
 						},
 
 						makeNav: function() {
 							vars = this.vars;
 
-							vars.prev_btn_texture = PIXI.Texture.fromImage("i/s7/nav_btn.svg");
+							vars.prev_btn_texture = PIXI.Texture.fromImage("i/s8/nav_btn.svg");
 							vars.prev_btn_sprite = new PIXI.Sprite(vars.prev_btn_texture);
 							vars.prev_btn_sprite.width = 45;
 							vars.prev_btn_sprite.height = 45;
@@ -2503,9 +2554,9 @@
 								else vars.active = 3;
 							});
 
-							slide_container_7.addChild(vars.prev_btn_sprite);						
+							slide_container_8.addChild(vars.prev_btn_sprite);						
 
-							vars.next_btn_texture = PIXI.Texture.fromImage("i/s7/nav_btn.svg");
+							vars.next_btn_texture = PIXI.Texture.fromImage("i/s8/nav_btn.svg");
 							vars.next_btn_sprite = new PIXI.Sprite(vars.next_btn_texture);
 							vars.next_btn_sprite.width = 45;
 							vars.next_btn_sprite.height = 45;
@@ -2521,7 +2572,7 @@
 								else vars.active = 1;
 							});
 
-							slide_container_7.addChild(vars.next_btn_sprite);
+							slide_container_8.addChild(vars.next_btn_sprite);
 						}
 
 					},
