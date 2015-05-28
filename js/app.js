@@ -1340,7 +1340,9 @@
 
 					slider: {
 
-						el: null,
+						el: 		null,
+						prev_btn: 	null,
+						next_btn: 	null,
 
 						init: function() {
 
@@ -1355,8 +1357,12 @@
 								slides = new PIXI.Container(),
 								slide_ind = 0;
 
+							this.el = slides;
+							slides.alpha = 0;
+
 							var Slide = function(index, url, title, description) {
 
+								// Title
 								var title_style = {
 									font : "30px HelveticaNeueCyr-Light",
 								    fill : "#ffffff"
@@ -1366,6 +1372,7 @@
 								this.title.position.y = 430;
 								this.title.anchor.x = .5;
 
+								// Line
 								this.line = new PIXI.Graphics();
 								this.line.beginFill(0xffffff);
 								this.line.lineStyle(1, 0xffffff, 1);
@@ -1375,6 +1382,7 @@
 								this.line.position.x = -50;
 								this.line.position.y = 475;
 
+								// Description
 								var description_style = {
 									font : "16px HelveticaNeueCyr-Light",
 								    fill : "#ffffff",
@@ -1385,6 +1393,7 @@
 								this.description.position.y = 485;
 								this.description.anchor.x = .5;
 
+								// Photo
 								this.texture = PIXI.Texture.fromImage(url);
 								this.sprite = new PIXI.Sprite(this.texture);
 								this.sprite.anchor.x = .5;
@@ -1407,12 +1416,18 @@
 
 							slide_container_4.addChild(slides);
 
+							createjs.Tween.get(slides)
+								.to({ alpha: 1 }, 1000, createjs.Ease.getPowInOut(4));
+
+							// Prev btn
 							var prev_btn_texture = PIXI.Texture.fromImage("i/s4/prev.png"),
 								prev_btn = new PIXI.Sprite(prev_btn_texture);
 
+							this.prev_btn = prev_btn;
+
 							prev_btn.anchor.x = .5;
 							prev_btn.anchor.y = .5;
-							prev_btn.position.x = 100;
+							prev_btn.position.x = -200;
 							prev_btn.position.y = renderer.height / 2;
 							prev_btn.buttonMode = true;
 							prev_btn.interactive = true;
@@ -1429,12 +1444,18 @@
 
 							slide_container_4.addChild(prev_btn);
 
+							createjs.Tween.get(prev_btn)
+								.to({ x: 100 }, 1000, createjs.Ease.getPowInOut(4));
+
+							// Next btn
 							var next_btn_texture = PIXI.Texture.fromImage("i/s4/next.png"),
 								next_btn = new PIXI.Sprite(next_btn_texture);
 
+							this.next_btn = next_btn;
+
 							next_btn.anchor.x = .5;
 							next_btn.anchor.y = .5;
-							next_btn.position.x = renderer.width - 100;
+							next_btn.position.x = renderer.width + 100;
 							next_btn.position.y = renderer.height / 2;
 							next_btn.buttonMode = true;
 							next_btn.interactive = true;
@@ -1451,14 +1472,22 @@
 
 							slide_container_4.addChild(next_btn);
 
+							createjs.Tween.get(next_btn)
+								.to({ x: renderer.width - 100 }, 1000, createjs.Ease.getPowInOut(4));
+
 						},
 
 						destroy: function() {
+							var that = this;
 
-						},
+							createjs.Tween.get(this.el)
+								.to({ alpha: 0 }, 1000, createjs.Ease.getPowInOut(4));
 
-						update: function() {
+							createjs.Tween.get(this.prev_btn)
+								.to({ x: -200 }, 1000, createjs.Ease.getPowInOut(4));
 
+							createjs.Tween.get(this.next_btn)
+								.to({ x: renderer.width + 200 }, 1000, createjs.Ease.getPowInOut(4));
 						}
 
 					}
