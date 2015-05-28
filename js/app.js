@@ -376,7 +376,6 @@
 				},
 
 				update: function() {
-					this.elems.slider.update();
 			    	this.elems.spinner.update();
 				},
 
@@ -421,9 +420,9 @@
 						init: function() {
 
 							var data = [
-								{ url: "i/s1/slide_1.jpg", x_pos: -25 },
-								{ url: "i/s1/slide_2.jpg", x_pos: 0 },
-								{ url: "i/s1/slide_3.jpg", x_pos: 25 }
+								{ url: "i/s1/slide_1.jpg", x_pos: -25, color: "0xffffff" },
+								{ url: "i/s1/slide_2.jpg", x_pos: 0, color: "0xffffff" },
+								{ url: "i/s1/slide_3.jpg", x_pos: 25, color: "0xffffff" }
 							],
 								slides = new PIXI.Container(),
 								dotes = new PIXI.Container(),
@@ -452,10 +451,11 @@
 							slide_container_1.addChild(slides);
 
 							// Navigation
-							var Dot = function(index, x_pos) {
+							var Dot = function(index, x_pos, color) {
 								var dot = new PIXI.Graphics();
+								dot.index = index;
 								dot.lineStyle(0);
-								dot.beginFill(0xffffff, 1);
+								dot.beginFill(color, 1);
 								dot.drawCircle(0, 20, 5);
 								dot.endFill();
 								dot.position.x = renderer.width / 2 + x_pos;
@@ -463,30 +463,31 @@
 								dot.buttonMode = true;
 								dot.interactive = true;
 								dot.on("click", function() {
-									
+									draw(this.index);
 								});
-
-								dot.makeActive = function() {
-									dot.beginFill(0x000000, 1);
-								};
 
 								return dot;
 							}
 
-							for(var i = 0; i < data.length; i++) {
-								var dot = new Dot( i, data[i].x_pos );
-								if(i == 0) dot.makeActive();
+							function draw(index){
+								if(index == undefined) index = 0;
 
-								dotes.addChild(dot);
+								for(var i = 0; i < data.length; i++) {
+									if(i == index) {
+										var color = "0xff7d7a";
+									} else {
+										var color = data[i].color;
+									}
+									var dot = new Dot( i, data[i].x_pos, color );	
+								
+									dotes.addChild(dot);
+								}
 							}
+
+							draw();
 
 							slide_container_1.addChild(dotes);
 
-
-						},
-
-						update: function() {
-							
 						}
 
 					},
