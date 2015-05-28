@@ -376,8 +376,8 @@
 				},
 
 				update: function() {
+					this.elems.slider.update();
 			    	this.elems.spinner.update();
-			    	this.elems.slider.update();
 				},
 
 				elems: {
@@ -415,150 +415,78 @@
 					},
 
 					slider: {
-						vars: {
-							slide_container_1_texture: 	null,
-							slide_container_1_sprite: 		null,
-							slide_container_2_texture: 	null,
-							slide_container_2_sprite: 		null,
-							slide_container_3_texture: 	null,
-							slide_container_3_sprite: 		null,
-							dot1_texture: 		null,
-							dot1: 				null,
-							dot2_texture: 		null,
-							dot2: 				null,
-							dot3_texture: 		null,
-							dot4: 				null,
-							timer: 				null,
-							next: 				0
-						},
+
+						el: null,
 
 						init: function() {
-							var vars = this.vars;
 
-							this.makeslide_container_1();
-							this.makeslide_container_2();
-							this.makeslide_container_3();
-							this.makeNav();
+							var data = [
+								{ url: "i/s1/slide_1.jpg", x_pos: -25 },
+								{ url: "i/s1/slide_2.jpg", x_pos: 0 },
+								{ url: "i/s1/slide_3.jpg", x_pos: 25 }
+							],
+								slides = new PIXI.Container(),
+								dotes = new PIXI.Container(),
+								slide_ind = 0;
 
-							vars.timer = setInterval(function() {
-								if( vars.next == 3 ) {
-									vars.next = 1;
-								} else {
-									vars.next++;
-								}
-							}, 7000);
+							this.el = dotes;
+
+							var Slide = function(index, url) {
+								this.texture = PIXI.Texture.fromImage(url);
+								this.sprite = new PIXI.Sprite(this.texture);
+								this.sprite.anchor.x = .5;
+								this.sprite.anchor.y = .5;
+								this.sprite.position.x = renderer.width / 2;
+								this.sprite.position.y = renderer.height / 2;
+								if( index != data.length - 1 ) this.sprite.alpha = 0;
+
+								return this.sprite;
+							};
+
+							for(var i = 0; i < data.length; i++) {
+								var slide = new Slide( i, data[i].url );
+
+								slides.addChild(slide);
+							}
+
+							slide_container_1.addChild(slides);
+
+							// Navigation
+							var Dot = function(index, x_pos) {
+								var dot = new PIXI.Graphics();
+								dot.lineStyle(0);
+								dot.beginFill(0xffffff, 1);
+								dot.drawCircle(0, 20, 5);
+								dot.endFill();
+								dot.position.x = renderer.width / 2 + x_pos;
+								dot.position.y = renderer.height / 2 + 200;
+								dot.buttonMode = true;
+								dot.interactive = true;
+								dot.on("click", function() {
+									
+								});
+
+								dot.makeActive = function() {
+									dot.beginFill(0x000000, 1);
+								};
+
+								return dot;
+							}
+
+							for(var i = 0; i < data.length; i++) {
+								var dot = new Dot( i, data[i].x_pos );
+								if(i == 0) dot.makeActive();
+
+								dotes.addChild(dot);
+							}
+
+							slide_container_1.addChild(dotes);
+
+
 						},
 
 						update: function() {
-							var vars = this.vars;
-
-							switch(vars.next) {
-								case 1: 
-									if( vars.slide_container_1_sprite.alpha < 1 ) vars.slide_container_1_sprite.alpha += 0.01;
-									if( vars.slide_container_2_sprite.alpha > 0 ) vars.slide_container_2_sprite.alpha -= 0.01;
-									if( vars.slide_container_3_sprite.alpha > 0 ) vars.slide_container_3_sprite.alpha -= 0.01;
-									break;
-
-								case 2: 
-									if( vars.slide_container_1_sprite.alpha > 0 ) vars.slide_container_1_sprite.alpha -= 0.01;
-									if( vars.slide_container_2_sprite.alpha < 1 ) vars.slide_container_2_sprite.alpha += 0.01;
-									if( vars.slide_container_3_sprite.alpha > 0 ) vars.slide_container_3_sprite.alpha -= 0.01;
-									break;
-
-								case 3: 
-									if( vars.slide_container_1_sprite.alpha > 0 ) vars.slide_container_1_sprite.alpha -= 0.01;
-									if( vars.slide_container_2_sprite.alpha > 0 ) vars.slide_container_2_sprite.alpha -= 0.01;
-									if( vars.slide_container_3_sprite.alpha < 1 ) vars.slide_container_3_sprite.alpha += 0.01;
-									break;
-							}
-						},
-
-						makeslide_container_1: function() {
-							var vars = this.vars;
-
-							// vars.slide_container_1_texture = PIXI.Texture.fromVideo("i/s1/slide_1.mp4");
-							vars.slide_container_1_texture = PIXI.Texture.fromImage("i/s1/slide_2.jpg");
-							vars.slide_container_1_sprite = new PIXI.Sprite(vars.slide_container_1_texture);
-							vars.slide_container_1_sprite.width = renderer.width;
-							vars.slide_container_1_sprite.height = renderer.height;
-							slide_container_1.addChild(vars.slide_container_1_sprite);
-						},
-
-						makeslide_container_2: function() {
-							var vars = this.vars;
-
-							vars.slide_container_2_texture = PIXI.Texture.fromImage("i/s1/slide_2.jpg");
-							vars.slide_container_2_sprite = new PIXI.Sprite(vars.slide_container_2_texture);
-							vars.slide_container_2_sprite.width = renderer.width;
-							vars.slide_container_2_sprite.height = renderer.height;
-							vars.slide_container_2_sprite.alpha = 0;
-							slide_container_1.addChild(vars.slide_container_2_sprite);
-						},
-
-						makeslide_container_3: function() {
-							var vars = this.vars;
-
-							vars.slide_container_3_texture = PIXI.Texture.fromImage("i/s1/slide_3.jpg");
-							vars.slide_container_3_sprite = new PIXI.Sprite(vars.slide_container_3_texture);
-							vars.slide_container_3_sprite.width = renderer.width;
-							vars.slide_container_3_sprite.height = renderer.height;
-							vars.slide_container_3_sprite.alpha = 0;
-							slide_container_1.addChild(vars.slide_container_3_sprite);
-						},
-
-						makeNav: function() {
-							var vars = this.vars;
-
-							dot1_texture = PIXI.Texture.fromImage("i/s1/dot_active.svg");
-							dot1 = new PIXI.Sprite(dot1_texture);
-							dot2_texture = PIXI.Texture.fromImage("i/s1/dot.svg");
-							dot2 = new PIXI.Sprite(dot2_texture);
-							dot3_texture = PIXI.Texture.fromImage("i/s1/dot.svg");
-							dot3 = new PIXI.Sprite(dot3_texture);
-								
-
-							dot1.anchor.set(0.5);
-							dot1.position.x = renderer.width / 2 - 25;
-							dot1.position.y = renderer.height / 2 + 200;
-							dot1.buttonMode = true;
-							dot1.interactive = true;
-							dot1.on("click", function() {
-								clearInterval(vars.timer);
-								this.texture = PIXI.Texture.fromImage("i/s1/dot_active.svg");
-								dot2.texture = PIXI.Texture.fromImage("i/s1/dot.svg");
-								dot3.texture = PIXI.Texture.fromImage("i/s1/dot.svg");
-								vars.next = 1;
-							});
-
-							dot2.anchor.set(0.5);
-							dot2.position.x = renderer.width / 2 - 5;
-							dot2.position.y = renderer.height / 2 + 200;
-							dot2.buttonMode = true;
-							dot2.interactive = true;
-							dot2.on("click", function() {
-								clearInterval(vars.timer);
-								this.texture = PIXI.Texture.fromImage("i/s1/dot_active.svg");
-								dot1.texture = PIXI.Texture.fromImage("i/s1/dot.svg");
-								dot3.texture = PIXI.Texture.fromImage("i/s1/dot.svg");
-								vars.next = 2;
-							});
-
-							dot3.anchor.set(0.5);
-							dot3.position.x = renderer.width / 2 + 15;
-							dot3.position.y = renderer.height / 2 + 200;
-							dot3.buttonMode = true;
-							dot3.interactive = true;
-							dot3.on("click", function() {
-								clearInterval(vars.timer);
-								this.texture = PIXI.Texture.fromImage("i/s1/dot_active.svg");
-								dot1.texture = PIXI.Texture.fromImage("i/s1/dot.svg");
-								dot2.texture = PIXI.Texture.fromImage("i/s1/dot.svg");
-								vars.next = 3;
-							});
-
-							slide_container_1.addChild(dot1);
-							slide_container_1.addChild(dot2);
-							slide_container_1.addChild(dot3);
+							
 						}
 
 					},
