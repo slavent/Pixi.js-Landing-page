@@ -300,13 +300,14 @@
     			active_slide = $(this).index() + 1;
     			$menu_popup.hide();
 
-    			App.mousewheelService.init();
+    			App.mousewheelService();
 
     			return false;
     		});
 
     		$order_btn.on("click", function() {
-    			$anketa.fadeIn();
+    			active_slide = 7;
+    			App.mousewheelService.init();
     		});
 
     		// For Anketa additional plugins
