@@ -958,6 +958,10 @@
 
 				init: function() {
 
+					console.log("Slide 3 init");
+
+					slide_container_3 = new PIXI.Container();
+
 					App.managerService.slide_3.scroll(step);
 
 					clearInterval(main_timer);
@@ -998,19 +1002,17 @@
 
 					switch(step) {
 						case 1: 
-						console.log("Slide 3 init");
+							top_pos = 0;
+							left_pos = 0;
 
-						top_pos = 0;
-						left_pos = 0;
+							slide_container_3 = new PIXI.Container();
 
-						slide_container_3 = new PIXI.Container();
+							App.managerService.slide_3.elems.menu.init();
+							App.managerService.slide_3.elems.menu.scene_1.init();
 
-						App.managerService.slide_3.elems.menu.init();
-						App.managerService.slide_3.elems.menu.scene_1.init();
+							stage.addChild(slide_container_3);
 
-						stage.addChild(slide_container_3);
-
-						break;
+							break;
 
 						case 2:
 							top_pos = 0;
@@ -1088,10 +1090,6 @@
 							$hyde_menu.addClass("active").css({ "height" : $(window).height() - $main_menu.height() });
 						},
 
-						update: function() {
-
-						},
-
 						destroy: function() {
 							$hyde_menu.removeClass("active");
 						},
@@ -1102,7 +1100,6 @@
 
 							init: function() {
 								//console.log("Scene 1 init");
-
 								var texture = PIXI.Texture.fromImage("i/s3/1/wears.jpg");
 
 								this.el = new PIXI.Sprite(texture);
