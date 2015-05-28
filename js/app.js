@@ -252,6 +252,7 @@
 			$body.one("mousewheel", App.mousewheelService.init);
 
 			main_timer = setInterval(function() {
+				$body.unbind("mousewheel");
 				$body.one("mousewheel", App.mousewheelService.init);
 			}, SLIDE_ANIMATION_TIME);
 
@@ -942,7 +943,7 @@
 
 					timer_slide_3 = setInterval(function() {
 						$body.one("mousewheel", App.managerService.slide_3.scroll);
-					}, SLIDE_ANIMATION_TIME);
+					}, 1000);
 
 				},
 
@@ -964,6 +965,7 @@
 						clearInterval(timer_slide_3);						
 
 						main_timer = setInterval(function() {
+							$body.unbind("mousewheel");
 							$body.one("mousewheel", App.mousewheelService.init);
 						}, SLIDE_ANIMATION_TIME);
 
@@ -1342,30 +1344,112 @@
 
 						init: function() {
 
-							var slides = [
-								{ url: "i/s1/slide_2.jpg" },
-								{ url: "i/s1/slide_2.jpg" },
-								{ url: "i/s1/slide_2.jpg" }
-							];
+							var data = [
+								{ url: "i/s4/slide_1.png", title: "Casual", description: "Одежда для настоящих\nметательниц" },
+								{ url: "i/s4/slide_2.png", title: "Романтический", description: "Одежда для настоящих\nметательниц" },
+								{ url: "i/s4/slide_3.png", title: "Классика", description: "Одежда для настоящих\nметательниц" },
+								{ url: "i/s4/slide_1.png", title: "Casual", description: "Одежда для настоящих\nметательниц" },
+								{ url: "i/s4/slide_2.png", title: "Романтический", description: "Одежда для настоящих\nметательниц" },
+								{ url: "i/s4/slide_3.png", title: "Классика", description: "Одежда для настоящих\nметательниц" }
+							],
+								slides = new PIXI.Container(),
+								slide_ind = 0;
 
-							var Slide = function(url) {
+							var Slide = function(index, url, title, description) {
+
+								var title_style = {
+									font : "30px HelveticaNeueCyr-Light",
+								    fill : "#ffffff"
+								};
+
+								this.title = new PIXI.Text(title, title_style);
+								this.title.position.y = 430;
+								this.title.anchor.x = .5;
+
+								this.line = new PIXI.Graphics();
+								this.line.beginFill(0xffffff);
+								this.line.lineStyle(1, 0xffffff, 1);
+								this.line.moveTo(0,0);
+								this.line.lineTo(100,0);
+								this.line.endFill();
+								this.line.position.x = -50;
+								this.line.position.y = 475;
+
+								var description_style = {
+									font : "16px HelveticaNeueCyr-Light",
+								    fill : "#ffffff",
+								    align: "center"
+								};
+
+								this.description = new PIXI.Text(description, description_style);
+								this.description.position.y = 485;
+								this.description.anchor.x = .5;
 
 								this.texture = PIXI.Texture.fromImage(url);
 								this.sprite = new PIXI.Sprite(this.texture);
-								this.sprite.width = renderer.width;
-								this.sprite.height = renderer.height - 250 - 70;
-								this.sprite.position.x = 0;
-								this.sprite.position.y = 70;
+								this.sprite.anchor.x = .5;
+								this.sprite.position.y = renderer.height - 400 - 250;
+								this.sprite.position.x = (renderer.width / 3 * (index + 1)) - (renderer.width / 6);
+
+								this.sprite.addChild(this.title);
+								this.sprite.addChild(this.line);
+								this.sprite.addChild(this.description);
 
 								return this.sprite;
 
 							}
 
-							for(var i = 0; i < slides.length; i++) {
-								var slide = new Slide(slides[i].url);
+							for(var i = 0; i < data.length; i++) {
+								var slide = new Slide( i, data[i].url, data[i].title, data[i].description );
 								
-								slide_container_4.addChild(slide);
+								slides.addChild(slide);
 							}
+
+							slide_container_4.addChild(slides);
+
+							var prev_btn_texture = PIXI.Texture.fromImage("i/s4/prev.png"),
+								prev_btn = new PIXI.Sprite(prev_btn_texture);
+
+							prev_btn.anchor.x = .5;
+							prev_btn.anchor.y = .5;
+							prev_btn.position.x = 100;
+							prev_btn.position.y = renderer.height / 2;
+							prev_btn.buttonMode = true;
+							prev_btn.interactive = true;
+							prev_btn.on("click", function() {
+								if(slide_ind != 0) {
+									for(var i = 0; i < slides.children.length; i++) {
+										createjs.Tween.get(slides.children[i])
+											.to({ x: slides.children[i].position.x + renderer.width / 3 }, 500, createjs.Ease.getPowInOut(4));
+									}
+
+									slide_ind--;
+								}
+							});
+
+							slide_container_4.addChild(prev_btn);
+
+							var next_btn_texture = PIXI.Texture.fromImage("i/s4/next.png"),
+								next_btn = new PIXI.Sprite(next_btn_texture);
+
+							next_btn.anchor.x = .5;
+							next_btn.anchor.y = .5;
+							next_btn.position.x = renderer.width - 100;
+							next_btn.position.y = renderer.height / 2;
+							next_btn.buttonMode = true;
+							next_btn.interactive = true;
+							next_btn.on("click", function() {
+								if(slide_ind != slides.children.length - 3) {
+									for(var i = 0; i < slides.children.length; i++) {
+										createjs.Tween.get(slides.children[i])
+											.to({ x: slides.children[i].position.x - renderer.width / 3 }, 500, createjs.Ease.getPowInOut(4));
+									}
+
+									slide_ind++;
+								}
+							});
+
+							slide_container_4.addChild(next_btn);
 
 						},
 
@@ -1823,7 +1907,7 @@
 
 						init: function() {
 
-							var texture = PIXI.Texture.fromImage("i/s4/magazine.png");
+							var texture = PIXI.Texture.fromImage("i/s5/magazine.png");
 
 							this.element = new PIXI.Sprite(texture);
 
@@ -1920,7 +2004,7 @@
 
 						init: function() {
 
-							var texture = PIXI.Texture.fromImage("i/s5/notepade.png");
+							var texture = PIXI.Texture.fromImage("i/s6/notepade.png");
 
 							this.element = new PIXI.Sprite(texture);
 							this.element.anchor.set(0.5);
@@ -1997,7 +2081,7 @@
 
 						init: function() {
 
-							var texture = PIXI.Texture.fromImage("i/s5/circle.svg");
+							var texture = PIXI.Texture.fromImage("i/s6/circle.svg");
 
 							this.element = new PIXI.Sprite(texture);
 							this.element.anchor.set(0.5);
@@ -2119,9 +2203,9 @@
 							var vars = this.vars;
 
 							vars.init = true;
-							vars.spin1_texture = PIXI.Texture.fromImage("i/s5/spin1.svg");
+							vars.spin1_texture = PIXI.Texture.fromImage("i/s6/spin1.svg");
 							vars.spin1 = new PIXI.Sprite(vars.spin1_texture);
-							vars.spin2_texture = PIXI.Texture.fromImage("i/s5/spin2.svg");
+							vars.spin2_texture = PIXI.Texture.fromImage("i/s6/spin2.svg");
 							vars.spin2 = new PIXI.Sprite(vars.spin2_texture);
 
 							vars.spin1.anchor.set(0.5);
