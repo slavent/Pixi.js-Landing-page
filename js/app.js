@@ -967,6 +967,7 @@
 					clearInterval(main_timer);
 
 					timer_slide_3 = setInterval(function() {
+						$body.unbind("mousewheel");
 						$body.one("mousewheel", App.managerService.slide_3.scroll);
 					}, 1000);
 
@@ -1080,8 +1081,6 @@
 
 					menu: {
 
-						element: null,
-
 						anim_params: {
 							speed: 1000
 						},
@@ -1094,23 +1093,38 @@
 							$hyde_menu.removeClass("active");
 						},
 
+						Scene: function(url) {
+							this.texture = PIXI.Texture.fromImage(url);
+							this.el = new PIXI.Sprite(this.texture);
+							this.el.position.x = renderer.width / 2;
+							this.el.position.y = renderer.height * 2;
+
+							this.el.init = function(element) {
+								createjs.Tween.get(element).to({ y: renderer.height / 2 - 250 }, 1000, createjs.Ease.getPowInOut(4));
+							}
+
+							this.el.destroy = function(element) {
+								createjs.Tween.get(element).to({ y: renderer.height * 2 }, 1000, createjs.Ease.getPowInOut(4))
+	  								.call(function() {
+	  									slide_container_3.removeChild(this.el);
+	  								});
+							}
+
+							return this.el;
+						},
+
 						scene_1: {
 
 							el: null,
 
 							init: function() {
-								//console.log("Scene 1 init");
-								var texture = PIXI.Texture.fromImage("i/s3/1/wears.jpg");
-
-								this.el = new PIXI.Sprite(texture);
-								this.el.position.x = renderer.width / 2;
-								this.el.position.y = renderer.height / 2 - 150;
-
+								this.el = new App.managerService.slide_3.elems.menu.Scene("i/s3/1/wears.jpg");
 								slide_container_3.addChild(this.el);
+								this.el.init(this.el);
 							},
 
 							destroy: function() {
-								slide_container_3.removeChild(this.el);
+								this.el.destroy(this.el);
 							}
 
 						},
@@ -1120,18 +1134,14 @@
 							el: null,
 
 							init: function() {
-								//console.log("Scene 2 init");
-								var texture = PIXI.Texture.fromImage("i/s3/1/wears.jpg");
-
-								this.el = new PIXI.Sprite(texture);
-								this.el.position.x = renderer.width / 2;
-								this.el.position.y = renderer.height / 2 - 150;
-
+								this.el = new App.managerService.slide_3.elems.menu.Scene("i/s3/2/wears.jpg");
 								slide_container_3.addChild(this.el);
+								this.el.init(this.el);
+
 							},
 
 							destroy: function() {
-								slide_container_3.removeChild(this.el);
+								this.el.destroy(this.el);
 							}
 
 						},
@@ -1141,18 +1151,14 @@
 							el: null,
 
 							init: function() {
-								//console.log("Scene 3 init");
-								var texture = PIXI.Texture.fromImage("i/s3/1/wears.jpg");
-
-								this.el = new PIXI.Sprite(texture);
-								this.el.position.x = renderer.width / 2;
-								this.el.position.y = renderer.height / 2 - 150;
-
+								this.el = new App.managerService.slide_3.elems.menu.Scene("i/s3/3/wears.jpg");
 								slide_container_3.addChild(this.el);
+								this.el.init(this.el);
+
 							},
 
 							destroy: function() {
-								slide_container_3.removeChild(this.el);
+								this.el.destroy(this.el);
 							}
 
 						},
@@ -1162,18 +1168,14 @@
 							el: null,
 
 							init: function() {
-								//console.log("Scene 4 init");
-								var texture = PIXI.Texture.fromImage("i/s3/1/wears.jpg");
-
-								this.el = new PIXI.Sprite(texture);
-								this.el.position.x = renderer.width / 2;
-								this.el.position.y = renderer.height / 2 - 150;
-
+								this.el = new App.managerService.slide_3.elems.menu.Scene("i/s3/4/wears.jpg");
 								slide_container_3.addChild(this.el);
+								this.el.init(this.el);
+
 							},
 
 							destroy: function() {
-								slide_container_3.removeChild(this.el);
+								this.el.destroy(this.el);
 							}
 
 						},
@@ -1183,18 +1185,14 @@
 							el: null,
 
 							init: function() {
-								//console.log("Scene 5 init");
-								var texture = PIXI.Texture.fromImage("i/s3/1/wears.jpg");
-
-								this.el = new PIXI.Sprite(texture);
-								this.el.position.x = renderer.width / 2;
-								this.el.position.y = renderer.height / 2 - 150;
-
+								this.el = new App.managerService.slide_3.elems.menu.Scene("i/s3/5/wears.jpg");
 								slide_container_3.addChild(this.el);
+								this.el.init(this.el);
+
 							},
 
 							destroy: function() {
-								slide_container_3.removeChild(this.el);
+								this.el.destroy(this.el);
 							}
 
 						},
@@ -1204,18 +1202,14 @@
 							el: null,
 
 							init: function() {
-								//console.log("Scene 6 init");
-								var texture = PIXI.Texture.fromImage("i/s3/1/wears.jpg");
-
-								this.el = new PIXI.Sprite(texture);
-								this.el.position.x = renderer.width / 2;
-								this.el.position.y = renderer.height / 2 - 150;
-
+								this.el = new App.managerService.slide_3.elems.menu.Scene("i/s3/6/wears.jpg");
 								slide_container_3.addChild(this.el);
+								this.el.init(this.el);
+
 							},
 
 							destroy: function() {
-								slide_container_3.removeChild(this.el);
+								this.el.destroy(this.el);
 							}
 
 						}
