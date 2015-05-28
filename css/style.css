@@ -452,9 +452,14 @@ footer a {
 	position: relative;
 }
 
-.hyde-menu-item.active {
+.hyde-menu-hover {
 	background: rgba(250, 100, 100, 0.89);
 	cursor: pointer;
+	position: absolute;
+	top: 70;
+	left: 0;
+	width: 50%;
+	height: 33.3333%;
 }
 
 .hyde-menu-symbol {

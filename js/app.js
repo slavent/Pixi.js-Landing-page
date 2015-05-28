@@ -14,6 +14,7 @@
 		$menu_close_btn = $(".popup-closebtn"),
 		$landing_nav = $(".landing-nav ul"),
 		$hyde_menu = $(".hyde-menu"),
+		$hover = $(".hyde-menu-hover"),
 		$anketa = $(".anketa"),
 		$order_btn = $(".order-btn"),
 
@@ -970,6 +971,9 @@
 
 					console.log(step);
 
+					var top_pos = 0,
+						left_pos = 0;
+
 					if( step != 6 ) {
 						step++;
 					} else {
@@ -995,6 +999,9 @@
 						case 1: 
 						console.log("Slide 3 init");
 
+						top_pos = 0;
+						left_pos = 0;
+
 						slide_container_3 = new PIXI.Container();
 
 						App.managerService.slide_3.elems.menu.init();
@@ -1005,33 +1012,48 @@
 						break;
 
 						case 2:
+							top_pos = 0;
+							left_pos = $hyde_menu.children().width();
+
 							App.managerService.slide_3.elems.menu.scene_1.destroy();
 							App.managerService.slide_3.elems.menu.scene_2.init();
 							break;
 
 						case 3:
+							top_pos = $hyde_menu.children().height();
+							left_pos = 0;
+
 							App.managerService.slide_3.elems.menu.scene_2.destroy();
 							App.managerService.slide_3.elems.menu.scene_3.init();
 							break;
 
 						case 4: 
+							top_pos = $hyde_menu.children().height();
+							left_pos = $hyde_menu.children().width();
+
 							App.managerService.slide_3.elems.menu.scene_3.destroy();
 							App.managerService.slide_3.elems.menu.scene_4.init();
 							break;
 
 						case 5:
+							top_pos = $hyde_menu.children().height() * 2;
+							left_pos = 0;
+
 							App.managerService.slide_3.elems.menu.scene_4.destroy();
 							App.managerService.slide_3.elems.menu.scene_5.init();
 							break;
 
 						case 6:
+							top_pos = $hyde_menu.children().height() * 2;
+							left_pos = $hyde_menu.children().width();
+
 							App.managerService.slide_3.elems.menu.scene_5.destroy();
 							App.managerService.slide_3.elems.menu.scene_6.init();
 							break;
 
 					}
 
-					$hyde_menu.children().removeClass("active").eq(step-1).addClass("active");
+					$hover.animate({ "top" : top_pos, "left" : left_pos });
 
 				},
 
