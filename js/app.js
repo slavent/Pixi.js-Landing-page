@@ -696,7 +696,7 @@
 
 							createjs.Tween.get(this.element)
 								.wait(this.anim_params.init_wait)
-  								.to({ y: (renderer.height / 2 - this.element.height / 2) - 130 }, this.anim_params.speed, createjs.Ease.quadOut());
+  								.to({ y: (renderer.height / 2 - this.element.height / 2) - 140 }, this.anim_params.speed, createjs.Ease.quadOut());
 
 						},
 
@@ -2385,12 +2385,8 @@
 				update: function() {
 
 					if( slide_container_8 != null ) {
-						if( slide_container_8.alpha < 1 ) slide_container_8.alpha += 0.05;
+						if( slide_container_8.alpha < 1 ) slide_container_8.alpha += 0.1;
 					}
-
-					this.elems.slider.update();
-					this.elems.orderBtn.update();
-					this.elems.footer.update();
 
 				},
 
@@ -2398,195 +2394,109 @@
 
 					slider: {
 
-						vars: {
-							slide_container_1_texture: 	null,
-							slide_container_1_sprite: 	null,
-							slide_container_2_texture: 	null,
-							slide_container_2_sprite: 	null,
-							slide_container_3_texture: 	null,
-							slide_container_3_sprite: 	null,
-							active: 					1,
-							next_btn_texture: 			null,
-							next_btn_sprite: 			null,
-							prev_btn_texture: 			null,
-							prev_btn_sprite: 			null,
-							title_1: 					null,
-							title_2: 					null,
-							title_3: 					null
-						},
-
 						init: function() {
-							this.makeslide_container_1();
-							this.makeslide_container_2();
-							this.makeslide_container_3();
-							this.makeNav();
-						},
 
-						update: function() {
-							var vars = this.vars;
+							var data = [
+								{ url: "i/s8/slide_4.jpg", title: "Восхищенные\nвзгляды!" },
+								{ url: "i/s8/slide_3.jpg", title: "Красивый\nдизайн!" },
+								{ url: "i/s8/slide_2.jpg", title: "Игоровой\nпроцесс!" },
+								{ url: "i/s8/slide_1.jpg", title: "Быстрый\nотклик!" }
+							],
+								slides = new PIXI.Container(),
+								slide_ind = 0;
 
-							if( vars.slide_container_1_sprite != null && vars.slide_container_2_sprite != null && vars.slide_container_3_sprite != null ) {
-								switch(vars.active) {
-									case 1: 
-										if( vars.slide_container_1_sprite.alpha < 1 ) {
-											vars.slide_container_1_sprite.alpha += 0.01;
-											vars.title_1.alpha += 0.01;
-										}
-										if( vars.slide_container_2_sprite.alpha > 0 ) {
-											vars.slide_container_2_sprite.alpha -= 0.01;
-											vars.title_2.alpha -= 0.01;
-										}
-										if( vars.slide_container_3_sprite.alpha > 0 ) {
-											vars.slide_container_3_sprite.alpha -= 0.01;
-											vars.title_3.alpha -= 0.01;
-										}
-										break;
+							var Slide = function(index, url, title) {
+								// Photo
+								this.texture = PIXI.Texture.fromImage(url);
+								this.sprite = new PIXI.Sprite(this.texture);
+								this.sprite.anchor.x = .5;
+								this.sprite.anchor.y = .5;
+								this.sprite.position.x = renderer.width / 2;
+								this.sprite.position.y = renderer.height / 2;
+								if( index != data.length - 1 ) this.sprite.alpha = 0;
 
-									case 2: 
-										if( vars.slide_container_1_sprite.alpha > 0 ) {
-											vars.slide_container_1_sprite.alpha -= 0.01;
-											vars.title_1.alpha -= 0.01;
-										}
-										if( vars.slide_container_2_sprite.alpha < 1 ) {
-											vars.slide_container_2_sprite.alpha += 0.01;
-											vars.title_2.alpha += 0.01;
-										}
-										if( vars.slide_container_3_sprite.alpha > 0 ) {
-											vars.slide_container_3_sprite.alpha -= 0.01;
-											vars.title_3.alpha -= 0.01;
-										}
-										break;
+								// Title
+								var style = {
+										font : '65px FiraSansRegular',
+									    fill : '#fff',
+									    lineHeight: 65,
+									    padding: 10,
+									    align : "center"
+									};
 
-									case 3: 
-										if( vars.slide_container_1_sprite.alpha > 0 ) {
-											vars.slide_container_1_sprite.alpha -= 0.01;
-											vars.title_1.alpha -= 0.01;
-										}
-										if( vars.slide_container_2_sprite.alpha > 0 ) {
-											vars.slide_container_2_sprite.alpha -= 0.01;
-											vars.title_2.alpha -= 0.01;
-										}
-										if( vars.slide_container_3_sprite.alpha < 1 ) {
-											vars.slide_container_3_sprite.alpha += 0.01;
-											vars.title_3.alpha += 0.01;
-										}
-										break;
-								}
+								this.title = new PIXI.Text(title, style);
+								this.title.anchor.x = .5;
+								this.title.anchor.y = .5;
+								this.title.x = 0;
+								this.title.y = 0;
+
+								this.sprite.addChild(this.title);
+
+								return this.sprite;
+							};
+
+							for(var i = 0; i < data.length; i++) {
+								var slide = new Slide( i, data[i].url, data[i].title );
+
+								slides.addChild(slide);
 							}
-							
-						},
 
-						makeslide_container_1: function() {
-							var vars = this.vars;
+							slide_container_8.addChild(slides);
 
-							vars.slide_container_1_texture = PIXI.Texture.fromImage("i/s1/slide_2.jpg");
-							vars.slide_container_1_sprite = new PIXI.Sprite(vars.slide_container_1_texture);
-							vars.slide_container_1_sprite.width = renderer.width;
-							vars.slide_container_1_sprite.height = renderer.height;
-							slide_container_8.addChild(vars.slide_container_1_sprite);
+							slide_ind = slides.children.length - 1;
 
-							var style = {
-									font : '65px FiraSansRegular',
-								    fill : '#fff',
-								    lineHeight: 65,
-								    padding: 10,
-								    align : "center"
-								};
+							// Prev btn
+							var prev_btn_texture = PIXI.Texture.fromImage("i/s8/prev.svg");
 
-							vars.title_1 = new PIXI.Text("Восхищенные\nвзгляды!", style);
-							vars.title_1.x = (renderer.width - vars.title_1.width) / 2;	
-							vars.title_1.y = ((renderer.height - vars.title_1.height) / 2);
+							prev_btn = new PIXI.Sprite(prev_btn_texture);
+							prev_btn.width = 45;
+							prev_btn.height = 45;
+							prev_btn.x = renderer.width / 2 - 500;
+							prev_btn.y = renderer.height / 2;
+							prev_btn.buttonMode = true;
+							prev_btn.interactive = true;
+							prev_btn.on("click", function() {
+								console.log(slide_ind, slides.children.length);
+								if( slide_ind < slides.children.length - 1 ) {
+									createjs.Tween.get(slides.children[slide_ind])
+										.to({ alpha: 0 }, 500, createjs.Ease.getPowInOut(4));
 
-							slide_container_8.addChild(vars.title_1);
-						},
-
-						makeslide_container_2: function() {
-							vars = this.vars;
-
-							vars.slide_container_2_texture = PIXI.Texture.fromImage("i/s1/slide_2.jpg");
-							vars.slide_container_2_sprite = new PIXI.Sprite(vars.slide_container_2_texture);
-							vars.slide_container_2_sprite.width = renderer.width;
-							vars.slide_container_2_sprite.height = renderer.height;
-							vars.slide_container_2_sprite.alpha = 0;
-							slide_container_8.addChild(vars.slide_container_2_sprite);
-
-							var style = {
-									font : '65px FiraSansRegular',
-								    fill : '#fff',
-								    lineHeight: 65,
-								    padding: 10,
-								    align : "center"
-								};
-
-							vars.title_2 = new PIXI.Text("Красивый\nдизайн!", style);
-							vars.title_2.x = (renderer.width - vars.title_2.width) / 2;	
-							vars.title_2.y = ((renderer.height - vars.title_2.height) / 2);
-							vars.title_2.alpha = 0;
-
-							slide_container_8.addChild(vars.title_2);
-						},
-
-						makeslide_container_3: function() {
-							vars = this.vars;
-
-							vars.slide_container_3_texture = PIXI.Texture.fromImage("i/s1/slide_3.jpg");
-							vars.slide_container_3_sprite = new PIXI.Sprite(vars.slide_container_3_texture);
-							vars.slide_container_3_sprite.width = renderer.width;
-							vars.slide_container_3_sprite.height = renderer.height;
-							vars.slide_container_3_sprite.alpha = 0;
-							slide_container_8.addChild(vars.slide_container_3_sprite);
-
-							var style = {
-									font : '65px FiraSansRegular',
-								    fill : '#fff',
-								    lineHeight: 65,
-								    padding: 10,
-								    align : "center"
-								};
-
-							vars.title_3 = new PIXI.Text("Игоровой\nпроцесс!", style);
-							vars.title_3.x = (renderer.width - vars.title_3.width) / 2;	
-							vars.title_3.y = ((renderer.height - vars.title_3.height) / 2);
-							vars.title_3.alpha = 0;
-
-							slide_container_8.addChild(vars.title_3);
-						},
-
-						makeNav: function() {
-							vars = this.vars;
-
-							vars.prev_btn_texture = PIXI.Texture.fromImage("i/s8/nav_btn.svg");
-							vars.prev_btn_sprite = new PIXI.Sprite(vars.prev_btn_texture);
-							vars.prev_btn_sprite.width = 45;
-							vars.prev_btn_sprite.height = 45;
-							vars.prev_btn_sprite.x = renderer.width / 2 - 500;
-							vars.prev_btn_sprite.y = renderer.height / 2;
-							vars.prev_btn_sprite.buttonMode = true;
-							vars.prev_btn_sprite.interactive = true;
-							vars.prev_btn_sprite.on("click", function() {
-								if(vars.active > 1) vars.active--;
-								else vars.active = 3;
+									createjs.Tween.get(slides.children[++slide_ind])
+										.to({ alpha: 1 }, 500, createjs.Ease.getPowInOut(4));
+								}
 							});
 
-							slide_container_8.addChild(vars.prev_btn_sprite);						
+							slide_container_8.addChild(prev_btn);
 
-							vars.next_btn_texture = PIXI.Texture.fromImage("i/s8/nav_btn.svg");
-							vars.next_btn_sprite = new PIXI.Sprite(vars.next_btn_texture);
-							vars.next_btn_sprite.width = 45;
-							vars.next_btn_sprite.height = 45;
-							vars.next_btn_sprite.x = renderer.width / 2 + 500;
-							vars.next_btn_sprite.y = renderer.height / 2 + 20;
-							vars.next_btn_sprite.anchor.x = 0.5; 
-							vars.next_btn_sprite.anchor.y = 0.5; 
-							vars.next_btn_sprite.rotation = 3.14159265;
-							vars.next_btn_sprite.buttonMode = true;
-							vars.next_btn_sprite.interactive = true;
-							vars.next_btn_sprite.on("click", function() {
-								if(vars.active < 3) vars.active++;
-								else vars.active = 1;
+							// Next btn
+							var next_btn_texture = PIXI.Texture.fromImage("i/s8/next.svg");
+
+							next_btn = new PIXI.Sprite(next_btn_texture);
+							next_btn.width = 45;
+							next_btn.height = 45;
+							next_btn.x = renderer.width / 2 + 500;
+							next_btn.y = renderer.height / 2;
+							next_btn.buttonMode = true;
+							next_btn.interactive = true;
+							next_btn.on("click", function() {
+								console.log(slide_ind, slides.children.length);
+								if( slide_ind != 0 ) {
+									createjs.Tween.get(slides.children[slide_ind])
+										.to({ alpha: 0 }, 500, createjs.Ease.getPowInOut(4));
+
+									createjs.Tween.get(slides.children[--slide_ind])
+										.to({ alpha: 1 }, 500, createjs.Ease.getPowInOut(4));
+								} else {
+									slide_ind = 0;
+								}
 							});
 
-							slide_container_8.addChild(vars.next_btn_sprite);
+							slide_container_8.addChild(next_btn);
+					
+						},
+
+						destroy: function() {
+
 						}
 
 					},
@@ -2602,10 +2512,6 @@
 						destroy: function() {
 
 							$order_btn.removeClass("active").removeClass("white");
-
-						},
-
-						update: function() {
 
 						}
 
@@ -2625,12 +2531,7 @@
 
 							$footer.removeClass("active");
 
-						},
-
-						update: function() {
-
 						}
-
 					}
 
 				}
