@@ -2450,7 +2450,7 @@
 				update: function() {
 
 					if( slide_container_8 != null ) {
-						if( slide_container_8.alpha < 1 ) slide_container_8.alpha += 0.1;
+						if( slide_container_8.alpha < 1 ) slide_container_8.alpha += 0.05;
 					}
 
 				},
@@ -2521,13 +2521,16 @@
 							prev_btn.buttonMode = true;
 							prev_btn.interactive = true;
 							prev_btn.on("click", function() {
-								console.log(slide_ind, slides.children.length);
-								if( slide_ind < slides.children.length - 1 ) {
+								if( slide_ind <= slides.children.length - 1 ) {
 									createjs.Tween.get(slides.children[slide_ind])
-										.to({ alpha: 0 }, 500, createjs.Ease.getPowInOut(4));
+										.to({ alpha: 0 }, 1000, createjs.Ease.getPowInOut(4));
+
+									if(slide_ind == slides.children.length - 1) {
+										slide_ind = -1;
+									}
 
 									createjs.Tween.get(slides.children[++slide_ind])
-										.to({ alpha: 1 }, 500, createjs.Ease.getPowInOut(4));
+										.to({ alpha: 1 }, 1000, createjs.Ease.getPowInOut(4));
 								}
 							});
 
@@ -2545,12 +2548,16 @@
 							next_btn.interactive = true;
 							next_btn.on("click", function() {
 								console.log(slide_ind, slides.children.length);
-								if( slide_ind != 0 ) {
+								if( slide_ind >= 0 ) {						
 									createjs.Tween.get(slides.children[slide_ind])
-										.to({ alpha: 0 }, 500, createjs.Ease.getPowInOut(4));
+										.to({ alpha: 0 }, 1000, createjs.Ease.getPowInOut(4));
+
+									if(slide_ind == 0) {
+										slide_ind = slides.children.length;
+									}
 
 									createjs.Tween.get(slides.children[--slide_ind])
-										.to({ alpha: 1 }, 500, createjs.Ease.getPowInOut(4));
+										.to({ alpha: 1 }, 1000, createjs.Ease.getPowInOut(4));
 								} else {
 									slide_ind = 0;
 								}
