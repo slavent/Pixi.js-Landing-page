@@ -300,7 +300,7 @@
     			active_slide = $(this).index() + 1;
     			$menu_popup.hide();
 
-    			App.mousewheelService();
+    			App.mousewheelService.init();
 
     			return false;
     		});
