@@ -912,10 +912,12 @@
 					if( step != 6 ) {
 						step++;
 					} else {
-						if(event.originalEvent.wheelDelta < 0) {
-							active_slide++;
-						} else {
-							active_slide--;
+						if(event) {
+							if(event.originalEvent.wheelDelta < 0) {
+								active_slide++;
+							} else {
+								active_slide--;
+							}
 						}
 						
 						App.mousewheelService.init();
@@ -986,7 +988,12 @@
 
 					}
 
-					$hover.animate({ "top" : top_pos, "left" : left_pos });
+					if(App.managerService.slide_3.elems.menu.order_btn.el != null) App.managerService.slide_3.elems.menu.order_btn.destroy();
+					App.managerService.slide_3.elems.menu.order_btn.init();
+
+					$hover.animate({ "top" : top_pos, "left" : left_pos }, function() {
+						$hyde_menu.children().removeClass("active").eq(step - 1).addClass("active");
+					});
 
 				},
 
@@ -1022,18 +1029,81 @@
 							$hyde_menu.removeClass("active");
 						},
 
-						Scene: function(url) {
+						Scene: function(url, title_top, title_down) {
+							// Titles
+							var style = {
+									font : "22px PlumbCondensed-Bold",
+								    fill : "#000000",
+								    align : "center"
+								},
+								title_top = new PIXI.Text(title_top, style),
+								title_down = new PIXI.Text(title_down, style);
+
+							title_top.x = -1000;
+							title_top.y = -50;
+
+							title_down.x = 1000;
+							title_down.y = 450;
+
+							// Title's lines
+							var data_lines = [
+								{ color: "0x000000", size: title_top.width - 100, 	x: -15, 						y: 50, pos: "top" },
+								{ color: "0x000000", size: title_top.width - 100, 	x: title_top.height + 15, 		y: 50, pos: "top" },
+								{ color: "0x000000", size: title_down.width - 100, 	x: -15, 						y: 50, pos: "down" },
+								{ color: "0x000000", size: title_down.width - 100, 	x: title_down.height + 15, 		y: 50, pos: "down" },
+							];
+
+							var Line = function(color, size, x, y) {
+								this.el = new PIXI.Graphics();
+								this.el.beginFill(0xffffff);
+								this.el.lineStyle(1, color, 1);
+								this.el.moveTo(0,0);
+								this.el.lineTo(size,0);
+								this.el.endFill();
+								this.el.position.x = y;
+								this.el.position.y = x;
+
+								return this.el;
+							};
+
+							for(var i = 0; i < data_lines.length; i++) {
+								var line = new Line( data_lines[i].color, data_lines[i].size, data_lines[i].x, data_lines[i].y );
+
+								switch(data_lines[i].pos) {
+									case "top":
+										title_top.addChild(line);
+										break;
+									case "down":
+										title_down.addChild(line);
+										break;
+								}
+							}
+
+							// Photo
 							this.texture = PIXI.Texture.fromImage(url);
 							this.el = new PIXI.Sprite(this.texture);
 							this.el.position.x = renderer.width / 2;
 							this.el.position.y = renderer.height * 2;
+							this.el.addChild(title_top);
+							this.el.addChild(title_down);
 
 							this.el.init = function(element) {
-								createjs.Tween.get(element).to({ y: renderer.height / 2 - 250 }, 1000, createjs.Ease.getPowInOut(4));
+								createjs.Tween.get(element)
+									.to({ y: renderer.height / 2 - 250 }, 1000, createjs.Ease.getPowInOut(4));
+								createjs.Tween.get(title_top)
+									.wait(500)
+									.to({ x: -50 }, 1000, createjs.Ease.getPowInOut(4));
+								createjs.Tween.get(title_down)
+									.wait(500)
+									.to({ x: 350 }, 1000, createjs.Ease.getPowInOut(4));
 							}
 
 							this.el.destroy = function(element) {
-								createjs.Tween.get(element).to({ y: renderer.height * 2 }, 1000, createjs.Ease.getPowInOut(4))
+								createjs.Tween.get(title_top).to({ x: -1000 }, 500, createjs.Ease.getPowInOut(4));
+								createjs.Tween.get(title_down).to({ x: 1000 }, 500, createjs.Ease.getPowInOut(4));
+								createjs.Tween.get(element)
+									.wait(200)
+									.to({ y: -renderer.height * 2 }, 1000, createjs.Ease.getPowInOut(4))
 	  								.call(function() {
 	  									slide_container_3.removeChild(this.el);
 	  								});
@@ -1047,7 +1117,10 @@
 							el: null,
 
 							init: function() {
-								this.el = new App.managerService.slide_3.elems.menu.Scene("i/s3/1/wears.jpg");
+								var title_top = "ХОТИТЕ ЗНАТЬ, КАКИЕ ЦВЕТА ПОДХОДЯТ ВАМ ИДЕАЛЬНО?\nДЛЯ ВАШЕГО ИМИДЖ-ГАЙДА СПЕЦИАЛИСТ СОСТАВИТ\nПЕРСОНАЛЬНУЮ ЦВЕТОВУЮ КАРТУ ВАШЕЙ ВНЕШНОСТИ!",
+									title_down = "ТЕПЕРЬ ВСЯ ОДЕЖДА БУДЕТ ПОДЧЕРКИВАТЬ КРАСОТУ\nВАШИХ ГЛАЗ И НЕЖНЫЙ ОТТЕНОК ВАШЕЙ КОЖИ.";
+
+								this.el = new App.managerService.slide_3.elems.menu.Scene("i/s3/1/wears.jpg", title_top, title_down);
 								slide_container_3.addChild(this.el);
 								this.el.init(this.el);
 							},
@@ -1063,7 +1136,10 @@
 							el: null,
 
 							init: function() {
-								this.el = new App.managerService.slide_3.elems.menu.Scene("i/s3/2/wears.jpg");
+								var title_top = "ХОТИТЕ ЗНАТЬ, КАКИЕ ЦВЕТА ПОДХОДЯТ ВАМ ИДЕАЛЬНО?\nДЛЯ ВАШЕГО ИМИДЖ-ГАЙДА СПЕЦИАЛИСТ СОСТАВИТ\nПЕРСОНАЛЬНУЮ ЦВЕТОВУЮ КАРТУ ВАШЕЙ ВНЕШНОСТИ!",
+									title_down = "ТЕПЕРЬ ВСЯ ОДЕЖДА БУДЕТ ПОДЧЕРКИВАТЬ КРАСОТУ\nВАШИХ ГЛАЗ И НЕЖНЫЙ ОТТЕНОК ВАШЕЙ КОЖИ.";
+
+								this.el = new App.managerService.slide_3.elems.menu.Scene("i/s3/2/wears.jpg", title_top, title_down);
 								slide_container_3.addChild(this.el);
 								this.el.init(this.el);
 
@@ -1080,7 +1156,10 @@
 							el: null,
 
 							init: function() {
-								this.el = new App.managerService.slide_3.elems.menu.Scene("i/s3/3/wears.jpg");
+								var title_top = "ХОТИТЕ ЗНАТЬ, КАКИЕ ЦВЕТА ПОДХОДЯТ ВАМ ИДЕАЛЬНО?\nДЛЯ ВАШЕГО ИМИДЖ-ГАЙДА СПЕЦИАЛИСТ СОСТАВИТ\nПЕРСОНАЛЬНУЮ ЦВЕТОВУЮ КАРТУ ВАШЕЙ ВНЕШНОСТИ!",
+									title_down = "ТЕПЕРЬ ВСЯ ОДЕЖДА БУДЕТ ПОДЧЕРКИВАТЬ КРАСОТУ\nВАШИХ ГЛАЗ И НЕЖНЫЙ ОТТЕНОК ВАШЕЙ КОЖИ.";
+
+								this.el = new App.managerService.slide_3.elems.menu.Scene("i/s3/3/wears.jpg", title_top, title_down);
 								slide_container_3.addChild(this.el);
 								this.el.init(this.el);
 
@@ -1097,7 +1176,10 @@
 							el: null,
 
 							init: function() {
-								this.el = new App.managerService.slide_3.elems.menu.Scene("i/s3/4/wears.jpg");
+								var title_top = "ХОТИТЕ ЗНАТЬ, КАКИЕ ЦВЕТА ПОДХОДЯТ ВАМ ИДЕАЛЬНО?\nДЛЯ ВАШЕГО ИМИДЖ-ГАЙДА СПЕЦИАЛИСТ СОСТАВИТ\nПЕРСОНАЛЬНУЮ ЦВЕТОВУЮ КАРТУ ВАШЕЙ ВНЕШНОСТИ!",
+									title_down = "ТЕПЕРЬ ВСЯ ОДЕЖДА БУДЕТ ПОДЧЕРКИВАТЬ КРАСОТУ\nВАШИХ ГЛАЗ И НЕЖНЫЙ ОТТЕНОК ВАШЕЙ КОЖИ.";
+
+								this.el = new App.managerService.slide_3.elems.menu.Scene("i/s3/4/wears.jpg", title_top, title_down);
 								slide_container_3.addChild(this.el);
 								this.el.init(this.el);
 
@@ -1114,7 +1196,10 @@
 							el: null,
 
 							init: function() {
-								this.el = new App.managerService.slide_3.elems.menu.Scene("i/s3/5/wears.jpg");
+								var title_top = "ХОТИТЕ ЗНАТЬ, КАКИЕ ЦВЕТА ПОДХОДЯТ ВАМ ИДЕАЛЬНО?\nДЛЯ ВАШЕГО ИМИДЖ-ГАЙДА СПЕЦИАЛИСТ СОСТАВИТ\nПЕРСОНАЛЬНУЮ ЦВЕТОВУЮ КАРТУ ВАШЕЙ ВНЕШНОСТИ!",
+									title_down = "ТЕПЕРЬ ВСЯ ОДЕЖДА БУДЕТ ПОДЧЕРКИВАТЬ КРАСОТУ\nВАШИХ ГЛАЗ И НЕЖНЫЙ ОТТЕНОК ВАШЕЙ КОЖИ.";
+
+								this.el = new App.managerService.slide_3.elems.menu.Scene("i/s3/5/wears.jpg", title_top, title_down);
 								slide_container_3.addChild(this.el);
 								this.el.init(this.el);
 
@@ -1131,7 +1216,10 @@
 							el: null,
 
 							init: function() {
-								this.el = new App.managerService.slide_3.elems.menu.Scene("i/s3/6/wears.jpg");
+								var title_top = "ХОТИТЕ ЗНАТЬ, КАКИЕ ЦВЕТА ПОДХОДЯТ ВАМ ИДЕАЛЬНО?\nДЛЯ ВАШЕГО ИМИДЖ-ГАЙДА СПЕЦИАЛИСТ СОСТАВИТ\nПЕРСОНАЛЬНУЮ ЦВЕТОВУЮ КАРТУ ВАШЕЙ ВНЕШНОСТИ!",
+									title_down = "ТЕПЕРЬ ВСЯ ОДЕЖДА БУДЕТ ПОДЧЕРКИВАТЬ КРАСОТУ\nВАШИХ ГЛАЗ И НЕЖНЫЙ ОТТЕНОК ВАШЕЙ КОЖИ.";
+
+								this.el = new App.managerService.slide_3.elems.menu.Scene("i/s3/6/wears.jpg", title_top, title_down);
 								slide_container_3.addChild(this.el);
 								this.el.init(this.el);
 
@@ -1139,6 +1227,54 @@
 
 							destroy: function() {
 								this.el.destroy(this.el);
+							}
+
+						},
+
+						order_btn: {
+
+							el: null,
+
+							init: function() {
+
+								var style = {
+									font : "20px PlumbCondensed-Bold",
+								    fill : "#ffffff",
+								    align : "center"
+								},
+									title = new PIXI.Text("ЗАКАЗАТЬ\nИМИДЖ-ГАЙД", style);
+
+								title.x = renderer.width / 2 + 50;
+								title.y = -120;
+
+								this.el = new PIXI.Graphics();
+								this.el.lineStyle(0);
+								this.el.beginFill(0xff7d7a, 1);
+								this.el.drawCircle(renderer.width / 2 + 100, -100, 60);
+								this.el.endFill();
+								this.el.buttonMode = true;
+								this.el.interactive = true;
+								this.el.on("click", function() {
+									step = 6;
+									active_slide = 7;
+									App.managerService.slide_3.scroll(); // for reset timer
+									App.mousewheelService.init();
+								});
+
+								this.el.addChild(title);
+								slide_container_3.addChild(this.el);
+
+								createjs.Tween.get(this.el)
+									.to({ y: renderer.height / 2 }, 1000, createjs.Ease.getPowInOut(4));
+
+							},
+
+							destroy: function() {
+								createjs.Tween.get(this.el)
+									.to({ y: -1000 }, 1000, createjs.Ease.getPowInOut(4))
+									.call(function() {
+										this.el = null;
+									});
 							}
 
 						}
@@ -2476,7 +2612,7 @@
 	// START: Web Font
 	window.WebFontConfig = {
 	    custom: {
-	        families: ["HelveticaNeueCyr-Light", "Plumb-Black", "FiraSansMedium", "BebasRegular"],
+	        families: ["HelveticaNeueCyr-Light", "Plumb-Black", "PlumbCondensed-Bold", "FiraSansMedium", "BebasRegular"],
 	        urls: ['css/style.css']
 	    },
 	    active: function() {
