@@ -889,6 +889,8 @@
 
 					console.log("Slide 3 init");
 
+					step = 0;
+
 					slide_container_3 = new PIXI.Container();
 
 					App.managerService.slide_3.scroll(step);
@@ -898,7 +900,7 @@
 					timer_slide_3 = setInterval(function() {
 						$body.unbind("mousewheel");
 						$body.one("mousewheel", App.managerService.slide_3.scroll);
-					}, 1000);
+					}, 1500);
 
 				},
 
@@ -911,7 +913,7 @@
 
 					if( step != 6 ) {
 						step++;
-					} else {
+					} else {					
 						if(event) {
 							if(event.originalEvent.wheelDelta < 0) {
 								active_slide++;
@@ -919,15 +921,7 @@
 								active_slide--;
 							}
 						}
-						
-						App.mousewheelService.init();
-
-						clearInterval(timer_slide_3);						
-
-						main_timer = setInterval(function() {
-							$body.unbind("mousewheel");
-							$body.one("mousewheel", App.mousewheelService.init);
-						}, SLIDE_ANIMATION_TIME);
+						App.managerService.slide_3.destroy();
 
 						return false;
 					}
@@ -1006,6 +1000,14 @@
 
 					stage.removeChild(slide_container_3);
 					slide_container_3 = null;
+
+					clearInterval(timer_slide_3);						
+
+					App.mousewheelService.init();
+					main_timer = setInterval(function() {
+						$body.unbind("mousewheel");
+						$body.one("mousewheel", App.mousewheelService.init);
+					}, SLIDE_ANIMATION_TIME);			
 
 				},
 
