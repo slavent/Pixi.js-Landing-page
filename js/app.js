@@ -277,6 +277,8 @@
 				$body.one("mousewheel", App.mousewheelService.init);
 			}, SLIDE_ANIMATION_TIME);
 
+			//$(window).resize( $.debounce(500, false, App.destroy) );
+
 			$menu_icon.on("click", function() {
     			$menu_popup.fadeIn();
     			$(this).fadeOut();
@@ -996,14 +998,13 @@
 
 					this.elems.menu.destroy();
 
-					step = 0;
-
 					stage.removeChild(slide_container_3);
 					slide_container_3 = null;
 
+					$body.unbind("mousewheel");
+
 					clearInterval(timer_slide_3);						
 
-					App.mousewheelService.init();
 					main_timer = setInterval(function() {
 						$body.unbind("mousewheel");
 						$body.one("mousewheel", App.mousewheelService.init);
@@ -1447,12 +1448,12 @@
 						init: function() {
 
 							var data = [
-								{ url: "i/s4/slide_1.png", title: "Casual", description: "Одежда для настоящих\nметательниц" },
-								{ url: "i/s4/slide_2.png", title: "Романтический", description: "Одежда для настоящих\nметательниц" },
-								{ url: "i/s4/slide_3.png", title: "Классика", description: "Одежда для настоящих\nметательниц" },
-								{ url: "i/s4/slide_1.png", title: "Casual", description: "Одежда для настоящих\nметательниц" },
-								{ url: "i/s4/slide_2.png", title: "Романтический", description: "Одежда для настоящих\nметательниц" },
-								{ url: "i/s4/slide_3.png", title: "Классика", description: "Одежда для настоящих\nметательниц" }
+								{ url: "i/s4/slide_1.png", title: "Casual", description: "Одежда для настоящих\nмечтательниц" },
+								{ url: "i/s4/slide_2.png", title: "Романтический", description: "Одежда для настоящих\nмечтательниц" },
+								{ url: "i/s4/slide_3.png", title: "Классика", description: "Одежда для настоящих\nмечтательниц" },
+								{ url: "i/s4/slide_1.png", title: "Casual", description: "Одежда для настоящих\nмечтательниц" },
+								{ url: "i/s4/slide_2.png", title: "Романтический", description: "Одежда для настоящих\nметчательниц" },
+								{ url: "i/s4/slide_3.png", title: "Классика", description: "Одежда для настоящих\nмечтательниц" }
 							],
 								slides = new PIXI.Container(),
 								slide_ind = 0;
@@ -1498,7 +1499,20 @@
 								this.sprite = new PIXI.Sprite(this.texture);
 								this.sprite.anchor.x = .5;
 								this.sprite.position.y = renderer.height - 400 - 250;
-								this.sprite.position.x = (renderer.width / 3 * (index + 1)) - (renderer.width / 6);
+								switch(index) {
+									case 0:
+										this.sprite.position.x = renderer.width / 2 - 350;
+										break;
+									case 1:
+										this.sprite.position.x = renderer.width / 2;
+										break;
+									case 2:
+										this.sprite.position.x = renderer.width / 2 + 350;
+										break;
+									default: 
+										this.sprite.position.x = renderer.width * 2;
+										break;
+								}
 
 								this.sprite.addChild(this.title);
 								this.sprite.addChild(this.line);
@@ -1533,10 +1547,16 @@
 							prev_btn.interactive = true;
 							prev_btn.on("click", function() {
 								if(slide_ind != 0) {
-									for(var i = 0; i < slides.children.length; i++) {
+									createjs.Tween.get(slides.children[slide_ind - 1])
+											.to({ x: renderer.width / 2 - 350 }, 800, createjs.Ease.getPowInOut(4));
+
+									for(var i = slide_ind; i < slide_ind + 2; i++) {
 										createjs.Tween.get(slides.children[i])
-											.to({ x: slides.children[i].position.x + renderer.width / 3 }, 500, createjs.Ease.getPowInOut(4));
+											.to({ x: slides.children[i].position.x + 350 }, 800, createjs.Ease.getPowInOut(4));
 									}
+
+									createjs.Tween.get(slides.children[slide_ind + 2])
+											.to({ x: renderer.width * 2}, 800, createjs.Ease.getPowInOut(4));
 
 									slide_ind--;
 								}
@@ -1561,10 +1581,16 @@
 							next_btn.interactive = true;
 							next_btn.on("click", function() {
 								if(slide_ind != slides.children.length - 3) {
-									for(var i = 0; i < slides.children.length; i++) {
+									createjs.Tween.get(slides.children[slide_ind])
+											.to({ x: -renderer.width * 2 }, 800, createjs.Ease.getPowInOut(4));
+
+									for(var i = slide_ind + 1; i < slide_ind + 3; i++) {
 										createjs.Tween.get(slides.children[i])
-											.to({ x: slides.children[i].position.x - renderer.width / 3 }, 500, createjs.Ease.getPowInOut(4));
+											.to({ x: slides.children[i].position.x - 350 }, 800, createjs.Ease.getPowInOut(4));
 									}
+
+									createjs.Tween.get(slides.children[slide_ind + 3])
+											.to({ x: renderer.width / 2 + 350}, 800, createjs.Ease.getPowInOut(4));
 
 									slide_ind++;
 								}
