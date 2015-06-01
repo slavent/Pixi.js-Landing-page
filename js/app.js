@@ -958,7 +958,7 @@
 					timer_slide_3 = setInterval(function() {
 						$body.unbind("mousewheel");
 						$body.one("mousewheel", App.managerService.slide_3.scroll);
-					}, 2000);
+					}, 1600);
 
 				},
 
@@ -1383,7 +1383,8 @@
 					bg: {
 
 						anim_params: {
-							speed: 300
+							speed: 500,
+							init_wait: 300
 						},
 
 						el: null,
@@ -1406,6 +1407,7 @@
 						destroy: function() {
 
 							createjs.Tween.get(this.el)
+								.wait(this.anim_params.init_wait)
   								.to({ y: renderer.height}, this.anim_params.speed, createjs.Ease.getPowInOut(4));
 
 						}
@@ -1588,7 +1590,7 @@
 							slide_container_4.addChild(slides);
 
 							createjs.Tween.get(slides)
-								.wait(700)
+								.wait(300)
 								.to({ alpha: 1, y: renderer.height - 400 - 250 }, 1000, createjs.Ease.getPowInOut(4));
 
 							// Prev btn
@@ -2482,7 +2484,20 @@
 
 					slide_container_7 = new PIXI.Container();
 
-					$anketa.fadeIn();
+					$anketa.fadeIn(function() {
+						var row = $anketa.find(".anketa-row"),
+							delay = 100;
+
+						row.each(function() {
+							var that = $(this);
+
+							setTimeout(function() {
+								that.animate({ "opacity" : 1 }, 500);
+							}, delay);
+
+							delay += 100;
+						});
+					});
 
 				},
 
@@ -2490,7 +2505,9 @@
 
 					console.log("Slide 7 destroy");
 
-					$anketa.fadeOut();
+					$anketa.fadeOut(function() {
+						$(this).find(".anketa-row").css({ "opacity" : 0 });
+					});
 
 					slide_container_7 = null;
 
