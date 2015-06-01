@@ -111,12 +111,52 @@
 		    }	
 
 		  	App.bindService();
-		  	App.managerService.init();
-		  	App.navService(active_slide);
+		  	App.SlideController.init();
 
 		},
 
-		mousewheelService: {
+		SlideController: {
+
+			init: function() {
+				App.managerService.slide_1.init().then(function() {
+					App.unlockScroll();
+				});
+			},
+
+			moveTo: function(from, to) {
+				from = active_slide;
+				to = ++active_slide;
+
+				switch(from) {
+					case 1: 
+						App.managerService.slide_1.destroy();
+						break;
+					case 2: 
+						App.managerService.slide_2.destroy();
+						break;
+				}
+
+				switch(to) {
+					case 1: 
+						App.managerService.slide_1.init().then(function() {
+							App.unlockScroll();
+						});
+						break;
+					case 2: 
+						App.managerService.slide_2.init().then(function() {
+							App.unlockScroll();
+						});
+						break;
+				}
+			},
+
+			moveToImmediately: function() {
+
+			}
+
+		},
+
+		WheelController: {
 
 			init: function(event) {
 
@@ -137,7 +177,7 @@
 					}
 				}
 
-				function destroySlides() {
+				/*function destroySlides() {
 					if( slide_container_1 != null ) App.managerService.slide_1.destroy();
 					if( slide_container_2 != null ) App.managerService.slide_2.destroy();
 					if( slide_container_3 != null ) App.managerService.slide_3.destroy();
@@ -251,12 +291,20 @@
 
 					}
 
-					App.navService(active_slide);
+					//App.navService(active_slide);
 
-				}
+				}*/
 
 		    }
 
+		},
+
+		lockScroll: function() {
+			$body.unbind("mousewheel");
+		},
+
+		unlockScroll: function() {
+			$body.one("mousewheel", App.SlideController.moveTo);
 		},
 
 		navService: function(ind) {
@@ -272,13 +320,6 @@
 		},
 
 		bindService: function() {
-
-			$body.one("mousewheel", App.mousewheelService.init);
-
-			main_timer = setInterval(function() {
-				$body.unbind("mousewheel");
-				$body.one("mousewheel", App.mousewheelService.init);
-			}, SLIDE_ANIMATION_TIME);
 
 			//$(window).resize( $.debounce(500, false, App.destroy) );
 
@@ -296,7 +337,7 @@
     			active_slide = $(this).index() + 1;
     			if(active_slide == 1) scroll_top = true;
 
-    			App.mousewheelService.init();
+    			App.WheelController.init();
 
     			return false;
     		});
@@ -305,14 +346,14 @@
     			active_slide = $(this).index() + 1;
     			$menu_popup.hide();
 
-    			App.mousewheelService.init();
+    			App.WheelController.init();
 
     			return false;
     		});
 
     		$order_btn.on("click", function() {
     			active_slide = 7;
-    			App.mousewheelService.init();
+    			App.WheelController.init();
     		});
 
     		// For Anketa additional plugins
@@ -332,16 +373,12 @@
 
 		managerService: {
 
-			init: function() {
-
-				this.slide_1.init();
-
-			},
-
 			slide_1: {
 
 				init: function() {
 					console.log("Slide 1 init");
+
+					var deffered = $.Deferred();
 
 					slide_container_1 = new PIXI.Container();
 					slide_container_1.alpha = 0;
@@ -359,6 +396,12 @@
   							$main_menu.css({ "top" : -70 });
   							$menu_icon.show();
   						});
+
+  					setTimeout(function() {
+						deffered.resolve();
+					}, SLIDE_ANIMATION_TIME);
+
+  					return deffered;
 
 				},
 
@@ -576,7 +619,7 @@
 							vars.spin1.interactive = true;
 							vars.spin1.on("click", function() {
 								active_slide++;
-	    						App.mousewheelService.init();
+	    						App.WheelController.init();
 							});
 
 							vars.spin2.anchor.set(0.5);
@@ -605,6 +648,8 @@
 				init: function() {
 					console.log("Slide 2 init");
 
+					var deffered = $.Deferred();
+
 					slide_container_2 = new PIXI.Container();
 
 					this.elems.title_1.init();
@@ -616,6 +661,12 @@
 					this.elems.arrowDown.init();
 
 					stage.addChild(slide_container_2);
+
+					setTimeout(function() {
+						deffered.resolve();
+					}, SLIDE_ANIMATION_TIME);
+
+					return deffered;
 
 				},
 
@@ -978,7 +1029,7 @@
 							} else {
 								active_slide--;
 							}
-							App.mousewheelService.init();
+							App.WheelController.init();
 						}
 
 						return false;
@@ -1063,7 +1114,7 @@
 
 					main_timer = setInterval(function() {
 						$body.unbind("mousewheel");
-						$body.one("mousewheel", App.mousewheelService.init);
+						$body.one("mousewheel", App.WheelController.init);
 					}, SLIDE_ANIMATION_TIME);			
 
 				},
@@ -1317,7 +1368,7 @@
 									step = 6;
 									active_slide = 7;
 									App.managerService.slide_3.scroll(); // for reset timer
-									App.mousewheelService.init();
+									App.WheelController.init();
 								});
 
 								this.el.addChild(title);
@@ -2433,7 +2484,7 @@
 							vars.spin1.interactive = true;
 							vars.spin1.on("click", function() {
 								active_slide++;
-	    						App.mousewheelService.init();
+	    						App.WheelController.init();
 							});
 
 							vars.spin2.anchor.set(0.5);
