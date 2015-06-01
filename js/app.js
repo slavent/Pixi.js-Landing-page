@@ -476,12 +476,12 @@
 									draw(this.index);
 
 									createjs.Tween.get(slides.children[index])
-  										.to({ alpha: 1 }, 1000, createjs.Ease.getPowInOut(4));
+  										.to({ alpha: 1 }, 2000, createjs.Ease.getPowInOut(4));
 
 									for(var i = 0; i < slides.children.length; i++) {
 										if(i != index) {
 											createjs.Tween.get(slides.children[i])
-  												.to({ alpha: 0}, 1000, createjs.Ease.getPowInOut(4));
+  												.to({ alpha: 0}, 2000, createjs.Ease.getPowInOut(4));
   										}
 									}
 								});
