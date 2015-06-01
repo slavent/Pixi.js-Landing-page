@@ -426,6 +426,7 @@
 								{ url: "i/s1/slide_2.jpg", x_pos: 0, color: "0xffffff" },
 								{ url: "i/s1/slide_3.jpg", x_pos: 25, color: "0xffffff" }
 							],
+								data_length = data.length,
 								slides = new PIXI.Container(),
 								dotes = new PIXI.Container(),
 								slide_ind = 0;
@@ -444,8 +445,8 @@
 								return this.sprite;
 							};
 
-							for(var i = 0; i < data.length; i++) {
-								var slide = new Slide( i, data[i].url );
+							while(data_length--) {
+								var slide = new Slide( data_length, data[data_length].url );
 
 								slides.addChild(slide);
 							}
@@ -466,12 +467,26 @@
 								dot.interactive = true;
 								dot.on("click", function() {
 									draw(this.index);
+
+									createjs.Tween.get(slides.children[index])
+  										.to({ alpha: 1}, 1000, createjs.Ease.getPowInOut(4));
+
+									for(var i = 0; i < slides.children.length; i++) {
+										if(i != index) {
+											createjs.Tween.get(slides.children[i])
+  												.to({ alpha: 0}, 1000, createjs.Ease.getPowInOut(4));
+  										}
+									}
 								});
 
 								return dot;
 							}
 
 							function draw(index){
+								for(var i = 0; i < dotes.children.length; i++) {
+									dotes.removeChild(dotes.children[i]);
+								}
+
 								if(index == undefined) index = 0;
 
 								for(var i = 0; i < data.length; i++) {
