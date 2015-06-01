@@ -6,6 +6,7 @@
 	window.App = window.App || {};
 
 	var $body = $("body"),
+		$preloader = $(".preloader"),
 		$footer = $("footer"),
 		$main_menu = $(".main-menu"),
 		$menu_icon = $(".menu-icon-wrp"),
@@ -41,7 +42,7 @@
 		active_slide = 1,
 		step = 0,
 
-		SLIDE_ANIMATION_TIME = 3000;
+		SLIDE_ANIMATION_TIME = 2500;
     // END: Variables
 
 
@@ -50,6 +51,8 @@
 	App = {
 
 		init: function() {
+
+			$preloader.hide();
 
 			createjs.Ticker.setFPS(60);
 
@@ -378,6 +381,7 @@
 				},
 
 				update: function() {
+					this.elems.slider.update();
 			    	this.elems.spinner.update();
 				},
 
@@ -418,6 +422,8 @@
 					slider: {
 
 						el: null,
+						slides: null,
+						reverse: false,
 
 						init: function() {
 
@@ -431,6 +437,7 @@
 								dotes = new PIXI.Container(),
 								slide_ind = 0;
 
+							this.slides = slides;
 							this.el = dotes;
 
 							var Slide = function(index, url) {
@@ -469,7 +476,7 @@
 									draw(this.index);
 
 									createjs.Tween.get(slides.children[index])
-  										.to({ alpha: 1}, 1000, createjs.Ease.getPowInOut(4));
+  										.to({ alpha: 1 }, 1000, createjs.Ease.getPowInOut(4));
 
 									for(var i = 0; i < slides.children.length; i++) {
 										if(i != index) {
@@ -504,6 +511,40 @@
 							draw();
 
 							slide_container_1.addChild(dotes);
+
+						},
+
+						update: function() {
+
+							if( this.slides != null) {
+								if( this.reverse == false ) {
+									if( this.slides.scale.x < 1.1 ) {
+										this.slides.scale.x += 0.00008;
+									} else {
+										this.reverse = true;
+									}
+								} else {
+									if( this.slides.scale.x > 1 ) {
+										this.slides.scale.x -= 0.00008;
+									} else {
+										this.reverse = false;
+									}
+								}
+								
+								if( this.reverse == false ) {
+									if( this.slides.scale.y < 1.1 ) {
+										this.slides.scale.y += 0.00008;
+									} else {
+										this.reverse = true;
+									}
+								} else {
+									if( this.slides.scale.y > 1 ) {
+										this.slides.scale.y -= 0.00008;
+									} else {
+										this.reverse = false;
+									}
+								}
+							}
 
 						}
 
@@ -917,7 +958,7 @@
 					timer_slide_3 = setInterval(function() {
 						$body.unbind("mousewheel");
 						$body.one("mousewheel", App.managerService.slide_3.scroll);
-					}, 1500);
+					}, 2000);
 
 				},
 
@@ -937,6 +978,7 @@
 							} else {
 								active_slide--;
 							}
+							App.mousewheelService.init();
 						}
 						App.managerService.slide_3.destroy();
 
