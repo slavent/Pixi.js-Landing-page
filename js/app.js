@@ -42,7 +42,7 @@
 		active_slide = 1,
 		step = 0,
 
-		SLIDE_ANIMATION_TIME = 2500;
+		SLIDE_ANIMATION_TIME = 3000;
     // END: Variables
 
 
@@ -980,7 +980,6 @@
 							}
 							App.mousewheelService.init();
 						}
-						App.managerService.slide_3.destroy();
 
 						return false;
 					}
@@ -1417,7 +1416,7 @@
 
 						anim_params: {
 							speed: 500,
-							init_wait: 400,
+							init_wait: 1700,
 							destroy_wait: 200
 						},
 
@@ -1458,7 +1457,7 @@
 
 						anim_params: {
 							speed: 500,
-							init_wait: 200,
+							init_wait: 1500,
 							destroy_wait: 400
 						},
 
@@ -1517,6 +1516,7 @@
 
 							this.el = slides;
 							slides.alpha = 0;
+							slides.position.y = renderer.height * 2;
 
 							var Slide = function(index, url, title, description) {
 
@@ -1555,7 +1555,7 @@
 								this.texture = PIXI.Texture.fromImage(url);
 								this.sprite = new PIXI.Sprite(this.texture);
 								this.sprite.anchor.x = .5;
-								this.sprite.position.y = renderer.height - 400 - 250;
+								this.sprite.position.y = 0;
 								switch(index) {
 									case 0:
 										this.sprite.position.x = renderer.width / 2 - 350;
@@ -1588,7 +1588,8 @@
 							slide_container_4.addChild(slides);
 
 							createjs.Tween.get(slides)
-								.to({ alpha: 1 }, 1000, createjs.Ease.getPowInOut(4));
+								.wait(700)
+								.to({ alpha: 1, y: renderer.height - 400 - 250 }, 1000, createjs.Ease.getPowInOut(4));
 
 							// Prev btn
 							var prev_btn_texture = PIXI.Texture.fromImage("i/s4/prev.png"),
@@ -1622,6 +1623,7 @@
 							slide_container_4.addChild(prev_btn);
 
 							createjs.Tween.get(prev_btn)
+								.wait(1200)
 								.to({ x: 100 }, 1000, createjs.Ease.getPowInOut(4));
 
 							// Next btn
@@ -1656,6 +1658,7 @@
 							slide_container_4.addChild(next_btn);
 
 							createjs.Tween.get(next_btn)
+								.wait(1200)
 								.to({ x: renderer.width - 100 }, 1000, createjs.Ease.getPowInOut(4));
 
 						},
