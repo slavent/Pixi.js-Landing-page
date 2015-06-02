@@ -811,17 +811,33 @@
 
 					slide_container_3 = new PIXI.Container();	
 					this.SceneController.init();	
+					this.NavController.setActive(0, 0);
 					stage.addChild(slide_container_3);	
 
 					if( slide_3_complete == true ) {
 						var deferred = $.Deferred();
-												
+					
+						this.Binder.init();
+
 						setTimeout(function() {
 							deferred.resolve();
 						}, SLIDE_ANIMATION_TIME);
 
 	  					return deferred;
 					}		
+
+				},
+
+				Binder: {
+
+					init: function() {
+						$hyde_menu.children().on("mouseover", function() {
+							var top = $(this).offset().top - 70,
+								left = $(this).offset().left;
+
+							$hover.stop(true).delay(300).animate({ "top" : top, "left" : left });
+						});
+					}
 
 				},
 
@@ -926,7 +942,8 @@
 
 					this.elems.menu.destroy();
 					stage.removeChild(slide_container_3);
-					slide_container_3 = null;	
+					slide_container_3 = null;
+					active_scene = 1;	
 
 					if( slide_3_complete == false ) {
 						var deferred = $.Deferred();
