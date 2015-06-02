@@ -141,9 +141,11 @@
     		});
 
     		$main_menu.find("li").on("click", function() {
-    			App.SlideController.moveTo(active_slide, $(this).index() + 1);
-    			active_slide = $(this).index() + 1;
-    			App.NavController.setActive();
+    			if( active_slide != $(this).index() + 1 ) {
+    				App.SlideController.moveTo(active_slide, $(this).index() + 1);
+	    			active_slide = $(this).index() + 1;
+	    			App.NavController.setActive();
+    			}
 
     			return false;
     		});
