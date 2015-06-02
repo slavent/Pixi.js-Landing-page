@@ -36,7 +36,7 @@
 		active_slide = 1,
 		active_scene = 1,
 
-		slide_3_compete = false,
+		slide_3_complete = false,
 
 		SLIDE_ANIMATION_TIME = 2000,
 		SCENE_ANIMATION_TIME = 1500;
@@ -77,7 +77,9 @@
 			moveTo: function(from, to) {
 				console.log([from, to]);
 
-				if( to == 3 && slide_3_compete == false ) {
+				App.NavController.setActive();
+
+				if( to == 3 && slide_3_complete == false ) {
 					App.managerService["slide_" + from].destroy();
 					App.managerService["slide_3"].init();
 
@@ -86,7 +88,6 @@
 
 				App.managerService["slide_" + from].destroy();
 				App.managerService["slide_" + to].init().then(function() { 
-					App.NavController.setActive();
 					App.WheelController.unlockWheel();
 				});
 			}
@@ -121,7 +122,7 @@
 
 			setActive: function() {
 				$main_menu.find("a").removeClass("main-menu-link-active");
-	    		$main_menu.find("li").eq(active_slide).children().addClass("main-menu-link-active");
+	    		$main_menu.find("li").eq(active_slide - 1).children().addClass("main-menu-link-active");
 
 			}
 
@@ -140,26 +141,26 @@
     		});
 
     		$main_menu.find("li").on("click", function() {
+    			App.SlideController.moveTo(active_slide, $(this).index() + 1);
     			active_slide = $(this).index() + 1;
-    			if(active_slide == 1) scroll_top = true;
-
-    			// App.WheelController.init();
+    			App.NavController.setActive();
 
     			return false;
     		});
 
     		$menu_popup_nav.find("li").on("click", function() {
-    			active_slide = $(this).index() + 1;
     			$menu_popup.hide();
-
-    			// App.WheelController.init();
+    			App.SlideController.moveTo(active_slide, $(this).index() + 1);
+    			active_slide = $(this).index() + 1;
+    			App.NavController.setActive();
 
     			return false;
     		});
 
     		$order_btn.on("click", function() {
+    			App.SlideController.moveTo(active_slide, 7);
     			active_slide = 7;
-    			// App.WheelController.init();
+    			App.NavController.setActive();
     		});
 
     		// For Anketa additional plugins
@@ -810,7 +811,7 @@
 					this.SceneController.init();	
 					stage.addChild(slide_container_3);	
 
-					if( slide_3_compete == true ) {
+					if( slide_3_complete == true ) {
 						var deferred = $.Deferred();
 												
 						setTimeout(function() {
@@ -826,7 +827,7 @@
 
 					init: function() {
 						App.managerService.slide_3.elems.menu["scene_1"].init().then(function() { 
-							if( slide_3_compete == false ) App.managerService.slide_3.WheelController.unlockWheel();
+							if( slide_3_complete == false ) App.managerService.slide_3.WheelController.unlockWheel();
 						});
 					},
 
@@ -925,9 +926,9 @@
 					stage.removeChild(slide_container_3);
 					slide_container_3 = null;	
 
-					if( slide_3_compete == false ) {
+					if( slide_3_complete == false ) {
 						var deferred = $.Deferred();
-						slide_3_compete = true;
+						slide_3_complete = true;
 
 						setTimeout(function() {
 							deferred.resolve();
@@ -2244,7 +2245,9 @@
 							this.element.buttonMode = true;
 							this.element.interactive = true;
 							this.element.on("click", function() {
-								$anketa.fadeIn();
+								App.SlideController.moveTo(active_slide, 7);
+				    			active_slide = 7;
+				    			App.NavController.setActive();
 							});
 
 
