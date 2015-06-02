@@ -33,16 +33,13 @@
 		slide_container_7 = null,
 		slide_container_8 = null,
 
-		scroll_top = false,
-		scroll_down = true,
-
-		main_timer = null,
-		timer_slide_3 = null,
-
 		active_slide = 1,
-		step = 0,
+		active_scene = 1,
 
-		SLIDE_ANIMATION_TIME = 3000;
+		slide_3_compete = false,
+
+		SLIDE_ANIMATION_TIME = 2000,
+		SCENE_ANIMATION_TIME = 1500;
     // END: Variables
 
 
@@ -52,8 +49,6 @@
 
 		init: function() {
 
-			$preloader.hide();
-
 			createjs.Ticker.setFPS(60);
 
 			$body.append(renderer.view);
@@ -61,56 +56,14 @@
 
 		    function animate() {
 
-		    	switch(active_slide) {
-
-		    		case 1: 
-		    			App.managerService.slide_1.update();
-
-		    			break;
-
-		    		case 2: 
-		    			App.managerService.slide_2.update();
-		    			
-		    			break;
-
-		    		case 3: 
-		    			App.managerService.slide_3.update();
-		    			
-		    			break;
-
-		    		case 4: 
-		    			App.managerService.slide_4.update();
-		    			
-		    			break;
-
-		    		case 5: 
-		    			App.managerService.slide_5.update();
-		    			
-		    			break;
-
-		    		case 6: 
-		    			App.managerService.slide_6.update();
-		    			
-		    			break;
-
-		    		case 7: 
-		    			App.managerService.slide_7.update();
-		    			
-		    			break;
-
-		    		case 8: 
-		    			App.managerService.slide_8.update();
-		    			
-		    			break;
-
-		    	}
+		    	App.managerService["slide_" + active_slide].update();
 
 		        renderer.render(stage);
 		        requestAnimationFrame(animate);
 
 		    }	
 
-		  	App.bindService();
+		  	App.Binder();
 		  	App.SlideController.init();
 
 		},
@@ -118,210 +71,63 @@
 		SlideController: {
 
 			init: function() {
-				App.managerService.slide_1.init().then(function() {
-					App.unlockScroll();
-				});
+				App.managerService.slide_1.init().then(function() { App.WheelController.unlockWheel() });
 			},
 
 			moveTo: function(from, to) {
-				from = active_slide;
-				to = ++active_slide;
+				console.log([from, to]);
 
-				switch(from) {
-					case 1: 
-						App.managerService.slide_1.destroy();
-						break;
-					case 2: 
-						App.managerService.slide_2.destroy();
-						break;
+				if( to == 3 && slide_3_compete == false ) {
+					App.managerService["slide_" + from].destroy();
+					App.managerService["slide_3"].init();
+
+					return;
 				}
 
-				switch(to) {
-					case 1: 
-						App.managerService.slide_1.init().then(function() {
-							App.unlockScroll();
-						});
-						break;
-					case 2: 
-						App.managerService.slide_2.init().then(function() {
-							App.unlockScroll();
-						});
-						break;
-				}
-			},
-
-			moveToImmediately: function() {
-
+				App.managerService["slide_" + from].destroy();
+				App.managerService["slide_" + to].init().then(function() { 
+					App.NavController.setActive();
+					App.WheelController.unlockWheel();
+				});
 			}
 
 		},
 
 		WheelController: {
 
-			init: function(event) {
+			checkDirection: function(event) {
 
-				// For scroll navigation. If no event, then it's click navigation
 				if(event) {
 					if(event.originalEvent.wheelDelta < 0) {
 						// scroll down
-						if( active_slide == 8 ) return;
-						if( active_slide < 8 ) active_slide++;
-						scroll_down = true;
-						scroll_top = false;
+						if( active_slide < Object.keys(App.managerService).length ) App.SlideController.moveTo(active_slide, ++active_slide);
+						else App.WheelController.unlockWheel();
 					} else {
 						// scroll top
-						if( active_slide == 1 ) return;
-						if( active_slide > 1 ) active_slide--;
-						scroll_down = false;
-						scroll_top = true;
+						if( active_slide > 1 ) App.SlideController.moveTo(active_slide, --active_slide);
+						else App.WheelController.unlockWheel();
 					}
 				}
 
-				/*function destroySlides() {
-					if( slide_container_1 != null ) App.managerService.slide_1.destroy();
-					if( slide_container_2 != null ) App.managerService.slide_2.destroy();
-					if( slide_container_3 != null ) App.managerService.slide_3.destroy();
-					if( slide_container_4 != null ) App.managerService.slide_4.destroy();
-					if( slide_container_5 != null ) App.managerService.slide_5.destroy();
-					if( slide_container_6 != null ) App.managerService.slide_6.destroy();
-					if( slide_container_7 != null ) App.managerService.slide_7.destroy();
-					if( slide_container_8 != null ) App.managerService.slide_8.destroy();
-				}
+		    },
 
-				if(active_slide >= 1 && active_slide <= 8) {
-
-					console.log("Active slide: " + active_slide);
-
-					destroySlides();
-
-					switch (active_slide) {
-
-						case 1: 
-							if( scroll_top == true ) {
-								setTimeout(function() {
-									App.managerService.slide_1.init();
-								}, 1000);
-							}
-							break;
-
-						case 2: 
-							if( scroll_top == true ) {
-								setTimeout(function() {
-									App.managerService.slide_2.init();
-								}, 1000);
-							}
-							if( scroll_down == true ) {
-								setTimeout(function() {
-									App.managerService.slide_2.init();
-								}, 500);
-							}
-							break;
-
-						case 3: 
-							if( scroll_top == true ) {
-								setTimeout(function() {
-									App.managerService.slide_3.init();
-								}, 500);
-							}
-							if( scroll_down == true ) {
-								setTimeout(function() {
-									App.managerService.slide_3.init();
-								}, 500);
-							}
-							break;
-
-						case 4: 
-							if( scroll_top == true ) {
-								setTimeout(function() {
-									App.managerService.slide_4.init();
-								}, 1000);
-							}
-							if( scroll_down == true ) {
-								setTimeout(function() {
-									App.managerService.slide_4.init();
-								}, 0);
-							}
-							break;
-
-						case 5: 
-							if( scroll_top == true ) {
-								setTimeout(function() {
-									App.managerService.slide_5.init();
-								}, 500);
-							}
-							if( scroll_down == true ) {
-								setTimeout(function() {
-									App.managerService.slide_5.init();
-								}, 500);
-							}
-							break;
-
-						case 6: 
-							if( scroll_top == true ) {
-								setTimeout(function() {
-									App.managerService.slide_6.init();
-								}, 500);
-							}
-							if( scroll_down == true ) {
-								setTimeout(function() {
-									App.managerService.slide_6.init();
-								}, 500);
-							}
-							break;
-
-						case 7: 
-							if( scroll_top == true ) {
-								setTimeout(function() {
-									App.managerService.slide_7.init();
-								}, 1000);
-							}
-							if( scroll_down == true ) {
-								setTimeout(function() {
-									App.managerService.slide_7.init();
-								}, 1000);
-							}
-							break;
-						case 8: 
-							if( scroll_down == true ) {
-								setTimeout(function() {
-									App.managerService.slide_8.init();
-								}, 1400);
-							}
-							break;
-
-					}
-
-					//App.navService(active_slide);
-
-				}*/
-
-		    }
+		    unlockWheel: function() {
+				$body.unbind("mousewheel").one("mousewheel", App.WheelController.checkDirection);
+			},
 
 		},
 
-		lockScroll: function() {
-			$body.unbind("mousewheel");
-		},
+		NavController: {
 
-		unlockScroll: function() {
-			$body.one("mousewheel", App.SlideController.moveTo);
-		},
+			setActive: function() {
+				$main_menu.find("a").removeClass("main-menu-link-active");
+	    		$main_menu.find("li").eq(active_slide).children().addClass("main-menu-link-active");
 
-		navService: function(ind) {
-
-			ind--;
-
-			$landing_nav.children().removeClass("landing-nav-item-active");
-			$landing_nav.children().eq(ind).addClass("landing-nav-item-active");
-
-			$main_menu.find("a").removeClass("main-menu-link-active");
-    		$main_menu.find("li").eq(ind).children().addClass("main-menu-link-active");
+			}
 
 		},
 
-		bindService: function() {
-
-			//$(window).resize( $.debounce(500, false, App.destroy) );
+		Binder: function() {
 
 			$menu_icon.on("click", function() {
     			$menu_popup.fadeIn();
@@ -337,7 +143,7 @@
     			active_slide = $(this).index() + 1;
     			if(active_slide == 1) scroll_top = true;
 
-    			App.WheelController.init();
+    			// App.WheelController.init();
 
     			return false;
     		});
@@ -346,14 +152,14 @@
     			active_slide = $(this).index() + 1;
     			$menu_popup.hide();
 
-    			App.WheelController.init();
+    			// App.WheelController.init();
 
     			return false;
     		});
 
     		$order_btn.on("click", function() {
     			active_slide = 7;
-    			App.WheelController.init();
+    			// App.WheelController.init();
     		});
 
     		// For Anketa additional plugins
@@ -378,7 +184,9 @@
 				init: function() {
 					console.log("Slide 1 init");
 
-					var deffered = $.Deferred();
+					var deferred = $.Deferred();
+
+					$preloader.hide();
 
 					slide_container_1 = new PIXI.Container();
 					slide_container_1.alpha = 0;
@@ -398,10 +206,10 @@
   						});
 
   					setTimeout(function() {
-						deffered.resolve();
+						deferred.resolve();
 					}, SLIDE_ANIMATION_TIME);
 
-  					return deffered;
+  					return deferred;
 
 				},
 
@@ -648,7 +456,7 @@
 				init: function() {
 					console.log("Slide 2 init");
 
-					var deffered = $.Deferred();
+					var deferred = $.Deferred();
 
 					slide_container_2 = new PIXI.Container();
 
@@ -663,10 +471,10 @@
 					stage.addChild(slide_container_2);
 
 					setTimeout(function() {
-						deffered.resolve();
+						deferred.resolve();
 					}, SLIDE_ANIMATION_TIME);
 
-					return deffered;
+					return deferred;
 
 				},
 
@@ -998,124 +806,135 @@
 
 					console.log("Slide 3 init");
 
-					step = 0;
+					slide_container_3 = new PIXI.Container();	
+					this.SceneController.init();	
+					stage.addChild(slide_container_3);	
 
-					slide_container_3 = new PIXI.Container();
+					if( slide_3_compete == true ) {
+						var deferred = $.Deferred();
+												
+						setTimeout(function() {
+							deferred.resolve();
+						}, SLIDE_ANIMATION_TIME);
 
-					App.managerService.slide_3.scroll(step);
-
-					clearInterval(main_timer);
-
-					timer_slide_3 = setInterval(function() {
-						$body.unbind("mousewheel");
-						$body.one("mousewheel", App.managerService.slide_3.scroll);
-					}, 1600);
+	  					return deferred;
+					}		
 
 				},
 
-				scroll: function(event) {
+				SceneController: {
 
-					console.log(step);
+					init: function() {
+						App.managerService.slide_3.elems.menu["scene_1"].init().then(function() { 
+							if( slide_3_compete == false ) App.managerService.slide_3.WheelController.unlockWheel();
+						});
+					},
 
-					var top_pos = 0,
-						left_pos = 0;
+					moveTo: function(from, to) {
+						console.log("Scene: " + [from, to]);
 
-					if( step != 6 ) {
-						step++;
-					} else {					
-						if(event) {
-							if(event.originalEvent.wheelDelta < 0) {
-								active_slide++;
-							} else {
-								active_slide--;
-							}
-							App.WheelController.init();
+						var top_pos = 0,
+							left_pos = 0;
+
+						switch(active_scene) {
+							case 1: 
+								top_pos = 0;
+								left_pos = 0;
+
+								break;
+
+							case 2:
+								top_pos = 0;
+								left_pos = $hyde_menu.children().width();
+
+								break;
+
+							case 3:
+								top_pos = $hyde_menu.children().height();
+								left_pos = 0;
+
+								break;
+
+							case 4: 
+								top_pos = $hyde_menu.children().height();
+								left_pos = $hyde_menu.children().width();
+
+								break;
+
+							case 5:
+								top_pos = $hyde_menu.children().height() * 2;
+								left_pos = 0;
+
+								break;
+
+							case 6:
+								top_pos = $hyde_menu.children().height() * 2;
+								left_pos = $hyde_menu.children().width();
+
+								break;
+
 						}
 
-						return false;
-					}
-
-					switch(step) {
-						case 1: 
-							top_pos = 0;
-							left_pos = 0;
-
-							slide_container_3 = new PIXI.Container();
-
-							App.managerService.slide_3.elems.menu.init();
-							App.managerService.slide_3.elems.menu.scene_1.init();
-
-							stage.addChild(slide_container_3);
-
-							break;
-
-						case 2:
-							top_pos = 0;
-							left_pos = $hyde_menu.children().width();
-
-							App.managerService.slide_3.elems.menu.scene_1.destroy();
-							App.managerService.slide_3.elems.menu.scene_2.init();
-							break;
-
-						case 3:
-							top_pos = $hyde_menu.children().height();
-							left_pos = 0;
-
-							App.managerService.slide_3.elems.menu.scene_2.destroy();
-							App.managerService.slide_3.elems.menu.scene_3.init();
-							break;
-
-						case 4: 
-							top_pos = $hyde_menu.children().height();
-							left_pos = $hyde_menu.children().width();
-
-							App.managerService.slide_3.elems.menu.scene_3.destroy();
-							App.managerService.slide_3.elems.menu.scene_4.init();
-							break;
-
-						case 5:
-							top_pos = $hyde_menu.children().height() * 2;
-							left_pos = 0;
-
-							App.managerService.slide_3.elems.menu.scene_4.destroy();
-							App.managerService.slide_3.elems.menu.scene_5.init();
-							break;
-
-						case 6:
-							top_pos = $hyde_menu.children().height() * 2;
-							left_pos = $hyde_menu.children().width();
-
-							App.managerService.slide_3.elems.menu.scene_5.destroy();
-							App.managerService.slide_3.elems.menu.scene_6.init();
-							break;
+						App.managerService.slide_3.NavController.setActive(top_pos, left_pos);
+						App.managerService.slide_3.elems.menu["scene_" + from].destroy();
+						App.managerService.slide_3.elems.menu["scene_" + to].init().then(function() { 
+							App.managerService.slide_3.WheelController.unlockWheel();
+						});
 
 					}
 
-					if(App.managerService.slide_3.elems.menu.order_btn.el != null) App.managerService.slide_3.elems.menu.order_btn.destroy();
-					App.managerService.slide_3.elems.menu.order_btn.init();
+				},
 
-					$hover.animate({ "top" : top_pos, "left" : left_pos }, function() {
-						$hyde_menu.children().removeClass("active").eq(step - 1).addClass("active");
-					});
+				WheelController: {
+
+					checkDirection: function(event) {
+						if(event) {
+							if(event.originalEvent.wheelDelta < 0) {
+								// scroll top
+								if( active_scene < 6 ) App.managerService.slide_3.SceneController.moveTo(active_scene, ++active_scene);
+								else App.SlideController.moveTo(active_slide, ++active_slide);
+							} else {
+								// scroll down
+								if( active_scene > 1 ) App.managerService.slide_3.SceneController.moveTo(active_scene, --active_scene);
+								else App.SlideController.moveTo(active_slide, --active_slide);
+							}
+						}
+					},
+
+					unlockWheel: function() {
+						$body.unbind("mousewheel").one("mousewheel", App.managerService.slide_3.WheelController.checkDirection);
+					}
+
+				},
+
+				NavController: {
+
+					setActive: function(top, left) {
+						$hover.animate({ "top" : top, "left" : left }, function() {
+							$hyde_menu.children().removeClass("active").eq(active_scene - 1).addClass("active");
+						});
+					}
 
 				},
 
 				destroy: function() {
+
 					console.log("Slide 3 destroy");
 
 					this.elems.menu.destroy();
-
 					stage.removeChild(slide_container_3);
-					slide_container_3 = null;
+					slide_container_3 = null;	
 
-					$body.unbind("mousewheel");
+					if( slide_3_compete == false ) {
+						var deferred = $.Deferred();
+						slide_3_compete = true;
 
-					clearInterval(timer_slide_3);						
+						setTimeout(function() {
+							deferred.resolve();
+						}, SLIDE_ANIMATION_TIME);
 
-					main_timer = setInterval(function() {
-						$body.unbind("mousewheel");
-						$body.one("mousewheel", App.WheelController.init);
-					}, SLIDE_ANIMATION_TIME);			
+	  					return deferred;
+					}	
 
 				},
 
@@ -1227,12 +1046,20 @@
 							el: null,
 
 							init: function() {
-								var title_top = "ХОТИТЕ ЗНАТЬ, КАКИЕ ЦВЕТА ПОДХОДЯТ ВАМ ИДЕАЛЬНО?\nДЛЯ ВАШЕГО ИМИДЖ-ГАЙДА СПЕЦИАЛИСТ СОСТАВИТ\nПЕРСОНАЛЬНУЮ ЦВЕТОВУЮ КАРТУ ВАШЕЙ ВНЕШНОСТИ!",
+								var deferred = $.Deferred(),
+									title_top = "ХОТИТЕ ЗНАТЬ, КАКИЕ ЦВЕТА ПОДХОДЯТ ВАМ ИДЕАЛЬНО?\nДЛЯ ВАШЕГО ИМИДЖ-ГАЙДА СПЕЦИАЛИСТ СОСТАВИТ\nПЕРСОНАЛЬНУЮ ЦВЕТОВУЮ КАРТУ ВАШЕЙ ВНЕШНОСТИ!",
 									title_down = "ТЕПЕРЬ ВСЯ ОДЕЖДА БУДЕТ ПОДЧЕРКИВАТЬ КРАСОТУ\nВАШИХ ГЛАЗ И НЕЖНЫЙ ОТТЕНОК ВАШЕЙ КОЖИ.";
 
+								App.managerService.slide_3.elems.menu.init();
 								this.el = new App.managerService.slide_3.elems.menu.Scene("i/s3/1/wears.jpg", title_top, title_down);
 								slide_container_3.addChild(this.el);
 								this.el.init(this.el);
+
+								setTimeout(function() {
+									deferred.resolve();
+								}, SCENE_ANIMATION_TIME);
+
+			  					return deferred;
 							},
 
 							destroy: function() {
@@ -1246,12 +1073,19 @@
 							el: null,
 
 							init: function() {
-								var title_top = "ХОТИТЕ ЗНАТЬ, КАКИЕ ЦВЕТА ПОДХОДЯТ ВАМ ИДЕАЛЬНО?\nДЛЯ ВАШЕГО ИМИДЖ-ГАЙДА СПЕЦИАЛИСТ СОСТАВИТ\nПЕРСОНАЛЬНУЮ ЦВЕТОВУЮ КАРТУ ВАШЕЙ ВНЕШНОСТИ!",
+								var deferred = $.Deferred(),
+									title_top = "ХОТИТЕ ЗНАТЬ, КАКИЕ ЦВЕТА ПОДХОДЯТ ВАМ ИДЕАЛЬНО?\nДЛЯ ВАШЕГО ИМИДЖ-ГАЙДА СПЕЦИАЛИСТ СОСТАВИТ\nПЕРСОНАЛЬНУЮ ЦВЕТОВУЮ КАРТУ ВАШЕЙ ВНЕШНОСТИ!",
 									title_down = "ТЕПЕРЬ ВСЯ ОДЕЖДА БУДЕТ ПОДЧЕРКИВАТЬ КРАСОТУ\nВАШИХ ГЛАЗ И НЕЖНЫЙ ОТТЕНОК ВАШЕЙ КОЖИ.";
 
 								this.el = new App.managerService.slide_3.elems.menu.Scene("i/s3/2/wears.jpg", title_top, title_down);
 								slide_container_3.addChild(this.el);
 								this.el.init(this.el);
+
+								setTimeout(function() {
+									deferred.resolve();
+								}, SCENE_ANIMATION_TIME);
+
+			  					return deferred;
 
 							},
 
@@ -1266,12 +1100,19 @@
 							el: null,
 
 							init: function() {
-								var title_top = "ХОТИТЕ ЗНАТЬ, КАКИЕ ЦВЕТА ПОДХОДЯТ ВАМ ИДЕАЛЬНО?\nДЛЯ ВАШЕГО ИМИДЖ-ГАЙДА СПЕЦИАЛИСТ СОСТАВИТ\nПЕРСОНАЛЬНУЮ ЦВЕТОВУЮ КАРТУ ВАШЕЙ ВНЕШНОСТИ!",
+								var deferred = $.Deferred(),
+									title_top = "ХОТИТЕ ЗНАТЬ, КАКИЕ ЦВЕТА ПОДХОДЯТ ВАМ ИДЕАЛЬНО?\nДЛЯ ВАШЕГО ИМИДЖ-ГАЙДА СПЕЦИАЛИСТ СОСТАВИТ\nПЕРСОНАЛЬНУЮ ЦВЕТОВУЮ КАРТУ ВАШЕЙ ВНЕШНОСТИ!",
 									title_down = "ТЕПЕРЬ ВСЯ ОДЕЖДА БУДЕТ ПОДЧЕРКИВАТЬ КРАСОТУ\nВАШИХ ГЛАЗ И НЕЖНЫЙ ОТТЕНОК ВАШЕЙ КОЖИ.";
 
 								this.el = new App.managerService.slide_3.elems.menu.Scene("i/s3/3/wears.jpg", title_top, title_down);
 								slide_container_3.addChild(this.el);
 								this.el.init(this.el);
+
+								setTimeout(function() {
+									deferred.resolve();
+								}, SCENE_ANIMATION_TIME);
+
+			  					return deferred;
 
 							},
 
@@ -1286,12 +1127,19 @@
 							el: null,
 
 							init: function() {
-								var title_top = "ХОТИТЕ ЗНАТЬ, КАКИЕ ЦВЕТА ПОДХОДЯТ ВАМ ИДЕАЛЬНО?\nДЛЯ ВАШЕГО ИМИДЖ-ГАЙДА СПЕЦИАЛИСТ СОСТАВИТ\nПЕРСОНАЛЬНУЮ ЦВЕТОВУЮ КАРТУ ВАШЕЙ ВНЕШНОСТИ!",
+								var deferred = $.Deferred(),
+									title_top = "ХОТИТЕ ЗНАТЬ, КАКИЕ ЦВЕТА ПОДХОДЯТ ВАМ ИДЕАЛЬНО?\nДЛЯ ВАШЕГО ИМИДЖ-ГАЙДА СПЕЦИАЛИСТ СОСТАВИТ\nПЕРСОНАЛЬНУЮ ЦВЕТОВУЮ КАРТУ ВАШЕЙ ВНЕШНОСТИ!",
 									title_down = "ТЕПЕРЬ ВСЯ ОДЕЖДА БУДЕТ ПОДЧЕРКИВАТЬ КРАСОТУ\nВАШИХ ГЛАЗ И НЕЖНЫЙ ОТТЕНОК ВАШЕЙ КОЖИ.";
 
 								this.el = new App.managerService.slide_3.elems.menu.Scene("i/s3/4/wears.jpg", title_top, title_down);
 								slide_container_3.addChild(this.el);
 								this.el.init(this.el);
+
+								setTimeout(function() {
+									deferred.resolve();
+								}, SCENE_ANIMATION_TIME);
+
+			  					return deferred;
 
 							},
 
@@ -1306,12 +1154,19 @@
 							el: null,
 
 							init: function() {
-								var title_top = "ХОТИТЕ ЗНАТЬ, КАКИЕ ЦВЕТА ПОДХОДЯТ ВАМ ИДЕАЛЬНО?\nДЛЯ ВАШЕГО ИМИДЖ-ГАЙДА СПЕЦИАЛИСТ СОСТАВИТ\nПЕРСОНАЛЬНУЮ ЦВЕТОВУЮ КАРТУ ВАШЕЙ ВНЕШНОСТИ!",
+								var deferred = $.Deferred(),
+									title_top = "ХОТИТЕ ЗНАТЬ, КАКИЕ ЦВЕТА ПОДХОДЯТ ВАМ ИДЕАЛЬНО?\nДЛЯ ВАШЕГО ИМИДЖ-ГАЙДА СПЕЦИАЛИСТ СОСТАВИТ\nПЕРСОНАЛЬНУЮ ЦВЕТОВУЮ КАРТУ ВАШЕЙ ВНЕШНОСТИ!",
 									title_down = "ТЕПЕРЬ ВСЯ ОДЕЖДА БУДЕТ ПОДЧЕРКИВАТЬ КРАСОТУ\nВАШИХ ГЛАЗ И НЕЖНЫЙ ОТТЕНОК ВАШЕЙ КОЖИ.";
 
 								this.el = new App.managerService.slide_3.elems.menu.Scene("i/s3/5/wears.jpg", title_top, title_down);
 								slide_container_3.addChild(this.el);
 								this.el.init(this.el);
+
+								setTimeout(function() {
+									deferred.resolve();
+								}, SCENE_ANIMATION_TIME);
+
+			  					return deferred;
 
 							},
 
@@ -1326,12 +1181,19 @@
 							el: null,
 
 							init: function() {
-								var title_top = "ХОТИТЕ ЗНАТЬ, КАКИЕ ЦВЕТА ПОДХОДЯТ ВАМ ИДЕАЛЬНО?\nДЛЯ ВАШЕГО ИМИДЖ-ГАЙДА СПЕЦИАЛИСТ СОСТАВИТ\nПЕРСОНАЛЬНУЮ ЦВЕТОВУЮ КАРТУ ВАШЕЙ ВНЕШНОСТИ!",
+								var deferred = $.Deferred(),
+									title_top = "ХОТИТЕ ЗНАТЬ, КАКИЕ ЦВЕТА ПОДХОДЯТ ВАМ ИДЕАЛЬНО?\nДЛЯ ВАШЕГО ИМИДЖ-ГАЙДА СПЕЦИАЛИСТ СОСТАВИТ\nПЕРСОНАЛЬНУЮ ЦВЕТОВУЮ КАРТУ ВАШЕЙ ВНЕШНОСТИ!",
 									title_down = "ТЕПЕРЬ ВСЯ ОДЕЖДА БУДЕТ ПОДЧЕРКИВАТЬ КРАСОТУ\nВАШИХ ГЛАЗ И НЕЖНЫЙ ОТТЕНОК ВАШЕЙ КОЖИ.";
 
 								this.el = new App.managerService.slide_3.elems.menu.Scene("i/s3/6/wears.jpg", title_top, title_down);
 								slide_container_3.addChild(this.el);
 								this.el.init(this.el);
+
+								setTimeout(function() {
+									deferred.resolve();
+								}, SCENE_ANIMATION_TIME);
+
+			  					return deferred;
 
 							},
 
@@ -1401,6 +1263,8 @@
 
 					console.log("Slide 4 init");
 
+					var deferred = $.Deferred();
+
 					slide_container_4 = new PIXI.Container();
 
 					this.elems.bg.init();
@@ -1409,6 +1273,12 @@
 					this.elems.slider.init();
 
 					stage.addChild(slide_container_4);
+
+					setTimeout(function() {
+						deferred.resolve();
+					}, SLIDE_ANIMATION_TIME);
+
+					return deferred;
 
 				},
 
@@ -1741,6 +1611,8 @@
 
 					console.log("Slide 5 init");
 
+					var deferred = $.Deferred();
+
 					slide_container_5 = new PIXI.Container();
 
 					this.elems.magazine.init();
@@ -1757,6 +1629,12 @@
 					this.elems.orderBtn.init();
 
 					stage.addChild(slide_container_5);
+
+					setTimeout(function() {
+						deferred.resolve();
+					}, SLIDE_ANIMATION_TIME);
+
+					return deferred;
 
 				},
 
@@ -2228,6 +2106,8 @@
 
 					console.log("Slide 6 init");
 
+					var deferred = $.Deferred();
+
 					slide_container_6 = new PIXI.Container();
 
 					this.elems.notepade.init();
@@ -2237,6 +2117,12 @@
 					this.elems.spinner.init();
 
 					stage.addChild(slide_container_6);
+
+					setTimeout(function() {
+						deferred.resolve();
+					}, SLIDE_ANIMATION_TIME);
+
+					return deferred;
 
 				},
 
@@ -2533,6 +2419,8 @@
 
 					console.log("Slide 7 init");
 
+					var deferred = $.Deferred();
+
 					slide_container_7 = new PIXI.Container();
 
 					$anketa.fadeIn(function() {
@@ -2549,6 +2437,12 @@
 							delay += 100;
 						});
 					});
+
+					setTimeout(function() {
+						deferred.resolve();
+					}, SLIDE_ANIMATION_TIME);
+
+					return deferred;
 
 				},
 
@@ -2580,6 +2474,8 @@
 
 					console.log("Slide 8 init");
 
+					var deferred = $.Deferred();
+
 					slide_container_8 = new PIXI.Container();
 					slide_container_8.alpha = 0;
 
@@ -2588,6 +2484,12 @@
 					this.elems.footer.init();
 
 					stage.addChild(slide_container_8);
+
+					setTimeout(function() {
+						deferred.resolve();
+					}, SLIDE_ANIMATION_TIME);
+
+					return deferred;
 
 				},
 
