@@ -382,7 +382,7 @@ footer a {
 	float: right;
 }
 
-.landing-nav {
+.step-pult {
 	position: fixed;
 	top: 50%;
 	right: -100px;
@@ -392,7 +392,11 @@ footer a {
 	-webkit-transition: all 1s;
 }
 
-.landing-nav-item {
+.step-pult.active {
+	right: 30px;
+}
+
+.step-pult-item {
 	width: 45px;
 	height: 45px;
 	text-align: center;
@@ -413,7 +417,7 @@ footer a {
 	-webkit-transition: all .3s;
 }
 
-.landing-nav-item:after {
+.step-pult-item:after {
 	content: "";
 	position: absolute;
 	bottom: -33px;
@@ -423,11 +427,11 @@ footer a {
 	border-left: 2px dotted #cfb3a2;
 }
 
-.landing-nav-item:last-child:after {
+.step-pult-item:last-child:after {
 	content: none;
 }
 
-.landing-nav-item-active {
+.step-pult-item-active {
 	border-color: #ff7d7a;
 	color: #ff7d7a;
 }

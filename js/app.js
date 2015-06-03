@@ -13,7 +13,7 @@
 		$menu_popup = $(".menu-popup"),
 		$menu_popup_nav = $(".menu-popup-nav"),
 		$menu_close_btn = $(".popup-closebtn"),
-		$landing_nav = $(".landing-nav ul"),
+		$step_pult = $(".step-pult ul"),
 		$hyde_menu = $(".hyde-menu"),
 		$hover = $(".hyde-menu-hover"),
 		$anketa = $(".anketa"),
@@ -82,6 +82,13 @@
 				if( to == 3 && slide_3_complete == false ) {
 					App.managerService["slide_" + from].destroy();
 					App.managerService["slide_3"].init();
+
+					return;
+				}
+
+				if( to == 6 ) {
+					App.managerService["slide_" + from].destroy();
+					App.managerService["slide_6"].init();
 
 					return;
 				}
@@ -2126,23 +2133,13 @@
 
 					console.log("Slide 6 init");
 
-					var deferred = $.Deferred();
-
 					slide_container_6 = new PIXI.Container();
 
-					this.elems.notepade.init();
-					this.elems.title.init();
-					this.elems.btn.init();
-					this.elems.info.init();
-					this.elems.spinner.init();
+					$step_pult.parent().addClass("active");
+					App.managerService.slide_6.SceneController.init();
+					this.spinner.init();
 
 					stage.addChild(slide_container_6);
-
-					setTimeout(function() {
-						deferred.resolve();
-					}, SLIDE_ANIMATION_TIME);
-
-					return deferred;
 
 				},
 
@@ -2150,11 +2147,7 @@
 
 					console.log("Slide 6 destroy");
 
-					this.elems.notepade.destroy();
-					this.elems.title.destroy();
-					this.elems.btn.destroy();
-					this.elems.info.destroy();
-					this.elems.spinner.destroy();
+					this.spinner.destroy();
 
 					slide_container_6 = null;
 					//stage.removeChild(slide_container_6);
@@ -2162,276 +2155,444 @@
 				},
 
 				update: function() {
-					this.elems.spinner.update();
+					this.spinner.update();
 				},
 
-				elems: {
-
-					notepade: {
-
-						element: null,
-
-						anim_params: {
-							speed: 3000,
-							init_wait: 0
-						},
-
-						init: function() {
-
-							var texture = PIXI.Texture.fromImage("i/s6/notepade.png");
-
-							this.element = new PIXI.Sprite(texture);
-							this.element.anchor.set(0.5);
-							this.element.position.x = renderer.width / 2 + 300;
-							this.element.position.y = -renderer.height;
-
-							slide_container_6.addChild(this.element);
-
-							createjs.Tween.get(this.element)
-								.wait(this.anim_params.init_wait)
-		  						.to({ y: renderer.height / 2 + 40 }, this.anim_params.speed, createjs.Ease.getPowInOut(4));
-
-
-						},
-
-						destroy: function() {
-							createjs.Tween.get(this.element)
-		  						.to({ y: -renderer.height }, this.anim_params.speed, createjs.Ease.getPowInOut(4));
-						}
-
-					},
-
-					title: {
-
-						element: null,
-
-						anim_params: {
-							speed: 2000,
-							speed2: 1000,
-							destroy_wait: 400
-						},
-
-						init: function() {
-
-							var style = {
-									font : '110px Plumb-Black',
-								    fill : '#fa6464',
-								    align : "center",
-								    lineHeight : 105
-								};
-
-							this.element = new PIXI.Text("ЗАПОЛНИТЕ\nАНКЕТУ\nНА САЙТЕ", style);
-
-							this.element.x = (renderer.width - this.element.width) / 2;	
-							this.element.y = -renderer.height;
-
-							slide_container_6.addChild(this.element);
-
-							createjs.Tween.get(this.element)
-		  						.to({ y: ((renderer.height - this.element.height) / 2) }, this.anim_params.speed, createjs.Ease.getPowInOut(4));
-
-						},
-
-						destroy: function() {
-							createjs.Tween.get(this.element)
-								.wait(this.anim_params.destroy_wait)
-		  						.to({ y: -renderer.height }, this.anim_params.speed2, createjs.Ease.getPowInOut(4));
-						}
-
-					},
-
-					btn: {
-
-						element: null,
-						element_2: null,
-
-						anim_params: {
-							speed: 1000,
-							init_wait: 0,
-							init_wait2: 200,
-							destroy_wait: 60,
-							destroy_wait2: 800
-						},
-
-						init: function() {
-
-							var texture = PIXI.Texture.fromImage("i/s6/circle.svg");
-
-							this.element = new PIXI.Sprite(texture);
-							this.element.anchor.set(0.5);
-							this.element.position.x = renderer.width / 2 - 280;
-							this.element.position.y = -renderer.height;
-							this.element.buttonMode = true;
-							this.element.interactive = true;
-							this.element.on("click", function() {
-								App.SlideController.moveTo(active_slide, 7);
-				    			active_slide = 7;
-				    			App.NavController.setActive();
-							});
-
-
-							var style = {
-								font : '24px BebasRegular',
-							    fill : '#ffffff'
-							};
-
-							this.element_2 = new PIXI.Text("ЗАПОЛНИТЬ", style);
-							this.element_2.x = (renderer.width - this.element_2.width) / 2 - 235;	
-							this.element_2.y = -renderer.height;
-							this.element_2.anchor.x = 0.5;
-							this.element_2.anchor.y = 0.5;
-							this.element_2.rotation = -0.3;
-
-							slide_container_6.addChild(this.element);
-							slide_container_6.addChild(this.element_2);
-
-							createjs.Tween.get(this.element)
-								.wait(this.anim_params.init_wait)
-		  						.to({ y: ((renderer.height - this.element_2.height) / 2) + 42 }, this.anim_params.speed, createjs.Ease.getPowInOut(4));
-
-		  					createjs.Tween.get(this.element_2)
-								.wait(this.anim_params.init_wait2)
-		  						.to({ y: renderer.height / 2 + 30 }, this.anim_params.speed, createjs.Ease.getPowInOut(4));
-
-						},
-
-						destroy: function() {
-							createjs.Tween.get(this.element)
-								.wait(this.anim_params.destroy_wait)
-		  						.to({ y: -renderer.height }, this.anim_params.speed, createjs.Ease.getPowInOut(4));
-
-		  					createjs.Tween.get(this.element_2)
-								.wait(this.anim_params.destroy_wait2)
-		  						.to({ y: -renderer.height }, this.anim_params.speed, createjs.Ease.getPowInOut(4));
-						}
-
-					},
-
-					info: {
-
-						element: null,
-						element_2: null,
-
-						anim_params: {
-							speed: 1000,
-							init_wait: 600,
-							destroy_wait: 0
-						},
-
-						init: function() {
-
-							var style = {
-								font : '16px HelveticaNeueCyr-Light',
-							    fill : '#3c3c3c',
-							    align : "center"
-							};
-
-							this.element = new PIXI.Text("Стилисты “Модного приговора” получат Ваши данные,\nопределят Ваш цветотип, тип фигуры, овал лица\nи составят подробную инструкцию преображения!", style);
-
-							this.element.x = renderer.width + 10;	
-							this.element.y = ((renderer.height - this.element.height) / 2) + 250;
-
-							slide_container_6.addChild(this.element);
-
-							this.element_2 = new PIXI.Graphics();
-
-							this.element_2.lineStyle(3, 0x3c3c3c, 1);
-							this.element_2.beginFill(0x000000, 0);
-							this.element_2.drawRect( -600 , renderer.height/2 + 200 , 450 , 100);
-
-							slide_container_6.addChild(this.element_2);
-
-							createjs.Tween.get(this.element)
-								.wait(this.anim_params.init_wait)
-		  						.to({ x: (renderer.width - this.element.width) / 2 }, this.anim_params.speed, createjs.Ease.getPowInOut(4));
-
-		  					createjs.Tween.get(this.element_2)
-								.wait(this.anim_params.init_wait)
-		  						.to({ x: renderer.width/2 + 380 }, this.anim_params.speed, createjs.Ease.getPowInOut(4));
-
-						},
-
-						destroy: function() {
-							createjs.Tween.get(this.element)
-								.wait(this.anim_params.destroy_wait)
-		  						.to({ x: renderer.width + 60 }, this.anim_params.speed, createjs.Ease.getPowInOut(4));
-
-		  					createjs.Tween.get(this.element_2)
-								.wait(this.anim_params.destroy_wait)
-		  						.to({ x: -600 }, this.anim_params.speed, createjs.Ease.getPowInOut(4));
-						}
-
-					},
-
-					spinner: {
-
-						vars: {
-							spin1_texture: 	null,
-							spin1: 			null,
-							spin2_texture: 	null,
-							spin2: 			null,
-							pos: 			0,
-							alpha: 			0,
-							init: false
-						},
-
-						init: function() {
-							var vars = this.vars;
-
-							vars.init = true;
-							vars.spin1_texture = PIXI.Texture.fromImage("i/s6/spin1.svg");
-							vars.spin1 = new PIXI.Sprite(vars.spin1_texture);
-							vars.spin2_texture = PIXI.Texture.fromImage("i/s6/spin2.svg");
-							vars.spin2 = new PIXI.Sprite(vars.spin2_texture);
-
-							vars.spin1.anchor.set(0.5);
-							vars.spin1.position.x = renderer.width / 2 - 5;
-							vars.spin1.position.y = renderer.height / 2 + 350;
-							vars.spin1.alpha = 0;
-							vars.spin1.buttonMode = true;
-							vars.spin1.interactive = true;
-							vars.spin1.on("click", function() {
-								active_slide++;
-	    						App.WheelController.init();
-							});
-
-							vars.spin2.anchor.set(0.5);
-							vars.spin2.position.x = renderer.width / 2 - 5;
-							vars.spin2.position.y = renderer.height / 2 + 345;
-							vars.spin2.alpha = 0;
-
-							slide_container_6.addChild(vars.spin1);
-							slide_container_6.addChild(vars.spin2); 
-						},
-
-						update: function() {
-							var vars = this.vars;
-
-							if(vars.init == true) {
-								vars.pos += 0.06;
-			    				vars.spin2.y += Math.sin(vars.pos);
+				WheelController: {
+
+					checkDirection: function(event) {
+						if(event) {
+							if(event.originalEvent.wheelDelta < 0) {
+								// scroll down
+								if( active_scene < 6 ) App.managerService.slide_6.SceneController.moveTo(active_scene, ++active_scene);
+								else {
+									App.managerService.slide_6["scene_" + active_scene].destroy();
+									App.SlideController.moveTo(active_slide, ++active_slide);
+								}
+							} else {
+								// scroll top
+								if( active_scene > 1 ) App.managerService.slide_6.SceneController.moveTo(active_scene, --active_scene);
+								else {
+									App.managerService.slide_6["scene_" + active_scene].destroy();
+									App.SlideController.moveTo(active_slide, --active_slide);
+								}
 							}
-
-							if( vars.spin1 != null ) {
-								if( vars.spin1.alpha < 1 ) vars.spin1.alpha += 0.01;
-							}
-							
-							if( vars.spin2 != null ) {
-								if( vars.spin2.alpha < 1 ) vars.spin2.alpha += 0.01;
-							}
-
-						},
-
-						destroy: function() {
-							var vars = this.vars;
-
-							slide_container_6.removeChild(vars.spin1);
-							slide_container_6.removeChild(vars.spin2);
 						}
+					},
+
+					unlockWheel: function() {
+						$body.unbind("mousewheel").one("mousewheel", App.managerService.slide_6.WheelController.checkDirection);
+					}
+
+				},
+
+				SceneController: {
+
+					init: function() {
+						App.managerService.slide_6["scene_" + active_scene].init().then(function() { 
+							App.managerService.slide_6.WheelController.unlockWheel();
+						});
+					},
+
+					moveTo: function(from, to) {
+						console.log([from, to]);
+
+						App.managerService.slide_6.NavController.setActive();
+
+						App.managerService.slide_6["scene_" + from].destroy();
+						App.managerService.slide_6["scene_" + to].init().then(function() { 
+							App.managerService.slide_6.WheelController.unlockWheel();
+						});
+					}
+
+				},
+
+				NavController: {
+
+					setActive: function() {
 
 					}
 
 				},
+
+				Scene: function(title, info, btn_title, pic) {
+
+					// pic
+					var pic_texture = PIXI.Texture.fromImage(pic);
+					pic = new PIXI.Sprite(pic_texture);
+					pic.anchor.set(0.5);
+					pic.position.x = renderer.width / 2 + 300;
+					pic.position.y = -renderer.height;
+
+					// title
+					var style = {
+							font : '110px Plumb-Black',
+						    fill : '#fa6464',
+						    align : "center",
+						    lineHeight : 105
+						};
+
+					title = new PIXI.Text(title, style);
+					title.x = (renderer.width - title.width) / 2;	
+					title.y = -renderer.height;
+
+  					// info
+  					var style = {
+						font : '16px HelveticaNeueCyr-Light',
+					    fill : '#3c3c3c',
+					    align : "center"
+					};
+
+					info = new PIXI.Text(info, style);
+					info.x = renderer.width + 10;	
+					info.y = ((renderer.height - info.height) / 2) + 250;
+
+					var border = new PIXI.Graphics();
+					border.lineStyle(3, 0x3c3c3c, 1);
+					border.beginFill(0x000000, 0);
+					border.drawRect( -600 , renderer.height/2 + 200 , 450 , 100);
+
+  					// btn
+  					var btn_texture = PIXI.Texture.fromImage("i/s6/circle.svg");
+					btn = new PIXI.Sprite(btn_texture);
+					btn.anchor.set(0.5);
+					btn.position.x = renderer.width / 2 - 280;
+					btn.position.y = -renderer.height;
+					btn.buttonMode = true;
+					btn.interactive = true;
+					btn.on("click", function() {
+						App.SlideController.moveTo(active_slide, 7);
+		    			active_slide = 7;
+		    			App.NavController.setActive();
+					});
+
+					var style = {
+						font : '24px BebasRegular',
+					    fill : '#ffffff'
+					},
+						btn_title = new PIXI.Text(btn_title, style);
+					
+					btn_title.x = (renderer.width - btn_title.width) / 2 - 235;	
+					btn_title.y = -renderer.height;
+					btn_title.anchor.x = 0.5;
+					btn_title.anchor.y = 0.5;
+					btn_title.rotation = -0.3;
+
+
+					var scene = new PIXI.Container();
+					scene.addChild(pic);
+					scene.addChild(title);
+					scene.addChild(info);
+					scene.addChild(border);
+					scene.addChild(btn);
+					scene.addChild(btn_title);
+
+
+  					scene.init = function() {
+  						// pic
+  						createjs.Tween.get(pic)
+  							.to({ y: renderer.height / 2 + 40 }, 3000, createjs.Ease.getPowInOut(4));
+
+  						// title 
+  						createjs.Tween.get(title)
+							.to({ y: ((renderer.height - title.height) / 2) }, 2000, createjs.Ease.getPowInOut(4));
+
+  						// info 
+  						createjs.Tween.get(info)
+							.wait(600)
+	  						.to({ x: (renderer.width - info.width) / 2 }, 1000, createjs.Ease.getPowInOut(4));
+
+	  					createjs.Tween.get(border)
+							.wait(600)
+	  						.to({ x: renderer.width/2 + 380 }, 1000, createjs.Ease.getPowInOut(4));
+
+  						// btn
+  						createjs.Tween.get(btn)
+							.wait(0)
+	  						.to({ y: ((renderer.height - btn_title.height) / 2) + 42 }, 1000, createjs.Ease.getPowInOut(4));
+
+	  					createjs.Tween.get(btn_title)
+							.wait(200)
+	  						.to({ y: renderer.height / 2 + 30 }, 1000, createjs.Ease.getPowInOut(4));
+  					};
+
+  					scene.destroy = function() {
+  						// pic
+  						createjs.Tween.get(pic)
+		  						.to({ y: -renderer.height }, 3000, createjs.Ease.getPowInOut(4));
+
+		  				// title
+		  				createjs.Tween.get(title)
+							.wait(400)
+	  						.to({ y: -renderer.height }, 1000, createjs.Ease.getPowInOut(4));
+
+	  					// info 
+	  					createjs.Tween.get(info)
+	  						.to({ x: renderer.width + 60 }, 1000, createjs.Ease.getPowInOut(4));
+
+	  					createjs.Tween.get(border)
+	  						.to({ x: -600 }, 1000, createjs.Ease.getPowInOut(4));
+
+	  					// btn 
+	  					createjs.Tween.get(btn)
+							.wait(600)
+	  						.to({ y: -renderer.height }, 1000, createjs.Ease.getPowInOut(4));
+
+	  					createjs.Tween.get(btn_title)
+							.wait(800)
+	  						.to({ y: -renderer.height }, 1000, createjs.Ease.getPowInOut(4));
+  					};
+
+					return scene;
+				},
+
+				scene_1: {
+
+					el: null,
+
+					init: function() {
+						var title = "ЗАПОЛНИТЕ\nАНКЕТУ\nНА САЙТЕ",
+							info = "Стилисты “Модного приговора” получат Ваши данные,\nопределят Ваш цветотип, тип фигуры, овал лица\nи составят подробную инструкцию преображения!",
+							btn_title = "ЗАПОЛНИТЬ",
+							pic = "i/s6/notepade.png",
+							scene = new App.managerService.slide_6.Scene(title, info, btn_title, pic);
+
+						this.el = scene;
+						slide_container_6.addChild(scene);
+						scene.init();
+
+						var deferred = $.Deferred();
+
+						setTimeout(function() {
+							deferred.resolve();
+						}, SLIDE_ANIMATION_TIME);
+
+	  					return deferred;
+					},
+
+					destroy: function() {
+						this.el.destroy();
+					}
+
+				},
+
+				scene_2: {
+
+					el: null,
+
+					init: function() {
+						var title = "ПОЛУЧИТЕ\nИМИДЖ-ГАЙД",
+							info = "Имидж-гайд придет на Ваш e-mail в формате PDF.\nВы можете его распечатать или читать с экрана\nмобильного устройства.\nВаш личный стилист в кармане!",
+							btn_title = "ПОЛУЧИТЬ",
+							pic = "i/s6/book.png",
+							scene = new App.managerService.slide_6.Scene(title, info, btn_title, pic);
+
+						this.el = scene;
+						slide_container_6.addChild(scene);
+						scene.init();
+
+						var deferred = $.Deferred();
+
+						setTimeout(function() {
+							deferred.resolve();
+						}, SLIDE_ANIMATION_TIME);
+
+	  					return deferred;
+					},
+
+					destroy: function() {
+						this.el.destroy();
+					}
+
+				},
+
+				scene_3: {
+
+					el: null,
+
+					init: function() {
+						var title = "УЗНАВАЙТЕ",
+							info = "В имидж-гайде Вы найдете описание своего\nцветотипа, типа фигуры и формы лица. Взгляните\nна себя новым взглядом и откройте секреты\nсобственной красоты!",
+							btn_title = "ЗАКАЗАТЬ",
+							pic = "i/s6/lamp.png",
+							scene = new App.managerService.slide_6.Scene(title, info, btn_title, pic);
+
+						this.el = scene;
+						slide_container_6.addChild(scene);
+						scene.init();
+
+						var deferred = $.Deferred();
+
+						setTimeout(function() {
+							deferred.resolve();
+						}, SLIDE_ANIMATION_TIME);
+
+	  					return deferred;
+					},
+
+					destroy: function() {
+						this.el.destroy();
+					}
+
+				},
+
+				scene_4: {
+
+					el: null,
+
+					init: function() {
+						var title = "МЕНЯЙТЕСЬ",
+							info = "Отправляйтесь в магазин или салон красоты -\nпрактические рекомендации помогут Вам\nс уверенностью профи создавать модные\nи яркие образы.",
+							btn_title = "ЗАКАЗАТЬ",
+							pic = "i/s6/fen.png",
+							scene = new App.managerService.slide_6.Scene(title, info, btn_title, pic);
+
+						this.el = scene;
+						slide_container_6.addChild(scene);
+						scene.init();
+
+						var deferred = $.Deferred();
+
+						setTimeout(function() {
+							deferred.resolve();
+						}, SLIDE_ANIMATION_TIME);
+
+	  					return deferred;
+					},
+
+					destroy: function() {
+						this.el.destroy();
+					}
+
+				},
+
+				scene_5: {
+
+					el: null,
+
+					init: function() {
+						var title = "ПРОБУЙТЕ",
+							info = "Благодаря имидж-гайду Вы научитесь\nсамостоятельно сочетать аксессуары\nи элементы одежды.",
+							btn_title = "ЗАКАЗАТЬ",
+							pic = "i/s6/dress.png",
+							scene = new App.managerService.slide_6.Scene(title, info, btn_title, pic);
+
+						this.el = scene;
+						slide_container_6.addChild(scene);
+						scene.init();
+
+						var deferred = $.Deferred();
+
+						setTimeout(function() {
+							deferred.resolve();
+						}, SLIDE_ANIMATION_TIME);
+
+	  					return deferred;
+					},
+
+					destroy: function() {
+						this.el.destroy();
+					}
+
+				},
+
+				scene_6: {
+
+					el: null,
+
+					init: function() {
+						var title = "ЧУВСТВУЙТЕ",
+							info = "Новый имидж – шаг в новую жизнь.\nЧувствуйте перемены, наслаждайтесь собой!",
+							btn_title = "ЗАКАЗАТЬ",
+							pic = "i/s6/hair.png",
+							scene = new App.managerService.slide_6.Scene(title, info, btn_title, pic);
+
+						this.el = scene;
+						slide_container_6.addChild(scene);
+						scene.init();
+
+						var deferred = $.Deferred();
+
+						setTimeout(function() {
+							deferred.resolve();
+						}, SLIDE_ANIMATION_TIME);
+
+	  					return deferred;
+					},
+
+					destroy: function() {
+						this.el.destroy();
+					}
+
+				},
+
+				spinner: {
+
+					vars: {
+						spin1_texture: 	null,
+						spin1: 			null,
+						spin2_texture: 	null,
+						spin2: 			null,
+						pos: 			0,
+						alpha: 			0,
+						init: false
+					},
+
+					init: function() {
+						var vars = this.vars;
+
+						vars.init = true;
+						vars.spin1_texture = PIXI.Texture.fromImage("i/s6/spin1.svg");
+						vars.spin1 = new PIXI.Sprite(vars.spin1_texture);
+						vars.spin2_texture = PIXI.Texture.fromImage("i/s6/spin2.svg");
+						vars.spin2 = new PIXI.Sprite(vars.spin2_texture);
+
+						vars.spin1.anchor.set(0.5);
+						vars.spin1.position.x = renderer.width / 2 - 5;
+						vars.spin1.position.y = renderer.height / 2 + 350;
+						vars.spin1.alpha = 0;
+						vars.spin1.buttonMode = true;
+						vars.spin1.interactive = true;
+						vars.spin1.on("click", function() {
+							active_slide++;
+    						App.WheelController.init();
+						});
+
+						vars.spin2.anchor.set(0.5);
+						vars.spin2.position.x = renderer.width / 2 - 5;
+						vars.spin2.position.y = renderer.height / 2 + 345;
+						vars.spin2.alpha = 0;
+
+						slide_container_6.addChild(vars.spin1);
+						slide_container_6.addChild(vars.spin2); 
+					},
+
+					update: function() {
+						var vars = this.vars;
+
+						if(vars.init == true) {
+							vars.pos += 0.06;
+		    				vars.spin2.y += Math.sin(vars.pos);
+						}
+
+						if( vars.spin1 != null ) {
+							if( vars.spin1.alpha < 1 ) vars.spin1.alpha += 0.01;
+						}
+						
+						if( vars.spin2 != null ) {
+							if( vars.spin2.alpha < 1 ) vars.spin2.alpha += 0.01;
+						}
+
+					},
+
+					destroy: function() {
+						var vars = this.vars;
+
+						slide_container_6.removeChild(vars.spin1);
+						slide_container_6.removeChild(vars.spin2);
+					}
+
+				}
 
 			},
 
