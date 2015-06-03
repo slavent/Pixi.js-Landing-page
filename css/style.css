@@ -539,6 +539,10 @@ footer a {
 	display: block;
 }
 
+.complete .hyde-menu-item {
+	cursor: pointer;
+}
+
 .anketa {
 	display: none;
 	position: absolute;

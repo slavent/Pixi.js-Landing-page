@@ -815,9 +815,9 @@
 					stage.addChild(slide_container_3);	
 
 					if( slide_3_complete == true ) {
-						var deferred = $.Deferred();
-					
 						this.Binder.init();
+
+						var deferred = $.Deferred();
 
 						setTimeout(function() {
 							deferred.resolve();
@@ -831,11 +831,10 @@
 				Binder: {
 
 					init: function() {
-						$hyde_menu.children().on("mouseover", function() {
-							var top = $(this).offset().top - 70,
-								left = $(this).offset().left;
-
-							$hover.stop(true).delay(300).animate({ "top" : top, "left" : left });
+						$hyde_menu.addClass("complete").children().on("click", function() {
+							var prev_scene = active_scene;
+							active_scene = $(this).index() + 1;
+							App.managerService.slide_3.SceneController.moveTo(prev_scene, active_scene);							
 						});
 					}
 
@@ -845,7 +844,7 @@
 
 					init: function() {
 						App.managerService.slide_3.elems.menu["scene_1"].init().then(function() { 
-							if( slide_3_complete == false ) App.managerService.slide_3.WheelController.unlockWheel();
+							App.managerService.slide_3.WheelController.unlockWheel();
 						});
 					},
 
@@ -921,7 +920,7 @@
 					},
 
 					unlockWheel: function() {
-						$body.unbind("mousewheel").one("mousewheel", App.managerService.slide_3.WheelController.checkDirection);
+						if( slide_3_complete == false ) $body.unbind("mousewheel").one("mousewheel", App.managerService.slide_3.WheelController.checkDirection);
 					}
 
 				},
@@ -946,9 +945,10 @@
 					active_scene = 1;	
 
 					if( slide_3_complete == false ) {
-						var deferred = $.Deferred();
 						slide_3_complete = true;
 
+						var deferred = $.Deferred();
+						
 						setTimeout(function() {
 							deferred.resolve();
 						}, SLIDE_ANIMATION_TIME);
