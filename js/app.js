@@ -2136,6 +2136,7 @@
 					slide_container_6 = new PIXI.Container();
 
 					$step_pult.parent().addClass("active");
+					App.managerService.slide_6.NavController.setActive();
 					App.managerService.slide_6.SceneController.init();
 					this.spinner.init();
 
@@ -2147,6 +2148,7 @@
 
 					console.log("Slide 6 destroy");
 
+					$step_pult.parent().removeClass("active");
 					this.spinner.destroy();
 
 					slide_container_6 = null;
@@ -2210,7 +2212,8 @@
 				NavController: {
 
 					setActive: function() {
-
+						$step_pult.children().removeClass("step-pult-item-active");
+						$step_pult.children().eq(active_scene - 1).addClass("step-pult-item-active");
 					}
 
 				},
@@ -2218,49 +2221,52 @@
 				Scene: function(title, info, btn_title, pic) {
 
 					// pic
-					var pic_texture = PIXI.Texture.fromImage(pic);
-					pic = new PIXI.Sprite(pic_texture);
-					pic.anchor.set(0.5);
-					pic.position.x = renderer.width / 2 + 300;
-					pic.position.y = -renderer.height;
+					var pic_texture = PIXI.Texture.fromImage(pic.url),
+						Pic = new PIXI.Sprite(pic_texture);
+					Pic.anchor.set(0.5);
+					Pic.position.x = pic.x;
+					Pic.position.y = pic.y;
 
 					// title
 					var style = {
 							font : '110px Plumb-Black',
 						    fill : '#fa6464',
 						    align : "center",
+						    padding : 20,
 						    lineHeight : 105
-						};
-
-					title = new PIXI.Text(title, style);
-					title.x = (renderer.width - title.width) / 2;	
-					title.y = -renderer.height;
+						},
+						Title = new PIXI.Text(title.text, style);
+					Title.x = title.x;	
+					Title.y = title.y;
+					Title.anchor.x = .5;
+					Title.anchor.y = .5;
 
   					// info
   					var style = {
 						font : '16px HelveticaNeueCyr-Light',
 					    fill : '#3c3c3c',
 					    align : "center"
-					};
+					},
+						Info = new PIXI.Text(info.text, style);
+					Info.x = info.x;	
+					Info.y = info.y;
 
-					info = new PIXI.Text(info, style);
-					info.x = renderer.width + 10;	
-					info.y = ((renderer.height - info.height) / 2) + 250;
-
-					var border = new PIXI.Graphics();
-					border.lineStyle(3, 0x3c3c3c, 1);
-					border.beginFill(0x000000, 0);
-					border.drawRect( -600 , renderer.height/2 + 200 , 450 , 100);
+					var Border = new PIXI.Graphics();
+					Border.lineStyle(3, 0x3c3c3c, 1);
+					Border.beginFill(0x000000, 0);
+					Border.drawRect( 0, 0, Info.width + 40, Info.height + 40 );
+					Border.position.x = -info.x;
+					Border.position.y = info.y - 17;
 
   					// btn
-  					var btn_texture = PIXI.Texture.fromImage("i/s6/circle.svg");
-					btn = new PIXI.Sprite(btn_texture);
-					btn.anchor.set(0.5);
-					btn.position.x = renderer.width / 2 - 280;
-					btn.position.y = -renderer.height;
-					btn.buttonMode = true;
-					btn.interactive = true;
-					btn.on("click", function() {
+  					var btn_texture = PIXI.Texture.fromImage("i/s6/circle.svg"),
+						Btn = new PIXI.Sprite(btn_texture);
+					Btn.anchor.set(0.5);
+					Btn.position.x = btn_title.x;
+					Btn.position.y = btn_title.y;
+					Btn.buttonMode = true;
+					Btn.interactive = true;
+					Btn.on("click", function() {
 						App.SlideController.moveTo(active_slide, 7);
 		    			active_slide = 7;
 		    			App.NavController.setActive();
@@ -2270,77 +2276,73 @@
 						font : '24px BebasRegular',
 					    fill : '#ffffff'
 					},
-						btn_title = new PIXI.Text(btn_title, style);
+						Btn_title = new PIXI.Text(btn_title.text, style);
 					
-					btn_title.x = (renderer.width - btn_title.width) / 2 - 235;	
-					btn_title.y = -renderer.height;
-					btn_title.anchor.x = 0.5;
-					btn_title.anchor.y = 0.5;
-					btn_title.rotation = -0.3;
+					Btn_title.x = btn_title.x;	
+					Btn_title.y = btn_title.y;
+					Btn_title.anchor.set(0.5);
+					Btn_title.rotation = -0.3;
 
 
 					var scene = new PIXI.Container();
-					scene.addChild(pic);
-					scene.addChild(title);
-					scene.addChild(info);
-					scene.addChild(border);
-					scene.addChild(btn);
-					scene.addChild(btn_title);
+					scene.addChild(Pic);
+					scene.addChild(Title);
+					scene.addChild(Info);
+					scene.addChild(Border);
+					scene.addChild(Btn);
+					scene.addChild(Btn_title);
 
 
   					scene.init = function() {
   						// pic
-  						createjs.Tween.get(pic)
-  							.to({ y: renderer.height / 2 + 40 }, 3000, createjs.Ease.getPowInOut(4));
+  						createjs.Tween.get(Pic)
+  							.to({ y: pic.y_to }, 3000, createjs.Ease.getPowInOut(4));
 
   						// title 
-  						createjs.Tween.get(title)
-							.to({ y: ((renderer.height - title.height) / 2) }, 2000, createjs.Ease.getPowInOut(4));
+  						createjs.Tween.get(Title)
+							.to({ y: title.y_to }, 2000, createjs.Ease.getPowInOut(4));
 
   						// info 
-  						createjs.Tween.get(info)
+  						createjs.Tween.get(Info)
 							.wait(600)
-	  						.to({ x: (renderer.width - info.width) / 2 }, 1000, createjs.Ease.getPowInOut(4));
+	  						.to({ x: info.x_to - Info.width/2 }, 1000, createjs.Ease.getPowInOut(4));
 
-	  					createjs.Tween.get(border)
+	  					createjs.Tween.get(Border)
 							.wait(600)
-	  						.to({ x: renderer.width/2 + 380 }, 1000, createjs.Ease.getPowInOut(4));
+	  						.to({ x: info.x_to - Border.width/2}, 1000, createjs.Ease.getPowInOut(4));
 
   						// btn
-  						createjs.Tween.get(btn)
+  						createjs.Tween.get(Btn)
 							.wait(0)
-	  						.to({ y: ((renderer.height - btn_title.height) / 2) + 42 }, 1000, createjs.Ease.getPowInOut(4));
+	  						.to({ y: btn_title.y_to }, 1000, createjs.Ease.getPowInOut(4));
 
-	  					createjs.Tween.get(btn_title)
+	  					createjs.Tween.get(Btn_title)
 							.wait(200)
-	  						.to({ y: renderer.height / 2 + 30 }, 1000, createjs.Ease.getPowInOut(4));
+	  						.to({ y: btn_title.y_to }, 1000, createjs.Ease.getPowInOut(4));
   					};
 
   					scene.destroy = function() {
   						// pic
-  						createjs.Tween.get(pic)
-		  						.to({ y: -renderer.height }, 3000, createjs.Ease.getPowInOut(4));
+  						createjs.Tween.get(Pic)
+		  						.to({ y: renderer.height*2 }, 1000, createjs.Ease.getPowInOut(4));
 
 		  				// title
-		  				createjs.Tween.get(title)
-							.wait(400)
-	  						.to({ y: -renderer.height }, 1000, createjs.Ease.getPowInOut(4));
+		  				createjs.Tween.get(Title)
+	  						.to({ y: renderer.height*2 }, 1000, createjs.Ease.getPowInOut(4));
 
 	  					// info 
-	  					createjs.Tween.get(info)
-	  						.to({ x: renderer.width + 60 }, 1000, createjs.Ease.getPowInOut(4));
+	  					createjs.Tween.get(Info)
+	  						.to({ y: renderer.height*2 }, 1000, createjs.Ease.getPowInOut(4));
 
-	  					createjs.Tween.get(border)
-	  						.to({ x: -600 }, 1000, createjs.Ease.getPowInOut(4));
+	  					createjs.Tween.get(Border)
+	  						.to({ y: renderer.height*2 }, 1000, createjs.Ease.getPowInOut(4));
 
 	  					// btn 
-	  					createjs.Tween.get(btn)
-							.wait(600)
-	  						.to({ y: -renderer.height }, 1000, createjs.Ease.getPowInOut(4));
+	  					createjs.Tween.get(Btn)
+	  						.to({ y: renderer.height*2 }, 1000, createjs.Ease.getPowInOut(4));
 
-	  					createjs.Tween.get(btn_title)
-							.wait(800)
-	  						.to({ y: -renderer.height }, 1000, createjs.Ease.getPowInOut(4));
+	  					createjs.Tween.get(Btn_title)
+	  						.to({ y: renderer.height*2 }, 1000, createjs.Ease.getPowInOut(4));
   					};
 
 					return scene;
@@ -2351,10 +2353,34 @@
 					el: null,
 
 					init: function() {
-						var title = "ЗАПОЛНИТЕ\nАНКЕТУ\nНА САЙТЕ",
-							info = "Стилисты “Модного приговора” получат Ваши данные,\nопределят Ваш цветотип, тип фигуры, овал лица\nи составят подробную инструкцию преображения!",
-							btn_title = "ЗАПОЛНИТЬ",
-							pic = "i/s6/notepade.png",
+						var title = {
+								text: "ЗАПОЛНИТЕ\nАНКЕТУ\nНА САЙТЕ",
+								x: renderer.width / 2,
+								y: -renderer.height,
+								x_to: renderer.width / 2,
+								y_to: renderer.height / 2 - 50
+							}, 
+							info = {
+								text: "Стилисты “Модного приговора” получат Ваши данные,\nопределят Ваш цветотип, тип фигуры, овал лица\nи составят подробную инструкцию преображения!",
+								x: renderer.width,
+								y: renderer.height / 2 + 200,
+								x_to: renderer.width / 2,
+								y_to: renderer.height / 2 + 200
+							},
+							btn_title = {
+								text: "ЗАПОЛНИТЬ",
+								x: renderer.width / 2 - 280,
+								y: -renderer.height,
+								x_to: renderer.width / 2 - 280,
+								y_to: renderer.height / 2 - 10
+							},
+							pic = {
+								url: "i/s6/notepade.png",
+								x: renderer.width / 2 + 300,
+								y: -renderer.height,
+								x_to: renderer.width / 2 + 300,
+								y_to: renderer.height / 2
+							},
 							scene = new App.managerService.slide_6.Scene(title, info, btn_title, pic);
 
 						this.el = scene;
@@ -2381,10 +2407,34 @@
 					el: null,
 
 					init: function() {
-						var title = "ПОЛУЧИТЕ\nИМИДЖ-ГАЙД",
-							info = "Имидж-гайд придет на Ваш e-mail в формате PDF.\nВы можете его распечатать или читать с экрана\nмобильного устройства.\nВаш личный стилист в кармане!",
-							btn_title = "ПОЛУЧИТЬ",
-							pic = "i/s6/book.png",
+						var title = {
+								text: "ПОЛУЧИТЕ\nИМИДЖ-ГАЙД",
+								x: renderer.width / 2,
+								y: -renderer.height,
+								x_to: renderer.width / 2,
+								y_to: renderer.height / 2 - 50
+							}, 
+							info = {
+								text: "Имидж-гайд придет на Ваш e-mail в формате PDF.\nВы можете его распечатать или читать с экрана\nмобильного устройства.\nВаш личный стилист в кармане!",
+								x: renderer.width,
+								y: renderer.height / 2 + 130,
+								x_to: renderer.width / 2,
+								y_to: renderer.height / 2 + 130
+							},
+							btn_title = {
+								text: "ПОЛУЧИТЬ",
+								x: renderer.width / 2 + 340,
+								y: -renderer.height,
+								x_to: renderer.width / 2 + 340,
+								y_to: renderer.height / 2 - 75
+							},
+							pic = {
+								url: "i/s6/book.png",
+								x: renderer.width / 2 - 300,
+								y: -renderer.height,
+								x_to: renderer.width / 2 - 300,
+								y_to: renderer.height / 2 - 50
+							},
 							scene = new App.managerService.slide_6.Scene(title, info, btn_title, pic);
 
 						this.el = scene;
@@ -2411,10 +2461,34 @@
 					el: null,
 
 					init: function() {
-						var title = "УЗНАВАЙТЕ",
-							info = "В имидж-гайде Вы найдете описание своего\nцветотипа, типа фигуры и формы лица. Взгляните\nна себя новым взглядом и откройте секреты\nсобственной красоты!",
-							btn_title = "ЗАКАЗАТЬ",
-							pic = "i/s6/lamp.png",
+						var title = {
+								text: "УЗНАВАЙТЕ",
+								x: renderer.width / 2,
+								y: -renderer.height,
+								x_to: renderer.width / 2,
+								y_to: renderer.height / 2 - 50
+							}, 
+							info = {
+								text: "В имидж-гайде Вы найдете описание своего\nцветотипа, типа фигуры и формы лица. Взгляните\nна себя новым взглядом и откройте секреты\nсобственной красоты!",
+								x: renderer.width,
+								y: renderer.height / 2 + 120,
+								x_to: renderer.width / 2,
+								y_to: renderer.height / 2 + 120
+							},
+							btn_title = {
+								text: "ЗАКАЗАТЬ",
+								x: renderer.width / 2 - 320,
+								y: -renderer.height,
+								x_to: renderer.width / 2 - 320,
+								y_to: renderer.height / 2 + 50
+							},
+							pic = {
+								url: "i/s6/lamp.png",
+								x: renderer.width / 2 + 300,
+								y: -renderer.height,
+								x_to: renderer.width / 2 + 300,
+								y_to: renderer.height / 2 - 80
+							},
 							scene = new App.managerService.slide_6.Scene(title, info, btn_title, pic);
 
 						this.el = scene;
@@ -2441,10 +2515,34 @@
 					el: null,
 
 					init: function() {
-						var title = "МЕНЯЙТЕСЬ",
-							info = "Отправляйтесь в магазин или салон красоты -\nпрактические рекомендации помогут Вам\nс уверенностью профи создавать модные\nи яркие образы.",
-							btn_title = "ЗАКАЗАТЬ",
-							pic = "i/s6/fen.png",
+						var title = {
+								text: "МЕНЯЙТЕСЬ",
+								x: renderer.width / 2,
+								y: -renderer.height,
+								x_to: renderer.width / 2,
+								y_to: renderer.height / 2 - 50
+							}, 
+							info = {
+								text: "Отправляйтесь в магазин или салон красоты -\nпрактические рекомендации помогут Вам\nс уверенностью профи создавать модные\nи яркие образы.",
+								x: renderer.width,
+								y: renderer.height / 2 + 120,
+								x_to: renderer.width / 2,
+								y_to: renderer.height / 2 + 120
+							},
+							btn_title = {
+								text: "ЗАКАЗАТЬ",
+								x: renderer.width / 2 + 320,
+								y: -renderer.height,
+								x_to: renderer.width / 2 + 320,
+								y_to: renderer.height / 2 + 50
+							},
+							pic = {
+								url: "i/s6/fen.png",
+								x: renderer.width / 2 - 300,
+								y: -renderer.height,
+								x_to: renderer.width / 2 - 300,
+								y_to: renderer.height / 2 - 80
+							},
 							scene = new App.managerService.slide_6.Scene(title, info, btn_title, pic);
 
 						this.el = scene;
@@ -2471,10 +2569,34 @@
 					el: null,
 
 					init: function() {
-						var title = "ПРОБУЙТЕ",
-							info = "Благодаря имидж-гайду Вы научитесь\nсамостоятельно сочетать аксессуары\nи элементы одежды.",
-							btn_title = "ЗАКАЗАТЬ",
-							pic = "i/s6/dress.png",
+						var title = {
+								text: "ПРОБУЙТЕ",
+								x: renderer.width / 2,
+								y: -renderer.height,
+								x_to: renderer.width / 2,
+								y_to: renderer.height / 2 - 50
+							}, 
+							info = {
+								text: "Благодаря имидж-гайду Вы научитесь\nсамостоятельно сочетать аксессуары\nи элементы одежды.",
+								x: renderer.width,
+								y: renderer.height / 2 + 120,
+								x_to: renderer.width / 2,
+								y_to: renderer.height / 2 + 120
+							},
+							btn_title = {
+								text: "ЗАКАЗАТЬ",
+								x: renderer.width / 2 - 280,
+								y: -renderer.height,
+								x_to: renderer.width / 2 - 280,
+								y_to: renderer.height / 2 - 120
+							},
+							pic = {
+								url: "i/s6/dress.png",
+								x: renderer.width / 2 + 300,
+								y: -renderer.height,
+								x_to: renderer.width / 2 + 300,
+								y_to: renderer.height / 2 - 80
+							},
 							scene = new App.managerService.slide_6.Scene(title, info, btn_title, pic);
 
 						this.el = scene;
@@ -2501,10 +2623,34 @@
 					el: null,
 
 					init: function() {
-						var title = "ЧУВСТВУЙТЕ",
-							info = "Новый имидж – шаг в новую жизнь.\nЧувствуйте перемены, наслаждайтесь собой!",
-							btn_title = "ЗАКАЗАТЬ",
-							pic = "i/s6/hair.png",
+						var title = {
+								text: "ЧУВСТВУЙТЕ",
+								x: renderer.width / 2,
+								y: -renderer.height,
+								x_to: renderer.width / 2,
+								y_to: renderer.height / 2 - 50
+							}, 
+							info = {
+								text: "Новый имидж – шаг в новую жизнь.\nЧувствуйте перемены, наслаждайтесь собой!",
+								x: renderer.width,
+								y: renderer.height / 2 + 120,
+								x_to: renderer.width / 2,
+								y_to: renderer.height / 2 + 120
+							},
+							btn_title = {
+								text: "ЗАКАЗАТЬ",
+								x: renderer.width / 2 + 250,
+								y: -renderer.height,
+								x_to: renderer.width / 2 + 250,
+								y_to: renderer.height / 2 - 130
+							},
+							pic = {
+								url: "i/s6/hair.png",
+								x: renderer.width / 2 - 250,
+								y: -renderer.height,
+								x_to: renderer.width / 2 - 250,
+								y_to: renderer.height / 2 - 80
+							},
 							scene = new App.managerService.slide_6.Scene(title, info, btn_title, pic);
 
 						this.el = scene;
