@@ -436,6 +436,10 @@ footer a {
 	color: #ff7d7a;
 }
 
+.complete .step-pult-item {
+	cursor: pointer;
+}
+
 .hyde-menu {
 	position: fixed;
 	top: 70px;

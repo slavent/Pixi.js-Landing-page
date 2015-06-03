@@ -37,6 +37,7 @@
 		active_scene = 1,
 
 		slide_3_complete = false,
+		slide_6_complete = false,
 
 		SLIDE_ANIMATION_TIME = 2000,
 		SCENE_ANIMATION_TIME = 1500;
@@ -86,7 +87,7 @@
 					return;
 				}
 
-				if( to == 6 ) {
+				if( to == 6 && slide_6_complete == false ) {
 					App.managerService["slide_" + from].destroy();
 					App.managerService["slide_6"].init();
 
@@ -2142,6 +2143,19 @@
 
 					stage.addChild(slide_container_6);
 
+					if( slide_6_complete == true ) {
+						this.Binder.init();
+						$step_pult.parent().addClass("complete");
+
+						var deferred = $.Deferred();
+
+						setTimeout(function() {
+							deferred.resolve();
+						}, SLIDE_ANIMATION_TIME);
+
+	  					return deferred;
+					}
+
 				},
 
 				destroy: function() {
@@ -2150,14 +2164,41 @@
 
 					$step_pult.parent().removeClass("active");
 					this.spinner.destroy();
+					App.managerService.slide_6["scene_" + active_scene].destroy();
+					
+					active_scene = 1;
 
 					slide_container_6 = null;
-					//stage.removeChild(slide_container_6);
+					
+					if( slide_6_complete == false ) {
+						slide_6_complete = true;
+
+						var deferred = $.Deferred();
+						
+						setTimeout(function() {
+							deferred.resolve();
+						}, SLIDE_ANIMATION_TIME);
+
+	  					return deferred;
+					}	
 
 				},
 
 				update: function() {
 					this.spinner.update();
+				},
+
+				Binder: {
+
+					init: function() {
+						$step_pult.children().on("click", function() {
+							App.managerService.slide_6["scene_" + active_scene].destroy();
+							App.managerService.slide_6["scene_" + ($(this).index() + 1)].init();
+							active_scene = $(this).index() + 1;
+							App.managerService.slide_6.NavController.setActive();
+						});
+					}
+
 				},
 
 				WheelController: {
@@ -2183,7 +2224,7 @@
 					},
 
 					unlockWheel: function() {
-						$body.unbind("mousewheel").one("mousewheel", App.managerService.slide_6.WheelController.checkDirection);
+						if( slide_6_complete == false ) $body.unbind("mousewheel").one("mousewheel", App.managerService.slide_6.WheelController.checkDirection);
 					}
 
 				},
