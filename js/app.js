@@ -2165,7 +2165,7 @@
 					$step_pult.parent().removeClass("active");
 					this.spinner.destroy();
 					App.managerService.slide_6["scene_" + active_scene].destroy();
-					
+
 					active_scene = 1;
 
 					slide_container_6 = null;
@@ -2192,8 +2192,7 @@
 
 					init: function() {
 						$step_pult.children().on("click", function() {
-							App.managerService.slide_6["scene_" + active_scene].destroy();
-							App.managerService.slide_6["scene_" + ($(this).index() + 1)].init();
+							App.managerService.slide_6.SceneController.moveTo(active_scene, $(this).index() + 1);
 							active_scene = $(this).index() + 1;
 							App.managerService.slide_6.NavController.setActive();
 						});
@@ -2239,6 +2238,8 @@
 
 					moveTo: function(from, to) {
 						console.log([from, to]);
+
+						if( from == to ) return;
 
 						App.managerService.slide_6.NavController.setActive();
 
