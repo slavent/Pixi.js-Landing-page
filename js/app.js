@@ -820,10 +820,10 @@
 					slide_container_3 = new PIXI.Container();	
 					this.SceneController.init();	
 					this.NavController.setActive(0, 0);
+					this.Binder.init();
 					stage.addChild(slide_container_3);	
 
 					if( slide_3_complete == true ) {
-						this.Binder.init();
 
 						var deferred = $.Deferred();
 
@@ -833,6 +833,32 @@
 
 	  					return deferred;
 					}		
+
+				},
+
+				destroy: function() {
+
+					console.log("Slide 3 destroy");
+
+					this.elems.menu.destroy();
+					stage.removeChild(slide_container_3);
+					slide_container_3 = null;
+					if( active_scene == 6 ) slide_3_complete = true;
+					active_scene = 1;	
+
+					if( slide_3_complete == false ) {
+						var deferred = $.Deferred();
+						
+						setTimeout(function() {
+							deferred.resolve();
+						}, SLIDE_ANIMATION_TIME);
+
+	  					return deferred;
+					}	
+
+				},
+
+				update: function() {
 
 				},
 
@@ -940,33 +966,6 @@
 							$hyde_menu.children().removeClass("active").eq(active_scene - 1).addClass("active");
 						});
 					}
-
-				},
-
-				destroy: function() {
-
-					console.log("Slide 3 destroy");
-
-					this.elems.menu.destroy();
-					stage.removeChild(slide_container_3);
-					slide_container_3 = null;
-					active_scene = 1;	
-
-					if( slide_3_complete == false ) {
-						slide_3_complete = true;
-
-						var deferred = $.Deferred();
-						
-						setTimeout(function() {
-							deferred.resolve();
-						}, SLIDE_ANIMATION_TIME);
-
-	  					return deferred;
-					}	
-
-				},
-
-				update: function() {
 
 				},
 
@@ -2137,14 +2136,15 @@
 					slide_container_6 = new PIXI.Container();
 
 					$step_pult.parent().addClass("active");
-					App.managerService.slide_6.NavController.setActive();
-					App.managerService.slide_6.SceneController.init();
+					this.NavController.setActive();
+					this.SceneController.init();
 					this.spinner.init();
+					this.Binder.init();
 
 					stage.addChild(slide_container_6);
 
 					if( slide_6_complete == true ) {
-						this.Binder.init();
+						
 						$step_pult.parent().addClass("complete");
 
 						var deferred = $.Deferred();
@@ -2165,14 +2165,12 @@
 					$step_pult.parent().removeClass("active");
 					this.spinner.destroy();
 					App.managerService.slide_6["scene_" + active_scene].destroy();
-
+					if( active_scene == 6 ) slide_6_complete = true;
 					active_scene = 1;
 
 					slide_container_6 = null;
 					
 					if( slide_6_complete == false ) {
-						slide_6_complete = true;
-
 						var deferred = $.Deferred();
 						
 						setTimeout(function() {
