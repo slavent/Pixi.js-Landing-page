@@ -21,7 +21,7 @@
 
 		w_width = $(window).width(),
 		w_height = $(window).height(),
-		renderer = new PIXI.CanvasRenderer(w_width, w_height, { transparent: true }),
+		renderer = new PIXI.autoDetectRenderer(w_width, w_height, { transparent: true }),
 		stage = new PIXI.Container(),
 
 		slide_container_1 = null,
@@ -137,6 +137,21 @@
 		},
 
 		Binder: function() {
+
+			$(window).resize($.debounce(500, function() {
+				console.log("resize");
+
+				w_width = $(window).width();
+				w_height = $(window).height();
+				renderer.resize(w_width, w_height);
+
+				for(var i = 0; i < stage.children.length; i++) {
+					stage.removeChild(stage.children[i]);
+				}
+				App.managerService["slide_" + active_slide].init().then(function() { 
+					App.WheelController.unlockWheel();
+				});
+			}));
 
 			$menu_icon.on("click", function() {
     			$menu_popup.fadeIn();
