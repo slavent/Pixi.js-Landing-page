@@ -437,8 +437,7 @@
 							vars.spin1.buttonMode = true;
 							vars.spin1.interactive = true;
 							vars.spin1.on("click", function() {
-								active_slide++;
-	    						App.WheelController.init();
+	    						App.SlideController.moveTo(active_slide, ++active_slide);
 							});
 
 							vars.spin2.anchor.set(0.5);
@@ -865,7 +864,7 @@
 				Binder: {
 
 					init: function() {
-						$hyde_menu.addClass("complete").children().on("click", function() {
+						$hyde_menu.addClass("complete").find(".hyde-menu-item").on("click", function() {
 							var prev_scene = active_scene;
 							active_scene = $(this).index() + 1;
 							App.managerService.slide_3.SceneController.moveTo(prev_scene, active_scene);							
@@ -884,6 +883,8 @@
 
 					moveTo: function(from, to) {
 						console.log("Scene: " + [from, to]);
+
+						if( from == to ) return;
 
 						var top_pos = 0,
 							left_pos = 0;
@@ -2144,9 +2145,6 @@
 					stage.addChild(slide_container_6);
 
 					if( slide_6_complete == true ) {
-						
-						$step_pult.parent().addClass("complete");
-
 						var deferred = $.Deferred();
 
 						setTimeout(function() {
@@ -2740,8 +2738,7 @@
 						vars.spin1.buttonMode = true;
 						vars.spin1.interactive = true;
 						vars.spin1.on("click", function() {
-							active_slide++;
-    						App.WheelController.init();
+							App.SlideController.moveTo(active_slide, ++active_slide);
 						});
 
 						vars.spin2.anchor.set(0.5);
