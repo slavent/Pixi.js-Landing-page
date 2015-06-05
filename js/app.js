@@ -80,13 +80,17 @@
 		SlideController: {
 
 			init: function() {
-				App.managerService.slide_1.init().then(function() { App.WheelController.unlockWheel() });
+				App.managerService.slide_1.init().then(function() { 
+					App.WheelController.unlockWheel();
+					App.SwipeController.unlockSwipe();
+				});
 			},
 
 			moveTo: function(from, to) {
 				console.log([from, to]);
 
 				App.NavController.setActive();
+				App.SwipeController.lockSwipe();
 
 				if( to == 3 && slide_3_complete == false ) {
 					App.managerService["slide_" + from].destroy();
@@ -105,6 +109,7 @@
 				App.managerService["slide_" + from].destroy();
 				App.managerService["slide_" + to].init().then(function() { 
 					App.WheelController.unlockWheel();
+					App.SwipeController.unlockSwipe();
 				});
 			}
 
@@ -131,6 +136,31 @@
 		    unlockWheel: function() {
 				$body.unbind("mousewheel").one("mousewheel", App.WheelController.checkDirection);
 			},
+
+		},
+
+		SwipeController: {
+
+			lockSwipe: function() {
+				
+				$$("body").off("swipeUp");
+				$$("body").off("swipeDown");
+
+			},
+
+			unlockSwipe: function() {
+				
+				$$("body").on("swipeUp", function() {
+					if( active_slide < Object.keys(App.managerService).length ) App.SlideController.moveTo(active_slide, ++active_slide);
+					else App.SwipeController.unlockSwipe();
+				});
+
+				$$("body").on("swipeDown", function() {
+					if( active_slide > 1 ) App.SlideController.moveTo(active_slide, --active_slide);
+					else App.SwipeController.unlockSwipe();
+				});
+
+			}
 
 		},
 
@@ -901,11 +931,14 @@
 					init: function() {
 						App.managerService.slide_3.elems.menu["scene_1"].init().then(function() { 
 							App.managerService.slide_3.WheelController.unlockWheel();
+							App.managerService.slide_3.SwipeController.unlockSwipe();
 						});
 					},
 
 					moveTo: function(from, to) {
 						console.log("Scene: " + [from, to]);
+
+						App.managerService.slide_3.SwipeController.lockSwipe();
 
 						if( from == to ) return;
 
@@ -955,6 +988,7 @@
 						App.managerService.slide_3.elems.menu["scene_" + from].destroy();
 						App.managerService.slide_3.elems.menu["scene_" + to].init().then(function() { 
 							App.managerService.slide_3.WheelController.unlockWheel();
+							App.managerService.slide_3.SwipeController.unlockSwipe();
 						});
 
 					}
@@ -979,6 +1013,31 @@
 
 					unlockWheel: function() {
 						if( slide_3_complete == false ) $body.unbind("mousewheel").one("mousewheel", App.managerService.slide_3.WheelController.checkDirection);
+					}
+
+				},
+
+				SwipeController: {
+
+					lockSwipe: function() {
+						
+						$$("body").off("swipeUp");
+						$$("body").off("swipeDown");
+
+					},
+
+					unlockSwipe: function() {
+						
+						$$("body").on("swipeUp", function() {
+							if( active_scene < 6 ) App.managerService.slide_3.SceneController.moveTo(active_scene, ++active_scene);
+							else App.SlideController.moveTo(active_slide, ++active_slide);
+						});
+
+						$$("body").on("swipeDown", function() {
+							if( active_scene > 1 ) App.managerService.slide_3.SceneController.moveTo(active_scene, --active_scene);
+							else App.SlideController.moveTo(active_slide, --active_slide);
+						});
+
 					}
 
 				},
@@ -2204,6 +2263,33 @@
 
 				},
 
+				SceneController: {
+
+					init: function() {
+						App.managerService.slide_6["scene_" + active_scene].init().then(function() { 
+							App.managerService.slide_6.WheelController.unlockWheel();
+							App.managerService.slide_6.SwipeController.unlockSwipe();
+						});
+					},
+
+					moveTo: function(from, to) {
+						console.log([from, to]);
+
+						App.managerService.slide_6.SwipeController.lockSwipe();
+
+						if( from == to ) return;
+
+						App.managerService.slide_6.NavController.setActive();
+
+						App.managerService.slide_6["scene_" + from].destroy();
+						App.managerService.slide_6["scene_" + to].init().then(function() { 
+							App.managerService.slide_6.WheelController.unlockWheel();
+							App.managerService.slide_6.SwipeController.unlockSwipe();
+						});
+					}
+
+				},
+
 				WheelController: {
 
 					checkDirection: function(event) {
@@ -2232,25 +2318,33 @@
 
 				},
 
-				SceneController: {
+				SwipeController: {
 
-					init: function() {
-						App.managerService.slide_6["scene_" + active_scene].init().then(function() { 
-							App.managerService.slide_6.WheelController.unlockWheel();
-						});
+					lockSwipe: function() {
+						
+						$$("body").off("swipeUp");
+						$$("body").off("swipeDown");
+
 					},
 
-					moveTo: function(from, to) {
-						console.log([from, to]);
-
-						if( from == to ) return;
-
-						App.managerService.slide_6.NavController.setActive();
-
-						App.managerService.slide_6["scene_" + from].destroy();
-						App.managerService.slide_6["scene_" + to].init().then(function() { 
-							App.managerService.slide_6.WheelController.unlockWheel();
+					unlockSwipe: function() {
+						
+						$$("body").on("swipeUp", function() {
+							if( active_scene < 6 ) App.managerService.slide_6.SceneController.moveTo(active_scene, ++active_scene);
+							else {
+								App.managerService.slide_6["scene_" + active_scene].destroy();
+								App.SlideController.moveTo(active_slide, ++active_slide);
+							}
 						});
+
+						$$("body").on("swipeDown", function() {
+							if( active_scene > 1 ) App.managerService.slide_6.SceneController.moveTo(active_scene, --active_scene);
+							else {
+								App.managerService.slide_6["scene_" + active_scene].destroy();
+								App.SlideController.moveTo(active_slide, --active_slide);
+							}
+						});
+
 					}
 
 				},
