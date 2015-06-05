@@ -39,7 +39,15 @@
 		slide_3_complete = false,
 		slide_6_complete = false,
 
-		SLIDE_ANIMATION_TIME = 2000,
+		SLIDE_ANIMATION_TIME_1 = 500,
+		SLIDE_ANIMATION_TIME_2 = 2000,
+		SLIDE_ANIMATION_TIME_3 = 2000,
+		SLIDE_ANIMATION_TIME_4 = 2000,
+		SLIDE_ANIMATION_TIME_5 = 2000,
+		SLIDE_ANIMATION_TIME_6 = 2000,
+		SLIDE_ANIMATION_TIME_7 = 2000,
+		SLIDE_ANIMATION_TIME_8 = 2000,
+
 		SCENE_ANIMATION_TIME = 1500;
     // END: Variables
 
@@ -142,15 +150,15 @@
 				console.log("resize");
 
 				w_width = $(window).width();
-				w_height = $(window).height();
-				renderer.resize(w_width, w_height);
+                w_height = $(window).height();
+                renderer.resize(w_width, w_height);
+                for(var i = 0; i < stage.children.length; i++) {
+                        stage.removeChild(stage.children[i]);
+                }
+                App.managerService["slide_" + active_slide].init().then(function() { 
+                        App.WheelController.unlockWheel();
+                });
 
-				for(var i = 0; i < stage.children.length; i++) {
-					stage.removeChild(stage.children[i]);
-				}
-				App.managerService["slide_" + active_slide].init().then(function() { 
-					App.WheelController.unlockWheel();
-				});
 			}));
 
 			$menu_icon.on("click", function() {
@@ -233,7 +241,7 @@
 
   					setTimeout(function() {
 						deferred.resolve();
-					}, SLIDE_ANIMATION_TIME);
+					}, SLIDE_ANIMATION_TIME_1);
 
   					return deferred;
 
@@ -497,7 +505,7 @@
 
 					setTimeout(function() {
 						deferred.resolve();
-					}, SLIDE_ANIMATION_TIME);
+					}, SLIDE_ANIMATION_TIME_2);
 
 					return deferred;
 
@@ -843,7 +851,7 @@
 
 						setTimeout(function() {
 							deferred.resolve();
-						}, SLIDE_ANIMATION_TIME);
+						}, SLIDE_ANIMATION_TIME_3);
 
 	  					return deferred;
 					}		
@@ -865,7 +873,7 @@
 						
 						setTimeout(function() {
 							deferred.resolve();
-						}, SLIDE_ANIMATION_TIME);
+						}, SLIDE_ANIMATION_TIME_3);
 
 	  					return deferred;
 					}	
@@ -1318,7 +1326,7 @@
 
 					setTimeout(function() {
 						deferred.resolve();
-					}, SLIDE_ANIMATION_TIME);
+					}, SLIDE_ANIMATION_TIME_4);
 
 					return deferred;
 
@@ -1532,7 +1540,6 @@
 							slide_container_4.addChild(slides);
 
 							createjs.Tween.get(slides)
-								.wait(300)
 								.to({ alpha: 1, y: renderer.height - 250 }, 1000, createjs.Ease.getPowInOut(4))
 								.call(function() {
 									for(var i = 0; i < slides.children.length; i++) {
@@ -1657,7 +1664,7 @@
 
 					setTimeout(function() {
 						deferred.resolve();
-					}, SLIDE_ANIMATION_TIME);
+					}, SLIDE_ANIMATION_TIME_5);
 
 					return deferred;
 
@@ -1696,8 +1703,9 @@
 						element: null,
 
 						anim_params: {
-							speed: 500,
-							init_wait: 1400,
+							speed: 2000,
+							init_wait: 500,
+							destroy_wait: 0
 						},
 
 						init: function() {
@@ -1717,13 +1725,14 @@
 
 							createjs.Tween.get(this.element)
 								.wait(this.anim_params.init_wait)
-  								.to({ y: ((renderer.height - this.element.height) / 2) - 220 }, this.anim_params.speed, createjs.Ease.quadOut());
+  								.to({ y: ((renderer.height - this.element.height) / 2) - 220 }, this.anim_params.speed, createjs.Ease.getPowInOut(4));
 
 						},
 
 						destroy: function() {
 							createjs.Tween.get(this.element)
-  								.to({ y: -renderer.height }, this.anim_params.speed, createjs.Ease.quadOut());
+								.wait(this.anim_params.destroy_wait)
+  								.to({ y: -renderer.height }, this.anim_params.speed, createjs.Ease.getPowInOut(4));
 						}
 
 					},
@@ -1733,9 +1742,9 @@
 						element: null,
 
 						anim_params: {
-							speed: 500,
-							init_wait: 1500,
-							destroy_wait: 600
+							speed: 2000,
+							init_wait: 500,
+							destroy_wait: 0
 						},
 
 						init: function() {
@@ -1753,14 +1762,14 @@
 
 							createjs.Tween.get(this.element)
 								.wait(this.anim_params.init_wait)
-  								.to({ y: ((renderer.height - this.element.height) / 2) - 230 }, this.anim_params.speed, createjs.Ease.quadOut());	
+  								.to({ y: ((renderer.height - this.element.height) / 2) - 230 }, this.anim_params.speed, createjs.Ease.getPowInOut(4));	
 
 						},
 
 						destroy: function() {
 							createjs.Tween.get(this.element)
 								.wait(this.anim_params.destroy_wait)
-  								.to({ y: -renderer.height }, this.anim_params.speed, createjs.Ease.quadOut());	
+  								.to({ y: -renderer.height }, this.anim_params.speed, createjs.Ease.getPowInOut(4));	
 						}
 
 					},
@@ -1770,9 +1779,9 @@
 						element: null,
 
 						anim_params: {
-							speed: 500,
-							init_wait: 200,
-							destroy_wait: 1400
+							speed: 2000,
+							init_wait: 500,
+							destroy_wait: 0
 						},
 
 						init: function() {
@@ -1790,14 +1799,14 @@
 
 							createjs.Tween.get(this.element)
 								.wait(this.anim_params.init_wait)
-  								.to({ y: ((renderer.height - this.element.height) / 2) + 220 }, this.anim_params.speed, createjs.Ease.quadOut());	
+  								.to({ y: ((renderer.height - this.element.height) / 2) + 220 }, this.anim_params.speed, createjs.Ease.getPowInOut(4));	
 
 						},
 
 						destroy: function() {
 							createjs.Tween.get(this.element)
 								.wait(this.anim_params.destroy_wait)
-  								.to({ y: -renderer.height }, this.anim_params.speed, createjs.Ease.quadOut());	
+  								.to({ y: -renderer.height }, this.anim_params.speed, createjs.Ease.getPowInOut(4));	
 						}
 
 					},
@@ -1807,9 +1816,9 @@
 						element: null,
 
 						anim_params: {
-							speed: 500,
-							init_wait: 0,
-							destroy_wait: 1600
+							speed: 2000,
+							init_wait: 500,
+							destroy_wait: 0
 						},
 
 						init: function() {
@@ -1827,14 +1836,14 @@
 
 							createjs.Tween.get(this.element)
 								.wait(this.anim_params.init_wait)
-  								.to({ y: ((renderer.height - this.element.height) / 2) + 247 }, this.anim_params.speed, createjs.Ease.quadOut());	
+  								.to({ y: ((renderer.height - this.element.height) / 2) + 247 }, this.anim_params.speed, createjs.Ease.getPowInOut(4));	
 
 						},
 
 						destroy: function() {
 							createjs.Tween.get(this.element)
 								.wait(this.anim_params.destroy_wait)
-  								.to({ y: -renderer.height }, this.anim_params.speed, createjs.Ease.quadOut());	
+  								.to({ y: -renderer.height }, this.anim_params.speed, createjs.Ease.getPowInOut(4));	
 						}
 
 					},
@@ -1844,9 +1853,9 @@
 						element: null,
 
 						anim_params: {
-							speed: 500,
-							init_wait: 1200,
-							destroy_wait: 200
+							speed: 2000,
+							init_wait: 500,
+							destroy_wait: 0
 						},
 
 						init: function() {
@@ -1865,14 +1874,14 @@
 
 							createjs.Tween.get(this.element)
 								.wait(this.anim_params.init_wait)
-  								.to({ y: ((renderer.height - this.element.height) / 2) - 225 }, this.anim_params.speed, createjs.Ease.quadOut());
+  								.to({ y: ((renderer.height - this.element.height) / 2) - 225 }, this.anim_params.speed, createjs.Ease.getPowInOut(4));
 
 						},
 
 						destroy: function() {
 							createjs.Tween.get(this.element)
 								.wait(this.anim_params.destroy_wait)
-  								.to({ y: -renderer.height }, this.anim_params.speed, createjs.Ease.quadOut());	
+  								.to({ y: -renderer.height }, this.anim_params.speed, createjs.Ease.getPowInOut(4));	
 						}
 
 					},
@@ -1882,9 +1891,9 @@
 						element: null,
 
 						anim_params: {
-							speed: 500,
-							init_wait: 1000,
-							destroy_wait: 400
+							speed: 2000,
+							init_wait: 500,
+							destroy_wait: 0
 						},
 
 						init: function() {
@@ -1903,14 +1912,14 @@
 
 							createjs.Tween.get(this.element)
 								.wait(this.anim_params.init_wait)
-  								.to({ y: ((renderer.height - this.element.height) / 2) - 150 }, this.anim_params.speed, createjs.Ease.quadOut());
+  								.to({ y: ((renderer.height - this.element.height) / 2) - 150 }, this.anim_params.speed, createjs.Ease.getPowInOut(4));
 
 						},
 
 						destroy: function() {
 							createjs.Tween.get(this.element)
 								.wait(this.anim_params.destroy_wait)
-  								.to({ y: -renderer.height }, this.anim_params.speed, createjs.Ease.quadOut());
+  								.to({ y: -renderer.height }, this.anim_params.speed, createjs.Ease.getPowInOut(4));
 						}
 
 					},
@@ -1920,9 +1929,9 @@
 						element: null,
 
 						anim_params: {
-							speed: 500,
-							init_wait: 600,
-							destroy_wait: 1000
+							speed: 2000,
+							init_wait: 500,
+							destroy_wait: 0
 						},
 
 						init: function() {
@@ -1941,14 +1950,14 @@
 
 							createjs.Tween.get(this.element)
 								.wait(this.anim_params.init_wait)
-  								.to({ y: ((renderer.height - this.element.height) / 2) + 130 },this.anim_params.speed, createjs.Ease.quadOut());
+  								.to({ y: ((renderer.height - this.element.height) / 2) + 130 },this.anim_params.speed, createjs.Ease.getPowInOut(4));
 
 						},
 
 						destroy: function() {
 							createjs.Tween.get(this.element)
 								.wait(this.anim_params.destroy_wait)
-  								.to({ y: -renderer.height },this.anim_params.speed, createjs.Ease.quadOut());
+  								.to({ y: -renderer.height },this.anim_params.speed, createjs.Ease.getPowInOut(4));
 						}
 
 					},
@@ -1958,9 +1967,9 @@
 						element: null,
 
 						anim_params: {
-							speed: 500,
-							init_wait: 400,
-							destroy_wait: 1200
+							speed: 2000,
+							init_wait: 500,
+							destroy_wait: 0
 						},
 
 						init: function() {
@@ -1979,14 +1988,14 @@
 
 							createjs.Tween.get(this.element)
 								.wait(this.anim_params.init_wait)
-  								.to({ y: ((renderer.height - this.element.height) / 2) + 180 }, this.anim_params.speed, createjs.Ease.quadOut());
+  								.to({ y: ((renderer.height - this.element.height) / 2) + 180 }, this.anim_params.speed, createjs.Ease.getPowInOut(4));
 
 						},
 
 						destroy: function() {
 							createjs.Tween.get(this.element)
 								.wait(this.anim_params.destroy_wait)
-  								.to({ y: -renderer.height }, this.anim_params.speed, createjs.Ease.quadOut());
+  								.to({ y: -renderer.height }, this.anim_params.speed, createjs.Ease.getPowInOut(4));
 						}
 
 					},
@@ -1996,9 +2005,9 @@
 						element: null,
 
 						anim_params: {
-							speed: 500,
-							init_wait: 800,
-							destroy_wait: 800
+							speed: 2000,
+							init_wait: 500,
+							destroy_wait: 0
 						},
 
 						init: function() {
@@ -2017,14 +2026,14 @@
 
 							createjs.Tween.get(this.element)
 								.wait(this.anim_params.init_wait)
-  								.to({ y: ((renderer.height - this.element.height) / 2) - 180 }, this.anim_params.speed, createjs.Ease.quadOut());
+  								.to({ y: ((renderer.height - this.element.height) / 2) - 180 }, this.anim_params.speed, createjs.Ease.getPowInOut(4));
 
 						},
 
 						destroy: function() {
 							createjs.Tween.get(this.element)
 								.wait(this.anim_params.destroy_wait)
-  								.to({ y: -renderer.height }, this.anim_params.speed, createjs.Ease.quadOut());
+  								.to({ y: -renderer.height }, this.anim_params.speed, createjs.Ease.getPowInOut(4));
 						}
 
 					},
@@ -2034,9 +2043,9 @@
 						element: null,
 
 						anim_params: {
-							speed: 500,
-							init_wait: 800,
-							destroy_wait: 800
+							speed: 2000,
+							init_wait: 500,
+							destroy_wait: 0
 						},
 
 						init: function() {
@@ -2055,14 +2064,14 @@
 
 							createjs.Tween.get(this.element)
 								.wait(this.anim_params.init_wait)
-  								.to({ y: ((renderer.height - this.element.height) / 2) - 180 }, this.anim_params.speed, createjs.Ease.quadOut());
+  								.to({ y: ((renderer.height - this.element.height) / 2) - 180 }, this.anim_params.speed, createjs.Ease.getPowInOut(4));
 
 						},
 
 						destroy: function() {
 							createjs.Tween.get(this.element)
 								.wait(this.anim_params.destroy_wait)
-  								.to({ y: -renderer.height }, this.anim_params.speed, createjs.Ease.quadOut());
+  								.to({ y: -renderer.height }, this.anim_params.speed, createjs.Ease.getPowInOut(4));
 						}
 
 					},
@@ -2072,8 +2081,8 @@
 						element: null,
 
 						anim_params: {
-							speed: 1000,
-							destroy_wait: 1000
+							speed: 2000,
+							destroy_wait: 0
 						},
 
 						init: function() {
@@ -2084,7 +2093,7 @@
 
 							this.element.anchor.set(0.5);
 							this.element.position.x = renderer.width / 2;
-							this.element.position.y = renderer.height*2;
+							this.element.position.y = renderer.height * 2;
 
 							slide_container_5.addChild(this.element);
 
@@ -2096,7 +2105,7 @@
 						destroy: function() {
 							createjs.Tween.get(this.element)
 								.wait(this.anim_params.destroy_wait)
-  								.to({ y: renderer.height*2 }, this.anim_params.speed, createjs.Ease.getPowInOut(4));
+  								.to({ y: renderer.height * 2 }, this.anim_params.speed, createjs.Ease.getPowInOut(4));
 						}
 
 					},
@@ -2105,7 +2114,9 @@
 
 						init: function() {
 
-							$order_btn.addClass("active");
+							setTimeout(function() {
+								$order_btn.addClass("active");
+							}, 1000);
 
 						},
 
@@ -2146,7 +2157,7 @@
 
 						setTimeout(function() {
 							deferred.resolve();
-						}, SLIDE_ANIMATION_TIME);
+						}, SLIDE_ANIMATION_TIME_6);
 
 	  					return deferred;
 					}
@@ -2170,7 +2181,7 @@
 						
 						setTimeout(function() {
 							deferred.resolve();
-						}, SLIDE_ANIMATION_TIME);
+						}, SLIDE_ANIMATION_TIME_6);
 
 	  					return deferred;
 					}	
@@ -2426,7 +2437,7 @@
 
 						setTimeout(function() {
 							deferred.resolve();
-						}, SLIDE_ANIMATION_TIME);
+						}, SLIDE_ANIMATION_TIME_6);
 
 	  					return deferred;
 					},
@@ -2480,7 +2491,7 @@
 
 						setTimeout(function() {
 							deferred.resolve();
-						}, SLIDE_ANIMATION_TIME);
+						}, SLIDE_ANIMATION_TIME_6);
 
 	  					return deferred;
 					},
@@ -2534,7 +2545,7 @@
 
 						setTimeout(function() {
 							deferred.resolve();
-						}, SLIDE_ANIMATION_TIME);
+						}, SLIDE_ANIMATION_TIME_6);
 
 	  					return deferred;
 					},
@@ -2588,7 +2599,7 @@
 
 						setTimeout(function() {
 							deferred.resolve();
-						}, SLIDE_ANIMATION_TIME);
+						}, SLIDE_ANIMATION_TIME_6);
 
 	  					return deferred;
 					},
@@ -2642,7 +2653,7 @@
 
 						setTimeout(function() {
 							deferred.resolve();
-						}, SLIDE_ANIMATION_TIME);
+						}, SLIDE_ANIMATION_TIME_6);
 
 	  					return deferred;
 					},
@@ -2696,7 +2707,7 @@
 
 						setTimeout(function() {
 							deferred.resolve();
-						}, SLIDE_ANIMATION_TIME);
+						}, SLIDE_ANIMATION_TIME_6);
 
 	  					return deferred;
 					},
@@ -2803,7 +2814,7 @@
 
 					setTimeout(function() {
 						deferred.resolve();
-					}, SLIDE_ANIMATION_TIME);
+					}, SLIDE_ANIMATION_TIME_7);
 
 					return deferred;
 
@@ -2850,7 +2861,7 @@
 
 					setTimeout(function() {
 						deferred.resolve();
-					}, SLIDE_ANIMATION_TIME);
+					}, SLIDE_ANIMATION_TIME_8);
 
 					return deferred;
 

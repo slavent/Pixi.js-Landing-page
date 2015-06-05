@@ -322,7 +322,7 @@ footer {
 	left: 0;
 	right: 0;
 	bottom: -120px;
-	z-index: 50;
+	z-index: 100;
 	background: rgba(241, 100, 99, 0.9);
 	height: 120px;
 	padding: 30px 0 0;
@@ -708,12 +708,12 @@ footer a {
 	background: #fff;
 	position: fixed;
 	left: 50%;
-	bottom: -100px;
+	bottom: -500px;
 	z-index: 70;
 	margin: 0 0 0 -75px;
 	outline: none;
-	transition: all .3s;
-	-webkit-transition: all .3s;
+	transition: all 1s;
+	-webkit-transition: all 1s;
 }
 
 .order-btn.active {
