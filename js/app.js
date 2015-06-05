@@ -3037,12 +3037,12 @@
 							slide_ind = slides.children.length - 1;
 
 							// Prev btn
-							var prev_btn_texture = PIXI.Texture.fromImage("i/s8/prev.svg");
+							var prev_btn_texture = PIXI.Texture.fromImage("i/s8/prev.png");
 
 							prev_btn = new PIXI.Sprite(prev_btn_texture);
 							prev_btn.width = 45;
 							prev_btn.height = 45;
-							prev_btn.x = renderer.width / 2 - 500;
+							prev_btn.x = 150;
 							prev_btn.y = renderer.height / 2;
 							prev_btn.buttonMode = true;
 							prev_btn.interactive = true;
@@ -3063,12 +3063,12 @@
 							slide_container_8.addChild(prev_btn);
 
 							// Next btn
-							var next_btn_texture = PIXI.Texture.fromImage("i/s8/next.svg");
+							var next_btn_texture = PIXI.Texture.fromImage("i/s8/next.png");
 
 							next_btn = new PIXI.Sprite(next_btn_texture);
 							next_btn.width = 45;
 							next_btn.height = 45;
-							next_btn.x = renderer.width / 2 + 500;
+							next_btn.x = renderer.width - 150;
 							next_btn.y = renderer.height / 2;
 							next_btn.buttonMode = true;
 							next_btn.interactive = true;
