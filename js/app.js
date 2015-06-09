@@ -39,6 +39,8 @@
 		slide_3_complete = false,
 		slide_6_complete = false,
 
+		mobile_version = false,
+
 		SLIDE_ANIMATION_TIME_1 = 500,
 		SLIDE_ANIMATION_TIME_2 = 2000,
 		SLIDE_ANIMATION_TIME_3 = 2000,
@@ -71,6 +73,8 @@
 		        requestAnimationFrame(animate);
 
 		    }	
+
+		    if( $(window).width() <= 1000 ) mobile_version = true;
 
 		  	App.Binder();
 		  	App.SlideController.init();
@@ -238,10 +242,10 @@
 
 			slide_1: {
 
+				update_flag: false,
+
 				init: function() {
 					console.log("Slide 1 init");
-
-					var deferred = $.Deferred();
 
 					$preloader.hide();
 
@@ -262,16 +266,18 @@
   							$menu_icon.show();
   						});
 
+  					var deferred = $.Deferred(),
+  						that = this;
+
   					setTimeout(function() {
 						deferred.resolve();
+						that.update_flag = true;
 					}, SLIDE_ANIMATION_TIME_1);
 
   					return deferred;
-
 				},
 
 				destroy: function() {
-
 					console.log("Slide 1 destroy");
 
 					createjs.Tween.get(slide_container_1)
@@ -286,13 +292,16 @@
 		  					$menu_popup.hide();
   						});
 
+  					this.update_flag = false;
 				},
 
 				update: function() {
-					this.elems.slider.update();
-			    	this.elems.spinner.update();
-			    	this.elems.logo.update();
-			    	this.elems.title.update();
+					if( this.update_flag == true ) {
+						this.elems.slider.update();
+				    	this.elems.spinner.update();
+				    	this.elems.logo.update();
+				    	this.elems.title.update();
+					}
 				},
 
 				elems: {
@@ -302,21 +311,31 @@
 						el: null,
 
 						init: function() {
-							var logo_texture = PIXI.Texture.fromImage("i/s1/logo.svg"),
-								logo = new PIXI.Sprite(logo_texture);
+							var logo_texture = PIXI.Texture.fromImage("i/s1/logo_main.svg");
+							this.el = new PIXI.Sprite(logo_texture);
+							this.el.anchor.set(0.5);
+							this.el.position.x = renderer.width / 2;
+							this.el.position.y = renderer.height / 2;
+							if( mobile_version == true ) {
+								this.el.position.y = renderer.height / 2 - 50;
+								this.el.scale.x = 1;
+								this.el.scale.y = 1;
+							} else {
+								this.el.scale.x = .45;
+								this.el.scale.y = .45;
+							}
 
-							this.el = logo;
-							logo.anchor.set(0.5);
-							logo.position.x = renderer.width / 2;
-							logo.position.y = renderer.height / 2;
-
-							slide_container_1.addChild(logo);
+							slide_container_1.addChild(this.el);
 						},
 
 						update: function() {
-							// on resize 
-							this.el.position.x = renderer.width / 2;
-							this.el.position.y = renderer.height / 2;
+							if( mobile_version == true ) {
+								this.el.position.x = renderer.width / 2;
+								this.el.position.y = renderer.height / 2 - 50;
+							} else {
+								this.el.position.x = renderer.width / 2;
+								this.el.position.y = renderer.height / 2;
+							}
 						}
 
 					},
@@ -326,26 +345,43 @@
 						el: null,
 
 						init: function() {
-							var style = {
+							if( mobile_version == true ) {
+								var style = {
+									font : '65px HelveticaNeueCyr-Light',
+								    fill : '#fff',
+								    align : "center",
+								    padding : 50
+								};
+								
+								this.el = new PIXI.Text("ДОБРО ПОЖАЛОВАТЬ\nВ ЛАБОРАТОРИЮ СТИЛЯ\n«МОДНОГО ПРИГОВОРА»!", style);
+								this.el.x = (renderer.width - this.el.width) / 2;
+								this.el.y = ((renderer.height - this.el.height) / 2) + 310;
+							} else {
+								var style = {
 									font : '38px HelveticaNeueCyr-Light',
 								    fill : '#fff',
 								    align : "center",
 								    lineHeight : 50,
 								    padding : 50
-								},
-								title = new PIXI.Text("ДОБРО ПОЖАЛОВАТЬ В ЛАБОРАТОРИЮ\nСТИЛЯ «МОДНОГО ПРИГОВОРА»!", style);
+								};
 
-							this.el = title;
-							title.x = (renderer.width - title.width) / 2;	
-							title.y = ((renderer.height - title.height) / 2) + 180;
+								this.el = new PIXI.Text("ДОБРО ПОЖАЛОВАТЬ В ЛАБОРАТОРИЮ\nСТИЛЯ «МОДНОГО ПРИГОВОРА»!", style);
+								this.el.x = (renderer.width - this.el.width) / 2;
+								this.el.y = ((renderer.height - this.el.height) / 2) + 180;
+							}
 
-							slide_container_1.addChild(title);
+							slide_container_1.addChild(this.el);
 						},
 
 						update: function() {
-							// on resize
-							this.el.x = (renderer.width - this.el.width) / 2;	
-							this.el.y = ((renderer.height - this.el.height) / 2) + 180;
+							// on resize							
+							if( mobile_version == true ) {
+								this.el.x = (renderer.width - this.el.width) / 2;
+								this.el.y = ((renderer.height - this.el.height) / 2) + 310;
+							} else {
+								this.el.x = (renderer.width - this.el.width) / 2;
+								this.el.y = ((renderer.height - this.el.height) / 2) + 180;
+							}
 						}
 
 					},
@@ -397,11 +433,18 @@
 								dot.index = index;
 								dot.lineStyle(0);
 								dot.beginFill(color, 1);
-								dot.drawCircle(0, 20, 5);
+								if( mobile_version == true ) {
+									dot.drawCircle(0, 20, 10);
+									dot.x_pos = x_pos * 2;
+									dot.position.x = renderer.width / 2 + dot.x_pos;
+									dot.position.y = renderer.height / 2 + 420;
+								} else {
+									dot.drawCircle(0, 20, 5);
+									dot.x_pos = x_pos;
+									dot.position.x = renderer.width / 2 + dot.x_pos;
+									dot.position.y = renderer.height / 2 + 200;
+								}
 								dot.endFill();
-								dot.x_pos = x_pos;
-								dot.position.x = renderer.width / 2 + dot.x_pos;
-								dot.position.y = renderer.height / 2 + 200;
 								dot.buttonMode = true;
 								dot.interactive = true;
 								dot.on("click", function() {
@@ -487,8 +530,13 @@
 
 							// dotes
 							for(var i = 0; i < this.el.children.length; i++) {
-								this.el.children[i].position.x = renderer.width / 2 + this.el.children[i].x_pos;
-								this.el.children[i].position.y = renderer.height / 2 + 200;
+								if( mobile_version == true ) {
+									this.el.children[i].position.x = renderer.width / 2 + this.el.children[i].x_pos;
+									this.el.children[i].position.y = renderer.height / 2 + 420;
+								} else {
+									this.el.children[i].position.x = renderer.width / 2 + this.el.children[i].x_pos;
+									this.el.children[i].position.y = renderer.height / 2 + 200;
+								}
 							}
 
 						}
@@ -497,51 +545,49 @@
 
 					spinner: {
 
-						vars: {
-							spin1_texture: 	null,
-							spin2_texture: 	null,
-							spin1: 			null,
-							spin2: 			null,
-							pos: 			0,
-							alpha: 			0
-						},
+						el_1: null,
+						el_2: null,
+						step: 0,
 
 						init: function() {
-							var vars = this.vars;
+							var texture_1 = PIXI.Texture.fromImage("i/s1/spin1.svg"),
+								texture_2 = PIXI.Texture.fromImage("i/s1/spin2.svg");
 
-							vars.spin1_texture = PIXI.Texture.fromImage("i/s1/spin1.svg");
-							vars.spin1 = new PIXI.Sprite(vars.spin1_texture);
-							vars.spin2_texture = PIXI.Texture.fromImage("i/s1/spin2.svg");
-							vars.spin2 = new PIXI.Sprite(vars.spin2_texture);
-
-							vars.spin1.anchor.set(0.5);
-							vars.spin1.position.x = renderer.width / 2 - 5;
-							vars.spin1.position.y = renderer.height / 2 + 350;
-							vars.spin1.buttonMode = true;
-							vars.spin1.interactive = true;
-							vars.spin1.on("click", function() {
+							this.el_1 = new PIXI.Sprite(texture_1);
+							this.el_1.anchor.set(0.5);
+							this.el_1.buttonMode = true;
+							this.el_1.interactive = true;
+							this.el_1.on("click", function() {
 	    						App.SlideController.moveTo(active_slide, ++active_slide);
 							});
 
-							vars.spin2.anchor.set(0.5);
-							vars.spin2.position.x = renderer.width / 2 - 5;
-							vars.spin2.position.y = renderer.height / 2 + 345;
+							this.el_2 = new PIXI.Sprite(texture_2);
+							this.el_2.anchor.set(0.5);
 
-							slide_container_1.addChild(vars.spin1);
-							slide_container_1.addChild(vars.spin2); 
+							if( mobile_version == true ) {
+								this.el_1.position.x = renderer.width / 2 - 5;
+								this.el_1.position.y = renderer.height / 2 + 600;
+							} else {
+								this.el_1.position.x = renderer.width / 2 - 5;
+								this.el_1.position.y = renderer.height / 2 + 350;
+							}
+
+							this.el_1.addChild(this.el_2);
+							slide_container_1.addChild(this.el_1); 
 						},
 
 						update: function() {
-							var vars = this.vars;
+							this.step += 0.06;
 
-							vars.pos += 0.06;
-		    				vars.spin2.y += Math.sin(vars.pos);
-
-		    				// on resize
-		    				vars.spin1.position.x = renderer.width / 2 - 5;
-							vars.spin1.position.y = renderer.height / 2 + 350;
-							vars.spin2.position.x = renderer.width / 2 - 5;
-							vars.spin2.position.y = renderer.height / 2 + 345;
+		    				if( mobile_version == true ) {
+		    					this.el_1.position.x = renderer.width / 2 - 5;
+								this.el_1.position.y = renderer.height / 2 + 600;
+								this.el_2.position.y += Math.sin(this.step);
+		    				} else {
+		    					this.el_1.position.x = renderer.width / 2 - 5;
+								this.el_1.position.y = renderer.height / 2 + 350;
+								this.el_2.position.y += Math.sin(this.step);
+		    				}
 						}
 
 					}
