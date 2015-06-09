@@ -622,8 +622,7 @@
 
 					title_1: {
 
-						element: null,
-						element_blur: null,
+						el: null,
 
 						anim_params: {
 							speed: 300,
@@ -641,38 +640,33 @@
 								    padding : 50
 								};
 
-							this.element_blur = new PIXI.filters.BlurFilter();
-							this.element_blur.blurX = 150;
+							this.el = new PIXI.Text("ЛУЧШИЕ СТИЛИСТЫ РОССИИ\nПРЕДЛАГАЮТ ВАМ СОЗДАТЬ", style);
+							this.el.x = (renderer.width - this.el.width) / 2;	
+							this.el.y = -this.el.height;
 
-							this.element = new PIXI.Text("ЛУЧШИЕ СТИЛИСТЫ РОССИИ\nПРЕДЛАГАЮТ ВАМ СОЗДАТЬ", style);
-							this.element.x = (renderer.width - this.element.width) / 2;	
-							this.element.y = -this.element.height;
-							//this.element.filters = [this.element_blur];
+							slide_container_2.addChild(this.el);
 
-							slide_container_2.addChild(this.element);
-
-							createjs.Tween.get(this.element)
+							createjs.Tween.get(this.el)
 								.wait(this.anim_params.init_wait)
-  								.to({ y: (renderer.height / 2 - this.element.height / 2) - 140 }, this.anim_params.speed, createjs.Ease.quadOut());
+  								.to({ y: (renderer.height / 2 - this.el.height / 2) - 140 }, this.anim_params.speed, createjs.Ease.quadOut());
 
 						},
 
 						update: function() {
-							//if( this.element_blur.blur > 0 ) this.element_blur.blur -= 1.4;
-							//if( this.element_blur.blur == 0 ) this.element.filters = null;
+							this.el.x = (renderer.width - this.el.width) / 2;
  						},
 
  						destroy: function() {
- 							createjs.Tween.get(this.element)
+ 							createjs.Tween.get(this.el)
 								.wait(this.anim_params.destroy_wait)
-  								.to({ y: -this.element.height }, this.anim_params.speed, createjs.Ease.quadOut());
+  								.to({ y: -this.el.height }, this.anim_params.speed, createjs.Ease.quadOut());
  						}
 
 					},
 
 					title_2: {
 
-						element: null,
+						el: null,
 
 						anim_params: {
 							speed: 500,
@@ -689,34 +683,34 @@
 								    padding : 50
 								};
 								
-							this.element = new PIXI.Text("ПЕРСОНАЛЬНЫЙ", style);
-							this.element.x = (renderer.width - this.element.width) / 2;	
-							this.element.y = -this.element.height;
-							this.element.resolution = 2;
+							this.el = new PIXI.Text("ПЕРСОНАЛЬНЫЙ", style);
+							this.el.x = (renderer.width - this.el.width) / 2;	
+							this.el.y = -this.el.height;
+							this.el.resolution = 2;
 
-							slide_container_2.addChild(this.element);
+							slide_container_2.addChild(this.el);
 
-							createjs.Tween.get(this.element)
+							createjs.Tween.get(this.el)
 								.wait(this.anim_params.init_wait)
-  								.to({ y: ((renderer.height - this.element.height) / 2) - 60 }, this.anim_params.speed, createjs.Ease.linear());
+  								.to({ y: ((renderer.height - this.el.height) / 2) - 60 }, this.anim_params.speed, createjs.Ease.linear());
 
 						},
 
 						update: function() {
-							
+							this.el.x = (renderer.width - this.el.width) / 2;
 						},
 
 						destroy: function() {
-							createjs.Tween.get(this.element)
+							createjs.Tween.get(this.el)
 								.wait(this.anim_params.destroy_wait)
-  								.to({ y: -this.element.height }, this.anim_params.speed, createjs.Ease.linear());
+  								.to({ y: -this.el.height }, this.anim_params.speed, createjs.Ease.linear());
 						}
 
 					},
 
 					title_3: {
 
-						element: null,
+						el: null,
 
 						anim_params: {
 							speed: 500,
@@ -734,34 +728,33 @@
 								    padding : 90
 								};
 
-							this.element = new PIXI.Text("ИМИДЖ-ГАЙД", style);
-							this.element.x = (renderer.width - this.element.width) / 2;	
-							this.element.y = -this.element.height;
+							this.el = new PIXI.Text("ИМИДЖ-ГАЙД", style);
+							this.el.x = (renderer.width - this.el.width) / 2;	
+							this.el.y = -this.el.height;
 
-							slide_container_2.addChild(this.element);
+							slide_container_2.addChild(this.el);
 
-							createjs.Tween.get(this.element)
+							createjs.Tween.get(this.el)
 								.wait(this.anim_params.init_wait)
-  								.to({ y: ((renderer.height - this.element.height) / 2) + 80 }, this.anim_params.speed, createjs.Ease.linear())
-  								.to({ y: ((renderer.height - this.element.height) / 2) + 20 }, this.anim_params.speed2, createjs.Ease.linear());
+  								.to({ y: ((renderer.height - this.el.height) / 2) + 80 }, this.anim_params.speed, createjs.Ease.linear())
+  								.to({ y: ((renderer.height - this.el.height) / 2) + 20 }, this.anim_params.speed2, createjs.Ease.linear());
 						},
 
 						update: function() {
-							
+							this.el.x = (renderer.width - this.el.width) / 2;	
 						},
 
 						destroy: function() {
-							createjs.Tween.get(this.element)
+							createjs.Tween.get(this.el)
 								.wait(this.anim_params.destroy_wait)
-  								.to({ y: -this.element.height }, this.anim_params.speed, createjs.Ease.linear());
+  								.to({ y: -this.el.height }, this.anim_params.speed, createjs.Ease.linear());
 						}
 
 					},
 
 					title_4: {
 
-						element: null,
-						element_blur: null,
+						el: null,
 
 						anim_params: {
 							speed: 300,
@@ -778,29 +771,24 @@
 								    padding : 50
 								};
 
-							this.element_blur = new PIXI.filters.BlurFilter();
-							this.element_blur.blurX = 150;
+							this.el = new PIXI.Text("- ПОДРОБНОЕ РУКОВОДСТВО\nПО ПРЕОБРАЖЕНИЮ", style);
+							this.el.x = (renderer.width - this.el.width) / 2;	
+							this.el.y = renderer.height;
 
-							this.element = new PIXI.Text("- ПОДРОБНОЕ РУКОВОДСТВО\nПО ПРЕОБРАЖЕНИЮ", style);
-							this.element.x = (renderer.width - this.element.width) / 2;	
-							this.element.y = renderer.height;
-							//this.element.filters = [this.element_blur];
+							slide_container_2.addChild(this.el);
 
-							slide_container_2.addChild(this.element);
-
-							createjs.Tween.get(this.element)
+							createjs.Tween.get(this.el)
 								.wait(this.anim_params.init_wait)
-  								.to({ y: (renderer.height / 2 - this.element.height / 2) + 130 }, this.anim_params.speed, createjs.Ease.quadOut());
+  								.to({ y: (renderer.height / 2 - this.el.height / 2) + 130 }, this.anim_params.speed, createjs.Ease.quadOut());
 
 						},
 
 						update: function() {
-							//if( this.element_blur.blur > 0 ) this.element_blur.blur -= 1.3;
-							//if( this.element_blur.blur == 0 ) this.element.filters = null;
+							this.el.x = (renderer.width - this.el.width) / 2;	
  						},
 
  						destroy: function() {
- 							createjs.Tween.get(this.element)
+ 							createjs.Tween.get(this.el)
 								.wait(this.anim_params.destroy_wait)
   								.to({ y: renderer.height }, this.anim_params.speed, createjs.Ease.quadOut());
  						}
@@ -809,8 +797,7 @@
 
 					info: {
 
-						element: null,
-						element_blur: null,
+						el: null,
 
 						anim_params: {
 							speed: 500,
@@ -826,24 +813,24 @@
 								};
 
 
-							this.element = new PIXI.Text("Имидж-гайд – это ваша личная книга стиля. Десятки\nкрасочных иллюстраций, детальный разбор вашего\nгардероба и практические советы по улучшению\nвашего образа – все это на страницах\nперсонального имидж-гайда. ", style);
-							this.element.x = renderer.width;	
-							this.element.y = ((renderer.height - this.element.height) / 2) + 250;
+							this.el = new PIXI.Text("Имидж-гайд – это ваша личная книга стиля. Десятки\nкрасочных иллюстраций, детальный разбор вашего\nгардероба и практические советы по улучшению\nвашего образа – все это на страницах\nперсонального имидж-гайда. ", style);
+							this.el.x = renderer.width;	
+							this.el.y = ((renderer.height - this.el.height) / 2) + 250;
 
-							slide_container_2.addChild(this.element);
+							slide_container_2.addChild(this.el);
 
-							createjs.Tween.get(this.element)
+							createjs.Tween.get(this.el)
 								.wait(this.anim_params.init_wait)
-  								.to({ x: (renderer.width - this.element.width) / 2 }, this.anim_params.speed, createjs.Ease.quadOut());
+  								.to({ x: (renderer.width - this.el.width) / 2 }, this.anim_params.speed, createjs.Ease.quadOut());
 
 						},
 
 						update: function() {
-
+							this.el.y = ((renderer.height - this.el.height) / 2) + 250;
 						},
 
 						destroy: function() {
-							createjs.Tween.get(this.element)
+							createjs.Tween.get(this.el)
   								.to({ x: renderer.width }, this.anim_params.speed, createjs.Ease.quadOut());
 						}
 
@@ -851,7 +838,7 @@
 
 					border: {
 
-						element: null,
+						el: null,
 
 						anim_params: {
 							speed: 500,
@@ -859,25 +846,25 @@
 						},
 
 						init: function() {
-							this.element = new PIXI.Graphics();
+							this.el = new PIXI.Graphics();
 
-							this.element.lineStyle(3, 0xfa6464, 1);
-							this.element.beginFill(0x000000, 0);
-							this.element.drawRect( -600 , renderer.height/2 + 150 , 560 , 170);
+							this.el.lineStyle(3, 0xfa6464, 1);
+							this.el.beginFill(0x000000, 0);
+							this.el.drawRect( -600 , renderer.height/2 + 150 , 560 , 170);
 
-							slide_container_2.addChild(this.element);
+							slide_container_2.addChild(this.el);
 
-							createjs.Tween.get(this.element)
+							createjs.Tween.get(this.el)
 								.wait(this.anim_params.init_wait)
   								.to({ x: renderer.width/2 + 320 }, this.anim_params.speed, createjs.Ease.quadOut());
 						},
 
 						update: function() {
-
+							
 						},
 
 						destroy: function() {
-							createjs.Tween.get(this.element)
+							createjs.Tween.get(this.el)
   								.to({ x: -560 }, this.anim_params.speed, createjs.Ease.quadOut());
 						}
 
