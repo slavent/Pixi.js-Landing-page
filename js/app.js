@@ -43,7 +43,7 @@
 		SLIDE_ANIMATION_TIME_2 = 2000,
 		SLIDE_ANIMATION_TIME_3 = 2000,
 		SLIDE_ANIMATION_TIME_4 = 2000,
-		SLIDE_ANIMATION_TIME_5 = 2000,
+		SLIDE_ANIMATION_TIME_5 = 2500,
 		SLIDE_ANIMATION_TIME_6 = 2000,
 		SLIDE_ANIMATION_TIME_7 = 2000,
 		SLIDE_ANIMATION_TIME_8 = 2000,
@@ -182,16 +182,6 @@
 				w_width = $(window).width();
                 w_height = $(window).height();
                 renderer.resize(w_width, w_height);
-                /*for(var i = 0; i < stage.children.length; i++) {
-                        stage.removeChild(stage.children[i]);
-                }*/
-
-                //stage.children[0].destroy(true);
-
-                /*App.managerService["slide_" + active_slide].init().then(function() { 
-                        App.WheelController.unlockWheel();
-                });*/
-
 			}));
 
 			$menu_icon.on("click", function() {
@@ -562,10 +552,13 @@
 
 			slide_2: {
 
+				update_flag: false,
+
 				init: function() {
 					console.log("Slide 2 init");
 
-					var deferred = $.Deferred();
+					var deferred = $.Deferred()
+						that = this;
 
 					slide_container_2 = new PIXI.Container();
 
@@ -581,6 +574,7 @@
 
 					setTimeout(function() {
 						deferred.resolve();
+						that.update_flag = true;
 					}, SLIDE_ANIMATION_TIME_2);
 
 					return deferred;
@@ -588,7 +582,6 @@
 				},
 
 				destroy: function() {
-
 					console.log("Slide 2 destroy");
 
 					this.elems.title_1.destroy();
@@ -599,20 +592,21 @@
 					this.elems.border.destroy();
 					this.elems.arrowDown.destroy();
 
-					//stage.removeChild(slide_container_2);
+					this.update_flag = false;
 					slide_container_2 = null;
-
 				},
 
 				update: function() {
 
-					this.elems.title_1.update();
-					this.elems.title_2.update();
-					this.elems.title_3.update();
-					this.elems.title_4.update();
-					this.elems.info.update();
-					this.elems.border.update();
-					this.elems.arrowDown.update();
+					if( this.update_flag == true ) {
+						this.elems.title_1.update();
+						this.elems.title_2.update();
+						this.elems.title_3.update();
+						this.elems.title_4.update();
+						this.elems.info.update();
+						this.elems.border.update();
+						this.elems.arrowDown.update();
+					}
 
 				},
 
@@ -824,7 +818,7 @@
 						},
 
 						update: function() {
-							this.el.y = ((renderer.height - this.el.height) / 2) + 250;
+							this.el.x = (renderer.width - this.el.width) / 2;
 						},
 
 						destroy: function() {
@@ -858,7 +852,7 @@
 						},
 
 						update: function() {
-
+							this.el.x = renderer.width/2 + 320;
 						},
 
 						destroy: function() {
@@ -1402,11 +1396,14 @@
 
 			slide_4: {
 
+				update_flag: false,
+
 				init: function() {
 
 					console.log("Slide 4 init");
 
-					var deferred = $.Deferred();
+					var deferred = $.Deferred()
+						that = this;
 
 					slide_container_4 = new PIXI.Container();
 
@@ -1418,6 +1415,7 @@
 
 					setTimeout(function() {
 						deferred.resolve();
+						that.update_flag = true;
 					}, SLIDE_ANIMATION_TIME_4);
 
 					return deferred;
@@ -1425,7 +1423,6 @@
 				},
 
 				destroy: function() {
-
 					console.log("Slide 4 destroy");
 
 					this.elems.title.destroy();
@@ -1433,11 +1430,15 @@
 					this.elems.slider.destroy();
 
 					slide_container_4 = null;
-
+					this.update_flag = false;
 				},
 
 				update: function() {
-
+					if( this.update_flag == true ) {
+						this.elems.title.update();
+						this.elems.info.update();
+						this.elems.slider.update();
+					}
 				},
 
 				elems: {
@@ -1479,6 +1480,11 @@
 								.wait(this.anim_params.destroy_wait)
   								.to({ y: -100 }, this.anim_params.speed, createjs.Ease.getPowInOut(4));
 
+						},
+
+						update: function() {
+							this.el.x = renderer.width / 2;
+							this.el.y = 120;
 						}
 
 					},
@@ -1521,6 +1527,11 @@
 								.wait(this.anim_params.destroy_wait)
   								.to({ y: -100 }, this.anim_params.speed, createjs.Ease.getPowInOut(4));
 
+						},
+
+						update: function() {
+							this.el.x = renderer.width / 2;
+							this.el.y = 180;
 						}
 
 					},
@@ -1530,6 +1541,7 @@
 						el: 		null,
 						prev_btn: 	null,
 						next_btn: 	null,
+						slides: null,
 
 						init: function() {
 
@@ -1545,6 +1557,7 @@
 								slide_ind = 0,
 								slide_scale = 1;
 
+							this.slides = slides;
 							slides.alpha = 0;
 							slides = new PIXI.Graphics();
 							slides.lineStyle(2, 0x0000FF, 0);
@@ -1721,6 +1734,14 @@
 
 							createjs.Tween.get(this.next_btn)
 								.to({ x: renderer.width + 200 }, 1000, createjs.Ease.getPowInOut(4));
+						},
+
+						update: function() {
+							this.slides.position.y = renderer.height - 250;
+							this.prev_btn.position.x = 100;
+							this.prev_btn.position.y = renderer.height / 2;
+							this.next_btn.position.x = renderer.width - 100;
+							this.next_btn.position.y = renderer.height / 2;
 						}
 
 					}
@@ -1731,11 +1752,14 @@
 
 			slide_5: {
 
+				update_flag: false,
+
 				init: function(active) {
 
 					console.log("Slide 5 init");
 
-					var deferred = $.Deferred();
+					var deferred = $.Deferred(),
+						that = this;
 
 					slide_container_5 = new PIXI.Container();
 
@@ -1756,6 +1780,7 @@
 
 					setTimeout(function() {
 						deferred.resolve();
+						that.update_flag = true;
 					}, SLIDE_ANIMATION_TIME_5);
 
 					return deferred;
@@ -1779,20 +1804,33 @@
 					this.elems.time_2.destroy();
 					this.elems.orderBtn.destroy();
 
+					this.update_flag = false;
 					slide_container_5 = null;
-					//stage.removeChild(slide_container_5);
 
 				},
 
 				update: function() {
-					this.elems.orderBtn.update();
+					if( this.update_flag == true ) {
+						this.elems.title_1.update();
+						this.elems.title_2.update();
+						this.elems.title_3.update();
+						this.elems.title_4.update();
+						this.elems.price_1.update();
+						this.elems.price_2.update();
+						this.elems.price_3.update();
+						this.elems.price_4.update();
+						this.elems.time_1.update();
+						this.elems.time_2.update();
+						this.elems.magazine.update();
+						this.elems.orderBtn.update();
+					}
 				},
 
 				elems: {
 
 					title_1: {
 
-						element: null,
+						el: null,
 
 						anim_params: {
 							speed: 2000,
@@ -1808,30 +1846,35 @@
 								    padding : 50
 								};
 
-							this.element = new PIXI.Text("Стоимость базовой\nверсии", style);
+							this.el = new PIXI.Text("Стоимость базовой\nверсии", style);
 
-							this.element.x = (renderer.width - this.element.width) / 2 - 350;	
-							this.element.y = -renderer.height;
+							this.el.x = (renderer.width - this.el.width) / 2 - 350;	
+							this.el.y = -renderer.height;
 
-							slide_container_5.addChild(this.element);
+							slide_container_5.addChild(this.el);
 
-							createjs.Tween.get(this.element)
+							createjs.Tween.get(this.el)
 								.wait(this.anim_params.init_wait)
-  								.to({ y: ((renderer.height - this.element.height) / 2) - 220 }, this.anim_params.speed, createjs.Ease.getPowInOut(4));
+  								.to({ y: ((renderer.height - this.el.height) / 2) - 220 }, this.anim_params.speed, createjs.Ease.getPowInOut(4));
 
 						},
 
 						destroy: function() {
-							createjs.Tween.get(this.element)
+							createjs.Tween.get(this.el)
 								.wait(this.anim_params.destroy_wait)
   								.to({ y: -renderer.height }, this.anim_params.speed, createjs.Ease.getPowInOut(4));
+						},
+
+						update: function() {
+							this.el.x = (renderer.width - this.el.width) / 2 - 350;	
+							this.el.y = ((renderer.height - this.el.height) / 2) - 220;
 						}
 
 					},
 
 					title_2: {
 
-						element: null,
+						el: null,
 
 						anim_params: {
 							speed: 2000,
@@ -1845,30 +1888,35 @@
 								    fill : '#3c3c3c'
 								};
 
-							this.element = new PIXI.Text("Срок изготовления", style);
+							this.el = new PIXI.Text("Срок изготовления", style);
 
-							this.element.x = (renderer.width - this.element.width) / 2 + 260;	
-							this.element.y = -renderer.height;
+							this.el.x = (renderer.width - this.el.width) / 2 + 260;	
+							this.el.y = -renderer.height;
 
-							slide_container_5.addChild(this.element);
+							slide_container_5.addChild(this.el);
 
-							createjs.Tween.get(this.element)
+							createjs.Tween.get(this.el)
 								.wait(this.anim_params.init_wait)
-  								.to({ y: ((renderer.height - this.element.height) / 2) - 230 }, this.anim_params.speed, createjs.Ease.getPowInOut(4));	
+  								.to({ y: ((renderer.height - this.el.height) / 2) - 230 }, this.anim_params.speed, createjs.Ease.getPowInOut(4));	
 
 						},
 
 						destroy: function() {
-							createjs.Tween.get(this.element)
+							createjs.Tween.get(this.el)
 								.wait(this.anim_params.destroy_wait)
   								.to({ y: -renderer.height }, this.anim_params.speed, createjs.Ease.getPowInOut(4));	
+						},
+
+						update: function() {
+							this.el.x = (renderer.width - this.el.width) / 2 + 260;	
+							this.el.y = ((renderer.height - this.el.height) / 2) - 230;
 						}
 
 					},
 
 					title_3: {
 
-						element: null,
+						el: null,
 
 						anim_params: {
 							speed: 2000,
@@ -1882,30 +1930,35 @@
 								    fill : '#3c3c3c'
 								};
 
-							this.element = new PIXI.Text("Стоимость за каждый\nдополнительный", style);
+							this.el = new PIXI.Text("Стоимость за каждый\nдополнительный", style);
 
-							this.element.x = (renderer.width - this.element.width) / 2 + 175;	
-							this.element.y = -renderer.height;
+							this.el.x = (renderer.width - this.el.width) / 2 + 175;	
+							this.el.y = -renderer.height;
 
-							slide_container_5.addChild(this.element);
+							slide_container_5.addChild(this.el);
 
-							createjs.Tween.get(this.element)
+							createjs.Tween.get(this.el)
 								.wait(this.anim_params.init_wait)
-  								.to({ y: ((renderer.height - this.element.height) / 2) + 220 }, this.anim_params.speed, createjs.Ease.getPowInOut(4));	
+  								.to({ y: ((renderer.height - this.el.height) / 2) + 220 }, this.anim_params.speed, createjs.Ease.getPowInOut(4));	
 
 						},
 
 						destroy: function() {
-							createjs.Tween.get(this.element)
+							createjs.Tween.get(this.el)
 								.wait(this.anim_params.destroy_wait)
   								.to({ y: -renderer.height }, this.anim_params.speed, createjs.Ease.getPowInOut(4));	
+						},
+
+						update: function() {
+							this.el.x = (renderer.width - this.el.width) / 2 + 175;	
+							this.el.y = ((renderer.height - this.el.height) / 2) + 220;
 						}
 
 					},
 
 					title_4: {
 
-						element: null,
+						el: null,
 
 						anim_params: {
 							speed: 2000,
@@ -1919,30 +1972,35 @@
 								    fill : '#b48264'
 								};
 
-							this.element = new PIXI.Text("Стиль, мероприятие или праздник", style);
+							this.el = new PIXI.Text("Стиль, мероприятие или праздник", style);
 
-							this.element.x = (renderer.width - this.element.width) / 2 + 215;	
-							this.element.y = -renderer.height;
+							this.el.x = (renderer.width - this.el.width) / 2 + 215;	
+							this.el.y = -renderer.height;
 
-							slide_container_5.addChild(this.element);
+							slide_container_5.addChild(this.el);
 
-							createjs.Tween.get(this.element)
+							createjs.Tween.get(this.el)
 								.wait(this.anim_params.init_wait)
-  								.to({ y: ((renderer.height - this.element.height) / 2) + 247 }, this.anim_params.speed, createjs.Ease.getPowInOut(4));	
+  								.to({ y: ((renderer.height - this.el.height) / 2) + 247 }, this.anim_params.speed, createjs.Ease.getPowInOut(4));	
 
 						},
 
 						destroy: function() {
-							createjs.Tween.get(this.element)
+							createjs.Tween.get(this.el)
 								.wait(this.anim_params.destroy_wait)
   								.to({ y: -renderer.height }, this.anim_params.speed, createjs.Ease.getPowInOut(4));	
+						},
+
+						update: function() {
+							this.el.x = (renderer.width - this.el.width) / 2 + 215;	
+							this.el.y = ((renderer.height - this.el.height) / 2) + 247;
 						}
 
 					},
 
 					price_1: {
 
-						element: null,
+						el: null,
 
 						anim_params: {
 							speed: 2000,
@@ -1957,30 +2015,35 @@
 								    fill : '#fa6464'
 								};
 
-							this.element = new PIXI.Text("2999", style);
+							this.el = new PIXI.Text("2999", style);
 
-							this.element.x = (renderer.width - this.element.width) / 2 - 230;	
-							this.element.y = -renderer.height;
+							this.el.x = (renderer.width - this.el.width) / 2 - 230;	
+							this.el.y = -renderer.height;
 
-							slide_container_5.addChild(this.element);
+							slide_container_5.addChild(this.el);
 
-							createjs.Tween.get(this.element)
+							createjs.Tween.get(this.el)
 								.wait(this.anim_params.init_wait)
-  								.to({ y: ((renderer.height - this.element.height) / 2) - 225 }, this.anim_params.speed, createjs.Ease.getPowInOut(4));
+  								.to({ y: ((renderer.height - this.el.height) / 2) - 225 }, this.anim_params.speed, createjs.Ease.getPowInOut(4));
 
 						},
 
 						destroy: function() {
-							createjs.Tween.get(this.element)
+							createjs.Tween.get(this.el)
 								.wait(this.anim_params.destroy_wait)
   								.to({ y: -renderer.height }, this.anim_params.speed, createjs.Ease.getPowInOut(4));	
+						},
+
+						update: function() {
+							this.el.x = (renderer.width - this.el.width) / 2 - 230;	
+							this.el.y = ((renderer.height - this.el.height) / 2) - 225;
 						}
 
 					},
 
 					price_2: {
 
-						element: null,
+						el: null,
 
 						anim_params: {
 							speed: 2000,
@@ -1995,30 +2058,35 @@
 								    fill : '#fa6464'
 								};
 
-							this.element = new PIXI.Text("РУБЛЕЙ", style);
+							this.el = new PIXI.Text("РУБЛЕЙ", style);
 
-							this.element.x = (renderer.width - this.element.width) / 2 - 270;	
-							this.element.y = -renderer.height;
+							this.el.x = (renderer.width - this.el.width) / 2 - 270;	
+							this.el.y = -renderer.height;
 
-							slide_container_5.addChild(this.element);
+							slide_container_5.addChild(this.el);
 
-							createjs.Tween.get(this.element)
+							createjs.Tween.get(this.el)
 								.wait(this.anim_params.init_wait)
-  								.to({ y: ((renderer.height - this.element.height) / 2) - 150 }, this.anim_params.speed, createjs.Ease.getPowInOut(4));
+  								.to({ y: ((renderer.height - this.el.height) / 2) - 150 }, this.anim_params.speed, createjs.Ease.getPowInOut(4));
 
 						},
 
 						destroy: function() {
-							createjs.Tween.get(this.element)
+							createjs.Tween.get(this.el)
 								.wait(this.anim_params.destroy_wait)
   								.to({ y: -renderer.height }, this.anim_params.speed, createjs.Ease.getPowInOut(4));
+						},
+
+						update: function() {
+							this.el.x = (renderer.width - this.el.width) / 2 - 270;	
+							this.el.y = ((renderer.height - this.el.height) / 2) - 150;
 						}
 
 					},
 
 					price_3: {
 
-						element: null,
+						el: null,
 
 						anim_params: {
 							speed: 2000,
@@ -2033,30 +2101,35 @@
 								    fill : '#fa6464'
 								};
 
-							this.element = new PIXI.Text("+999", style);
+							this.el = new PIXI.Text("+999", style);
 
-							this.element.x = (renderer.width - this.element.width) / 2 + 140;	
-							this.element.y = -renderer.height;
+							this.el.x = (renderer.width - this.el.width) / 2 + 140;	
+							this.el.y = -renderer.height;
 
-							slide_container_5.addChild(this.element);
+							slide_container_5.addChild(this.el);
 
-							createjs.Tween.get(this.element)
+							createjs.Tween.get(this.el)
 								.wait(this.anim_params.init_wait)
-  								.to({ y: ((renderer.height - this.element.height) / 2) + 130 },this.anim_params.speed, createjs.Ease.getPowInOut(4));
+  								.to({ y: ((renderer.height - this.el.height) / 2) + 130 },this.anim_params.speed, createjs.Ease.getPowInOut(4));
 
 						},
 
 						destroy: function() {
-							createjs.Tween.get(this.element)
+							createjs.Tween.get(this.el)
 								.wait(this.anim_params.destroy_wait)
   								.to({ y: -renderer.height },this.anim_params.speed, createjs.Ease.getPowInOut(4));
+						},
+
+						update: function() {
+							this.el.x = (renderer.width - this.el.width) / 2 + 140;	
+							this.el.y = ((renderer.height - this.el.height) / 2) + 130;
 						}
 
 					},
 
 					price_4: {
 
-						element: null,
+						el: null,
 
 						anim_params: {
 							speed: 2000,
@@ -2071,30 +2144,35 @@
 								    fill : '#fa6464'
 								};
 
-							this.element = new PIXI.Text("РУБЛЕЙ", style);
+							this.el = new PIXI.Text("РУБЛЕЙ", style);
 
-							this.element.x = (renderer.width - this.element.width) / 2 + 180;	
-							this.element.y = -renderer.height;
+							this.el.x = (renderer.width - this.el.width) / 2 + 180;	
+							this.el.y = -renderer.height;
 
-							slide_container_5.addChild(this.element);
+							slide_container_5.addChild(this.el);
 
-							createjs.Tween.get(this.element)
+							createjs.Tween.get(this.el)
 								.wait(this.anim_params.init_wait)
-  								.to({ y: ((renderer.height - this.element.height) / 2) + 180 }, this.anim_params.speed, createjs.Ease.getPowInOut(4));
+  								.to({ y: ((renderer.height - this.el.height) / 2) + 180 }, this.anim_params.speed, createjs.Ease.getPowInOut(4));
 
 						},
 
 						destroy: function() {
-							createjs.Tween.get(this.element)
+							createjs.Tween.get(this.el)
 								.wait(this.anim_params.destroy_wait)
   								.to({ y: -renderer.height }, this.anim_params.speed, createjs.Ease.getPowInOut(4));
+						},
+
+						update: function() {
+							this.el.x = (renderer.width - this.el.width) / 2 + 180;	
+							this.el.y = ((renderer.height - this.el.height) / 2) + 180;
 						}
 
 					},
 
 					time_1: {
 
-						element: null,
+						el: null,
 
 						anim_params: {
 							speed: 2000,
@@ -2109,30 +2187,35 @@
 								    fill : '#b48264'
 								};
 
-							this.element = new PIXI.Text("3", style);
+							this.el = new PIXI.Text("3", style);
 
-							this.element.x = (renderer.width - this.element.width) / 2 + 200;	
-							this.element.y = -renderer.height;
+							this.el.x = (renderer.width - this.el.width) / 2 + 200;	
+							this.el.y = -renderer.height;
 
-							slide_container_5.addChild(this.element);
+							slide_container_5.addChild(this.el);
 
-							createjs.Tween.get(this.element)
+							createjs.Tween.get(this.el)
 								.wait(this.anim_params.init_wait)
-  								.to({ y: ((renderer.height - this.element.height) / 2) - 180 }, this.anim_params.speed, createjs.Ease.getPowInOut(4));
+  								.to({ y: ((renderer.height - this.el.height) / 2) - 180 }, this.anim_params.speed, createjs.Ease.getPowInOut(4));
 
 						},
 
 						destroy: function() {
-							createjs.Tween.get(this.element)
+							createjs.Tween.get(this.el)
 								.wait(this.anim_params.destroy_wait)
   								.to({ y: -renderer.height }, this.anim_params.speed, createjs.Ease.getPowInOut(4));
+						},
+
+						update: function() {
+							this.el.x = (renderer.width - this.el.width) / 2 + 200;	
+							this.el.y = ((renderer.height - this.el.height) / 2) - 180;
 						}
 
 					},
 
 					time_2: {
 
-						element: null,
+						el: null,
 
 						anim_params: {
 							speed: 2000,
@@ -2147,30 +2230,35 @@
 								    fill : '#b48264'
 								};
 
-							this.element = new PIXI.Text("РАБОЧИХ\nДНЯ", style);
+							this.el = new PIXI.Text("РАБОЧИХ\nДНЯ", style);
 
-							this.element.x = (renderer.width - this.element.width) / 2 + 300;	
-							this.element.y = -renderer.height;
+							this.el.x = (renderer.width - this.el.width) / 2 + 300;	
+							this.el.y = -renderer.height;
 
-							slide_container_5.addChild(this.element);
+							slide_container_5.addChild(this.el);
 
-							createjs.Tween.get(this.element)
+							createjs.Tween.get(this.el)
 								.wait(this.anim_params.init_wait)
-  								.to({ y: ((renderer.height - this.element.height) / 2) - 180 }, this.anim_params.speed, createjs.Ease.getPowInOut(4));
+  								.to({ y: ((renderer.height - this.el.height) / 2) - 180 }, this.anim_params.speed, createjs.Ease.getPowInOut(4));
 
 						},
 
 						destroy: function() {
-							createjs.Tween.get(this.element)
+							createjs.Tween.get(this.el)
 								.wait(this.anim_params.destroy_wait)
   								.to({ y: -renderer.height }, this.anim_params.speed, createjs.Ease.getPowInOut(4));
+						},
+
+						update: function() {
+							this.el.x = (renderer.width - this.el.width) / 2 + 300;	
+							this.el.y = ((renderer.height - this.el.height) / 2) - 180;
 						}
 
 					},
 
 					magazine: {
 
-						element: null,
+						el: null,
 
 						anim_params: {
 							speed: 2000,
@@ -2181,23 +2269,28 @@
 
 							var texture = PIXI.Texture.fromImage("i/s5/magazine.png");
 
-							this.element = new PIXI.Sprite(texture);
+							this.el = new PIXI.Sprite(texture);
 
-							this.element.anchor.set(0.5);
-							this.element.position.x = renderer.width / 2;
-							this.element.position.y = renderer.height * 2;
+							this.el.anchor.set(0.5);
+							this.el.position.x = renderer.width / 2;
+							this.el.position.y = renderer.height * 2;
 
-							slide_container_5.addChild(this.element);
+							slide_container_5.addChild(this.el);
 
-							createjs.Tween.get(this.element)
+							createjs.Tween.get(this.el)
   								.to({ y: renderer.height / 2 }, this.anim_params.speed, createjs.Ease.getPowInOut(4));
 
 						},
 
 						destroy: function() {
-							createjs.Tween.get(this.element)
+							createjs.Tween.get(this.el)
 								.wait(this.anim_params.destroy_wait)
   								.to({ y: renderer.height * 2 }, this.anim_params.speed, createjs.Ease.getPowInOut(4));
+						},
+
+						update: function() {
+							this.el.position.x = renderer.width / 2;
+							this.el.position.y = renderer.height / 2;
 						}
 
 					},
