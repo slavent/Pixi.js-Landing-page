@@ -182,12 +182,15 @@
 				w_width = $(window).width();
                 w_height = $(window).height();
                 renderer.resize(w_width, w_height);
-                for(var i = 0; i < stage.children.length; i++) {
+                /*for(var i = 0; i < stage.children.length; i++) {
                         stage.removeChild(stage.children[i]);
-                }
-                App.managerService["slide_" + active_slide].init().then(function() { 
+                }*/
+
+                //stage.children[0].destroy(true);
+
+                /*App.managerService["slide_" + active_slide].init().then(function() { 
                         App.WheelController.unlockWheel();
-                });
+                });*/
 
 			}));
 
@@ -226,7 +229,7 @@
     			App.NavController.setActive();
     		});
 
-    		// For Anketa additional plugins
+    		// For Anketa
     		$("input").iCheck({
 				checkboxClass: "icheckbox_minimal",
 				increaseArea: "20%"
@@ -298,25 +301,40 @@
 				update: function() {
 					this.elems.slider.update();
 			    	this.elems.spinner.update();
+			    	this.elems.logo.update();
+			    	this.elems.title.update();
 				},
 
 				elems: {
 
 					logo: {
 
+						el: null,
+
 						init: function() {
 							var logo_texture = PIXI.Texture.fromImage("i/s1/logo.svg"),
 								logo = new PIXI.Sprite(logo_texture);
 
+							this.el = logo;
 							logo.anchor.set(0.5);
 							logo.position.x = renderer.width / 2;
 							logo.position.y = renderer.height / 2;
 
 							slide_container_1.addChild(logo);
+						},
+
+						update: function() {
+							// on resize 
+							this.el.position.x = renderer.width / 2;
+							this.el.position.y = renderer.height / 2;
 						}
+
 					},
 
 					title: {
+
+						el: null,
+
 						init: function() {
 							var style = {
 									font : '38px HelveticaNeueCyr-Light',
@@ -327,11 +345,19 @@
 								},
 								title = new PIXI.Text("ДОБРО ПОЖАЛОВАТЬ В ЛАБОРАТОРИЮ\nСТИЛЯ «МОДНОГО ПРИГОВОРА»!", style);
 
+							this.el = title;
 							title.x = (renderer.width - title.width) / 2;	
 							title.y = ((renderer.height - title.height) / 2) + 180;
 
 							slide_container_1.addChild(title);
+						},
+
+						update: function() {
+							// on resize
+							this.el.x = (renderer.width - this.el.width) / 2;	
+							this.el.y = ((renderer.height - this.el.height) / 2) + 180;
 						}
+
 					},
 
 					slider: {
@@ -383,7 +409,8 @@
 								dot.beginFill(color, 1);
 								dot.drawCircle(0, 20, 5);
 								dot.endFill();
-								dot.position.x = renderer.width / 2 + x_pos;
+								dot.x_pos = x_pos;
+								dot.position.x = renderer.width / 2 + dot.x_pos;
 								dot.position.y = renderer.height / 2 + 200;
 								dot.buttonMode = true;
 								dot.interactive = true;
@@ -461,6 +488,21 @@
 								}
 							}
 
+							// on resize 
+							// slides
+							for(var i = 0; i < this.slides.children.length; i++) {
+								this.slides.children[i].position.x = renderer.width / 2;
+								this.slides.children[i].position.y = renderer.height / 2;
+							}
+
+							// dotes
+							for(var i = 0; i < this.el.children.length; i++) {
+								this.el.children[i].position.x = renderer.width / 2 + this.el.children[i].x_pos;
+								this.el.children[i].position.y = renderer.height / 2 + 200;
+							}
+
+
+
 						}
 
 					},
@@ -506,6 +548,12 @@
 
 							vars.pos += 0.06;
 		    				vars.spin2.y += Math.sin(vars.pos);
+
+		    				// on resize
+		    				vars.spin1.position.x = renderer.width / 2 - 5;
+							vars.spin1.position.y = renderer.height / 2 + 350;
+							vars.spin2.position.x = renderer.width / 2 - 5;
+							vars.spin2.position.y = renderer.height / 2 + 345;
 						}
 
 					}
