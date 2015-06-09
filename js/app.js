@@ -248,14 +248,10 @@
 					console.log("Slide 1 init");
 
 					$preloader.hide();
-
 					slide_container_1 = new PIXI.Container();
 					slide_container_1.alpha = 0;
 
-					this.elems.slider.init();
-					this.elems.logo.init();
-					this.elems.title.init();
-					this.elems.spinner.init();
+					for (var key in this.elems) this.elems[key].init();
 
 					stage.addChild(slide_container_1);
 
@@ -297,94 +293,11 @@
 
 				update: function() {
 					if( this.update_flag == true ) {
-						this.elems.slider.update();
-				    	this.elems.spinner.update();
-				    	this.elems.logo.update();
-				    	this.elems.title.update();
+						for (var key in this.elems) this.elems[key].update();
 					}
 				},
 
 				elems: {
-
-					logo: {
-
-						el: null,
-
-						init: function() {
-							var logo_texture = PIXI.Texture.fromImage("i/s1/logo_main.svg");
-							this.el = new PIXI.Sprite(logo_texture);
-							this.el.anchor.set(0.5);
-							this.el.position.x = renderer.width / 2;
-							this.el.position.y = renderer.height / 2;
-							if( mobile_version == true ) {
-								this.el.position.y = renderer.height / 2 - 50;
-								this.el.scale.x = 1;
-								this.el.scale.y = 1;
-							} else {
-								this.el.scale.x = .45;
-								this.el.scale.y = .45;
-							}
-
-							slide_container_1.addChild(this.el);
-						},
-
-						update: function() {
-							if( mobile_version == true ) {
-								this.el.position.x = renderer.width / 2;
-								this.el.position.y = renderer.height / 2 - 50;
-							} else {
-								this.el.position.x = renderer.width / 2;
-								this.el.position.y = renderer.height / 2;
-							}
-						}
-
-					},
-
-					title: {
-
-						el: null,
-
-						init: function() {
-							if( mobile_version == true ) {
-								var style = {
-									font : '65px HelveticaNeueCyr-Light',
-								    fill : '#fff',
-								    align : "center",
-								    padding : 50
-								};
-								
-								this.el = new PIXI.Text("ДОБРО ПОЖАЛОВАТЬ\nВ ЛАБОРАТОРИЮ СТИЛЯ\n«МОДНОГО ПРИГОВОРА»!", style);
-								this.el.x = (renderer.width - this.el.width) / 2;
-								this.el.y = ((renderer.height - this.el.height) / 2) + 310;
-							} else {
-								var style = {
-									font : '38px HelveticaNeueCyr-Light',
-								    fill : '#fff',
-								    align : "center",
-								    lineHeight : 50,
-								    padding : 50
-								};
-
-								this.el = new PIXI.Text("ДОБРО ПОЖАЛОВАТЬ В ЛАБОРАТОРИЮ\nСТИЛЯ «МОДНОГО ПРИГОВОРА»!", style);
-								this.el.x = (renderer.width - this.el.width) / 2;
-								this.el.y = ((renderer.height - this.el.height) / 2) + 180;
-							}
-
-							slide_container_1.addChild(this.el);
-						},
-
-						update: function() {
-							// on resize							
-							if( mobile_version == true ) {
-								this.el.x = (renderer.width - this.el.width) / 2;
-								this.el.y = ((renderer.height - this.el.height) / 2) + 310;
-							} else {
-								this.el.x = (renderer.width - this.el.width) / 2;
-								this.el.y = ((renderer.height - this.el.height) / 2) + 180;
-							}
-						}
-
-					},
 
 					slider: {
 
@@ -543,6 +456,86 @@
 
 					},
 
+					logo: {
+
+						el: null,
+
+						init: function() {
+							var logo_texture = PIXI.Texture.fromImage("i/s1/logo_main.svg");
+							this.el = new PIXI.Sprite(logo_texture);
+							this.el.anchor.set(0.5);
+							this.el.position.x = renderer.width / 2;
+							this.el.position.y = renderer.height / 2;
+							if( mobile_version == true ) {
+								this.el.position.y = renderer.height / 2 - 50;
+								this.el.scale.x = 1;
+								this.el.scale.y = 1;
+							} else {
+								this.el.scale.x = .45;
+								this.el.scale.y = .45;
+							}
+
+							slide_container_1.addChild(this.el);
+						},
+
+						update: function() {
+							if( mobile_version == true ) {
+								this.el.position.x = renderer.width / 2;
+								this.el.position.y = renderer.height / 2 - 50;
+							} else {
+								this.el.position.x = renderer.width / 2;
+								this.el.position.y = renderer.height / 2;
+							}
+						}
+
+					},
+
+					title: {
+
+						el: null,
+
+						init: function() {
+							if( mobile_version == true ) {
+								var style = {
+									font : '65px HelveticaNeueCyr-Light',
+								    fill : '#fff',
+								    align : "center",
+								    padding : 50
+								};
+								
+								this.el = new PIXI.Text("ДОБРО ПОЖАЛОВАТЬ\nВ ЛАБОРАТОРИЮ СТИЛЯ\n«МОДНОГО ПРИГОВОРА»!", style);
+								this.el.x = (renderer.width - this.el.width) / 2;
+								this.el.y = ((renderer.height - this.el.height) / 2) + 310;
+							} else {
+								var style = {
+									font : '38px HelveticaNeueCyr-Light',
+								    fill : '#fff',
+								    align : "center",
+								    lineHeight : 50,
+								    padding : 50
+								};
+
+								this.el = new PIXI.Text("ДОБРО ПОЖАЛОВАТЬ В ЛАБОРАТОРИЮ\nСТИЛЯ «МОДНОГО ПРИГОВОРА»!", style);
+								this.el.x = (renderer.width - this.el.width) / 2;
+								this.el.y = ((renderer.height - this.el.height) / 2) + 180;
+							}
+
+							slide_container_1.addChild(this.el);
+						},
+
+						update: function() {
+							// on resize							
+							if( mobile_version == true ) {
+								this.el.x = (renderer.width - this.el.width) / 2;
+								this.el.y = ((renderer.height - this.el.height) / 2) + 310;
+							} else {
+								this.el.x = (renderer.width - this.el.width) / 2;
+								this.el.y = ((renderer.height - this.el.height) / 2) + 180;
+							}
+						}
+
+					},
+
 					spinner: {
 
 						el_1: null,
@@ -603,20 +596,12 @@
 				init: function() {
 					console.log("Slide 2 init");
 
-					var deferred = $.Deferred()
-						that = this;
-
 					slide_container_2 = new PIXI.Container();
-
-					this.elems.title_1.init();
-					this.elems.title_2.init();
-					this.elems.title_3.init();
-					this.elems.title_4.init();
-					this.elems.info.init();
-					this.elems.border.init();
-					this.elems.arrowDown.init();
-
+					for (var key in this.elems) this.elems[key].init();
 					stage.addChild(slide_container_2);
+
+					var deferred = $.Deferred(),
+						that = this;
 
 					setTimeout(function() {
 						deferred.resolve();
@@ -629,27 +614,14 @@
 				destroy: function() {
 					console.log("Slide 2 destroy");
 
-					this.elems.title_1.destroy();
-					this.elems.title_2.destroy();
-					this.elems.title_3.destroy();
-					this.elems.title_4.destroy();
-					this.elems.info.destroy();
-					this.elems.border.destroy();
-					this.elems.arrowDown.destroy();
-
+					for (var key in this.elems) this.elems[key].destroy();
 					this.update_flag = false;
 					slide_container_2 = null;
 				},
 
 				update: function() {
 					if( this.update_flag == true ) {
-						this.elems.title_1.update();
-						this.elems.title_2.update();
-						this.elems.title_3.update();
-						this.elems.title_4.update();
-						this.elems.info.update();
-						this.elems.border.update();
-						this.elems.arrowDown.update();
+						for (var key in this.elems) this.elems[key].update();
 					}
 				},
 
@@ -1442,19 +1414,14 @@
 				update_flag: false,
 
 				init: function() {
-
 					console.log("Slide 4 init");
 
-					var deferred = $.Deferred()
-						that = this;
-
 					slide_container_4 = new PIXI.Container();
-
-					this.elems.title.init();
-					this.elems.info.init();
-					this.elems.slider.init();
-
+					for (var key in this.elems) this.elems[key].init();
 					stage.addChild(slide_container_4);
+
+					var deferred = $.Deferred(),
+						that = this;
 
 					setTimeout(function() {
 						deferred.resolve();
@@ -1462,25 +1429,19 @@
 					}, SLIDE_ANIMATION_TIME_4);
 
 					return deferred;
-
 				},
 
 				destroy: function() {
 					console.log("Slide 4 destroy");
 
-					this.elems.title.destroy();
-					this.elems.info.destroy();
-					this.elems.slider.destroy();
-
+					for (var key in this.elems) this.elems[key].destroy();
 					slide_container_4 = null;
 					this.update_flag = false;
 				},
 
 				update: function() {
 					if( this.update_flag == true ) {
-						this.elems.title.update();
-						this.elems.info.update();
-						this.elems.slider.update();
+						for (var key in this.elems) this.elems[key].update();
 					}
 				},
 
@@ -1798,28 +1759,14 @@
 				update_flag: false,
 
 				init: function(active) {
-
 					console.log("Slide 5 init");
+
+					slide_container_5 = new PIXI.Container();
+					for (var key in this.elems) this.elems[key].init();
+					stage.addChild(slide_container_5);
 
 					var deferred = $.Deferred(),
 						that = this;
-
-					slide_container_5 = new PIXI.Container();
-
-					this.elems.magazine.init();
-					this.elems.title_1.init();
-					this.elems.title_2.init();
-					this.elems.title_3.init();
-					this.elems.title_4.init();
-					this.elems.price_1.init();
-					this.elems.price_2.init();
-					this.elems.price_3.init();
-					this.elems.price_4.init();
-					this.elems.time_1.init();
-					this.elems.time_2.init();
-					this.elems.orderBtn.init();
-
-					stage.addChild(slide_container_5);
 
 					setTimeout(function() {
 						deferred.resolve();
@@ -1827,49 +1774,84 @@
 					}, SLIDE_ANIMATION_TIME_5);
 
 					return deferred;
-
 				},
 
 				destroy: function() {
-
 					console.log("Slide 5 destroy");
 
-					this.elems.magazine.destroy();
-					this.elems.title_1.destroy();
-					this.elems.title_2.destroy();
-					this.elems.title_3.destroy();
-					this.elems.title_4.destroy();
-					this.elems.price_1.destroy();
-					this.elems.price_2.destroy();
-					this.elems.price_3.destroy();
-					this.elems.price_4.destroy();
-					this.elems.time_1.destroy();
-					this.elems.time_2.destroy();
-					this.elems.orderBtn.destroy();
-
+					for (var key in this.elems) this.elems[key].destroy();
 					this.update_flag = false;
 					slide_container_5 = null;
-
 				},
 
 				update: function() {
 					if( this.update_flag == true ) {
-						this.elems.title_1.update();
-						this.elems.title_2.update();
-						this.elems.title_3.update();
-						this.elems.title_4.update();
-						this.elems.price_1.update();
-						this.elems.price_2.update();
-						this.elems.price_3.update();
-						this.elems.price_4.update();
-						this.elems.time_1.update();
-						this.elems.time_2.update();
-						this.elems.magazine.update();
-						this.elems.orderBtn.update();
+						for (var key in this.elems) this.elems[key].update();
 					}
 				},
 
 				elems: {
+
+					magazine: {
+
+						el: null,
+
+						anim_params: {
+							speed: 2000,
+							destroy_wait: 0
+						},
+
+						init: function() {
+
+							var texture = PIXI.Texture.fromImage("i/s5/magazine.png");
+
+							this.el = new PIXI.Sprite(texture);
+
+							this.el.anchor.set(0.5);
+							this.el.position.x = renderer.width / 2;
+							this.el.position.y = renderer.height * 2;
+
+							slide_container_5.addChild(this.el);
+
+							createjs.Tween.get(this.el)
+  								.to({ y: renderer.height / 2 }, this.anim_params.speed, createjs.Ease.getPowInOut(4));
+
+						},
+
+						destroy: function() {
+							createjs.Tween.get(this.el)
+								.wait(this.anim_params.destroy_wait)
+  								.to({ y: renderer.height * 2 }, this.anim_params.speed, createjs.Ease.getPowInOut(4));
+						},
+
+						update: function() {
+							this.el.position.x = renderer.width / 2;
+							this.el.position.y = renderer.height / 2;
+						}
+
+					},
+
+					orderBtn: {
+
+						init: function() {
+
+							setTimeout(function() {
+								$order_btn.addClass("active");
+							}, 1000);
+
+						},
+
+						destroy: function() {
+							
+							$order_btn.removeClass("active");
+
+						},
+
+						update: function() {
+
+						}
+
+					},
 
 					title_1: {
 
@@ -2295,67 +2277,6 @@
 						update: function() {
 							this.el.x = (renderer.width - this.el.width) / 2 + 300;	
 							this.el.y = ((renderer.height - this.el.height) / 2) - 180;
-						}
-
-					},
-
-					magazine: {
-
-						el: null,
-
-						anim_params: {
-							speed: 2000,
-							destroy_wait: 0
-						},
-
-						init: function() {
-
-							var texture = PIXI.Texture.fromImage("i/s5/magazine.png");
-
-							this.el = new PIXI.Sprite(texture);
-
-							this.el.anchor.set(0.5);
-							this.el.position.x = renderer.width / 2;
-							this.el.position.y = renderer.height * 2;
-
-							slide_container_5.addChild(this.el);
-
-							createjs.Tween.get(this.el)
-  								.to({ y: renderer.height / 2 }, this.anim_params.speed, createjs.Ease.getPowInOut(4));
-
-						},
-
-						destroy: function() {
-							createjs.Tween.get(this.el)
-								.wait(this.anim_params.destroy_wait)
-  								.to({ y: renderer.height * 2 }, this.anim_params.speed, createjs.Ease.getPowInOut(4));
-						},
-
-						update: function() {
-							this.el.position.x = renderer.width / 2;
-							this.el.position.y = renderer.height / 2;
-						}
-
-					},
-
-					orderBtn: {
-
-						init: function() {
-
-							setTimeout(function() {
-								$order_btn.addClass("active");
-							}, 1000);
-
-						},
-
-						destroy: function() {
-							
-							$order_btn.removeClass("active");
-
-						},
-
-						update: function() {
-
 						}
 
 					}
@@ -3053,7 +2974,6 @@
 			slide_7: {
 
 				init: function() {
-
 					console.log("Slide 7 init");
 
 					var deferred = $.Deferred();
@@ -3080,11 +3000,9 @@
 					}, SLIDE_ANIMATION_TIME_7);
 
 					return deferred;
-
 				},
 
 				destroy: function() {
-
 					console.log("Slide 7 destroy");
 
 					$anketa.fadeOut(function() {
@@ -3092,7 +3010,6 @@
 					});
 
 					slide_container_7 = null;
-
 				},
 
 				update: function() {
@@ -3108,48 +3025,35 @@
 			slide_8: {
 
 				init: function(active) {
-
 					console.log("Slide 8 init");
-
-					var deferred = $.Deferred();
 
 					slide_container_8 = new PIXI.Container();
 					slide_container_8.alpha = 0;
-
-					this.elems.slider.init();
-					this.elems.orderBtn.init();
-					this.elems.footer.init();
-
+					for (var key in this.elems) this.elems[key].init();
 					stage.addChild(slide_container_8);
+
+					var deferred = $.Deferred();
 
 					setTimeout(function() {
 						deferred.resolve();
 					}, SLIDE_ANIMATION_TIME_8);
 
 					return deferred;
-
 				},
 
 				destroy: function() {
-
 					console.log("Slide 8 destroy");
 
-					this.elems.orderBtn.destroy();
-					this.elems.footer.destroy();
-
+					for (var key in this.elems) this.elems[key].destroy();
 					stage.removeChild(slide_container_8);
 					slide_container_8 = null;
-
 				},
 
 				update: function() {
-
 					if( slide_container_8 != null ) {
 						if( slide_container_8.alpha < 1 ) slide_container_8.alpha += 0.05;
 					}
-
-					this.elems.slider.update();
-
+					for (var key in this.elems) this.elems[key].update();
 				},
 
 				elems: {
@@ -3271,8 +3175,6 @@
 						},
 
 						update: function() {
-							// on resize 
-							// slides
 							for(var i = 0; i < this.slides.children.length; i++) {
 								this.slides.children[i].position.x = renderer.width / 2;
 								this.slides.children[i].position.y = renderer.height / 2;
@@ -3302,13 +3204,15 @@
 
 							$order_btn.removeClass("active").removeClass("white");
 
+						},
+
+						update: function() {
+
 						}
 
 					},
 
 					footer: {
-
-						element: null,
 
 						init: function() {
 
@@ -3320,7 +3224,12 @@
 
 							$footer.removeClass("active");
 
+						},
+
+						update: function() {
+
 						}
+
 					}
 
 				}
