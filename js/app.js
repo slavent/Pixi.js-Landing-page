@@ -624,7 +624,6 @@
 					}, SLIDE_ANIMATION_TIME_2);
 
 					return deferred;
-
 				},
 
 				destroy: function() {
@@ -643,7 +642,6 @@
 				},
 
 				update: function() {
-
 					if( this.update_flag == true ) {
 						this.elems.title_1.update();
 						this.elems.title_2.update();
@@ -653,7 +651,6 @@
 						this.elems.border.update();
 						this.elems.arrowDown.update();
 					}
-
 				},
 
 				elems: {
