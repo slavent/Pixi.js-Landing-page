@@ -501,8 +501,6 @@
 								this.el.children[i].position.y = renderer.height / 2 + 200;
 							}
 
-
-
 						}
 
 					},
@@ -860,7 +858,7 @@
 						},
 
 						update: function() {
-							
+
 						},
 
 						destroy: function() {
@@ -3014,11 +3012,17 @@
 						if( slide_container_8.alpha < 1 ) slide_container_8.alpha += 0.05;
 					}
 
+					this.elems.slider.update();
+
 				},
 
 				elems: {
 
 					slider: {
+
+						slides: null,
+						next_btn: null,
+						prev_btn: null,
 
 						init: function() {
 
@@ -3030,6 +3034,8 @@
 							],
 								slides = new PIXI.Container(),
 								slide_ind = 0;
+
+							this.slides = slides;
 
 							var Slide = function(index, url, title) {
 								// Photo
@@ -3074,14 +3080,14 @@
 							// Prev btn
 							var prev_btn_texture = PIXI.Texture.fromImage("i/s8/prev.png");
 
-							prev_btn = new PIXI.Sprite(prev_btn_texture);
-							prev_btn.width = 45;
-							prev_btn.height = 45;
-							prev_btn.x = 150;
-							prev_btn.y = renderer.height / 2;
-							prev_btn.buttonMode = true;
-							prev_btn.interactive = true;
-							prev_btn.on("click", function() {
+							this.prev_btn = new PIXI.Sprite(prev_btn_texture);
+							this.prev_btn.width = 45;
+							this.prev_btn.height = 45;
+							this.prev_btn.x = 150;
+							this.prev_btn.y = renderer.height / 2;
+							this.prev_btn.buttonMode = true;
+							this.prev_btn.interactive = true;
+							this.prev_btn.on("click", function() {
 								if( slide_ind <= slides.children.length - 1 ) {
 									createjs.Tween.get(slides.children[slide_ind])
 										.to({ alpha: 0 }, 1000, createjs.Ease.getPowInOut(4));
@@ -3095,19 +3101,19 @@
 								}
 							});
 
-							slide_container_8.addChild(prev_btn);
+							slide_container_8.addChild(this.prev_btn);
 
 							// Next btn
 							var next_btn_texture = PIXI.Texture.fromImage("i/s8/next.png");
 
-							next_btn = new PIXI.Sprite(next_btn_texture);
-							next_btn.width = 45;
-							next_btn.height = 45;
-							next_btn.x = renderer.width - 150;
-							next_btn.y = renderer.height / 2;
-							next_btn.buttonMode = true;
-							next_btn.interactive = true;
-							next_btn.on("click", function() {
+							this.next_btn = new PIXI.Sprite(next_btn_texture);
+							this.next_btn.width = 45;
+							this.next_btn.height = 45;
+							this.next_btn.x = renderer.width - 150;
+							this.next_btn.y = renderer.height / 2;
+							this.next_btn.buttonMode = true;
+							this.next_btn.interactive = true;
+							this.next_btn.on("click", function() {
 								console.log(slide_ind, slides.children.length);
 								if( slide_ind >= 0 ) {						
 									createjs.Tween.get(slides.children[slide_ind])
@@ -3124,8 +3130,22 @@
 								}
 							});
 
-							slide_container_8.addChild(next_btn);
+							slide_container_8.addChild(this.next_btn);
 					
+						},
+
+						update: function() {
+							// on resize 
+							// slides
+							for(var i = 0; i < this.slides.children.length; i++) {
+								this.slides.children[i].position.x = renderer.width / 2;
+								this.slides.children[i].position.y = renderer.height / 2;
+							}
+
+							this.prev_btn.x = 150;
+							this.prev_btn.y = renderer.height / 2;
+							this.next_btn.x = renderer.width - 150;
+							this.next_btn.y = renderer.height / 2;
 						},
 
 						destroy: function() {
