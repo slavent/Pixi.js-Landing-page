@@ -59,26 +59,21 @@
 	App = {
 
 		init: function() {
-
 			createjs.Ticker.setFPS(60);
-
 			$body.append(renderer.view);
 			requestAnimationFrame(animate);
 
 		    function animate() {
-
 		    	App.managerService["slide_" + active_slide].update();
 
 		        renderer.render(stage);
 		        requestAnimationFrame(animate);
-
 		    }	
 
 		    if( $(window).width() <= 1000 ) mobile_version = true;
 
 		  	App.Binder();
 		  	App.SlideController.init();
-
 		},
 
 		SlideController: {
@@ -250,9 +245,7 @@
 					$preloader.hide();
 					slide_container_1 = new PIXI.Container();
 					slide_container_1.alpha = 0;
-
 					for (var key in this.elems) this.elems[key].init();
-
 					stage.addChild(slide_container_1);
 
 					createjs.Tween.get(slide_container_1)
