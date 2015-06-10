@@ -1,0 +1,39 @@
+/* START: Order btn */
+.order-btn {
+	border: 2px solid #ff7d7a;
+	font-size: 18px;
+	color: #ff7d7a;
+	width: 150px;
+	height: 35px;
+	background: #fff;
+	position: fixed;
+	left: 50%;
+	bottom: -500px;
+	z-index: 70;
+	margin: 0 0 0 -75px;
+	outline: none;
+	transition: all 1s;
+	-webkit-transition: all 1s;
+}
+
+.order-btn.active {
+	bottom: 100px;
+}
+
+.order-btn.white {
+	border-color: #fff;
+	color: #fff;
+	background: none;
+	bottom: 200px;
+}
+
+.order-btn.white:hover {
+	background: none;
+}
+
+.order-btn:hover {
+	color: #fff;
+	background: #ff7d7a;
+	cursor: pointer;
+}
+/* END: Order btn */

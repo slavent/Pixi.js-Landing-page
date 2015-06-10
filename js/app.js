@@ -3440,7 +3440,7 @@
 	window.WebFontConfig = {
 	    custom: {
 	        families: ["HelveticaNeueCyr-Light", "Plumb-Black", "PlumbCondensed-Bold", "FiraSansMedium", "BebasRegular"],
-	        urls: ['css/style.css']
+	        urls: ['css/build/build.css']
 	    },
 	    active: function() {
 	    	App.init();

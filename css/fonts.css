@@ -1,0 +1,47 @@
+@font-face {
+  font-family: "HelveticaNeueCyr-Light";
+  src: url('../../fonts/HelveticaNeueCyr-Light.eot');
+  src: local('â˜º'), url('../../fonts/HelveticaNeueCyr-Light.woff') format('woff'), url('../../fonts/HelveticaNeueCyr-Light.ttf') format('truetype'), url('../../fonts/HelveticaNeueCyr-Light.svg') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "PlumbCondensed-Bold";
+  src: url('../../fonts/PlumbCondensed-Bold.eot');
+  src: local('â˜º'), url('../../fonts/PlumbCondensed-Bold.woff') format('woff'), url('../../fonts/PlumbCondensed-Bold.ttf') format('truetype'), url('../../fonts/PlumbCondensed-Bold.svg') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Plumb-Black";
+  src: url('../../fonts/Plumb-Black.eot');
+  src: local('â˜º'), url('../../fonts/Plumb-Black.woff') format('woff'), url('../../fonts/Plumb-Black.ttf') format('truetype'), url('../../fonts/Plumb-Black.svg') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Intro-Black-Caps";
+  src: url('../../fonts/Intro-Black-Caps.eot');
+  src: local('â˜º'), url('../../fonts/Intro-Black-Caps.woff') format('woff'), url('../../fonts/Intro-Black-Caps.ttf') format('truetype'), url('../../fonts/Intro-Black-Caps.svg') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "BebasRegular";
+  src: url('../../fonts/BebasRegular.eot');
+  src: local('â˜º'), url('../../fonts/BebasRegular.woff') format('woff'), url('../../fonts/BebasRegular.ttf') format('truetype'), url('../../fonts/BebasRegular.svg') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "FiraSansRegular";
+  src: url('../../fonts/FiraSansRegular.eot');
+  src: local('â˜º'), url('../../fonts/FiraSansRegular.woff') format('woff'), url('../../fonts/FiraSansRegular.ttf') format('truetype'), url('../../fonts/FiraSansRegular.svg') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}

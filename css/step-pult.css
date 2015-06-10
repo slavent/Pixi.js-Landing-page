@@ -1,0 +1,56 @@
+/* START: Step pult */
+.step-pult {
+	position: fixed;
+	top: 50%;
+	right: -100px;
+	margin: -246px 0 0;
+	z-index: 50;
+	transition: all 1s;
+	-webkit-transition: all 1s;
+}
+
+.step-pult.active {
+	right: 30px;
+}
+
+.step-pult-item {
+	width: 45px;
+	height: 45px;
+	text-align: center;
+	list-style: none;
+	border-radius: 50%;
+	-webkit-border-radius: 50%;
+	-moz-border-radius: 50%;
+	-o-border-radius: 50%;
+	border: 3px solid #cfb3a2;
+	color: #cfb3a2;
+	font-family: HelveticaNeueCyr-Light;
+	font-size: 30px;
+	padding: 8px 0 0;
+	box-sizing: border-box;
+	margin: 0 0 30px 0;
+	position: relative;
+	cursor: pointer;
+	transition: all .3s;
+	-webkit-transition: all .3s;
+}
+
+.step-pult-item:after {
+	content: "";
+	position: absolute;
+	bottom: -33px;
+	right: 17px;
+	height: 30px;
+	width: 1px;
+	border-left: 2px dotted #cfb3a2;
+}
+
+.step-pult-item:last-child:after {
+	content: none;
+}
+
+.step-pult-item-active {
+	border-color: #ff7d7a;
+	color: #ff7d7a;
+}
+/* END: Step pult */
