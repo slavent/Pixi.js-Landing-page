@@ -9,7 +9,7 @@ module.exports = function(grunt) {
                 src: [
                     "css/*.css",
                 ],
-                dest: "css/build/build.css",
+                dest: "build/css/build.css",
             },
 
             js: {
@@ -37,22 +37,22 @@ module.exports = function(grunt) {
                     "js/Slide_7.js",
                     "js/Slide_8.js"
                 ],
-                dest: "js/build/build.js"
+                dest: "build/js/build.js"
             },
 
         },
 
         cssmin: {
             minify: {
-                src: 'css/build/build.css',
-                dest: 'css/build/build.min.css'
+                src: 'build/css/build.css',
+                dest: 'build/css/build.min.css'
             }
         },
 
         uglify: {
             build: {
-                src: 'js/build/build.js',
-                dest: 'js/build/build.min.js'
+                src: 'build/js/build.js',
+                dest: 'build/js/build.min.js'
             }
         }
 

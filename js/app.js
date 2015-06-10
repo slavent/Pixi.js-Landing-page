@@ -77,7 +77,7 @@ App.init = function() {
 window.WebFontConfig = {
     custom: {
         families: ["HelveticaNeueCyr-Light", "Plumb-Black", "PlumbCondensed-Bold", "FiraSansMedium", "BebasRegular"],
-        urls: ['css/build/build.css']
+        urls: ['build/css/build.css']
     },
     active: function() {
     	App.init();
