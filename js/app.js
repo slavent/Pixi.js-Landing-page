@@ -1201,9 +1201,13 @@
 				NavController: {
 
 					setActive: function(top, left) {
-						$hover.animate({ "top" : top, "left" : left }, function() {
+						if( mobile_version == true ) {
 							$hyde_menu.children().removeClass("active").eq(active_scene - 1).addClass("active");
-						});
+						} else {
+							$hover.animate({ "top" : top, "left" : left }, function() {
+								$hyde_menu.children().removeClass("active").eq(active_scene - 1).addClass("active");
+							});
+						}
 					}
 
 				},
@@ -1217,7 +1221,8 @@
 						},
 
 						init: function() {
-							$hyde_menu.addClass("active").css({ "height" : $(window).height() - $main_menu.height() });
+							if( mobile_version == true ) $hyde_menu.addClass("active");
+							else $hyde_menu.addClass("active").css({ "height" : $(window).height() - $main_menu.height() });
 						},
 
 						destroy: function() {
@@ -1226,7 +1231,24 @@
 
 						Scene: function(url, title_top, title_down) {
 							// Titles
-							var style = {
+							if( mobile_version == true ) {
+								var style = {
+									font : "35px PlumbCondensed-Bold",
+								    fill : "#000000",
+								    align : "center"
+								},
+								title_top = new PIXI.Text(title_top, style),
+								title_down = new PIXI.Text(title_down, style);
+
+								title_top.x = -1000;
+								title_top.y = -300;
+								title_top.anchor.set(0.5);
+
+								title_down.x = 1000;
+								title_down.y = 300;
+								title_down.anchor.set(0.5);
+							} else {
+								var style = {
 									font : "22px PlumbCondensed-Bold",
 								    fill : "#000000",
 								    align : "center"
@@ -1234,63 +1256,121 @@
 								title_top = new PIXI.Text(title_top, style),
 								title_down = new PIXI.Text(title_down, style);
 
-							title_top.x = -1000;
-							title_top.y = -50;
+								title_top.x = -1000;
+								title_top.y = -50;
 
-							title_down.x = 1000;
-							title_down.y = 450;
+								title_down.x = 1000;
+								title_down.y = 450;
+							}
 
 							// Title's lines
-							var data_lines = [
-								{ color: "0x000000", size: title_top.width - 100, 	x: -15, 						y: 50, pos: "top" },
-								{ color: "0x000000", size: title_top.width - 100, 	x: title_top.height + 15, 		y: 50, pos: "top" },
-								{ color: "0x000000", size: title_down.width - 100, 	x: -15, 						y: 50, pos: "down" },
-								{ color: "0x000000", size: title_down.width - 100, 	x: title_down.height + 15, 		y: 50, pos: "down" },
-							];
+							if( mobile_version == true ) {
+								var data_lines = [
+									{ color: "0x000000", size: title_top.width - 100, 	x: -15, 						y: 50, pos: "top" },
+									{ color: "0x000000", size: title_top.width - 100, 	x: title_top.height + 15, 		y: 50, pos: "top" },
+									{ color: "0x000000", size: title_down.width - 100, 	x: -15, 						y: 50, pos: "down" },
+									{ color: "0x000000", size: title_down.width - 100, 	x: title_down.height + 15, 		y: 50, pos: "down" },
+								];
 
-							var Line = function(color, size, x, y) {
-								this.el = new PIXI.Graphics();
-								this.el.beginFill(0xffffff);
-								this.el.lineStyle(1, color, 1);
-								this.el.moveTo(0,0);
-								this.el.lineTo(size,0);
-								this.el.endFill();
-								this.el.position.x = y;
-								this.el.position.y = x;
+								var Line = function(color, size, x, y) {
+									this.el = new PIXI.Graphics();
+									this.el.beginFill(0xffffff);
+									this.el.lineStyle(3, color, 1);
+									this.el.moveTo(0,0);
+									this.el.lineTo(size,0);
+									this.el.endFill();
+									this.el.position.x = y;
+									this.el.position.y = x;
 
-								return this.el;
-							};
+									return this.el;
+								};
 
-							for(var i = 0; i < data_lines.length; i++) {
-								var line = new Line( data_lines[i].color, data_lines[i].size, data_lines[i].x, data_lines[i].y );
+								/*for(var i = 0; i < data_lines.length; i++) {
+									var line = new Line( data_lines[i].color, data_lines[i].size, data_lines[i].x, data_lines[i].y );
 
-								switch(data_lines[i].pos) {
-									case "top":
-										title_top.addChild(line);
-										break;
-									case "down":
-										title_down.addChild(line);
-										break;
+									switch(data_lines[i].pos) {
+										case "top":
+											title_top.addChild(line);
+											break;
+										case "down":
+											title_down.addChild(line);
+											break;
+									}
+								}*/
+							} else {
+								var data_lines = [
+									{ color: "0x000000", size: title_top.width - 100, 	x: -15, 						y: 50, pos: "top" },
+									{ color: "0x000000", size: title_top.width - 100, 	x: title_top.height + 15, 		y: 50, pos: "top" },
+									{ color: "0x000000", size: title_down.width - 100, 	x: -15, 						y: 50, pos: "down" },
+									{ color: "0x000000", size: title_down.width - 100, 	x: title_down.height + 15, 		y: 50, pos: "down" },
+								];
+
+								var Line = function(color, size, x, y) {
+									this.el = new PIXI.Graphics();
+									this.el.beginFill(0xffffff);
+									this.el.lineStyle(1, color, 1);
+									this.el.moveTo(0,0);
+									this.el.lineTo(size,0);
+									this.el.endFill();
+									this.el.position.x = y;
+									this.el.position.y = x;
+
+									return this.el;
+								};
+
+								for(var i = 0; i < data_lines.length; i++) {
+									var line = new Line( data_lines[i].color, data_lines[i].size, data_lines[i].x, data_lines[i].y );
+
+									switch(data_lines[i].pos) {
+										case "top":
+											title_top.addChild(line);
+											break;
+										case "down":
+											title_down.addChild(line);
+											break;
+									}
 								}
 							}
 
 							// Photo
-							this.texture = PIXI.Texture.fromImage(url);
-							this.el = new PIXI.Sprite(this.texture);
-							this.el.position.x = renderer.width / 2;
-							this.el.position.y = renderer.height * 2;
-							this.el.addChild(title_top);
-							this.el.addChild(title_down);
+							if( mobile_version == true ) {
+								this.texture = PIXI.Texture.fromImage(url);
+								this.el = new PIXI.Sprite(this.texture);
+								this.el.scale.set(1.2);
+								this.el.anchor.set(0.5);
+								this.el.position.x = renderer.width / 2;
+								this.el.position.y = renderer.height * 2;
+								this.el.addChild(title_top);
+								this.el.addChild(title_down);
+							} else {
+								this.texture = PIXI.Texture.fromImage(url);
+								this.el = new PIXI.Sprite(this.texture);
+								this.el.position.x = renderer.width / 2;
+								this.el.position.y = renderer.height * 2;
+								this.el.addChild(title_top);
+								this.el.addChild(title_down);
+							}
 
 							this.el.init = function(element) {
-								createjs.Tween.get(element)
-									.to({ y: renderer.height / 2 - 250 }, 1000, createjs.Ease.getPowInOut(4));
-								createjs.Tween.get(title_top)
-									.wait(500)
-									.to({ x: -50 }, 1000, createjs.Ease.getPowInOut(4));
-								createjs.Tween.get(title_down)
-									.wait(500)
-									.to({ x: 350 }, 1000, createjs.Ease.getPowInOut(4));
+								if( mobile_version == true ) {
+									createjs.Tween.get(element)
+										.to({ y: renderer.height / 2 + 250 }, 1000, createjs.Ease.getPowInOut(4));
+									createjs.Tween.get(title_top)
+										.wait(500)
+										.to({ x: 0 }, 1000, createjs.Ease.getPowInOut(4));
+									createjs.Tween.get(title_down)
+										.wait(500)
+										.to({ x: 0 }, 1000, createjs.Ease.getPowInOut(4));
+								} else {
+									createjs.Tween.get(element)
+										.to({ y: renderer.height / 2 - 250 }, 1000, createjs.Ease.getPowInOut(4));
+									createjs.Tween.get(title_top)
+										.wait(500)
+										.to({ x: -50 }, 1000, createjs.Ease.getPowInOut(4));
+									createjs.Tween.get(title_down)
+										.wait(500)
+										.to({ x: 350 }, 1000, createjs.Ease.getPowInOut(4));
+								}
 							}
 
 							this.el.destroy = function(element) {
