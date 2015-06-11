@@ -1,0 +1,75 @@
+{
+    "slide_1": {
+        "slider": {
+           "slides": [
+                {
+                    "url": "i/s1/slide_1.jpg",
+                    "anchor": 0.5,
+                    "scale": 1.2
+                },
+                {
+                    "url": "i/s1/slide_2.jpg",
+                    "anchor": 0.5,
+                    "scale": 1.2
+                },
+                {
+                    "url": "i/s1/slide_3.jpg",
+                    "anchor": 0.5,
+                    "scale": 1.2
+                }
+            ],
+            "dotes": [
+                {
+                    "x": -50,
+                    "y": 420,
+                    "r": 10,
+                    "fill": "0xffffff",
+                    "fill_active": "0xff7d7a"
+                },
+                {
+                    "x": 0,
+                    "y": 420,
+                    "r": 10,
+                    "fill": "0xffffff",
+                    "fill_active": "0xff7d7a"
+                },
+                {
+                    "x": 50,
+                    "y": 420,
+                    "r": 10,
+                    "fill": "0xffffff",
+                    "fill_active": "0xff7d7a"
+                }
+           ]
+        },
+        "logo": {
+            "url": "i/s1/logo_main.svg",
+            "anchor": 0.5,
+            "scale": 1,
+            "y": -50
+        },
+        "title": {
+            "text": "ДОБРО ПОЖАЛОВАТЬ\nВ ЛАБОРАТОРИЮ СТИЛЯ\n«МОДНОГО ПРИГОВОРА»!",
+            "font": "65px HelveticaNeueCyr-Light",
+            "fill": "#fff",
+            "align": "center",
+            "lineHeight": 50,
+            "padding": 50,
+            "y": 310
+        },
+        "spinner": {
+        	"url_1": "i/s1/spin1.svg",
+        	"url_2": "i/s1/spin2.svg",
+            "anchor": 0.5,
+            "x": -5,
+            "y": 600
+        }
+    },
+    "slide_2": {},
+    "slide_3": {},
+    "slide_4": {},
+    "slide_5": {},
+    "slide_6": {},
+    "slide_7": {},
+    "slide_8": {}
+}

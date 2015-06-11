@@ -29,6 +29,8 @@ var $body = $("body"),
 	slide_container_7 = null,
 	slide_container_8 = null,
 
+	DATA = {},
+
 	active_slide = 1,
 	active_scene = 1,
 
@@ -66,8 +68,15 @@ App.init = function() {
 
     if( $(window).width() <= 1000 ) mobile_version = true;
 
-  	App.Binder();
-  	App.SlideController.init();
+   	$.getJSON("data/data.json")
+    	.success(function(data) {
+    		DATA = data;
+			App.Binder();
+			App.SlideController.init();
+    	})
+	    .fail(function() {
+	    	console.log("FAIL: Can't get json data");
+	    });
 };
 // END: App
 

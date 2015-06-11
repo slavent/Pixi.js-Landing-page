@@ -1,49 +1,75 @@
 {
-	"slide_1" : {
-
-		"slider" : [
-				{ "url" : "i/s1/slide_1.jpg", "x_pos" : -25, "color" : "0xffffff" },
-				{ "url" : "i/s1/slide_2.jpg", "x_pos" : 0, "color" : "0xffffff" },
-				{ "url" : "i/s1/slide_3.jpg", "x_pos" : 25, "color" : "0xffffff" }
-		],
-
-		"logo" : {
-			"url": "i/s1/logo_main.svg"
-		},
-
-		"title" : {
-			"default" : "ДОБРО ПОЖАЛОВАТЬ В ЛАБОРАТОРИЮ\nСТИЛЯ «МОДНОГО ПРИГОВОРА»!",
-			"mobile" : "ДОБРО ПОЖАЛОВАТЬ\nВ ЛАБОРАТОРИЮ СТИЛЯ\n«МОДНОГО ПРИГОВОРА»!"
-		}
-
-	},
-
-	"slide_2" : {
-
-	},
-
-	"slide_3" : {
-
-	},
-
-	"slide_4" : {
-
-	},
-
-	"slide_5" : {
-
-	},
-
-	"slide_6" : {
-
-	},
-
-	"slide_7" : {
-
-	},
-
-	"slide_8" : {
-
-	},
-
+    "slide_1": {
+        "slider": {
+        	"slides": [
+        		{
+	                "url": "i/s1/slide_3.jpg",
+	                "anchor": 0.5,
+	                "scale": 1
+	            },
+	            {
+	                "url": "i/s1/slide_2.jpg",
+	                "anchor": 0.5,
+	                "scale": 1
+	            },
+	            {
+	                "url": "i/s1/slide_1.jpg",
+	                "anchor": 0.5,
+	                "scale": 1
+	            }
+        	],
+        	"dotes": [
+                {
+                    "x": -25,
+                    "y": 200,
+                    "r": 5,
+                    "fill": "0xffffff",
+                    "fill_active": "0xff7d7a"
+                },
+                {
+                    "x": 0,
+                    "y": 200,
+                    "r": 5,
+                    "fill": "0xffffff",
+                    "fill_active": "0xff7d7a"
+                },
+                {
+                    "x": 25,
+                    "y": 200,
+                    "r": 5,
+                    "fill": "0xffffff",
+                    "fill_active": "0xff7d7a"
+                }
+           ]
+        },
+        "logo": {
+            "url": "i/s1/logo_main.svg",
+            "anchor": 0.5,
+            "scale": 0.45,
+            "y": 0
+        },
+        "title": {
+        	"text": "ДОБРО ПОЖАЛОВАТЬ В ЛАБОРАТОРИЮ\nСТИЛЯ «МОДНОГО ПРИГОВОРА»!",
+        	"font": "38px HelveticaNeueCyr-Light",
+            "fill": "#fff",
+            "align": "center",
+            "lineHeight": 50,
+            "padding": 50,
+            "y": 180
+        },
+        "spinner": {
+        	"url_1": "i/s1/spin1.svg",
+        	"url_2": "i/s1/spin2.svg",
+            "anchor": 0.5,
+            "x": -5,
+            "y": 350
+        }
+    },
+    "slide_2": {},
+    "slide_3": {},
+    "slide_4": {},
+    "slide_5": {},
+    "slide_6": {},
+    "slide_7": {},
+    "slide_8": {}
 }
