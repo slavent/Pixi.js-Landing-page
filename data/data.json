@@ -65,7 +65,80 @@
             "y": 350
         }
     },
-    "slide_2": {},
+    "slide_2": {
+    	"title_1": {
+    		"text": "ЛУЧШИЕ СТИЛИСТЫ РОССИИ\nПРЕДЛАГАЮТ ВАМ СОЗДАТЬ",
+    		"font": "38px HelveticaNeueCyr-Light",
+		    "fill": "#3c3c3c",
+		    "align": "center",
+		    "lineHeight": 50,
+		    "padding": 50,
+		    "y": -140,
+		    "speed": 300,
+			"init_wait": 900,
+			"destroy_wait": 200
+    	},
+    	"title_2": {
+    		"text": "ПЕРСОНАЛЬНЫЙ",
+    		"font": "52px HelveticaNeueCyr-Light",
+		    "fill": "#fa6464",
+		    "align": "center",
+		    "lineHeight": 50,
+		    "padding": 50,
+		    "y": -60,
+		    "speed": 500,
+			"init_wait": 500,
+			"destroy_wait": 300
+    	},
+    	"title_3": {
+    		"text": "ИМИДЖ-ГАЙД",
+    		"font": "bold 100px Plumb-Black",
+		    "fill": "#fa6464",
+		    "align": "center",
+		    "lineHeight": 50,
+		    "padding": 90,
+		    "x1": 80,
+		    "x2": 20,
+		    "speed": 500,
+			"speed2": 200,
+			"init_wait": 200,
+			"destroy_wait": 500
+    	},
+    	"title_4": {
+    		"text": "- ПОДРОБНОЕ РУКОВОДСТВО\nПО ПРЕОБРАЖЕНИЮ",
+    		"font": "38px HelveticaNeueCyr-Light",
+		    "fill": "#3c3c3c",
+		    "align": "center",
+		    "lineHeight": 50,
+		    "padding": 50,
+		    "y": 130,
+		    "speed": 300,
+			"init_wait": 900,
+			"destroy_wait": 200
+
+    	},
+    	"info": {
+    		"text": "Имидж-гайд – это ваша личная книга стиля. Десятки\nкрасочных иллюстраций, детальный разбор вашего\nгардероба и практические советы по улучшению\nвашего образа – все это на страницах\nперсонального имидж-гайда. ",
+    		"font": "21px HelveticaNeueCyr-Light",
+		    "fill": "#fa6464",
+		    "align": "center",
+		    "padding": 20,
+		    "y": 250,
+		    "x": 0,
+		    "speed": 500,
+			"init_wait": 1100
+    	},
+    	"border": {
+    		"fill": "0xfa6464",
+    		"borderWidth": 3,
+    		"y": 150,
+    		"x": 320,
+    		"width": 560,
+    		"height": 170,
+    		"speed": 500,
+			"init_wait": 1100
+    	}
+    },
     "slide_3": {},
     "slide_4": {},
     "slide_5": {},
