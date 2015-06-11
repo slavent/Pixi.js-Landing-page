@@ -13,11 +13,11 @@ App.managerService.slide_1 = {
 		stage.addChild(slide_container_1);
 
 		createjs.Tween.get(slide_container_1)
-				.to({ alpha: 1 }, 500, createjs.Ease.getPowInOut(4))
-				.call(function() {
-					$main_menu.css({ "top" : -70 });
-					$menu_icon.show();
-				});
+			.to({ alpha: 1 }, 500, createjs.Ease.getPowInOut(4))
+			.call(function() {
+				$main_menu.css({ "top" : -70 });
+				$menu_icon.show();
+			});
 
 		var deferred = $.Deferred(),
 			that = this;
@@ -34,21 +34,21 @@ App.managerService.slide_1 = {
 		console.log("Slide 1 destroy");
 
 		createjs.Tween.get(slide_container_1)
-				.to({ alpha: 0 }, 1000, createjs.Ease.getPowInOut(4))
-				.call(function() {
-					slide_container_1 = null;
+			.to({ alpha: 0 }, 1000, createjs.Ease.getPowInOut(4))
+			.call(function() {
+				slide_container_1 = null;
 
-					setTimeout(function() {
-						if( mobile_version != true ) $main_menu.css({ "top" : 0 });
-					}, 1000);
+				setTimeout(function() {
+					if( mobile_version != true ) $main_menu.css({ "top" : 0 });
+				}, 1000);
 
-					if( mobile_version == true ) $menu_icon.addClass("red");
-					else $menu_icon.hide();
+				if( mobile_version == true ) $menu_icon.addClass("red");
+				else $menu_icon.hide();
 
-					$menu_popup.hide();
-				});
+				$menu_popup.hide();
+			});
 
-			this.update_flag = false;
+		this.update_flag = false;
 	},
 
 	update: function() {
@@ -206,19 +206,22 @@ App.managerService.slide_1 = {
 			el: null,
 
 			init: function() {
-				var texture = PIXI.Texture.fromImage(DATA.slide_1.logo.url);
+				var data = DATA.slide_1.logo,
+					texture = PIXI.Texture.fromImage(data.url);
 				this.el = new PIXI.Sprite(texture);
-				this.el.anchor.set(DATA.slide_1.logo.anchor);
+				this.el.anchor.set(data.anchor);
 				this.el.position.x = renderer.width / 2;
-				this.el.position.y = renderer.height / 2 + DATA.slide_1.logo.y;
-				this.el.scale.set(DATA.slide_1.logo.scale);
+				this.el.position.y = renderer.height / 2 + data.y;
+				this.el.scale.set(data.scale);
 
 				slide_container_1.addChild(this.el);
 			},
 
 			update: function() {
+				var data = DATA.slide_1.logo;
+
 				this.el.position.x = renderer.width / 2;
-				this.el.position.y = renderer.height / 2 + DATA.slide_1.logo.y;
+				this.el.position.y = renderer.height / 2 + data.y;
 			}
 
 		},
@@ -228,24 +231,27 @@ App.managerService.slide_1 = {
 			el: null,
 
 			init: function() {
-				var style = {
-					font 		: DATA.slide_1.title.font,
-				    fill 		: DATA.slide_1.title.fill,
-				    align 		: DATA.slide_1.title.align,
-				    lineHeight 	: DATA.slide_1.title.lineHeight,
-				    padding 	: DATA.slide_1.title.padding
-				};
+				var data = DATA.slide_1.title,
+					style = {
+						font 		: data.font,
+					    fill 		: data.fill,
+					    align 		: data.align,
+					    lineHeight 	: data.lineHeight,
+					    padding 	: data.padding
+					};
 
-				this.el = new PIXI.Text(DATA.slide_1.title.text, style);
+				this.el = new PIXI.Text(data.text, style);
 				this.el.x = (renderer.width - this.el.width) / 2;
-				this.el.y = ((renderer.height - this.el.height) / 2) + DATA.slide_1.title.y;
+				this.el.y = ((renderer.height - this.el.height) / 2) + data.y;
 
 				slide_container_1.addChild(this.el);
 			},
 
-			update: function() {						
+			update: function() {	
+				var data = DATA.slide_1.title;
+
 				this.el.x = (renderer.width - this.el.width) / 2;
-				this.el.y = ((renderer.height - this.el.height) / 2) + DATA.slide_1.title.y;
+				this.el.y = ((renderer.height - this.el.height) / 2) + data.y;
 			}
 
 		},
@@ -257,31 +263,33 @@ App.managerService.slide_1 = {
 			step: 0,
 
 			init: function() {
-				var texture_1 = PIXI.Texture.fromImage(DATA.slide_1.spinner.url_1),
-					texture_2 = PIXI.Texture.fromImage(DATA.slide_1.spinner.url_2);
+				var data = DATA.slide_1.spinner,
+					texture_1 = PIXI.Texture.fromImage(data.url_1),
+					texture_2 = PIXI.Texture.fromImage(data.url_2);
 
 				this.el_1 = new PIXI.Sprite(texture_1);
-				this.el_1.anchor.set(DATA.slide_1.spinner.anchor);
+				this.el_1.anchor.set(data.anchor);
 				this.el_1.buttonMode = true;
 				this.el_1.interactive = true;
-				this.el_1.position.x = renderer.width / 2 + DATA.slide_1.spinner.x;
-				this.el_1.position.y = renderer.height / 2 + DATA.slide_1.spinner.y;
+				this.el_1.position.x = renderer.width / 2 + data.x;
+				this.el_1.position.y = renderer.height / 2 + data.y;
 				this.el_1.on("click", function() {
 					App.SlideController.moveTo(active_slide, ++active_slide);
 				});
 
 				this.el_2 = new PIXI.Sprite(texture_2);
-				this.el_2.anchor.set(DATA.slide_1.spinner.anchor);
+				this.el_2.anchor.set(data.anchor);
 
 				this.el_1.addChild(this.el_2);
 				slide_container_1.addChild(this.el_1); 
 			},
 
 			update: function() {
-				this.step += 0.06;
+				var data = DATA.slide_1.spinner;
 
-				this.el_1.position.x = renderer.width / 2 + DATA.slide_1.spinner.x;
-				this.el_1.position.y = renderer.height / 2 + DATA.slide_1.spinner.y;
+				this.step += 0.06;
+				this.el_1.position.x = renderer.width / 2 + data.x;
+				this.el_1.position.y = renderer.height / 2 + data.y;
 				this.el_2.position.y += Math.sin(this.step);
 			}
 
