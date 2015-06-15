@@ -68,7 +68,11 @@ App.init = function() {
 
     if( $(window).width() <= 1000 ) mobile_version = true;
 
-   	$.getJSON("data/data.json")
+    var url;
+    if( mobile_version == true ) url = "data/data_mobile.json";
+    else url = "data/data.json";
+
+   	$.getJSON(url)
     	.success(function(data) {
     		DATA = data;
 			App.Binder();
