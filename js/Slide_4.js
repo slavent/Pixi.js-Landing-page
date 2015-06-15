@@ -29,102 +29,93 @@ App.managerService.slide_4 = {
 	},
 
 	update: function() {
-		if( this.update_flag == true ) {
+		if( this.update_flag == true )
 			for (var key in this.elems) this.elems[key].update();
-		}
 	},
 
 	elems: {
 
 		title: {
 
-			anim_params: {
-				speed: 500,
-				init_wait: 1700,
-				destroy_wait: 200
-			},
-
 			el: null,
 
 			init: function() {
 
-				var style = {
-						font : "30px HelveticaNeueCyr-Light",
-					    fill : "#ff7d7a"
+				var data = DATA.slide_4.title,
+					style = {
+						font : data.font,
+					    fill : data.fill
 					};
 
-				this.el = new PIXI.Text("Выберите стиль", style);
-				this.el.anchor.x = .5;
-				this.el.anchor.y = .5;
+				this.el = new PIXI.Text(data.text, style);
+				this.el.anchor.set(data.anchor);
 				this.el.x = renderer.width / 2;
 				this.el.y = -100;
 
 				slide_container_4.addChild(this.el);
 
 				createjs.Tween.get(this.el)
-					.wait(this.anim_params.init_wait)
-						.to({ y: 120 }, this.anim_params.speed, createjs.Ease.getPowInOut(4));
+					.wait(data.init_wait)
+					.to({ y: data.y }, data.speed, createjs.Ease.getPowInOut(4));
 
 			},
 
 			destroy: function() {
+				var data = DATA.slide_4.title;
 
 				createjs.Tween.get(this.el)
-					.wait(this.anim_params.destroy_wait)
-						.to({ y: -100 }, this.anim_params.speed, createjs.Ease.getPowInOut(4));
-
+					.wait(data.destroy_wait)
+					.to({ y: -100 }, data.speed, createjs.Ease.getPowInOut(4));
 			},
 
 			update: function() {
+				var data = DATA.slide_4.title;
+
 				this.el.x = renderer.width / 2;
-				this.el.y = 120;
+				this.el.y = data.y;
 			}
 
 		},
 
 		info: {
 
-			anim_params: {
-				speed: 500,
-				init_wait: 1500,
-				destroy_wait: 400
-			},
-
 			el: null,
 
 			init: function() {
 
-				var style = {
-						font : "16px HelveticaNeueCyr-Light",
-					    fill : "#3c3c3c",
-					    align: "center"
+				var data = DATA.slide_4.info,
+					style = {
+						font 	: data.font,
+					    fill 	: data. fill,
+					    align	: data.align
 					};
 
-				this.el = new PIXI.Text("Хотите стать более женственной, спортивной, строгой или утонченной? Специально\nдля вас, учитывая особенности вашей внешности, профессиональные стилисты\nсоставят пять комплектов одежды в выбранном стиле.", style);
-				this.el.anchor.x = .5;
-				this.el.anchor.y = .5;
+				this.el = new PIXI.Text(data.text, style);
+				this.el.anchor.set(data.anchor);
 				this.el.x = renderer.width / 2;
 				this.el.y = -100;
 
 				slide_container_4.addChild(this.el);
 
 				createjs.Tween.get(this.el)
-					.wait(this.anim_params.init_wait)
-						.to({ y: 180 }, this.anim_params.speed, createjs.Ease.getPowInOut(4));
+					.wait(data.init_wait)
+						.to({ y: data.y }, data.speed, createjs.Ease.getPowInOut(4));
 
 			},
 
 			destroy: function() {
+				var data = DATA.slide_4.info;
 
 				createjs.Tween.get(this.el)
-					.wait(this.anim_params.destroy_wait)
-						.to({ y: -100 }, this.anim_params.speed, createjs.Ease.getPowInOut(4));
-
+					.wait(data.destroy_wait)
+					.to({ y: -100 }, data.speed, createjs.Ease.getPowInOut(4));
 			},
 
 			update: function() {
+				var data = DATA.slide_4.info;
+
 				this.el.x = renderer.width / 2;
-				this.el.y = 180;
+				this.el.y = data.y;
 			}
 
 		},
@@ -138,14 +129,8 @@ App.managerService.slide_4 = {
 
 			init: function() {
 
-				var data = [
-					{ url: "i/s4/slide_1.png", title: "Casual", description: "Одежда для настоящих\nмечтательниц" },
-					{ url: "i/s4/slide_2.png", title: "Романтический", description: "Одежда для настоящих\nмечтательниц" },
-					{ url: "i/s4/slide_3.png", title: "Классика", description: "Одежда для настоящих\nмечтательниц" },
-					{ url: "i/s4/slide_1.png", title: "Casual", description: "Одежда для настоящих\nмечтательниц" },
-					{ url: "i/s4/slide_2.png", title: "Романтический", description: "Одежда для настоящих\nметчательниц" },
-					{ url: "i/s4/slide_3.png", title: "Классика", description: "Одежда для настоящих\nмечтательниц" }
-				],
+				var data = DATA.slide_4.slider,
+					data_slides = data.slides,
 					slides = new PIXI.Container(),
 					slide_ind = 0,
 					slide_scale = 1;
@@ -154,8 +139,8 @@ App.managerService.slide_4 = {
 				slides.alpha = 0;
 				slides = new PIXI.Graphics();
 				slides.lineStyle(2, 0x0000FF, 0);
-				slides.beginFill(0xff7d7a, 1);
-				slides.drawRect(0, 0, renderer.width, 250);
+				slides.beginFill(data.bg.fill, 1);
+				slides.drawRect(0, 0, renderer.width, data.bg.height);
 				slides.y = renderer.height * 2;
 
 				this.el = slides;
@@ -164,34 +149,34 @@ App.managerService.slide_4 = {
 
 					// Title
 					var title_style = {
-						font : "30px HelveticaNeueCyr-Light",
-					    fill : "#ffffff"
+						font : data.titles.font,
+					    fill : data.titles.fill
 					};
 
 					this.title = new PIXI.Text(title, title_style);
-					this.title.position.y = 430;
-					this.title.anchor.x = .5;
+					this.title.position.y = data.titles.y;
+					this.title.anchor.x = data.titles.anchor;
 
 					// Line
 					this.line = new PIXI.Graphics();
 					this.line.beginFill(0xffffff);
-					this.line.lineStyle(1, 0xffffff, 1);
+					this.line.lineStyle(1, data.lines.fill, 1);
 					this.line.moveTo(0,0);
 					this.line.lineTo(100,0);
 					this.line.endFill();
-					this.line.position.x = -50;
-					this.line.position.y = 475;
+					this.line.position.x = data.lines.x;
+					this.line.position.y = data.lines.y;
 
 					// Description
 					var description_style = {
-						font : "16px HelveticaNeueCyr-Light",
-					    fill : "#ffffff",
-					    align: "center"
+						font : data.description.font,
+					    fill : data.description.fill,
+					    align: data.description.align
 					};
 
 					this.description = new PIXI.Text(description, description_style);
-					this.description.position.y = 485;
-					this.description.anchor.x = .5;
+					this.description.position.y = data.description.y;
+					this.description.anchor.x = data.description.anchor;
 
 					// Photo
 					this.texture = PIXI.Texture.fromImage(url);
@@ -229,8 +214,8 @@ App.managerService.slide_4 = {
 
 				}
 
-				for(var i = 0; i < data.length; i++) {
-					var slide = new Slide( i, data[i].url, data[i].title, data[i].description );
+				for(var i = 0; i < data_slides.length; i++) {
+					var slide = new Slide( i, data_slides[i].url, data_slides[i].title, data_slides[i].description );
 					
 					slides.addChild(slide);
 				}
@@ -238,22 +223,21 @@ App.managerService.slide_4 = {
 				slide_container_4.addChild(slides);
 
 				createjs.Tween.get(slides)
-					.to({ alpha: 1, y: renderer.height - 250 }, 1000, createjs.Ease.getPowInOut(4))
+					.to({ alpha: 1, y: renderer.height - 250 }, data.speed, createjs.Ease.getPowInOut(4))
 					.call(function() {
 						for(var i = 0; i < slides.children.length; i++) {
 							createjs.Tween.get(slides.children[i])
-								.to({ y: -400 * slide_scale }, 1000, createjs.Ease.getPowInOut(4));
+								.to({ y: -400 * slide_scale }, data.speed, createjs.Ease.getPowInOut(4));
 						}
 					});
 
 				// Prev btn
-				var prev_btn_texture = PIXI.Texture.fromImage("i/s4/prev.png"),
+				var prev_btn_texture = PIXI.Texture.fromImage(data.prevBtn.url),
 					prev_btn = new PIXI.Sprite(prev_btn_texture);
 
 				this.prev_btn = prev_btn;
 
-				prev_btn.anchor.x = .5;
-				prev_btn.anchor.y = .5;
+				prev_btn.anchor.set(data.prevBtn.anchor);
 				prev_btn.position.x = -200;
 				prev_btn.position.y = renderer.height / 2;
 				prev_btn.buttonMode = true;
@@ -261,15 +245,15 @@ App.managerService.slide_4 = {
 				prev_btn.on("click", function() {
 					if(slide_ind != 0) {
 						createjs.Tween.get(slides.children[slide_ind - 1])
-								.to({ x: renderer.width / 2 - 350 }, 800, createjs.Ease.getPowInOut(4));
+								.to({ x: renderer.width / 2 - 350 }, data.animSpeed, createjs.Ease.getPowInOut(4));
 
 						for(var i = slide_ind; i < slide_ind + 2; i++) {
 							createjs.Tween.get(slides.children[i])
-								.to({ x: slides.children[i].position.x + 350 }, 800, createjs.Ease.getPowInOut(4));
+								.to({ x: slides.children[i].position.x + 350 }, data.animSpeed, createjs.Ease.getPowInOut(4));
 						}
 
 						createjs.Tween.get(slides.children[slide_ind + 2])
-								.to({ x: renderer.width * 2}, 800, createjs.Ease.getPowInOut(4));
+								.to({ x: renderer.width * 2}, data.animSpeed, createjs.Ease.getPowInOut(4));
 
 						slide_ind--;
 					}
@@ -278,17 +262,16 @@ App.managerService.slide_4 = {
 				slide_container_4.addChild(prev_btn);
 
 				createjs.Tween.get(prev_btn)
-					.wait(1200)
-					.to({ x: 100 }, 1000, createjs.Ease.getPowInOut(4));
+					.wait(data.prevBtn.init_wait)
+					.to({ x: data.prevBtn.x }, data.prevBtn.speed, createjs.Ease.getPowInOut(4));
 
 				// Next btn
-				var next_btn_texture = PIXI.Texture.fromImage("i/s4/next.png"),
+				var next_btn_texture = PIXI.Texture.fromImage(data.nextBtn.url),
 					next_btn = new PIXI.Sprite(next_btn_texture);
 
 				this.next_btn = next_btn;
 
-				next_btn.anchor.x = .5;
-				next_btn.anchor.y = .5;
+				next_btn.anchor.set(data.nextBtn.anchor);
 				next_btn.position.x = renderer.width + 100;
 				next_btn.position.y = renderer.height / 2;
 				next_btn.buttonMode = true;
@@ -296,15 +279,15 @@ App.managerService.slide_4 = {
 				next_btn.on("click", function() {
 					if(slide_ind != slides.children.length - 3) {
 						createjs.Tween.get(slides.children[slide_ind])
-								.to({ x: -renderer.width * 2 }, 800, createjs.Ease.getPowInOut(4));
+								.to({ x: -renderer.width * 2 }, data.animSpeed, createjs.Ease.getPowInOut(4));
 
 						for(var i = slide_ind + 1; i < slide_ind + 3; i++) {
 							createjs.Tween.get(slides.children[i])
-								.to({ x: slides.children[i].position.x - 350 }, 800, createjs.Ease.getPowInOut(4));
+								.to({ x: slides.children[i].position.x - 350 }, data.animSpeed, createjs.Ease.getPowInOut(4));
 						}
 
 						createjs.Tween.get(slides.children[slide_ind + 3])
-								.to({ x: renderer.width / 2 + 350}, 800, createjs.Ease.getPowInOut(4));
+								.to({ x: renderer.width / 2 + 350}, data.animSpeed, createjs.Ease.getPowInOut(4));
 
 						slide_ind++;
 					}
@@ -313,23 +296,27 @@ App.managerService.slide_4 = {
 				slide_container_4.addChild(next_btn);
 
 				createjs.Tween.get(next_btn)
-					.wait(1200)
-					.to({ x: renderer.width - 100 }, 1000, createjs.Ease.getPowInOut(4));
+					.wait(data.nextBtn.init_wait)
+					.to({ x: renderer.width - 100 }, data.nextBtn.speed, createjs.Ease.getPowInOut(4));
 
 			},
 
 			destroy: function() {
+				var data = DATA.slide_4.slider;
+
 				createjs.Tween.get(this.el)
-					.to({ y: 2000 }, 1000, createjs.Ease.getPowInOut(4));
+					.to({ y: 2000 }, data.speed, createjs.Ease.getPowInOut(4));
 
 				createjs.Tween.get(this.prev_btn)
-					.to({ x: -200 }, 1000, createjs.Ease.getPowInOut(4));
+					.to({ x: -200 }, data.prevBtn.speed, createjs.Ease.getPowInOut(4));
 
 				createjs.Tween.get(this.next_btn)
-					.to({ x: renderer.width + 200 }, 1000, createjs.Ease.getPowInOut(4));
+					.to({ x: renderer.width + 200 }, data.nextBtn.speed, createjs.Ease.getPowInOut(4));
 			},
 
 			update: function() {
+				var data = DATA.slide_4.slider;
+
 				this.slides.position.y = renderer.height - 250;
 				this.prev_btn.position.x = 100;
 				this.prev_btn.position.y = renderer.height / 2;

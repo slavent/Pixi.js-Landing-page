@@ -29,9 +29,8 @@ App.managerService.slide_5 = {
 	},
 
 	update: function() {
-		if( this.update_flag == true ) {
+		if( this.update_flag == true )
 			for (var key in this.elems) this.elems[key].update();
-		}
 	},
 
 	elems: {
@@ -40,32 +39,28 @@ App.managerService.slide_5 = {
 
 			el: null,
 
-			anim_params: {
-				speed: 2000,
-				destroy_wait: 0
-			},
-
 			init: function() {
-
-				var texture = PIXI.Texture.fromImage("i/s5/magazine.png");
+				var data = DATA.slide_5.magazine,
+					texture = PIXI.Texture.fromImage(data.url);
 
 				this.el = new PIXI.Sprite(texture);
 
-				this.el.anchor.set(0.5);
+				this.el.anchor.set(data.anchor);
 				this.el.position.x = renderer.width / 2;
 				this.el.position.y = renderer.height * 2;
 
 				slide_container_5.addChild(this.el);
 
 				createjs.Tween.get(this.el)
-						.to({ y: renderer.height / 2 }, this.anim_params.speed, createjs.Ease.getPowInOut(4));
-
+					.to({ y: renderer.height / 2 }, data.speed, createjs.Ease.getPowInOut(4));
 			},
 
 			destroy: function() {
+				var data = DATA.slide_5.magazine;
+
 				createjs.Tween.get(this.el)
-					.wait(this.anim_params.destroy_wait)
-						.to({ y: renderer.height * 2 }, this.anim_params.speed, createjs.Ease.getPowInOut(4));
+					.wait(data.destroy_wait)
+					.to({ y: renderer.height * 2 }, data.speed, createjs.Ease.getPowInOut(4));
 			},
 
 			update: function() {
@@ -78,10 +73,11 @@ App.managerService.slide_5 = {
 		orderBtn: {
 
 			init: function() {
+				var data = DATA.slide_5.orderBtn;
 
 				setTimeout(function() {
 					$order_btn.addClass("active");
-				}, 1000);
+				}, data.init_wait);
 
 			},
 
@@ -101,42 +97,41 @@ App.managerService.slide_5 = {
 
 			el: null,
 
-			anim_params: {
-				speed: 2000,
-				init_wait: 500,
-				destroy_wait: 0
-			},
-
 			init: function() {
-				var style = {
-						font : '20px Myriad Pro',
-					    fill : '#3c3c3c',
-					    align : "left",
-					    padding : 50
+				var data = DATA.slide_5.title_1,
+					style = {
+						font 	: data.font,
+					    fill 	: data.fill,
+					    align 	: data.align,
+					    padding : data.padding
 					};
 
-				this.el = new PIXI.Text("Стоимость базовой\nверсии", style);
+				this.el = new PIXI.Text(data.text, style);
 
-				this.el.x = (renderer.width - this.el.width) / 2 - 350;	
+				this.el.x = (renderer.width - this.el.width) / 2 + data.x;	
 				this.el.y = -renderer.height;
 
 				slide_container_5.addChild(this.el);
 
 				createjs.Tween.get(this.el)
-					.wait(this.anim_params.init_wait)
-						.to({ y: ((renderer.height - this.el.height) / 2) - 220 }, this.anim_params.speed, createjs.Ease.getPowInOut(4));
+					.wait(data.init_wait)
+					.to({ y: ((renderer.height - this.el.height) / 2) + data.y }, data.speed, createjs.Ease.getPowInOut(4));
 
 			},
 
 			destroy: function() {
+				var data = DATA.slide_5.title_1;
+
 				createjs.Tween.get(this.el)
-					.wait(this.anim_params.destroy_wait)
-						.to({ y: -renderer.height }, this.anim_params.speed, createjs.Ease.getPowInOut(4));
+					.wait(data.destroy_wait)
+					.to({ y: -renderer.height }, data.speed, createjs.Ease.getPowInOut(4));
 			},
 
 			update: function() {
-				this.el.x = (renderer.width - this.el.width) / 2 - 350;	
-				this.el.y = ((renderer.height - this.el.height) / 2) - 220;
+				var data = DATA.slide_5.title_1;
+
+				this.el.x = (renderer.width - this.el.width) / 2 + data.x;	
+				this.el.y = ((renderer.height - this.el.height) / 2) + data.y;
 			}
 
 		},
@@ -145,40 +140,39 @@ App.managerService.slide_5 = {
 
 			el: null,
 
-			anim_params: {
-				speed: 2000,
-				init_wait: 500,
-				destroy_wait: 0
-			},
-
 			init: function() {
-				var style = {
-						font : '20px Myriad Pro',
-					    fill : '#3c3c3c'
+				var data = DATA.slide_5.title_2,
+					style = {
+						font : data.font,
+					    fill : data.fill
 					};
 
-				this.el = new PIXI.Text("Срок изготовления", style);
+				this.el = new PIXI.Text(data.text, style);
 
-				this.el.x = (renderer.width - this.el.width) / 2 + 260;	
+				this.el.x = (renderer.width - this.el.width) / 2 + data.x;	
 				this.el.y = -renderer.height;
 
 				slide_container_5.addChild(this.el);
 
 				createjs.Tween.get(this.el)
-					.wait(this.anim_params.init_wait)
-						.to({ y: ((renderer.height - this.el.height) / 2) - 230 }, this.anim_params.speed, createjs.Ease.getPowInOut(4));	
+					.wait(data.init_wait)
+						.to({ y: ((renderer.height - this.el.height) / 2) + data.y }, data.speed, createjs.Ease.getPowInOut(4));	
 
 			},
 
 			destroy: function() {
+				var data = DATA.slide_5.title_2;
+
 				createjs.Tween.get(this.el)
-					.wait(this.anim_params.destroy_wait)
-						.to({ y: -renderer.height }, this.anim_params.speed, createjs.Ease.getPowInOut(4));	
+					.wait(data.destroy_wait)
+					.to({ y: -renderer.height }, data.speed, createjs.Ease.getPowInOut(4));	
 			},
 
 			update: function() {
-				this.el.x = (renderer.width - this.el.width) / 2 + 260;	
-				this.el.y = ((renderer.height - this.el.height) / 2) - 230;
+				var data = DATA.slide_5.title_2;
+
+				this.el.x = (renderer.width - this.el.width) / 2 + data.x;	
+				this.el.y = ((renderer.height - this.el.height) / 2) + data.y;
 			}
 
 		},
@@ -187,40 +181,39 @@ App.managerService.slide_5 = {
 
 			el: null,
 
-			anim_params: {
-				speed: 2000,
-				init_wait: 500,
-				destroy_wait: 0
-			},
-
 			init: function() {
-				var style = {
-						font : '14px HelveticaNeueCyr-Light',
-					    fill : '#3c3c3c'
+				var data = DATA.slide_5.title_3,
+					style = {
+						font : data.font,
+					    fill : data.fill
 					};
 
-				this.el = new PIXI.Text("Стоимость за каждый\nдополнительный", style);
+				this.el = new PIXI.Text(data.text, style);
 
-				this.el.x = (renderer.width - this.el.width) / 2 + 175;	
+				this.el.x = (renderer.width - this.el.width) / 2 + data.x;	
 				this.el.y = -renderer.height;
 
 				slide_container_5.addChild(this.el);
 
 				createjs.Tween.get(this.el)
-					.wait(this.anim_params.init_wait)
-						.to({ y: ((renderer.height - this.el.height) / 2) + 220 }, this.anim_params.speed, createjs.Ease.getPowInOut(4));	
+					.wait(data.init_wait)
+						.to({ y: ((renderer.height - this.el.height) / 2) + data.y }, data.speed, createjs.Ease.getPowInOut(4));	
 
 			},
 
 			destroy: function() {
+				var data = DATA.slide_5.title_3;
+
 				createjs.Tween.get(this.el)
-					.wait(this.anim_params.destroy_wait)
-						.to({ y: -renderer.height }, this.anim_params.speed, createjs.Ease.getPowInOut(4));	
+					.wait(data.destroy_wait)
+					.to({ y: -renderer.height }, data.speed, createjs.Ease.getPowInOut(4));	
 			},
 
 			update: function() {
-				this.el.x = (renderer.width - this.el.width) / 2 + 175;	
-				this.el.y = ((renderer.height - this.el.height) / 2) + 220;
+				var data = DATA.slide_5.title_3;
+
+				this.el.x = (renderer.width - this.el.width) / 2 + data.x;	
+				this.el.y = ((renderer.height - this.el.height) / 2) + data.y;
 			}
 
 		},
@@ -229,40 +222,39 @@ App.managerService.slide_5 = {
 
 			el: null,
 
-			anim_params: {
-				speed: 2000,
-				init_wait: 500,
-				destroy_wait: 0
-			},
-
 			init: function() {
-				var style = {
-						font : '14px HelveticaNeueCyr-Light',
-					    fill : '#b48264'
+				var data = DATA.slide_5.title_4,
+					style = {
+						font : data.font,
+					    fill : data.fill
 					};
 
-				this.el = new PIXI.Text("Стиль, мероприятие или праздник", style);
+				this.el = new PIXI.Text(data.text, style);
 
-				this.el.x = (renderer.width - this.el.width) / 2 + 215;	
+				this.el.x = (renderer.width - this.el.width) / 2 + data.x;	
 				this.el.y = -renderer.height;
 
 				slide_container_5.addChild(this.el);
 
 				createjs.Tween.get(this.el)
-					.wait(this.anim_params.init_wait)
-						.to({ y: ((renderer.height - this.el.height) / 2) + 247 }, this.anim_params.speed, createjs.Ease.getPowInOut(4));	
+					.wait(data.init_wait)
+					.to({ y: ((renderer.height - this.el.height) / 2) + data.y }, data.speed, createjs.Ease.getPowInOut(4));	
 
 			},
 
 			destroy: function() {
+				var data = DATA.slide_5.title_4;
+
 				createjs.Tween.get(this.el)
-					.wait(this.anim_params.destroy_wait)
-						.to({ y: -renderer.height }, this.anim_params.speed, createjs.Ease.getPowInOut(4));	
+					.wait(data.destroy_wait)
+					.to({ y: -renderer.height }, data.speed, createjs.Ease.getPowInOut(4));	
 			},
 
 			update: function() {
-				this.el.x = (renderer.width - this.el.width) / 2 + 215;	
-				this.el.y = ((renderer.height - this.el.height) / 2) + 247;
+				var data = DATA.slide_5.title_4;
+
+				this.el.x = (renderer.width - this.el.width) / 2 + data.x;	
+				this.el.y = ((renderer.height - this.el.height) / 2) + data.y;
 			}
 
 		},
@@ -271,41 +263,38 @@ App.managerService.slide_5 = {
 
 			el: null,
 
-			anim_params: {
-				speed: 2000,
-				init_wait: 500,
-				destroy_wait: 0
-			},
-
 			init: function() {
-
-				var style = {
-						font : '120px Plumb-Black',
-					    fill : '#fa6464'
+				var data = DATA.slide_5.price_1,
+					style = {
+						font : data.font,
+					    fill : data.fill
 					};
 
-				this.el = new PIXI.Text("2999", style);
+				this.el = new PIXI.Text(data.text, style);
 
-				this.el.x = (renderer.width - this.el.width) / 2 - 230;	
+				this.el.x = (renderer.width - this.el.width) / 2 + data.x;	
 				this.el.y = -renderer.height;
 
 				slide_container_5.addChild(this.el);
 
 				createjs.Tween.get(this.el)
-					.wait(this.anim_params.init_wait)
-						.to({ y: ((renderer.height - this.el.height) / 2) - 225 }, this.anim_params.speed, createjs.Ease.getPowInOut(4));
-
+					.wait(data.init_wait)
+					.to({ y: ((renderer.height - this.el.height) / 2) + data.y }, data.speed, createjs.Ease.getPowInOut(4));
 			},
 
 			destroy: function() {
+				var data = DATA.slide_5.price_1;
+
 				createjs.Tween.get(this.el)
-					.wait(this.anim_params.destroy_wait)
-						.to({ y: -renderer.height }, this.anim_params.speed, createjs.Ease.getPowInOut(4));	
+					.wait(data.destroy_wait)
+					.to({ y: -renderer.height }, data.speed, createjs.Ease.getPowInOut(4));	
 			},
 
 			update: function() {
-				this.el.x = (renderer.width - this.el.width) / 2 - 230;	
-				this.el.y = ((renderer.height - this.el.height) / 2) - 225;
+				var data = DATA.slide_5.price_1;
+
+				this.el.x = (renderer.width - this.el.width) / 2 + data.x;	
+				this.el.y = ((renderer.height - this.el.height) / 2) + data.y;
 			}
 
 		},
@@ -314,41 +303,38 @@ App.managerService.slide_5 = {
 
 			el: null,
 
-			anim_params: {
-				speed: 2000,
-				init_wait: 500,
-				destroy_wait: 0
-			},
-
 			init: function() {
-
-				var style = {
-						font : '60px Plumb-Black',
-					    fill : '#fa6464'
+				var data = DATA.slide_5.price_2,
+					style = {
+						font : data.font,
+					    fill : data.fill
 					};
 
-				this.el = new PIXI.Text("РУБЛЕЙ", style);
+				this.el = new PIXI.Text(data.text, style);
 
-				this.el.x = (renderer.width - this.el.width) / 2 - 270;	
+				this.el.x = (renderer.width - this.el.width) / 2 + data.x;	
 				this.el.y = -renderer.height;
 
 				slide_container_5.addChild(this.el);
 
 				createjs.Tween.get(this.el)
-					.wait(this.anim_params.init_wait)
-						.to({ y: ((renderer.height - this.el.height) / 2) - 150 }, this.anim_params.speed, createjs.Ease.getPowInOut(4));
-
+					.wait(data.init_wait)
+					.to({ y: ((renderer.height - this.el.height) / 2) + data.y }, data.speed, createjs.Ease.getPowInOut(4));
 			},
 
 			destroy: function() {
+				var data = DATA.slide_5.price_2;
+
 				createjs.Tween.get(this.el)
-					.wait(this.anim_params.destroy_wait)
-						.to({ y: -renderer.height }, this.anim_params.speed, createjs.Ease.getPowInOut(4));
+					.wait(data.destroy_wait)
+					.to({ y: -renderer.height }, data.speed, createjs.Ease.getPowInOut(4));
 			},
 
 			update: function() {
-				this.el.x = (renderer.width - this.el.width) / 2 - 270;	
-				this.el.y = ((renderer.height - this.el.height) / 2) - 150;
+				var data = DATA.slide_5.price_2;
+
+				this.el.x = (renderer.width - this.el.width) / 2 + data.x;	
+				this.el.y = ((renderer.height - this.el.height) / 2) + data.y;
 			}
 
 		},
@@ -357,41 +343,38 @@ App.managerService.slide_5 = {
 
 			el: null,
 
-			anim_params: {
-				speed: 2000,
-				init_wait: 500,
-				destroy_wait: 0
-			},
-
 			init: function() {
-
-				var style = {
-						font : '80px Plumb-Black',
-					    fill : '#fa6464'
+				var data = DATA.slide_5.price_3,
+					style = {
+						font : data.font,
+					    fill : data.fill
 					};
 
-				this.el = new PIXI.Text("+999", style);
+				this.el = new PIXI.Text(data.text, style);
 
-				this.el.x = (renderer.width - this.el.width) / 2 + 140;	
+				this.el.x = (renderer.width - this.el.width) / 2 + data.x;	
 				this.el.y = -renderer.height;
 
 				slide_container_5.addChild(this.el);
 
 				createjs.Tween.get(this.el)
-					.wait(this.anim_params.init_wait)
-						.to({ y: ((renderer.height - this.el.height) / 2) + 130 },this.anim_params.speed, createjs.Ease.getPowInOut(4));
-
+					.wait(data.init_wait)
+					.to({ y: ((renderer.height - this.el.height) / 2) + data.y }, data.speed, createjs.Ease.getPowInOut(4));
 			},
 
 			destroy: function() {
+				var data = DATA.slide_5.price_3;
+
 				createjs.Tween.get(this.el)
-					.wait(this.anim_params.destroy_wait)
-						.to({ y: -renderer.height },this.anim_params.speed, createjs.Ease.getPowInOut(4));
+					.wait(data.destroy_wait)
+					.to({ y: -renderer.height }, data.speed, createjs.Ease.getPowInOut(4));
 			},
 
 			update: function() {
-				this.el.x = (renderer.width - this.el.width) / 2 + 140;	
-				this.el.y = ((renderer.height - this.el.height) / 2) + 130;
+				var data = DATA.slide_5.price_3;
+
+				this.el.x = (renderer.width - this.el.width) / 2 + data.x;	
+				this.el.y = ((renderer.height - this.el.height) / 2) + data.y;
 			}
 
 		},
@@ -400,41 +383,38 @@ App.managerService.slide_5 = {
 
 			el: null,
 
-			anim_params: {
-				speed: 2000,
-				init_wait: 500,
-				destroy_wait: 0
-			},
-
 			init: function() {
-
-				var style = {
-						font : '40px Plumb-Black',
-					    fill : '#fa6464'
+				var data = DATA.slide_5.price_4,
+					style = {
+						font : data.font,
+					    fill : data.fill
 					};
 
-				this.el = new PIXI.Text("РУБЛЕЙ", style);
+				this.el = new PIXI.Text(data.text, style);
 
-				this.el.x = (renderer.width - this.el.width) / 2 + 180;	
+				this.el.x = (renderer.width - this.el.width) / 2 + data.x;	
 				this.el.y = -renderer.height;
 
 				slide_container_5.addChild(this.el);
 
 				createjs.Tween.get(this.el)
-					.wait(this.anim_params.init_wait)
-						.to({ y: ((renderer.height - this.el.height) / 2) + 180 }, this.anim_params.speed, createjs.Ease.getPowInOut(4));
-
+					.wait(data.init_wait)
+					.to({ y: ((renderer.height - this.el.height) / 2) + data.y }, data.speed, createjs.Ease.getPowInOut(4));
 			},
 
 			destroy: function() {
+				var data = DATA.slide_5.price_4;
+
 				createjs.Tween.get(this.el)
-					.wait(this.anim_params.destroy_wait)
-						.to({ y: -renderer.height }, this.anim_params.speed, createjs.Ease.getPowInOut(4));
+					.wait(data.destroy_wait)
+					.to({ y: -renderer.height }, data.speed, createjs.Ease.getPowInOut(4));
 			},
 
 			update: function() {
-				this.el.x = (renderer.width - this.el.width) / 2 + 180;	
-				this.el.y = ((renderer.height - this.el.height) / 2) + 180;
+				var data = DATA.slide_5.price_4;
+
+				this.el.x = (renderer.width - this.el.width) / 2 + data.x;	
+				this.el.y = ((renderer.height - this.el.height) / 2) + data.y;
 			}
 
 		},
@@ -443,41 +423,38 @@ App.managerService.slide_5 = {
 
 			el: null,
 
-			anim_params: {
-				speed: 2000,
-				init_wait: 500,
-				destroy_wait: 0
-			},
-
 			init: function() {
-
-				var style = {
-						font : '100px Plumb-Black',
-					    fill : '#b48264'
+				var data = DATA.slide_5.time_1,
+					style = {
+						font : data.font,
+					    fill : data.fill
 					};
 
-				this.el = new PIXI.Text("3", style);
+				this.el = new PIXI.Text(data.text, style);
 
-				this.el.x = (renderer.width - this.el.width) / 2 + 200;	
+				this.el.x = (renderer.width - this.el.width) / 2 + data.x;	
 				this.el.y = -renderer.height;
 
 				slide_container_5.addChild(this.el);
 
 				createjs.Tween.get(this.el)
-					.wait(this.anim_params.init_wait)
-						.to({ y: ((renderer.height - this.el.height) / 2) - 180 }, this.anim_params.speed, createjs.Ease.getPowInOut(4));
-
+					.wait(data.init_wait)
+					.to({ y: ((renderer.height - this.el.height) / 2) + data.y }, data.speed, createjs.Ease.getPowInOut(4));
 			},
 
 			destroy: function() {
+				var data = DATA.slide_5.time_1;
+
 				createjs.Tween.get(this.el)
-					.wait(this.anim_params.destroy_wait)
-						.to({ y: -renderer.height }, this.anim_params.speed, createjs.Ease.getPowInOut(4));
+					.wait(data.destroy_wait)
+					.to({ y: -renderer.height }, data.speed, createjs.Ease.getPowInOut(4));
 			},
 
 			update: function() {
-				this.el.x = (renderer.width - this.el.width) / 2 + 200;	
-				this.el.y = ((renderer.height - this.el.height) / 2) - 180;
+				var data = DATA.slide_5.time_1;
+
+				this.el.x = (renderer.width - this.el.width) / 2 + data.x;	
+				this.el.y = ((renderer.height - this.el.height) / 2) + data.y;
 			}
 
 		},
@@ -486,41 +463,38 @@ App.managerService.slide_5 = {
 
 			el: null,
 
-			anim_params: {
-				speed: 2000,
-				init_wait: 500,
-				destroy_wait: 0
-			},
-
 			init: function() {
-
-				var style = {
-						font : '30px Plumb-Black',
-					    fill : '#b48264'
+				var data = DATA.slide_5.time_2,
+					style = {
+						font : data.font,
+					    fill : data.fill
 					};
 
-				this.el = new PIXI.Text("РАБОЧИХ\nДНЯ", style);
+				this.el = new PIXI.Text(data.text, style);
 
-				this.el.x = (renderer.width - this.el.width) / 2 + 300;	
+				this.el.x = (renderer.width - this.el.width) / 2 + data.x;	
 				this.el.y = -renderer.height;
 
 				slide_container_5.addChild(this.el);
 
 				createjs.Tween.get(this.el)
-					.wait(this.anim_params.init_wait)
-						.to({ y: ((renderer.height - this.el.height) / 2) - 180 }, this.anim_params.speed, createjs.Ease.getPowInOut(4));
-
+					.wait(data.init_wait)
+					.to({ y: ((renderer.height - this.el.height) / 2) + data.y }, data.speed, createjs.Ease.getPowInOut(4));
 			},
 
 			destroy: function() {
+				var data = DATA.slide_5.time_2;
+
 				createjs.Tween.get(this.el)
-					.wait(this.anim_params.destroy_wait)
-						.to({ y: -renderer.height }, this.anim_params.speed, createjs.Ease.getPowInOut(4));
+					.wait(data.destroy_wait)
+					.to({ y: -renderer.height }, data.speed, createjs.Ease.getPowInOut(4));
 			},
 
 			update: function() {
-				this.el.x = (renderer.width - this.el.width) / 2 + 300;	
-				this.el.y = ((renderer.height - this.el.height) / 2) - 180;
+				var data = DATA.slide_5.time_2;
+
+				this.el.x = (renderer.width - this.el.width) / 2 + data.x;	
+				this.el.y = (renderer.height - this.el.height) / 2 + data.y;
 			}
 
 		}

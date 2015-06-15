@@ -195,10 +195,6 @@ App.managerService.slide_3 = {
 
 		menu: {
 
-			anim_params: {
-				speed: 1000
-			},
-
 			init: function() {
 				if( mobile_version == true ) $hyde_menu.addClass("active");
 				else $hyde_menu.addClass("active").css({ "height" : $(window).height() - $main_menu.height() });

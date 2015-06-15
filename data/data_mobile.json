@@ -300,7 +300,76 @@
 
         }
     },
-    "slide_4": {},
+    "slide_4": {
+        "title": {
+            "text": "Выберите стиль",
+            "font": "30px HelveticaNeueCyr-Light",
+            "fill": "#ff7d7a",
+            "anchor": 0.5,
+            "y": 120,
+            "speed": 500,
+            "init_wait": 1700,
+            "destroy_wait": 200
+        },
+        "info": {
+            "text": "Хотите стать более женственной, спортивной, строгой или утонченной? Специально\nдля вас, учитывая особенности вашей внешности, профессиональные стилисты\nсоставят пять комплектов одежды в выбранном стиле.",
+            "font": "16px HelveticaNeueCyr-Light",
+            "fill": "#3c3c3c",
+            "align": "center",
+            "y": 180,
+            "anchor": 0.5,
+            "speed": 500,
+            "init_wait": 1500,
+            "destroy_wait": 400
+        },
+        "slider": {
+            "slides": [
+                { "url": "i/s4/slide_1.png", "title": "Casual", "description": "Одежда для настоящих\nмечтательниц" },
+                { "url": "i/s4/slide_2.png", "title": "Романтический", "description": "Одежда для настоящих\nмечтательниц" },
+                { "url": "i/s4/slide_3.png", "title": "Классика", "description": "Одежда для настоящих\nмечтательниц" },
+                { "url": "i/s4/slide_1.png", "title": "Casual", "description": "Одежда для настоящих\nмечтательниц" },
+                { "url": "i/s4/slide_2.png", "title": "Романтический", "description": "Одежда для настоящих\nметчательниц" },
+                { "url": "i/s4/slide_3.png", "title": "Классика", "description": "Одежда для настоящих\nмечтательниц" }
+            ],
+            "bg": {
+                "fill": "0xff7d7a",
+                "height": 250
+            },
+            "titles": {
+                "font": "30px HelveticaNeueCyr-Light",
+                "fill": "#ffffff",
+                "y": 430,
+                "anchor": 0.5
+            },
+            "lines": {
+                "fill": "0xffffff",
+                "x": -50,
+                "y": 475
+            },
+            "description": {
+                "font": "16px HelveticaNeueCyr-Light",
+                "fill": "#ffffff",
+                "align": "center",
+                "y": 485,
+                "anchor": 0.5
+            },
+            "prevBtn": {
+                "url": "i/s4/prev.png",
+                "anchor": 0.5,
+                "init_wait": 1200,
+                "speed": 1000,
+                "x": 100
+            },
+            "nextBtn": {
+                "url": "i/s4/next.png",
+                "anchor": 0.5,
+                "init_wait": 1200,
+                "speed": 1000
+            },
+            "speed": 1000,
+            "animSpeed": 800
+        }
+    },
     "slide_5": {},
     "slide_6": {},
     "slide_7": {},
