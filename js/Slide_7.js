@@ -3,22 +3,24 @@ App.managerService.slide_7 = {
 	init: function() {
 		console.log("Slide 7 init");
 
+		var data = DATA.slide_7;
+
 		var deferred = $.Deferred();
 
 		slide_container_7 = new PIXI.Container();
 
 		$anketa.fadeIn(function() {
 			var row = $anketa.find(".anketa-row"),
-				delay = 100;
+				delay = data.delay;
 
 			row.each(function() {
 				var that = $(this);
 
 				setTimeout(function() {
-					that.animate({ "opacity" : 1 }, 500);
+					that.animate({ "opacity" : 1 }, data.speed);
 				}, delay);
 
-				delay += 100;
+				delay += data.delay;
 			});
 		});
 
@@ -41,10 +43,5 @@ App.managerService.slide_7 = {
 
 	update: function() {
 
-	},
-
-	elems: {
-
 	}
-
 };

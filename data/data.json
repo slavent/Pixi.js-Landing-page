@@ -634,6 +634,42 @@
             "y": 350
         }
     },
-    "slide_7": {},
-    "slide_8": {}
+    "slide_7": {
+        "delay": 100,
+        "speed": 500
+    },
+    "slide_8": {
+        "slider": {
+            "slides": [
+                { "url": "i/s8/slide_4.jpg", "title": "Восхищенные\nвзгляды!" },
+                { "url": "i/s8/slide_3.jpg", "title": "Красивый\nдизайн!" },
+                { "url": "i/s8/slide_2.jpg", "title": "Игоровой\nпроцесс!" },
+                { "url": "i/s8/slide_1.jpg", "title": "Быстрый\nотклик!" }
+            ],
+            "anchor": 0.5,
+            "animSpeed": 1000,
+            "titles": {
+                "font": "65px FiraSansRegular",
+                "fill": "#fff",
+                "lineHeight": 65,
+                "padding": 10,
+                "align": "center",
+                "anchor": 0.5,
+                "x": 0,
+                "y": 0
+            },
+            "prevBtn": {
+                "url": "i/s8/prev.png",
+                "width": 45,
+                "height": 45,
+                "x": 150
+            },
+            "nextBtn": {
+                "url": "i/s8/next.png",
+                "width": 45,
+                "height": 45,
+                "x": -150
+            }
+        }
+    }
 }
