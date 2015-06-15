@@ -296,33 +296,34 @@ App.managerService.slide_6 = {
 		el: null,
 
 		init: function() {
-			var title = {
-					text: "ЗАПОЛНИТЕ\nАНКЕТУ\nНА САЙТЕ",
+			var data = DATA.slide_6.scene_1,
+				title = {
+					text: data.title.text,
 					x: renderer.width / 2,
 					y: -renderer.height,
-					x_to: renderer.width / 2,
-					y_to: renderer.height / 2 - 50
+					x_to: renderer.width / 2 + data.title.x,
+					y_to: renderer.height / 2 + data.title.y
 				}, 
 				info = {
-					text: "Стилисты “Модного приговора” получат Ваши данные,\nопределят Ваш цветотип, тип фигуры, овал лица\nи составят подробную инструкцию преображения!",
+					text: data.info.text,
 					x: renderer.width,
-					y: renderer.height / 2 + 200,
-					x_to: renderer.width / 2,
-					y_to: renderer.height / 2 + 200
+					y: renderer.height / 2 + data.info.y,
+					x_to: renderer.width / 2 + data.info.x,
+					y_to: renderer.height / 2 + data.info.y
 				},
 				btn_title = {
-					text: "ЗАПОЛНИТЬ",
-					x: renderer.width / 2 - 280,
+					text: data.btn_title.text,
+					x: renderer.width / 2 + data.btn_title.x,
 					y: -renderer.height,
-					x_to: renderer.width / 2 - 280,
-					y_to: renderer.height / 2 - 10
+					x_to: renderer.width / 2 + data.btn_title.x,
+					y_to: renderer.height / 2 + data.btn_title.y
 				},
 				pic = {
-					url: "i/s6/notepade.png",
-					x: renderer.width / 2 + 300,
+					url: data.pic.url,
+					x: renderer.width / 2 + data.pic.x,
 					y: -renderer.height,
-					x_to: renderer.width / 2 + 300,
-					y_to: renderer.height / 2
+					x_to: renderer.width / 2 + data.pic.x,
+					y_to: renderer.height / 2 + data.pic.y
 				},
 				scene = new App.managerService.slide_6.Scene(title, info, btn_title, pic);
 
@@ -336,7 +337,7 @@ App.managerService.slide_6 = {
 				deferred.resolve();
 			}, SLIDE_ANIMATION_TIME_6);
 
-				return deferred;
+			return deferred;
 		},
 
 		destroy: function() {
@@ -350,33 +351,34 @@ App.managerService.slide_6 = {
 		el: null,
 
 		init: function() {
-			var title = {
-					text: "ПОЛУЧИТЕ\nИМИДЖ-ГАЙД",
+			var data = DATA.slide_6.scene_2,
+				title = {
+					text: data.title.text,
 					x: renderer.width / 2,
 					y: -renderer.height,
-					x_to: renderer.width / 2,
-					y_to: renderer.height / 2 - 50
+					x_to: renderer.width / 2 + data.title.x,
+					y_to: renderer.height / 2 + data.title.y
 				}, 
 				info = {
-					text: "Имидж-гайд придет на Ваш e-mail в формате PDF.\nВы можете его распечатать или читать с экрана\nмобильного устройства.\nВаш личный стилист в кармане!",
+					text: data.info.text,
 					x: renderer.width,
-					y: renderer.height / 2 + 130,
-					x_to: renderer.width / 2,
-					y_to: renderer.height / 2 + 130
+					y: renderer.height / 2 + data.info.y,
+					x_to: renderer.width / 2 + data.info.x,
+					y_to: renderer.height / 2 + data.info.y
 				},
 				btn_title = {
-					text: "ПОЛУЧИТЬ",
-					x: renderer.width / 2 + 340,
+					text: data.btn_title.text,
+					x: renderer.width / 2 + data.btn_title.x,
 					y: -renderer.height,
-					x_to: renderer.width / 2 + 340,
-					y_to: renderer.height / 2 - 75
+					x_to: renderer.width / 2 + data.btn_title.x,
+					y_to: renderer.height / 2 + data.btn_title.y
 				},
 				pic = {
-					url: "i/s6/book.png",
-					x: renderer.width / 2 - 300,
+					url: data.pic.url,
+					x: renderer.width / 2 + data.pic.x,
 					y: -renderer.height,
-					x_to: renderer.width / 2 - 300,
-					y_to: renderer.height / 2 - 50
+					x_to: renderer.width / 2 + data.pic.x,
+					y_to: renderer.height / 2 + data.pic.y
 				},
 				scene = new App.managerService.slide_6.Scene(title, info, btn_title, pic);
 
@@ -404,33 +406,34 @@ App.managerService.slide_6 = {
 		el: null,
 
 		init: function() {
-			var title = {
-					text: "УЗНАВАЙТЕ",
+			var data = DATA.slide_6.scene_3,
+				title = {
+					text: data.title.text,
 					x: renderer.width / 2,
 					y: -renderer.height,
-					x_to: renderer.width / 2,
-					y_to: renderer.height / 2 - 50
+					x_to: renderer.width / 2 + data.title.x,
+					y_to: renderer.height / 2 + data.title.y
 				}, 
 				info = {
-					text: "В имидж-гайде Вы найдете описание своего\nцветотипа, типа фигуры и формы лица. Взгляните\nна себя новым взглядом и откройте секреты\nсобственной красоты!",
+					text: data.info.text,
 					x: renderer.width,
-					y: renderer.height / 2 + 120,
-					x_to: renderer.width / 2,
-					y_to: renderer.height / 2 + 120
+					y: renderer.height / 2 + data.info.y,
+					x_to: renderer.width / 2 + data.info.x,
+					y_to: renderer.height / 2 + data.info.y
 				},
 				btn_title = {
-					text: "ЗАКАЗАТЬ",
-					x: renderer.width / 2 - 320,
+					text: data.btn_title.text,
+					x: renderer.width / 2 + data.btn_title.x,
 					y: -renderer.height,
-					x_to: renderer.width / 2 - 320,
-					y_to: renderer.height / 2 + 50
+					x_to: renderer.width / 2 + data.btn_title.x,
+					y_to: renderer.height / 2 + data.btn_title.y
 				},
 				pic = {
-					url: "i/s6/lamp.png",
-					x: renderer.width / 2 + 300,
+					url: data.pic.url,
+					x: renderer.width / 2 + data.pic.x,
 					y: -renderer.height,
-					x_to: renderer.width / 2 + 300,
-					y_to: renderer.height / 2 - 80
+					x_to: renderer.width / 2 + data.pic.x,
+					y_to: renderer.height / 2 + data.pic.y
 				},
 				scene = new App.managerService.slide_6.Scene(title, info, btn_title, pic);
 
@@ -458,33 +461,34 @@ App.managerService.slide_6 = {
 		el: null,
 
 		init: function() {
-			var title = {
-					text: "МЕНЯЙТЕСЬ",
+			var data = DATA.slide_6.scene_4,
+				title = {
+					text: data.title.text,
 					x: renderer.width / 2,
 					y: -renderer.height,
-					x_to: renderer.width / 2,
-					y_to: renderer.height / 2 - 50
+					x_to: renderer.width / 2 + data.title.x,
+					y_to: renderer.height / 2 + data.title.y
 				}, 
 				info = {
-					text: "Отправляйтесь в магазин или салон красоты -\nпрактические рекомендации помогут Вам\nс уверенностью профи создавать модные\nи яркие образы.",
+					text: data.info.text,
 					x: renderer.width,
-					y: renderer.height / 2 + 120,
-					x_to: renderer.width / 2,
-					y_to: renderer.height / 2 + 120
+					y: renderer.height / 2 + data.info.y,
+					x_to: renderer.width / 2 + data.info.x,
+					y_to: renderer.height / 2 + data.info.y
 				},
 				btn_title = {
-					text: "ЗАКАЗАТЬ",
-					x: renderer.width / 2 + 320,
+					text: data.btn_title.text,
+					x: renderer.width / 2 + data.btn_title.x,
 					y: -renderer.height,
-					x_to: renderer.width / 2 + 320,
-					y_to: renderer.height / 2 + 50
+					x_to: renderer.width / 2 + data.btn_title.x,
+					y_to: renderer.height / 2 + data.btn_title.y
 				},
 				pic = {
-					url: "i/s6/fen.png",
-					x: renderer.width / 2 - 300,
+					url: data.pic.url,
+					x: renderer.width / 2 + data.pic.x,
 					y: -renderer.height,
-					x_to: renderer.width / 2 - 300,
-					y_to: renderer.height / 2 - 80
+					x_to: renderer.width / 2 + data.pic.x,
+					y_to: renderer.height / 2 + data.pic.y
 				},
 				scene = new App.managerService.slide_6.Scene(title, info, btn_title, pic);
 
@@ -512,33 +516,34 @@ App.managerService.slide_6 = {
 		el: null,
 
 		init: function() {
-			var title = {
-					text: "ПРОБУЙТЕ",
+			var data = DATA.slide_6.scene_5,
+				title = {
+					text: data.title.text,
 					x: renderer.width / 2,
 					y: -renderer.height,
-					x_to: renderer.width / 2,
-					y_to: renderer.height / 2 - 50
+					x_to: renderer.width / 2 + data.title.x,
+					y_to: renderer.height / 2 + data.title.y
 				}, 
 				info = {
-					text: "Благодаря имидж-гайду Вы научитесь\nсамостоятельно сочетать аксессуары\nи элементы одежды.",
+					text: data.info.text,
 					x: renderer.width,
-					y: renderer.height / 2 + 120,
-					x_to: renderer.width / 2,
-					y_to: renderer.height / 2 + 120
+					y: renderer.height / 2 + data.info.y,
+					x_to: renderer.width / 2 + data.info.x,
+					y_to: renderer.height / 2 + data.info.y
 				},
 				btn_title = {
-					text: "ЗАКАЗАТЬ",
-					x: renderer.width / 2 - 280,
+					text: data.btn_title.text,
+					x: renderer.width / 2 + data.btn_title.x,
 					y: -renderer.height,
-					x_to: renderer.width / 2 - 280,
-					y_to: renderer.height / 2 - 120
+					x_to: renderer.width / 2 + data.btn_title.x,
+					y_to: renderer.height / 2 + data.btn_title.y
 				},
 				pic = {
-					url: "i/s6/dress.png",
-					x: renderer.width / 2 + 300,
+					url: data.pic.url,
+					x: renderer.width / 2 + data.pic.x,
 					y: -renderer.height,
-					x_to: renderer.width / 2 + 300,
-					y_to: renderer.height / 2 - 80
+					x_to: renderer.width / 2 + data.pic.x,
+					y_to: renderer.height / 2 + data.pic.y
 				},
 				scene = new App.managerService.slide_6.Scene(title, info, btn_title, pic);
 
@@ -566,33 +571,34 @@ App.managerService.slide_6 = {
 		el: null,
 
 		init: function() {
-			var title = {
-					text: "ЧУВСТВУЙТЕ",
+			var data = DATA.slide_6.scene_6,
+				title = {
+					text: data.title.text,
 					x: renderer.width / 2,
 					y: -renderer.height,
-					x_to: renderer.width / 2,
-					y_to: renderer.height / 2 - 50
+					x_to: renderer.width / 2 + data.title.x,
+					y_to: renderer.height / 2 + data.title.y
 				}, 
 				info = {
-					text: "Новый имидж – шаг в новую жизнь.\nЧувствуйте перемены, наслаждайтесь собой!",
+					text: data.info.text,
 					x: renderer.width,
-					y: renderer.height / 2 + 120,
-					x_to: renderer.width / 2,
-					y_to: renderer.height / 2 + 120
+					y: renderer.height / 2 + data.info.y,
+					x_to: renderer.width / 2 + data.info.x,
+					y_to: renderer.height / 2 + data.info.y
 				},
 				btn_title = {
-					text: "ЗАКАЗАТЬ",
-					x: renderer.width / 2 + 250,
+					text: data.btn_title.text,
+					x: renderer.width / 2 + data.btn_title.x,
 					y: -renderer.height,
-					x_to: renderer.width / 2 + 250,
-					y_to: renderer.height / 2 - 130
+					x_to: renderer.width / 2 + data.btn_title.x,
+					y_to: renderer.height / 2 + data.btn_title.y
 				},
 				pic = {
-					url: "i/s6/hair.png",
-					x: renderer.width / 2 - 250,
+					url: data.pic.url,
+					x: renderer.width / 2 + data.pic.x,
 					y: -renderer.height,
-					x_to: renderer.width / 2 - 250,
-					y_to: renderer.height / 2 - 80
+					x_to: renderer.width / 2 + data.pic.x,
+					y_to: renderer.height / 2 + data.pic.y
 				},
 				scene = new App.managerService.slide_6.Scene(title, info, btn_title, pic);
 
@@ -617,67 +623,45 @@ App.managerService.slide_6 = {
 
 	spinner: {
 
-		vars: {
-			spin1_texture: 	null,
-			spin1: 			null,
-			spin2_texture: 	null,
-			spin2: 			null,
-			pos: 			0,
-			alpha: 			0,
-			init: false
-		},
+		el_1: null,
+		el_2: null,
+		step: 0,
 
 		init: function() {
-			var vars = this.vars;
+			var data = DATA.slide_6.spinner,
+				texture_1 = PIXI.Texture.fromImage(data.url_1),
+				texture_2 = PIXI.Texture.fromImage(data.url_2);
 
-			vars.init = true;
-			vars.spin1_texture = PIXI.Texture.fromImage("i/s6/spin1.svg");
-			vars.spin1 = new PIXI.Sprite(vars.spin1_texture);
-			vars.spin2_texture = PIXI.Texture.fromImage("i/s6/spin2.svg");
-			vars.spin2 = new PIXI.Sprite(vars.spin2_texture);
-
-			vars.spin1.anchor.set(0.5);
-			vars.spin1.position.x = renderer.width / 2 - 5;
-			vars.spin1.position.y = renderer.height / 2 + 350;
-			vars.spin1.alpha = 0;
-			vars.spin1.buttonMode = true;
-			vars.spin1.interactive = true;
-			vars.spin1.on("click", function() {
+			this.el_1 = new PIXI.Sprite(texture_1);
+			this.el_1.anchor.set(data.anchor);
+			this.el_1.buttonMode = true;
+			this.el_1.interactive = true;
+			this.el_1.position.x = renderer.width / 2 + data.x;
+			this.el_1.position.y = renderer.height / 2 + data.y;
+			this.el_1.on("click", function() {
 				App.SlideController.moveTo(active_slide, ++active_slide);
 			});
 
-			vars.spin2.anchor.set(0.5);
-			vars.spin2.position.x = renderer.width / 2 - 5;
-			vars.spin2.position.y = renderer.height / 2 + 345;
-			vars.spin2.alpha = 0;
+			this.el_2 = new PIXI.Sprite(texture_2);
+			this.el_2.anchor.set(data.anchor);
 
-			slide_container_6.addChild(vars.spin1);
-			slide_container_6.addChild(vars.spin2); 
+			this.el_1.addChild(this.el_2);
+			slide_container_6.addChild(this.el_1); 
 		},
 
 		update: function() {
-			var vars = this.vars;
+			var data = DATA.slide_6.spinner;
 
-			if(vars.init == true) {
-				vars.pos += 0.06;
-				vars.spin2.y += Math.sin(vars.pos);
-			}
-
-			if( vars.spin1 != null ) {
-				if( vars.spin1.alpha < 1 ) vars.spin1.alpha += 0.01;
-			}
-			
-			if( vars.spin2 != null ) {
-				if( vars.spin2.alpha < 1 ) vars.spin2.alpha += 0.01;
-			}
+			this.step += 0.06;
+			this.el_1.position.x = renderer.width / 2 + data.x;
+			this.el_1.position.y = renderer.height / 2 + data.y;
+			this.el_2.position.y += Math.sin(this.step);
 
 		},
 
 		destroy: function() {
-			var vars = this.vars;
-
-			slide_container_6.removeChild(vars.spin1);
-			slide_container_6.removeChild(vars.spin2);
+			slide_container_6.removeChild(this.el_1);
+			slide_container_6.removeChild(this.el_2);
 		}
 
 	}

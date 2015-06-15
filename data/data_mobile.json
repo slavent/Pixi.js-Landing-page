@@ -370,7 +370,119 @@
             "animSpeed": 800
         }
     },
-    "slide_5": {},
+    "slide_5": {
+        "magazine": {
+            "url": "i/s5/magazine.png",
+            "anchor": 0.5,
+            "speed": 2000,
+            "destroy_wait": 0
+        },
+        "orderBtn": {
+            "init_wait": 1000
+        },
+        "title_1": {
+            "text": "Стоимость базовой\nверсии",
+            "font": "20px Myriad Pro",
+            "fill": "#3c3c3c",
+            "align": "left",
+            "padding": 50,
+            "speed": 2000,
+            "init_wait": 500,
+            "destroy_wait": 0,
+            "x": -350,
+            "y": -220
+        },
+        "title_2": {
+            "text": "Срок изготовления",
+            "font": "20px Myriad Pro",
+            "fill": "#3c3c3c",
+            "speed": 2000,
+            "init_wait": 500,
+            "destroy_wait": 0,
+            "x": 260,
+            "y": -230
+        },
+        "title_3": {
+            "text": "Стоимость за каждый\nдополнительный",
+            "font": "14px HelveticaNeueCyr-Light",
+            "fill": "#3c3c3c",
+            "x": 175,
+            "y": 220,
+            "speed": 2000,
+            "init_wait": 500,
+            "destroy_wait": 0
+        },
+        "title_4": {
+            "text": "Стиль, мероприятие или праздник",
+            "font": "14px HelveticaNeueCyr-Light",
+            "fill": "#b48264",
+            "x": 215,
+            "y": 247,
+            "speed": 2000,
+            "init_wait": 500,
+            "destroy_wait": 0
+        },
+        "price_1": {
+            "text": "2999",
+            "font": "120px Plumb-Black",
+            "fill": "#fa6464",
+            "x": -230,
+            "y": -225,
+            "speed": 2000,
+            "init_wait": 500,
+            "destroy_wait": 0
+        },
+        "price_2": {
+            "text": "РУБЛЕЙ",
+            "font": "60px Plumb-Black",
+            "fill": "#fa6464",
+            "x": -270,
+            "y": -150,
+            "speed": 2000,
+            "init_wait": 500,
+            "destroy_wait": 0
+        },
+        "price_3": {
+            "text": "+999",
+            "font": "80px Plumb-Black",
+            "fill": "#fa6464",
+            "speed": 2000,
+            "init_wait": 500,
+            "destroy_wait": 0,
+            "x": 140,
+            "y": 130
+        },
+        "price_4": {
+            "text": "РУБЛЕЙ",
+            "font": "40px Plumb-Black",
+            "fill": "#fa6464",
+            "x": 180,
+            "y": 180,
+            "speed": 2000,
+            "init_wait": 500,
+            "destroy_wait": 0
+        },
+        "time_1": {
+            "text": "3",
+            "font": "100px Plumb-Black",
+            "fill": "#b48264",
+            "x": 200,
+            "y": -180,
+            "speed": 2000,
+            "init_wait": 500,
+            "destroy_wait": 0
+        },
+        "time_2": {
+            "text": "РАБОЧИХ\nДНЯ",
+            "font": "30px Plumb-Black",
+            "fill": "#b48264",
+            "x": 300,
+            "y": -180,
+            "speed": 2000,
+            "init_wait": 500,
+            "destroy_wait": 0
+        }
+    },
     "slide_6": {},
     "slide_7": {},
     "slide_8": {}
