@@ -56,4 +56,6 @@ App.Binder = function() {
 
   	$(".age-range").ionRangeSlider();
 
+  	$(".selectize").selectize();
+
 };

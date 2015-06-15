@@ -21,6 +21,7 @@ module.exports = function(grunt) {
                     "js/libs/quo.min.js",
                     "js/libs/icheck.js",
                     "js/libs/ion.rangeSlider.min.js",
+                    "js/libs/selectize.js",
                     "js/app.js",
                     "js/SlideController.js",
                     "js/WheelController.js",

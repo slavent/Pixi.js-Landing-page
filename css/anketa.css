@@ -1,4 +1,6 @@
 /* START: Anketa */
+
+/* Scene 1 */
 .anketa {
 	display: none;
 	position: absolute;
@@ -48,14 +50,14 @@
 	color: #3c3c3c;
 	display: inline-block;
 	vertical-align: middle;
-	width: 45%;
+	width: 150px;
 	text-align: right;
 }
 
 .anketa-val {
 	display: inline-block;
 	vertical-align: middle;
-	width: 54%;
+	width: 370px;
 	margin: 0 0 0 10px;
 	padding: 0 0 0 25px;
 	text-align: left;
@@ -162,4 +164,24 @@
 	color: #fff;
 	cursor: pointer;
 }
+
+/* Scene 2 */
+.anketa-col-2 {
+	display: inline-block;
+	vertical-align: top;
+	width: 49%;
+}
+
+.anketa-col-2 .irs {
+	margin-bottom: 10px;
+}
+
+.anketa-col_align_right {
+	text-align: right;
+}
+
+.anketa-col_align_left {
+	text-align: left;
+}
+
 /* END: Anketa */

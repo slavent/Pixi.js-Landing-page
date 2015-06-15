@@ -196,7 +196,7 @@ App.managerService.slide_7 = {
 		},
 
 		destroy: function() {
-			$anketa.find(".anketa-scene-1").fadeOut(function() {
+			$anketa.find(".anketa-scene-1").hide(function() {
 				$(this).find(".anketa-row").css({ "opacity" : 0 });
 			});
 		}
@@ -206,6 +206,7 @@ App.managerService.slide_7 = {
 	scene_2: {
 
 		init: function() {
+			$anketa.find(".anketa-scene-2").fadeIn();
 
 			var deferred = $.Deferred();
 
@@ -217,7 +218,7 @@ App.managerService.slide_7 = {
 		},
 
 		destroy: function() {
-			
+			$anketa.find(".anketa-scene-2").hide();
 		}
 
 	},
@@ -225,6 +226,7 @@ App.managerService.slide_7 = {
 	scene_3: {
 
 		init: function() {
+			$anketa.find(".anketa-scene-3").fadeIn();
 
 			var deferred = $.Deferred();
 
@@ -236,7 +238,7 @@ App.managerService.slide_7 = {
 		},
 
 		destroy: function() {
-			
+			$anketa.find(".anketa-scene-3").hide();
 		}
 
 	},
@@ -244,6 +246,7 @@ App.managerService.slide_7 = {
 	scene_4: {
 
 		init: function() {
+			$anketa.find(".anketa-scene-4").fadeIn();
 
 			var deferred = $.Deferred();
 
@@ -255,7 +258,7 @@ App.managerService.slide_7 = {
 		},
 
 		destroy: function() {
-			
+			$anketa.find(".anketa-scene-4").hide();	
 		}
 
 	},
@@ -263,6 +266,7 @@ App.managerService.slide_7 = {
 	scene_5: {
 
 		init: function() {
+			$anketa.find(".anketa-scene-5").fadeIn();
 
 			var deferred = $.Deferred();
 
@@ -274,7 +278,7 @@ App.managerService.slide_7 = {
 		},
 
 		destroy: function() {
-			
+			$anketa.find(".anketa-scene-5").hide();
 		}
 
 	},
@@ -282,6 +286,7 @@ App.managerService.slide_7 = {
 	scene_6: {
 
 		init: function() {
+			$anketa.find(".anketa-scene-6").fadeIn();
 
 			var deferred = $.Deferred();
 
@@ -293,7 +298,7 @@ App.managerService.slide_7 = {
 		},
 
 		destroy: function() {
-			
+			$anketa.find(".anketa-scene-6").hide();
 		}
 
 	},
@@ -301,6 +306,7 @@ App.managerService.slide_7 = {
 	scene_7: {
 
 		init: function() {
+			$anketa.find(".anketa-scene-7").fadeIn();
 
 			var deferred = $.Deferred();
 
@@ -312,7 +318,7 @@ App.managerService.slide_7 = {
 		},
 
 		destroy: function() {
-			
+			$anketa.find(".anketa-scene-7").hide();
 		}
 
 	}
