@@ -6,8 +6,7 @@ App.managerService.slide_6 = {
 
 		slide_container_6 = new PIXI.Container();
 
-		$step_pult.parent().addClass("active");
-		this.NavController.setActive();
+		this.NavController.init();
 		this.SceneController.init();
 		this.spinner.init();
 		this.Binder.init();
@@ -21,7 +20,7 @@ App.managerService.slide_6 = {
 				deferred.resolve();
 			}, SLIDE_ANIMATION_TIME_6);
 
-				return deferred;
+			return deferred;
 		}
 
 	},
@@ -30,7 +29,7 @@ App.managerService.slide_6 = {
 
 		console.log("Slide 6 destroy");
 
-		$step_pult.parent().removeClass("active");
+		this.NavController.destroy();
 		this.spinner.destroy();
 		App.managerService.slide_6["scene_" + active_scene].destroy();
 		if( active_scene == 6 ) slide_6_complete = true;
@@ -45,7 +44,7 @@ App.managerService.slide_6 = {
 				deferred.resolve();
 			}, SLIDE_ANIMATION_TIME_6);
 
-				return deferred;
+			return deferred;
 		}	
 
 	},
@@ -124,14 +123,11 @@ App.managerService.slide_6 = {
 	SwipeController: {
 
 		lockSwipe: function() {
-			
 			$$("body").off("swipeUp");
 			$$("body").off("swipeDown");
-
 		},
 
 		unlockSwipe: function() {
-			
 			$$("body").on("swipeUp", function() {
 				if( active_scene < 6 ) App.managerService.slide_6.SceneController.moveTo(active_scene, ++active_scene);
 				else {
@@ -147,12 +143,28 @@ App.managerService.slide_6 = {
 					App.SlideController.moveTo(active_slide, --active_slide);
 				}
 			});
-
 		}
 
 	},
 
 	NavController: {
+
+		init: function() {
+			$step_pult
+				.html("")
+				.parent()
+				.addClass("active");
+
+			for(var i = 0; i < 6; i++) {
+				$step_pult.append("<li class=step-pult-item>" + (i + 1) + "</li>");
+			}
+
+			this.setActive();
+		},
+
+		destroy: function() {
+			$step_pult.parent().removeClass("active");
+		},
 
 		setActive: function() {
 			$step_pult.children().removeClass("step-pult-item-active");

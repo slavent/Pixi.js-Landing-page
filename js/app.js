@@ -36,6 +36,7 @@ var $body = $("body"),
 
 	slide_3_complete = false,
 	slide_6_complete = false,
+	slide_7_complete = false,
 
 	mobile_version = false,
 

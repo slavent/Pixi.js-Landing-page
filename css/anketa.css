@@ -11,6 +11,16 @@
 	z-index: 60;
 }
 
+.anketa-scene-1,
+.anketa-scene-2,
+.anketa-scene-3,
+.anketa-scene-4,
+.anketa-scene-5,
+.anketa-scene-6,
+.anketa-scene-7 {
+	display: none;
+}
+
 .anketa:after {
 	content: "";
 	display: inline-block;

@@ -4,7 +4,7 @@
 	top: 50%;
 	right: -100px;
 	margin: -246px 0 0;
-	z-index: 50;
+	z-index: 70;
 	transition: all 1s;
 	-webkit-transition: all 1s;
 }

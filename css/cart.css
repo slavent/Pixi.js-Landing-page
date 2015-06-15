@@ -1,0 +1,47 @@
+.cart {
+	border: 2px dashed #000;
+	padding: 10px 25px;
+	position: absolute;
+	top: 110px;
+	right: 30px;
+	font-family: "FiraSansRegular";
+}
+
+.cart-title {
+	font-size: 18px;
+	font-weight: bold;
+	color: #000;
+	padding: 0 0 5px 0;
+	border-bottom: 2px solid #000;
+}
+
+.cart-list {
+	padding: 10px 0;
+}
+
+.cart-item {
+	color: #000;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.cart-item sup {
+	font-size: 8px;
+	text-transform: uppercase;
+	color: #000;
+	font-weight: normal;
+}
+
+.cart-summ {
+	color: #000;
+	font-size: 20px;
+	text-transform: uppercase;
+	font-weight: bold;
+}
+
+.cart-summ sup {
+	font-size: 11px;
+	text-transform: uppercase;
+	font-weight: bold;
+	color: #000;
+}
