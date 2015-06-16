@@ -334,12 +334,12 @@
         },
         "slider": {
             "slides": [
-                { "url": "i/s4/slide_1.png", "title": "Casual", "description": "Одежда для настоящих\nмечтательниц" },
-                { "url": "i/s4/slide_2.png", "title": "Романтический", "description": "Одежда для настоящих\nмечтательниц" },
-                { "url": "i/s4/slide_3.png", "title": "Классика", "description": "Одежда для настоящих\nмечтательниц" },
-                { "url": "i/s4/slide_1.png", "title": "Casual", "description": "Одежда для настоящих\nмечтательниц" },
-                { "url": "i/s4/slide_2.png", "title": "Романтический", "description": "Одежда для настоящих\nметчательниц" },
-                { "url": "i/s4/slide_3.png", "title": "Классика", "description": "Одежда для настоящих\nмечтательниц" }
+                { "url": "i/s4/slide_1.mp4", "title": "Casual", "description": "Одежда для настоящих\nмечтательниц" },
+                { "url": "i/s4/slide_1.mp4", "title": "Романтический", "description": "Одежда для настоящих\nмечтательниц" },
+                { "url": "i/s4/slide_1.mp4", "title": "Классика", "description": "Одежда для настоящих\nмечтательниц" },
+                { "url": "i/s4/slide_1.mp4", "title": "Casual", "description": "Одежда для настоящих\nмечтательниц" },
+                { "url": "i/s4/slide_1.mp4", "title": "Романтический", "description": "Одежда для настоящих\nметчательниц" },
+                { "url": "i/s4/slide_1.mp4", "title": "Классика", "description": "Одежда для настоящих\nмечтательниц" }
             ],
             "bg": {
                 "fill": "0xff7d7a",

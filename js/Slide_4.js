@@ -179,9 +179,10 @@ App.managerService.slide_4 = {
 					this.description.anchor.x = data.description.anchor;
 
 					// Photo
-					this.texture = PIXI.Texture.fromImage(url);
+					this.texture = PIXI.Texture.fromVideo(url);
 					this.sprite = new PIXI.Sprite(this.texture);
 					this.sprite.anchor.x = .5;
+					this.sprite.texture.baseTexture.source.loop = true;
 					this.sprite.position.y = renderer.height / 2;
 					this.sprite.scale.x = slide_scale;
 					this.sprite.scale.y = slide_scale;
