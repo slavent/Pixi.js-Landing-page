@@ -24,18 +24,18 @@
     height: 60px;
 }
 .irs-line {
-    height: 4px; top: 25px;
+    height: 2px; top: 25px;
 }
     .irs-line-left {
-        height: 4px;
+        height: 2px;
         background-position: 0 -60px;
     }
     .irs-line-mid {
-        height: 4px;
+        height: 2px;
         background-position: 0 0;
     }
     .irs-line-right {
-        height: 4px;
+        height: 2px;
         background-position: 100% -30px;
     }
 
