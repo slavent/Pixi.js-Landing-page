@@ -25,6 +25,7 @@ App.managerService.slide_7 = {
 		console.log("Slide 7 destroy");
 
 		$anketa.hide();
+		this.NavController.destroy();
 
 		if( active_scene == 7 ) slide_7_complete = true;
 		active_scene = 1;
