@@ -307,7 +307,7 @@
             "fill": "#ff7d7a",
             "anchor": 0.5,
             "y": 120,
-            "speed": 500,
+            "speed": 1000,
             "init_wait": 1700,
             "destroy_wait": 200
         },
@@ -318,7 +318,7 @@
             "align": "center",
             "y": 180,
             "anchor": 0.5,
-            "speed": 500,
+            "speed": 1000,
             "init_wait": 1500,
             "destroy_wait": 400
         },
