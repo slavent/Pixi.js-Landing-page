@@ -41,11 +41,11 @@
 
 .anketa-row {
 	opacity: 0;
-	margin: 0 0 20px 0;
+	min-height: 65px;
 }
 
-.anketa-row-selectize {
-	margin: 0 0 33px 0;
+.anketa-row:last-child {
+	margin: 0;
 }
 
 .anketa-label {
@@ -179,10 +179,6 @@
 	width: 49%;
 }
 
-.anketa-col-2 .irs {
-	margin-bottom: 10px;
-}
-
 .anketa-col_align_right {
 	text-align: right;
 }
@@ -199,11 +195,12 @@
 
 .anketa-subtitle {
 	color: #ff7d7a;
-	font-family: "HelveticaNeueCyr-Light";
+	font-family: "HelveticaNeueCyr-Bold";
 	font-size: 28px;
 	font-weight: bold;
 	text-align: left;
 	margin: 0 0 25px 0;
+	letter-spacing: 1px;
 }
 
 .anketa-subtitle-toggle {
@@ -303,9 +300,10 @@
 .anketa-choice-title {
 	font-style: italic;
 	color: #ff7d7a;
-	font-size: 22px;
-	font-family: "HelveticaNeueCyr-Light";
+	font-size: 20px;
+	font-family: "HelveticaNeueCyr-Bold";
 	padding: 0 20px 0 0;
+	letter-spacing: 1px;
 }
 
 .anketa-choice-item {
@@ -349,6 +347,16 @@
 	text-align: center;
 }
 
+.anketa-row-item_loaded .anketa-row-photo{
+	border-color: #ff7d7a;
+}
+
+.anketa-row-item_loaded .anketa-row-btn {
+	border-color: #ff7d7a;
+	background: #ff7d7a;
+	color: #fff;
+}
+
 .anketa-row-title {
 	font-family: "FiraSansRegular";
 	font-size: 16px;
@@ -374,6 +382,21 @@
 	height: 100px;
 	border: 2px solid #3c3c3c;
 	margin: 10px auto 18px auto;
+	position: relative;
+}
+
+.anketa-row-photo-title {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin: -12px 0 0 -48px;
+	font-size: 14px;
+	font-family: FiraSansRegular;
+	line-height: 16px;
+}
+
+.anketa-row-photo img {
+	opacity: .2;
 }
 
 .anketa-row-btn {
@@ -387,5 +410,77 @@
 	-o-border-radius: 30px;
 }
 
+/* Slide 5 */
+.anketa-textarea {
+	width: 300px;
+	height: 120px;
+	border: 2px solid #3c3c3c;
+	color: #3c3c3c;
+	font-family: "FiraSansRegular";
+	font-size: 16px;
+	margin: 0 0 40px 0;
+	padding: 5px 10px;
+	outline: none;
+	resize: none;
+}
+
+.anketa-scene-5 .anketa-label {
+	vertical-align: top;
+	width: 180px;
+}
+
+.anketa-scene-5 .anketa-val:before {
+	margin: 0;
+	top: 5px;
+}
+
+/* slide 7 */
+.magazine {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin: -265px 0 0 -400px;
+}
+
+.thank-u-title {
+	position: relative;
+	z-index: 50;
+	color: #3c3c3c;
+	font-size: 80px;
+	font-family: "FiraSansMedium";
+}
+
+.time-title {
+	position: relative;
+	z-index: 50;
+	margin: 160px 0 0;
+}
+
+.time-title-1 {
+	font-size: 25px;
+	font-family: "FiraSansRegular";
+}
+
+.time-title-2 {
+	font-family: "FiraSansMedium";
+	font-size: 25px;
+	color: #fa6464;
+	text-transform: uppercase;
+}
+
+.time-title-3 {
+	color: #fa6464;
+	font-family: "FiraSansMedium";
+	font-size: 90px;
+	margin: -80px 0 0 375px;
+}
+
+.time-title-4 {
+	font-size: 120px;
+}
+
+.anketa-btn-to-index {
+	display: none;
+}
 
 /* END: Anketa */

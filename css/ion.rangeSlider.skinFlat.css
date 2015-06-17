@@ -18,7 +18,6 @@
 .irs {
     height: 40px;
     width: 320px;
-    margin: -13px 0 0;
 }
 .irs-with-grid {
     height: 60px;
@@ -40,12 +39,12 @@
     }
 
 .irs-bar {
-    height: 4px; top: 25px;
+    height: 2px; top: 25px;
     background-position: 0 -60px;
 }
     .irs-bar-edge {
         top: 25px;
-        height: 4px; width: 9px;
+        height: 2px; width: 9px;
         background-position: 0 -90px;
     }
 
@@ -85,10 +84,11 @@
     font-size: 18px;
     top: -6px;
     font-family: FiraSansRegular;
+    z-index: 100;
 }
 .irs-from:after, .irs-to:after, .irs-single:after {
     display: none;
-    position: absolute; display: block; content: "";
+    position: absolute; content: "";
     bottom: -6px; left: 50%;
     width: 0; height: 0;
     margin-left: -3px;

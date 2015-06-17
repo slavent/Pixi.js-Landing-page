@@ -113,9 +113,8 @@
   border-left-color: #aaaaaa;
 }
 .selectize-control {
-  position: absolute;
   width: 300px;
-  top: -20px;
+  height: 40px;
 }
 .selectize-dropdown,
 .selectize-input,

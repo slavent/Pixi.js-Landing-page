@@ -90,7 +90,7 @@ App.init = function() {
 // START: Web Font
 window.WebFontConfig = {
     custom: {
-        families: ["HelveticaNeueCyr-Light", "Plumb-Black", "PlumbCondensed-Bold", "FiraSansMedium", "BebasRegular"],
+        families: ["HelveticaNeueCyr-Light", "HelveticaNeueCyr-Bold", "Plumb-Black", "PlumbCondensed-Bold", "FiraSansMedium", "BebasRegular"],
         urls: ['build/css/build.css']
     },
     active: function() {

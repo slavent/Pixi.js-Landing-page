@@ -197,9 +197,7 @@ App.managerService.slide_7 = {
 		},
 
 		destroy: function() {
-			$anketa.find(".anketa-scene-1").hide(function() {
-				$(this).find(".anketa-row").css({ "opacity" : 0 });
-			});
+			$anketa.find(".anketa-scene-1").hide();
 		}
 
 	},
