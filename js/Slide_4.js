@@ -145,7 +145,7 @@ App.managerService.slide_4 = {
 
 				this.el = slides;
 
-				var Slide = function(index, url, title, description) {
+				var Slide = function(index, url_photo, url_video, title, description) {
 
 					// Title
 					var title_style = {
@@ -178,8 +178,27 @@ App.managerService.slide_4 = {
 					this.description.position.y = data.description.y;
 					this.description.anchor.x = data.description.anchor;
 
+					// Video
+					this.video_texture = PIXI.Texture.fromVideo(url_video);
+					this.video_sprite = new PIXI.Sprite(this.video_texture);
+					this.video_sprite.anchor.x = .5;
+					this.video_sprite.scale.x = slide_scale;
+					this.video_sprite.scale.y = slide_scale;
+					this.video_sprite.alpha = 0;
+					this.video_sprite.texture.baseTexture.source.loop = true;
+					this.video_sprite.buttonMode = true;
+					this.video_sprite.interactive = true;
+					this.video_sprite.on("mouseover", function() {
+						createjs.Tween.get(this)
+							.to({ alpha: 1}, 1000, createjs.Ease.getPowInOut(4));
+					});
+					this.video_sprite.on("mouseout", function() {
+						createjs.Tween.get(this)
+							.to({ alpha: 0}, 1000, createjs.Ease.getPowInOut(4));
+					});
+
 					// Photo
-					this.texture = PIXI.Texture.fromVideo(url);
+					this.texture = PIXI.Texture.fromImage(url_photo);
 					this.sprite = new PIXI.Sprite(this.texture);
 					this.sprite.anchor.x = .5;
 					this.sprite.texture.baseTexture.source.loop = true;
@@ -210,13 +229,14 @@ App.managerService.slide_4 = {
 					this.sprite.addChild(this.title);
 					this.sprite.addChild(this.line);
 					this.sprite.addChild(this.description);
+					this.sprite.addChild(this.video_sprite);
 
 					return this.sprite;
 
 				}
 
 				for(var i = 0; i < data_slides.length; i++) {
-					var slide = new Slide( i, data_slides[i].url, data_slides[i].title, data_slides[i].description );
+					var slide = new Slide( i, data_slides[i].url_photo, data_slides[i].url_video, data_slides[i].title, data_slides[i].description );
 					
 					slides.addChild(slide);
 				}
