@@ -434,6 +434,96 @@
 	top: 5px;
 }
 
+/* Slide 6 */
+.order-header {
+	width: 900px;
+	margin: 0 auto 15px auto;
+}
+
+.order-subtitle {
+	display: inline-block;
+	width: 50%;
+	font-family: "FiraSansMedium";
+	font-size: 24px;
+	color: #ff7d7a;
+	letter-spacing: 1px;
+	text-align: left;
+}
+
+.order-add-more {
+	display: inline-block;
+	width: 50%;
+	text-align: right;
+}
+
+.order-add-more span{
+	font-family: "FiraSansRegular";
+	font-style: italic;
+	font-size: 16px;
+	color: #ff7d7a;
+	border-bottom: 1px dotted #ff7d7a;
+}
+
+.order-list {
+	width: 900px;
+	border-top: 2px solid #ff7d7a;
+	margin: auto;
+}
+
+.order-row {
+	border-bottom: 1px solid #ffdcdb;
+	padding: 10px 0;
+}
+
+.order-row:last-child {
+	border: none;
+}
+
+.order-pic {
+	display: inline-block;
+	vertical-align: middle;
+	width: 80px;
+}
+
+.order-title {
+	display: inline-block;
+	vertical-align: middle;
+	width: 600px;
+	font-size: 16px;
+	font-family: "Myriad Pro";
+	color: #3c3c3c;
+	text-align: left;
+	padding: 0 0 0 20px;
+}
+
+.order-price {
+	display: inline-block;
+	vertical-align: middle;
+	width: 140px;
+	font-size: 18px;
+  	letter-spacing: 1px;
+	font-family: "FiraSansMedium";
+	color: #ff7d7a;
+}
+
+.order-del {
+	display: inline-block;
+	vertical-align: middle;
+	width: 60px;
+	position: relative;
+}
+
+.order-del:after {
+	content: "";
+	width: 22px;
+	height: 22px;
+	background: url(../../i/s7/delete_order.png) 0 0 no-repeat;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin: -11px 0 0 -11px;
+}
+
 /* slide 7 */
 .magazine {
 	position: absolute;
