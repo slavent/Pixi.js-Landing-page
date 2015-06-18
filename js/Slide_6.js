@@ -96,7 +96,7 @@ App.managerService.slide_6 = {
 
 		checkDirection: function(event) {
 			if(event) {
-				if(event.originalEvent.wheelDelta < 0) {
+				if(event.deltaY < 0) {
 					// scroll down
 					if( active_scene < 6 ) App.managerService.slide_6.SceneController.moveTo(active_scene, ++active_scene);
 					else {

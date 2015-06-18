@@ -3,7 +3,7 @@ App.WheelController = {
 	checkDirection: function(event) {
 
 		if(event) {
-			if(event.originalEvent.wheelDelta < 0) {
+			if(event.deltaY < 0) {
 				// scroll down
 				if( active_slide < Object.keys(App.managerService).length ) App.SlideController.moveTo(active_slide, ++active_slide);
 				else App.WheelController.unlockWheel();

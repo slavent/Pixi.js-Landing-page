@@ -185,7 +185,7 @@ App.managerService.slide_4 = {
 					this.description.anchor.x = data.description.anchor;
 
 					// Video
-					this.video_texture = PIXI.Texture.fromVideo(url_video);
+					/*this.video_texture = PIXI.Texture.fromVideo(url_video);
 					this.video_sprite = new PIXI.Sprite(this.video_texture);
 					this.video_sprite.anchor.x = .5;
 					this.video_sprite.scale.x = slide_scale;
@@ -201,7 +201,7 @@ App.managerService.slide_4 = {
 					this.video_sprite.on("mouseout", function() {
 						createjs.Tween.get(this)
 							.to({ alpha: 0}, 1000, createjs.Ease.getPowInOut(4));
-					});
+					});*/
 
 					// Photo
 					this.texture = PIXI.Texture.fromImage(url_photo);
@@ -235,7 +235,7 @@ App.managerService.slide_4 = {
 					this.sprite.addChild(this.title);
 					this.sprite.addChild(this.line);
 					this.sprite.addChild(this.description);
-					this.sprite.addChild(this.video_sprite);
+					//this.sprite.addChild(this.video_sprite);
 
 					return this.sprite;
 

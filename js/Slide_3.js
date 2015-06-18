@@ -151,7 +151,7 @@ App.managerService.slide_3 = {
 
 		checkDirection: function(event) {
 			if(event) {
-				if(event.originalEvent.wheelDelta < 0) {
+				if(event.deltaY < 0) {
 					// scroll top
 					if( active_scene < 6 ) App.managerService.slide_3.SceneController.moveTo(active_scene, ++active_scene);
 					else App.SlideController.moveTo(active_slide, ++active_slide);
