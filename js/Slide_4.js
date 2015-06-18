@@ -185,7 +185,7 @@ App.managerService.slide_4 = {
 					this.description.anchor.x = data.description.anchor;
 
 					// Video
-					/*this.video_texture = PIXI.Texture.fromVideo(url_video);
+					this.video_texture = PIXI.Texture.fromVideo(url_video);
 					this.video_sprite = new PIXI.Sprite(this.video_texture);
 					this.video_sprite.anchor.x = .5;
 					this.video_sprite.scale.x = slide_scale;
@@ -194,14 +194,22 @@ App.managerService.slide_4 = {
 					this.video_sprite.texture.baseTexture.source.loop = true;
 					this.video_sprite.buttonMode = true;
 					this.video_sprite.interactive = true;
+
+					var source = this.video_sprite.texture.baseTexture.source;
+					source.pause();
+
 					this.video_sprite.on("mouseover", function() {
+						source.play();
+
 						createjs.Tween.get(this)
 							.to({ alpha: 1}, 1000, createjs.Ease.getPowInOut(4));
 					});
 					this.video_sprite.on("mouseout", function() {
+						source.pause();
+
 						createjs.Tween.get(this)
 							.to({ alpha: 0}, 1000, createjs.Ease.getPowInOut(4));
-					});*/
+					});
 
 					// Photo
 					this.texture = PIXI.Texture.fromImage(url_photo);
@@ -235,7 +243,7 @@ App.managerService.slide_4 = {
 					this.sprite.addChild(this.title);
 					this.sprite.addChild(this.line);
 					this.sprite.addChild(this.description);
-					//this.sprite.addChild(this.video_sprite);
+					this.sprite.addChild(this.video_sprite);
 
 					return this.sprite;
 
