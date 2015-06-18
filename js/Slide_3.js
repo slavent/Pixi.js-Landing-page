@@ -55,7 +55,24 @@ App.managerService.slide_3 = {
 			$hyde_menu.addClass("complete").find(".hyde-menu-item").on("click", function() {
 				var prev_scene = active_scene;
 				active_scene = $(this).index() + 1;
+				$(this).removeClass("hover");
 				App.managerService.slide_3.SceneController.moveTo(prev_scene, active_scene);							
+			});
+
+			$hyde_menu.addClass("complete").find(".hyde-menu-item").hover(
+				function() {
+					if( $(this).hasClass("active") ) return;
+					$(this).addClass("hover");
+				},
+				function() {
+					$(this).removeClass("hover");
+				}
+			);
+
+			$hover.on("click", function() {
+				var prev_scene = active_scene;
+				active_scene = ind;
+				App.managerService.slide_3.SceneController.moveTo(prev_scene, active_scene);
 			});
 		}
 

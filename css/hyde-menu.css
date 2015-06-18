@@ -44,6 +44,7 @@
 	background-size: 100% 100%;
 	position: relative;
 	cursor: pointer;
+	overflow: hidden;
 }
 
 @media (max-width: 1000px) {
@@ -85,12 +86,13 @@
 }
 
 .hyde-menu-symbol {
-	color: #3c3c3c;
+	opacity: .4;
+	color: #fff;
 	font-family: HelveticaNeueCyr-Light;
 	font-size: 70px;
 	line-height: 1;
 	text-transform: uppercase;
-	border: 3px solid #3c3c3c;
+	border: 3px solid #fff;
 	width: 90px;
 	height: 90px;
 	box-sizing: border-box;
@@ -100,20 +102,24 @@
 	top: 50%;
 	left: 50%;
 	z-index: 50;
+	transition: all .5s;
+	-webkit-transition: all .5s;
 }
 
 .hyde-menu-color-map {
-	display: none;
+	opacity: 0;
 	font: 18px "Helvetica";
 	text-transform: uppercase;
 	color: #fff;
 	position: absolute;
-	top: 50%;
+	top: 100%;
 	left: 0;
 	right: 0;
 	bottom: 0;
 	z-index: 70;
 	text-align: center;
+	transition: all .5s;
+	-webkit-transition: all .5s;
 }
 
 .hyde-menu-color-map:before {
@@ -132,14 +138,32 @@
 	padding: 15px 0 0;
 }
 
-.hyde-menu-item.active .hyde-menu-symbol {
-	color: #fff;
-	border-color: #fff;
+.hyde-menu-item.active .hyde-menu-symbol,
+.hyde-menu-item.hover .hyde-menu-symbol {
+	opacity: 1;
 	z-index: 70;
 }
 
 .hyde-menu-item.active .hyde-menu-color-map {
-	display: block;
+	opacity: 1;
+	top: 50%;
+}
+
+.hyde-menu-item:before {
+	content: "";
+	opacity: 0;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: rgba(250, 100, 100, 0.89);
+	transition: all .5s;
+	-webkit-transition: all .5s;
+}
+
+.hyde-menu-item.hover:before {
+	opacity: 1;
 }
 
 @media (max-width: 1000px) {
