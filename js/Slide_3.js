@@ -489,10 +489,9 @@ App.managerService.slide_3 = {
 					this.el.buttonMode = true;
 					this.el.interactive = true;
 					this.el.on("click", function() {
-						step = 6;
+						App.SlideController.moveTo(active_slide, 7);
 						active_slide = 7;
-						App.managerService.slide_3.scroll(); // for reset timer
-						App.WheelController.init();
+						App.NavController.setActive();
 					});
 
 					this.el.addChild(title);
