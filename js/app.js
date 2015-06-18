@@ -70,8 +70,8 @@ App.init = function() {
     if( $(window).width() <= 1000 ) mobile_version = true;
 
     var url;
-    if( mobile_version == true ) url = "data/data_mobile.json";
-    else url = "data/data.json";
+    if( mobile_version == true ) url = "data/data_for_mobile.json";
+    else url = "data/data_for_desktop.json";
 
    	$.getJSON(url)
     	.success(function(data) {

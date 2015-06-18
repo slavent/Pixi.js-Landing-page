@@ -508,7 +508,7 @@ App.managerService.slide_3 = {
 					slide_container_3.addChild(this.el);
 
 					createjs.Tween.get(this.el)
-						.to({ y: renderer.height / 2 }, data.speed, createjs.Ease.getPowInOut(4));
+						.to({ y: renderer.height / 2 + 100 }, data.speed, createjs.Ease.getPowInOut(4));
 
 				},
 
@@ -516,7 +516,7 @@ App.managerService.slide_3 = {
 					var data = DATA.slide_3.orderBtn;
 
 					createjs.Tween.get(this.el)
-						.to({ y: data.y }, data.speed, createjs.Ease.getPowInOut(4))
+						.to({ y: renderer.height + 200 }, data.speed, createjs.Ease.getPowInOut(4))
 						.call(function() {
 							this.children[0].destroy(true);
 						});
