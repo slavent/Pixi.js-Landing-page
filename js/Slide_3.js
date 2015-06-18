@@ -299,14 +299,24 @@ App.managerService.slide_3 = {
 				}
 
 				this.el.destroy = function(element) {
-					createjs.Tween.get(title_top).to({ x: data.titles.title_top.x }, 500, createjs.Ease.getPowInOut(4));
-					createjs.Tween.get(title_down).to({ x: data.titles.title_down.x }, 500, createjs.Ease.getPowInOut(4));
+					createjs.Tween.get(title_top)
+						.to({ x: data.titles.title_top.x }, 500, createjs.Ease.getPowInOut(4))
+						.call(function() {
+							this.destroy(true);
+						});
+
+					createjs.Tween.get(title_down)
+						.to({ x: data.titles.title_down.x }, 500, createjs.Ease.getPowInOut(4))
+						.call(function() {
+							this.destroy(true);
+						});
+
 					createjs.Tween.get(element)
 						.wait(200)
 						.to({ y: -renderer.height * 2 }, 1000, createjs.Ease.getPowInOut(4))
-							.call(function() {
-								slide_container_3.removeChild(this.el);
-							});
+						.call(function() {
+							this.texture.destroy(true, true);
+						});
 
 					App.managerService.slide_3.elems.menu["order_btn"].destroy();
 				}
@@ -508,7 +518,7 @@ App.managerService.slide_3 = {
 					createjs.Tween.get(this.el)
 						.to({ y: data.y }, data.speed, createjs.Ease.getPowInOut(4))
 						.call(function() {
-							this.el = null;
+							this.children[0].destroy(true);
 						});
 				}
 

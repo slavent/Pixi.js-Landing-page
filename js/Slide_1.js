@@ -33,9 +33,13 @@ App.managerService.slide_1 = {
 	destroy: function() {
 		console.log("Slide 1 destroy");
 
+		var that = this;
+
 		createjs.Tween.get(slide_container_1)
 			.to({ alpha: 0 }, 1000, createjs.Ease.getPowInOut(4))
 			.call(function() {
+				for (var key in that.elems) that.elems[key].destroy();
+
 				slide_container_1 = null;
 
 				setTimeout(function() {
@@ -197,6 +201,12 @@ App.managerService.slide_1 = {
 					this.el.children[i].position.y = renderer.height / 2 + this.el.children[i].y_pos;
 				}
 
+			},
+
+			destroy: function() {
+				for(var i = 0; i < this.slides.children.length; i++) {
+					this.slides.children[i].texture.destroy(true, true);
+				}
 			}
 
 		},
@@ -222,6 +232,10 @@ App.managerService.slide_1 = {
 
 				this.el.position.x = renderer.width / 2;
 				this.el.position.y = renderer.height / 2 + data.y;
+			},
+
+			destroy: function() {
+				this.el.texture.destroy(true, true);
 			}
 
 		},
@@ -252,6 +266,10 @@ App.managerService.slide_1 = {
 
 				this.el.x = (renderer.width - this.el.width) / 2;
 				this.el.y = ((renderer.height - this.el.height) / 2) + data.y;
+			},
+
+			destroy: function() {
+				this.el.destroy(true);
 			}
 
 		},
@@ -291,6 +309,11 @@ App.managerService.slide_1 = {
 				this.el_1.position.x = renderer.width / 2 + data.x;
 				this.el_1.position.y = renderer.height / 2 + data.y;
 				this.el_2.position.y += Math.sin(this.step);
+			},
+
+			destroy: function() {
+				this.el_1.texture.destroy(true, true);
+				this.el_2.texture.destroy(true, true);
 			}
 
 		}

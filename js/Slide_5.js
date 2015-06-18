@@ -60,7 +60,10 @@ App.managerService.slide_5 = {
 
 				createjs.Tween.get(this.el)
 					.wait(data.destroy_wait)
-					.to({ y: renderer.height * 2 }, data.speed, createjs.Ease.getPowInOut(4));
+					.to({ y: renderer.height * 2 }, data.speed, createjs.Ease.getPowInOut(4))
+					.call(function() {
+						this.texture.destroy(true, true);
+					});
 			},
 
 			update: function() {
@@ -124,7 +127,10 @@ App.managerService.slide_5 = {
 
 				createjs.Tween.get(this.el)
 					.wait(data.destroy_wait)
-					.to({ y: -renderer.height }, data.speed, createjs.Ease.getPowInOut(4));
+					.to({ y: -renderer.height }, data.speed, createjs.Ease.getPowInOut(4))
+					.call(function() {
+						this.destroy();
+					});
 			},
 
 			update: function() {
@@ -165,7 +171,10 @@ App.managerService.slide_5 = {
 
 				createjs.Tween.get(this.el)
 					.wait(data.destroy_wait)
-					.to({ y: -renderer.height }, data.speed, createjs.Ease.getPowInOut(4));	
+					.to({ y: -renderer.height }, data.speed, createjs.Ease.getPowInOut(4))
+					.call(function() {
+						this.destroy();
+					});
 			},
 
 			update: function() {
@@ -206,7 +215,10 @@ App.managerService.slide_5 = {
 
 				createjs.Tween.get(this.el)
 					.wait(data.destroy_wait)
-					.to({ y: -renderer.height }, data.speed, createjs.Ease.getPowInOut(4));	
+					.to({ y: -renderer.height }, data.speed, createjs.Ease.getPowInOut(4))
+					.call(function() {
+						this.destroy();
+					});
 			},
 
 			update: function() {
@@ -247,7 +259,10 @@ App.managerService.slide_5 = {
 
 				createjs.Tween.get(this.el)
 					.wait(data.destroy_wait)
-					.to({ y: -renderer.height }, data.speed, createjs.Ease.getPowInOut(4));	
+					.to({ y: -renderer.height }, data.speed, createjs.Ease.getPowInOut(4))
+					.call(function() {
+						this.destroy();
+					});
 			},
 
 			update: function() {
@@ -287,7 +302,10 @@ App.managerService.slide_5 = {
 
 				createjs.Tween.get(this.el)
 					.wait(data.destroy_wait)
-					.to({ y: -renderer.height }, data.speed, createjs.Ease.getPowInOut(4));	
+					.to({ y: -renderer.height }, data.speed, createjs.Ease.getPowInOut(4))
+					.call(function() {
+						this.destroy();
+					});
 			},
 
 			update: function() {
@@ -327,7 +345,10 @@ App.managerService.slide_5 = {
 
 				createjs.Tween.get(this.el)
 					.wait(data.destroy_wait)
-					.to({ y: -renderer.height }, data.speed, createjs.Ease.getPowInOut(4));
+					.to({ y: -renderer.height }, data.speed, createjs.Ease.getPowInOut(4))
+					.call(function() {
+						this.destroy();
+					});
 			},
 
 			update: function() {
@@ -367,7 +388,10 @@ App.managerService.slide_5 = {
 
 				createjs.Tween.get(this.el)
 					.wait(data.destroy_wait)
-					.to({ y: -renderer.height }, data.speed, createjs.Ease.getPowInOut(4));
+					.to({ y: -renderer.height }, data.speed, createjs.Ease.getPowInOut(4))
+					.call(function() {
+						this.destroy();
+					});
 			},
 
 			update: function() {
@@ -407,7 +431,10 @@ App.managerService.slide_5 = {
 
 				createjs.Tween.get(this.el)
 					.wait(data.destroy_wait)
-					.to({ y: -renderer.height }, data.speed, createjs.Ease.getPowInOut(4));
+					.to({ y: -renderer.height }, data.speed, createjs.Ease.getPowInOut(4))
+					.call(function() {
+						this.destroy();
+					});
 			},
 
 			update: function() {
@@ -447,7 +474,10 @@ App.managerService.slide_5 = {
 
 				createjs.Tween.get(this.el)
 					.wait(data.destroy_wait)
-					.to({ y: -renderer.height }, data.speed, createjs.Ease.getPowInOut(4));
+					.to({ y: -renderer.height }, data.speed, createjs.Ease.getPowInOut(4))
+					.call(function() {
+						this.destroy();
+					});
 			},
 
 			update: function() {
@@ -487,7 +517,10 @@ App.managerService.slide_5 = {
 
 				createjs.Tween.get(this.el)
 					.wait(data.destroy_wait)
-					.to({ y: -renderer.height }, data.speed, createjs.Ease.getPowInOut(4));
+					.to({ y: -renderer.height }, data.speed, createjs.Ease.getPowInOut(4))
+					.call(function() {
+						this.destroy();
+					});
 			},
 
 			update: function() {

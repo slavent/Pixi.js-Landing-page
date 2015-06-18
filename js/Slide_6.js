@@ -197,11 +197,11 @@ App.managerService.slide_6 = {
 		Title.anchor.y = .5;
 
 			// info
-			var style = {
-			font : '16px HelveticaNeueCyr-Light',
-		    fill : '#3c3c3c',
-		    align : "center"
-		},
+		var style = {
+				font : '16px HelveticaNeueCyr-Light',
+			    fill : '#3c3c3c',
+			    align : "center"
+			},
 			Info = new PIXI.Text(info.text, style);
 		Info.x = info.x;	
 		Info.y = info.y;
@@ -213,8 +213,8 @@ App.managerService.slide_6 = {
 		Border.position.x = -info.x;
 		Border.position.y = info.y - 17;
 
-			// btn
-			var btn_texture = PIXI.Texture.fromImage("i/s6/circle.svg"),
+		// btn
+		var btn_texture = PIXI.Texture.fromImage("i/s6/circle.svg"),
 			Btn = new PIXI.Sprite(btn_texture);
 		Btn.anchor.set(0.5);
 		Btn.position.x = btn_title.x;
@@ -248,57 +248,66 @@ App.managerService.slide_6 = {
 		scene.addChild(Btn_title);
 
 
-			scene.init = function() {
-				// pic
-				createjs.Tween.get(Pic)
-					.to({ y: pic.y_to }, 3000, createjs.Ease.getPowInOut(4));
+		scene.init = function() {
+			// pic
+			createjs.Tween.get(Pic)
+				.to({ y: pic.y_to }, 2500, createjs.Ease.getPowInOut(4));
 
-				// title 
-				createjs.Tween.get(Title)
+			// title 
+			createjs.Tween.get(Title)
 				.to({ y: title.y_to }, 2000, createjs.Ease.getPowInOut(4));
 
-				// info 
-				createjs.Tween.get(Info)
+			// info 
+			createjs.Tween.get(Info)
 				.wait(600)
-					.to({ x: info.x_to - Info.width/2 }, 1000, createjs.Ease.getPowInOut(4));
+				.to({ x: info.x_to - Info.width/2 }, 1000, createjs.Ease.getPowInOut(4));
 
-				createjs.Tween.get(Border)
+			createjs.Tween.get(Border)
 				.wait(600)
-					.to({ x: info.x_to - Border.width/2}, 1000, createjs.Ease.getPowInOut(4));
+				.to({ x: info.x_to - Border.width/2}, 1000, createjs.Ease.getPowInOut(4));
 
-				// btn
-				createjs.Tween.get(Btn)
+			// btn
+			createjs.Tween.get(Btn)
 				.wait(0)
-					.to({ y: btn_title.y_to }, 1000, createjs.Ease.getPowInOut(4));
+				.to({ y: btn_title.y_to }, 1000, createjs.Ease.getPowInOut(4));
 
-				createjs.Tween.get(Btn_title)
+			createjs.Tween.get(Btn_title)
 				.wait(200)
-					.to({ y: btn_title.y_to }, 1000, createjs.Ease.getPowInOut(4));
-			};
+				.to({ y: btn_title.y_to }, 1000, createjs.Ease.getPowInOut(4));
+		};
 
-			scene.destroy = function() {
-				// pic
-				createjs.Tween.get(Pic)
-						.to({ y: renderer.height*2 }, 1000, createjs.Ease.getPowInOut(4));
+		scene.destroy = function() {
+			// pic
+			createjs.Tween.get(Pic)
+				.to({ y: renderer.height*2 }, 1000, createjs.Ease.getPowInOut(4))
+				.call(function() {
+					this.texture.destroy(true, true);
+				})
 
-				// title
-				createjs.Tween.get(Title)
-					.to({ y: renderer.height*2 }, 1000, createjs.Ease.getPowInOut(4));
+			// title
+			createjs.Tween.get(Title)
+				.to({ y: renderer.height*2 }, 1000, createjs.Ease.getPowInOut(4))
+				.call(function() {
+					this.destroy();
+				});
 
-				// info 
-				createjs.Tween.get(Info)
-					.to({ y: renderer.height*2 }, 1000, createjs.Ease.getPowInOut(4));
+			// info 
+			createjs.Tween.get(Info)
+				.to({ y: renderer.height*2 }, 1000, createjs.Ease.getPowInOut(4))
+				.call(function() {
+					this.destroy();
+				});
 
-				createjs.Tween.get(Border)
-					.to({ y: renderer.height*2 }, 1000, createjs.Ease.getPowInOut(4));
+			createjs.Tween.get(Border)
+				.to({ y: renderer.height*2 }, 1000, createjs.Ease.getPowInOut(4));
 
-				// btn 
-				createjs.Tween.get(Btn)
-					.to({ y: renderer.height*2 }, 1000, createjs.Ease.getPowInOut(4));
+			// btn 
+			createjs.Tween.get(Btn)
+				.to({ y: renderer.height*2 }, 1000, createjs.Ease.getPowInOut(4));
 
-				createjs.Tween.get(Btn_title)
-					.to({ y: renderer.height*2 }, 1000, createjs.Ease.getPowInOut(4));
-			};
+			createjs.Tween.get(Btn_title)
+				.to({ y: renderer.height*2 }, 1000, createjs.Ease.getPowInOut(4));
+		};
 
 		return scene;
 	},
@@ -672,8 +681,8 @@ App.managerService.slide_6 = {
 		},
 
 		destroy: function() {
-			slide_container_6.removeChild(this.el_1);
-			slide_container_6.removeChild(this.el_2);
+			this.el_1.texture.destroy();
+			this.el_2.texture.destroy();
 		}
 
 	}

@@ -70,7 +70,10 @@ App.managerService.slide_2 = {
 
 				createjs.Tween.get(this.el)
 					.wait(data.destroy_wait)
-					.to({ y: -this.el.height }, data.speed, createjs.Ease.quadOut());
+					.to({ y: -this.el.height }, data.speed, createjs.Ease.quadOut())
+					.call(function() {
+						this.destroy();
+					});
 			}
 
 		},
@@ -110,7 +113,10 @@ App.managerService.slide_2 = {
 
 				createjs.Tween.get(this.el)
 					.wait(data.destroy_wait)
-						.to({ y: -this.el.height }, data.speed, createjs.Ease.linear());
+					.to({ y: -this.el.height }, data.speed, createjs.Ease.linear())
+					.call(function() {
+						this.destroy();
+					});
 			}
 
 		},
@@ -150,7 +156,10 @@ App.managerService.slide_2 = {
 
 				createjs.Tween.get(this.el)
 					.wait(data.destroy_wait)
-					.to({ y: -this.el.height }, data.speed, createjs.Ease.linear());
+					.to({ y: -this.el.height }, data.speed, createjs.Ease.linear())
+					.call(function() {
+						this.destroy();
+					});
 			}
 
 		},
@@ -189,7 +198,10 @@ App.managerService.slide_2 = {
 
 				createjs.Tween.get(this.el)
 					.wait(data.destroy_wait)
-					.to({ y: renderer.height }, data.speed, createjs.Ease.quadOut());
+					.to({ y: renderer.height + 200 }, data.speed, createjs.Ease.quadOut())
+					.call(function() {
+						this.destroy();
+					});
 			}
 
 		},
@@ -229,7 +241,10 @@ App.managerService.slide_2 = {
 				var data = DATA.slide_2.info;
 
 				createjs.Tween.get(this.el)
-					.to({ x: renderer.width }, data.speed, createjs.Ease.quadOut());
+					.to({ x: renderer.width }, data.speed, createjs.Ease.quadOut())
+					.call(function() {
+						this.destroy();
+					});
 			}
 
 		},

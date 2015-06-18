@@ -65,7 +65,10 @@ App.managerService.slide_4 = {
 
 				createjs.Tween.get(this.el)
 					.wait(data.destroy_wait)
-					.to({ y: -100 }, data.speed, createjs.Ease.getPowInOut(4));
+					.to({ y: -100 }, data.speed, createjs.Ease.getPowInOut(4))
+					.call(function() {
+						this.destroy(true);
+					});
 			},
 
 			update: function() {
@@ -108,7 +111,10 @@ App.managerService.slide_4 = {
 
 				createjs.Tween.get(this.el)
 					.wait(data.destroy_wait)
-					.to({ y: -100 }, data.speed, createjs.Ease.getPowInOut(4));
+					.to({ y: -100 }, data.speed, createjs.Ease.getPowInOut(4))
+					.call(function() {
+						this.destroy(true);
+					});
 			},
 
 			update: function() {
@@ -326,13 +332,29 @@ App.managerService.slide_4 = {
 				var data = DATA.slide_4.slider;
 
 				createjs.Tween.get(this.el)
-					.to({ y: 2000 }, data.speed, createjs.Ease.getPowInOut(4));
+					.to({ y: 2000 }, data.speed, createjs.Ease.getPowInOut(4))
+					.call(function() {
+						for(var i = 0; i < this.children.length; i++) {
+							for(var j = 0; j < this.children[i].children.length; j++) {
+								if( j == 0 || j == 2) this.children[i].children[j].destroy(true); // text
+								if( j == 3 ) this.children[i].children[j].texture.destroy(); // video
+							}
+
+							this.children[i].texture.destroy(true, true);
+						}
+					});
 
 				createjs.Tween.get(this.prev_btn)
-					.to({ x: -200 }, data.prevBtn.speed, createjs.Ease.getPowInOut(4));
+					.to({ x: -200 }, data.prevBtn.speed, createjs.Ease.getPowInOut(4))
+					.call(function() {
+						this.texture.destroy(true, true);
+					});
 
 				createjs.Tween.get(this.next_btn)
-					.to({ x: renderer.width + 200 }, data.nextBtn.speed, createjs.Ease.getPowInOut(4));
+					.to({ x: renderer.width + 200 }, data.nextBtn.speed, createjs.Ease.getPowInOut(4))
+					.call(function() {
+						this.texture.destroy(true, true);
+					});
 			},
 
 			update: function() {
