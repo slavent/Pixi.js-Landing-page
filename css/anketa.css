@@ -172,6 +172,18 @@
 	cursor: pointer;
 }
 
+.anketa-error {
+	display: none;
+	color: red;
+	text-align: center;
+	position: absolute;
+	bottom: 110px;
+	left: 50%;
+	font-size: 16px;
+	font-family: "FiraSansRegular";
+	margin: 0 0 0 -70px;
+}
+
 /* Scene 2 */
 .anketa-col-2 {
 	display: inline-block;

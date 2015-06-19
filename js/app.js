@@ -15,6 +15,7 @@ var $body = $("body"),
 	$cart = $(".cart"),
 	$anketa = $(".anketa"),
 	$anketa_btn = $(".anketa-btn"),
+	$anketa_error = $(".anketa-error"),
 	$order_btn = $(".order-btn"),
 
 	w_width = $(window).width(),
