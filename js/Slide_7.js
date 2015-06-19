@@ -236,6 +236,7 @@ App.managerService.slide_7 = {
 				this.$slides 		= this.$wrp.children();
 				this.$prev_btn 		= this.$el.find(".carousel-prevbtn");
 				this.$next_btn 		= this.$el.find(".carousel-nextbtn");
+				this.$toggle_btn 	= this.$el.prev().children(),
 
 				this.s_margin_left 	= parseInt( this.$slides.eq(0).css("marginLeft") );
 				this.s_margin_right = parseInt( this.$slides.eq(0).css("marginRight") );
@@ -243,10 +244,22 @@ App.managerService.slide_7 = {
 			}
 
 			Slider.prototype.bind = function() {
-				var that = this;
+				var that 		= this,
+					word_show 	= "Показать",
+					word_hide 	= "Скрыть";
 
 				that.$prev_btn.on("click", { ctx: that, dir: "prev" }, that.move);
 				that.$next_btn.on("click", { ctx: that, dir: "next" }, that.move);
+
+				that.$toggle_btn.on("click", function() {
+					if( $(this).hasClass("active") ) {
+						$(this).removeClass("active").html(word_hide);
+						that.$wrp.parents(".carousel-row").slideDown();
+					} else {
+						$(this).addClass("active").html(word_show);
+						that.$wrp.parents(".carousel-row").slideUp();
+					}
+				})
 			};
 
 			Slider.prototype.move = function(event) {

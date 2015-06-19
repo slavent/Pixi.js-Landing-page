@@ -211,6 +211,11 @@
 	border-bottom: 1px dotted #ff7d7a;
 }
 
+.anketa-subtitle-toggle:hover {
+	cursor: pointer;
+	opacity: .8;
+}
+
 .carousel {
 	width: 100%;
 	overflow: hidden;
