@@ -162,8 +162,8 @@
 	left: 50%;
 	outline: none;
 	font-family: FiraSansRegular;
-	transition: all .3s;
-	-webkit-transition: all .3s;
+	transition: background, color .3s;
+	-webkit-transition: background, color .3s;
 }
 
 .anketa-btn:hover {

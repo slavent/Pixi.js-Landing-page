@@ -7,17 +7,18 @@ App.managerService.slide_7 = {
 
 		$body.unbind("mousewheel");
 		$anketa.show();
-		$cart.slideDown(700);
+		$cart.fadeIn();
 		this.Binder.init();
 		this.NavController.init();
 		this.SceneController.init();
+		this.BtnController.setValue();
 
 		if( slide_7_complete == true ) {
 			var deferred = $.Deferred();
 
 			setTimeout(function() {
 				deferred.resolve();
-			}, SLIDE_ANIMATION_TIME_6);
+			}, SLIDE_ANIMATION_TIME_7);
 
 			return deferred;
 		}
@@ -26,10 +27,11 @@ App.managerService.slide_7 = {
 	destroy: function() {
 		console.log("Slide 7 destroy");
 
-		$cart.slideUp();
+		$cart.fadeOut();
 		$anketa.hide();
 		this.NavController.destroy();
 		this.Binder.destroy();
+		this.BtnController.destroy();
 
 		if( active_scene == 7 ) slide_7_complete = true;
 		active_scene = 1;
@@ -73,8 +75,6 @@ App.managerService.slide_7 = {
 			var from = active_scene,
 				to   = ++active_scene;
 
-			console.log(from, to);
-
 			if( active_scene > 7 ) {
 				App.managerService.slide_7["scene_7"].destroy();
 				App.SlideController.moveTo(active_slide, ++active_slide);
@@ -83,6 +83,7 @@ App.managerService.slide_7 = {
 			}
 
 			App.managerService.slide_7.NavController.setActive();
+			App.managerService.slide_7.BtnController.setValue();
 			App.managerService.slide_7["scene_" + from].destroy();
 			App.managerService.slide_7["scene_" + to].init();
 		}
@@ -115,6 +116,31 @@ App.managerService.slide_7 = {
 		setActive: function() {
 			$step_pult.children().removeClass("step-pult-item-active");
 			$step_pult.children().eq(active_scene - 1).addClass("step-pult-item-active");
+		}
+
+	},
+
+	BtnController: {
+
+		setValue: function() {
+			var btn_values = {
+				s1: "Далее",
+				s2: "Далее",
+				s3: "Далее",
+				s4: "Далее",
+				s5: "Заказать",
+				s6: "Перейти к оплате",
+				s7: "Вернуться на главную"
+			}
+				btn_width = null;
+
+			$anketa_btn.hide().html(btn_values["s" + active_scene]).fadeIn();
+			btn_width = $anketa_btn.width();
+			$anketa_btn.css({ "marginLeft" : -btn_width/2 });
+		},
+
+		destroy: function() {
+			$anketa_btn.html("");
 		}
 
 	},
