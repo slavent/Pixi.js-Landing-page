@@ -12,6 +12,7 @@ var $body = $("body"),
 	$step_pult = $(".step-pult ul"),
 	$hyde_menu = $(".hyde-menu"),
 	$hover = $(".hyde-menu-hover"),
+	$cart = $(".cart"),
 	$anketa = $(".anketa"),
 	$order_btn = $(".order-btn"),
 

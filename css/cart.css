@@ -1,8 +1,9 @@
 .cart {
+	display: none;
 	border: 2px dashed #000;
 	padding: 14px 25px;
 	position: absolute;
-	top: 110px;
+	top: 90px;
 	right: 30px;
 	font-family: "FiraSansRegular";
 }

@@ -6,6 +6,7 @@ App.managerService.slide_7 = {
 		slide_container_7 = new PIXI.Container();
 
 		$anketa.show();
+		$cart.slideDown(700);
 		this.Binder.init();
 		this.NavController.init();
 		this.SceneController.init();
@@ -24,6 +25,7 @@ App.managerService.slide_7 = {
 	destroy: function() {
 		console.log("Slide 7 destroy");
 
+		$cart.slideUp();
 		$anketa.hide();
 		this.NavController.destroy();
 
@@ -226,6 +228,55 @@ App.managerService.slide_7 = {
 
 		init: function() {
 			$anketa.find(".anketa-scene-3").fadeIn();
+
+			/* START: Slider */
+			function Slider($el) {
+				this.$el 			= $el;
+				this.$wrp 			= this.$el.find(".carousel-wrp");
+				this.$slides 		= this.$wrp.children();
+				this.$prev_btn 		= this.$el.find(".carousel-prevbtn");
+				this.$next_btn 		= this.$el.find(".carousel-nextbtn");
+
+				this.s_margin_left 	= parseInt( this.$slides.eq(0).css("marginLeft") );
+				this.s_margin_right = parseInt( this.$slides.eq(0).css("marginRight") );
+				this.s_width		= parseInt( this.$slides.eq(0).width() );
+			}
+
+			Slider.prototype.bind = function() {
+				var that = this;
+
+				that.$prev_btn.on("click", { ctx: that, dir: "prev" }, that.move);
+				that.$next_btn.on("click", { ctx: that, dir: "next" }, that.move);
+			};
+
+			Slider.prototype.move = function(event) {
+				var that = event.data.ctx,
+					dir  = event.data.dir,
+					val = -1 * (that.s_width + that.s_margin_right);
+
+				switch(dir) {
+					case "prev": 
+							that.$wrp.prepend(that.$slides.last().css({ "marginLeft" : val }));
+							that.$slides = that.$wrp.children();
+							that.$slides.eq(0).animate({ "marginLeft" : that.s_margin_left, "marginRight" : this.s_margin_right });
+						break;
+					case "next":
+							that.$slides.eq(0).animate({ "marginLeft" : val }, function() {
+								that.$wrp.append($(this).css({ "marginLeft" : that.s_margin_left, "marginRight" : this.s_margin_right }));
+								that.$slides = that.$wrp.children();
+							});
+						break;
+				}
+			};
+
+			Slider.prototype.init = function() {
+				this.bind();
+			};
+
+			var slider_1 = new Slider($(".carousel-row-1")).init(),
+				slider_2 = new Slider($(".carousel-row-2")).init(),
+				slider_3 = new Slider($(".carousel-row-3")).init();
+			/* END: Slider */
 
 			var deferred = $.Deferred();
 
