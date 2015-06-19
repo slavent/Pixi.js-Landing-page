@@ -5,6 +5,7 @@ App.managerService.slide_7 = {
 
 		slide_container_7 = new PIXI.Container();
 
+		$body.unbind("mousewheel");
 		$anketa.show();
 		$cart.slideDown(700);
 		this.Binder.init();
@@ -28,6 +29,7 @@ App.managerService.slide_7 = {
 		$cart.slideUp();
 		$anketa.hide();
 		this.NavController.destroy();
+		this.Binder.destroy();
 
 		if( active_scene == 7 ) slide_7_complete = true;
 		active_scene = 1;
@@ -52,7 +54,11 @@ App.managerService.slide_7 = {
 	Binder: {
 
 		init: function() {
+			$anketa_btn.on("click", App.managerService.slide_7.SceneController.moveTo);
+		},
 
+		destroy: function() {
+			$anketa_btn.unbind("click");
 		}
 
 	},
@@ -60,81 +66,25 @@ App.managerService.slide_7 = {
 	SceneController: {
 
 		init: function() {
-			App.managerService.slide_7["scene_1"].init().then(function() { 
-				App.managerService.slide_7.WheelController.unlockWheel();
-				App.managerService.slide_7.SwipeController.unlockSwipe();
-			});
+			App.managerService.slide_7["scene_1"].init();
 		},
 
-		moveTo: function(from, to) {
-			console.log([from, to]);
+		moveTo: function() {
+			var from = active_scene,
+				to   = ++active_scene;
 
-			App.managerService.slide_7.SwipeController.lockSwipe();
+			console.log(from, to);
 
-			if( from == to ) return;
+			if( active_scene > 7 ) {
+				App.managerService.slide_7["scene_7"].destroy();
+				App.SlideController.moveTo(active_slide, ++active_slide);
+
+				return;
+			}
 
 			App.managerService.slide_7.NavController.setActive();
-
 			App.managerService.slide_7["scene_" + from].destroy();
-			App.managerService.slide_7["scene_" + to].init().then(function() { 
-				App.managerService.slide_7.WheelController.unlockWheel();
-				App.managerService.slide_7.SwipeController.unlockSwipe();
-			});
-		}
-
-	},
-
-	WheelController: {
-
-		checkDirection: function(event) {
-			if(event) {
-				if(event.deltaY < 0) {
-					// scroll down
-					if( active_scene < 7 ) App.managerService.slide_7.SceneController.moveTo(active_scene, ++active_scene);
-					else {
-						App.managerService.slide_7["scene_" + active_scene].destroy();
-						App.SlideController.moveTo(active_slide, ++active_slide);
-					}
-				} else {
-					// scroll top
-					if( active_scene > 1 ) App.managerService.slide_7.SceneController.moveTo(active_scene, --active_scene);
-					else {
-						App.managerService.slide_7["scene_" + active_scene].destroy();
-						App.SlideController.moveTo(active_slide, --active_slide);
-					}
-				}
-			}
-		},
-
-		unlockWheel: function() {
-			if( slide_7_complete == false ) $body.unbind("mousewheel").one("mousewheel", App.managerService.slide_7.WheelController.checkDirection);
-		}
-
-	},
-
-	SwipeController: {
-
-		lockSwipe: function() {
-			$$("body").off("swipeUp");
-			$$("body").off("swipeDown");
-		},
-
-		unlockSwipe: function() {
-			$$("body").on("swipeUp", function() {
-				if( active_scene < 7 ) App.managerService.slide_7.SceneController.moveTo(active_scene, ++active_scene);
-				else {
-					App.managerService.slide_7["scene_" + active_scene].destroy();
-					App.SlideController.moveTo(active_slide, ++active_slide);
-				}
-			});
-
-			$$("body").on("swipeDown", function() {
-				if( active_scene > 1 ) App.managerService.slide_7.SceneController.moveTo(active_scene, --active_scene);
-				else {
-					App.managerService.slide_7["scene_" + active_scene].destroy();
-					App.SlideController.moveTo(active_slide, --active_slide);
-				}
-			});
+			App.managerService.slide_7["scene_" + to].init();
 		}
 
 	},

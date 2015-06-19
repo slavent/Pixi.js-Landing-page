@@ -14,6 +14,7 @@ var $body = $("body"),
 	$hover = $(".hyde-menu-hover"),
 	$cart = $(".cart"),
 	$anketa = $(".anketa"),
+	$anketa_btn = $(".anketa-btn"),
 	$order_btn = $(".order-btn"),
 
 	w_width = $(window).width(),
