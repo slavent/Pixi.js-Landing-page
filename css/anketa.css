@@ -269,6 +269,13 @@
 	-webkit-transition: all .1s;
 }
 
+.carousel-item-subtitle.active {
+	color: #fff;
+	background: #ff7d7a;
+	border-color: #ff7d7a;
+	cursor: pointer;
+}
+
 .carousel-item-big .carousel-item-subtitle {
 	font-size: 24px;
 	padding: 7px 0 5px 0;
