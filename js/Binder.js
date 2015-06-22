@@ -44,18 +44,31 @@ App.Binder = function() {
 	});
 
 	// For Anketa
-	$("input").iCheck({
+	$(".icheckbox_minimal").iCheck({
 		checkboxClass: "icheckbox_minimal",
 		increaseArea: "20%"
+	});
+
+	$(".icheckbox_minimal").on('ifChecked', function(event){
+		$(".agree").val("true");
+	});
+
+	$(".icheckbox_minimal").on('ifUnchecked', function(event){
+		$(".agree").val("");
 	});
 
   	$(".anketa-season").on("click", function() {
   		$(".anketa-season").removeClass("anketa-season_selected");
   		$(this).addClass("anketa-season_selected");
+  		$(".season").val($(this).text());
   	});
 
   	$(".age-range").ionRangeSlider();
 
-  	$(".selectize").selectize();
+  	var $selects = $(".selectize").selectize();
+
+  	$(".selectize").on("item_add", function(value, $item) {
+  		console.log($(this), value);
+  	});
 
 };

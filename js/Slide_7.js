@@ -72,8 +72,11 @@ App.managerService.slide_7 = {
 		},
 
 		moveTo: function() {
-			if( App.managerService.slide_7.ValidateController.validate() == false ) {
+			if( App.managerService.slide_7.ValidateController.validate(active_scene) == false ) {
 				return;
+			} else {
+				App.managerService.slide_7.ErrorController.hideError();
+				console.log(anketa_data);
 			}
 
 			var from = active_scene,
@@ -151,45 +154,18 @@ App.managerService.slide_7 = {
 
 	ValidateController: {
 
-		validate: function() {
-			var anketa_data = {
-				s1: {
-					name	: { val: null, errorText: "Представьтесь пожалуйста" },
-					email	: { val: null, errorText: "Не указан email" },
-					tel 	: { val: null, errorText: "Не указан телефон" },
-					age 	: { val: null, errorText: "Не указан возраст" },
-					season 	: { val: null, errorText: "Не выбран сезон" },
-					agree 	: { val: null, errorText: "Необходимо принять условия пользовательского соглашения" }				
-				},
-				s2: {
-					growth	: { val: null, errorText: "Не указан рост" }, 
-					weight 	: { val: null, errorText: "Не указан вес" }, 
-					v_1 	: { val: null, errorText: "Не указан объем бюста" }, 
-					v_2 	: { val: null, errorText: "Не указан объем талии" }, 
-					v_3 	: { val: null, errorText: "Не указан объем бедер" }, 
-					size 	: { val: null, errorText: "Не указан размер одежды" }, 
-					type 	: { val: null, errorText: "Не указан тип внешности" }, 
-					color_1 : { val: null, errorText: "Не указан цвет глаз" }, 
-					color_2 : { val: null, errorText: "Не указан цвет волос" }, 
-					color_3 : { val: null, errorText: "Не указан цвет кожи" }
- 				},
-				s3: {
-					images	: { val: null, errorText: "Не был выбран ни один образ" }
-				},
-				s4: {
-					photos	: { val: null, errorText: "Необходимо загрузить фотографии" }
-				},
-				s5: {
-					input_1 : { val: null, errorText: "Укажите ваши пожелания" },
-					input_2 : { val: null, errorText: "Укажите причину вашего обращения к стилистам" }
-				}
-			};
+		validate: function(active_scene) {
+			var data = $anketa.find(".anketa-scene-" + active_scene).serializeArray(),
+				i = 0;
 
-			for( i in anketa_data["s" + active_scene] ) {
-				if( anketa_data.s1[i].val == null ) {
-					App.managerService.slide_7.ErrorController.showError( anketa_data.s1[i].errorText );
+			for( key in anketa_data["s" + active_scene] ) {
+				if( data[i]["value"] == "" ) {
+					App.managerService.slide_7.ErrorController.showError( anketa_data["s" + active_scene][key].errorText );
 					return false;
+				} else {
+					anketa_data["s" + active_scene][key].val = data[i]["value"];
 				}
+				i++;
 			}
 		}
 

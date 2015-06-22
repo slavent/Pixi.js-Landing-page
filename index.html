@@ -197,46 +197,46 @@
 
 		<div class="anketa-wrp">
 
-			<div class="anketa-scene-1">
+			<form class="anketa-scene-1">
 
 				<div class="anketa-title">Анкета</div>
 
 				<div class="anketa-row">
 					<div class="anketa-label">Имя Фамилия<span>*</span></div>
 					<div class="anketa-val">
-						<input type="text" name="" class="anketa-input">
+						<input type="text" name="name" class="anketa-input">
 					</div>	
 				</div>
 
 				<div class="anketa-row">
 					<div class="anketa-label">E-mail<span>*</span></div>
 					<div class="anketa-val">
-						<input type="text" name="" class="anketa-input anketa-input_size_small">
+						<input type="text" name="email" class="anketa-input anketa-input_size_small">
 					</div>
 				</div>
 
 				<div class="anketa-row">
 					<div class="anketa-label">Телефон<span>*</span></div>
 					<div class="anketa-val">
-						<input type="text" name="" class="anketa-input anketa-input_size_small" placeholder="+7 905 336 73 44">
+						<input type="text" name="tel" class="anketa-input anketa-input_size_small" placeholder="+7 905 336 73 44">
 					</div>
 				</div>
 
 				<div class="anketa-row">
 					<div class="anketa-label">Ваш возраст<span>*</span></div>
 					<div class="anketa-val">
-						<input type="text" class="age-range" value="" data-min="10" data-max="100" />
+						<input type="text" class="age-range" value="" name="age" data-min="10" data-max="100" />
 					</div>
 				</div>
 
 				<div class="anketa-row">
 					<div class="anketa-label">Выберите сезон<span>*</span></div>
 					<div class="anketa-val">
-						<div class="anketa-season anketa-season_selected">Зима</div>
+						<div class="anketa-season">Зима</div>
 						<div class="anketa-season">Весна</div>
 						<div class="anketa-season">Лето</div>
 						<div class="anketa-season">Осень</div>
-						<input type="hidden" name="">
+						<input type="hidden" class="season" name="season">
 					</div>
 				</div>
 
@@ -246,51 +246,52 @@
 						<input type="checkbox" class="icheckbox_minimal">
 						<span class="agreement-text">Я принимаю условия <a href="">пользовательского соглашения</a></span>
 					</div>
+					<input type="hidden" class="agree" name="agree">
 				</div>
 
-			</div>
+			</form>
 
-			<div class="anketa-scene-2">
+			<form class="anketa-scene-2">
 				<div class="anketa-col-2 anketa-col_align_right">
 					<div class="anketa-row">
 						<div class="anketa-label">Рост<span>*</span></div>
 						<div class="anketa-val">
-							<input type="text" class="age-range" value="" data-min="10" data-max="100" />
+							<input type="text" class="age-range" value="" name="growth" data-min="10" data-max="100" />
 						</div>
 					</div>
 
 					<div class="anketa-row">
 						<div class="anketa-label">Вес</div>
 						<div class="anketa-val">
-							<input type="text" class="age-range" value="" data-min="10" data-max="100" />
+							<input type="text" class="age-range" value="" name="weight" data-min="10" data-max="100" />
 						</div>
 					</div>
 
 					<div class="anketa-row">
 						<div class="anketa-label">Объем бюста<span>*</span></div>
 						<div class="anketa-val">
-							<input type="text" class="age-range" value="" data-min="10" data-max="100" />
+							<input type="text" class="age-range" value="" name="v_1" data-min="10" data-max="100" />
 						</div>
 					</div>
 
 					<div class="anketa-row">
 						<div class="anketa-label">Объем талии<span>*</span></div>
 						<div class="anketa-val">
-							<input type="text" class="age-range" value="" data-min="10" data-max="100" />
+							<input type="text" class="age-range" value="" name="v_2" data-min="10" data-max="100" />
 						</div>
 					</div>
 
 					<div class="anketa-row">
 						<div class="anketa-label">Объем бедер<span>*</span></div>
 						<div class="anketa-val">
-							<input type="text" class="age-range" value="" data-min="10" data-max="100" />
+							<input type="text" class="age-range" value="" name="v_3" data-min="10" data-max="100" />
 						</div>
 					</div>
 
 					<div class="anketa-row">
 						<div class="anketa-label">Размер одежды<span>*</span></div>
 						<div class="anketa-val">
-							<input type="text" class="age-range" value="" data-min="10" data-max="100" />
+							<input type="text" class="age-range" value="" name="size" data-min="10" data-max="100" />
 						</div>
 					</div>
 				</div>
@@ -299,7 +300,7 @@
 					<div class="anketa-row anketa-row-selectize">
 						<div class="anketa-label">Тип внешности<span>*</span></div>
 						<div class="anketa-val">
-							<select class="selectize">
+							<select class="selectize" name="type">
 								<option value="0"></option>
 								<option value="1">Test 1</option>
 								<option value="2">Test 2</option>
@@ -310,7 +311,7 @@
 					<div class="anketa-row anketa-row-selectize">
 						<div class="anketa-label">Цвет глаз<span>*</span></div>
 						<div class="anketa-val">
-							<select class="selectize">
+							<select class="selectize" name="color_1">
 								<option value="0"></option>
 								<option value="1">Test 1</option>
 								<option value="2">Test 2</option>
@@ -321,7 +322,7 @@
 					<div class="anketa-row anketa-row-selectize">
 						<div class="anketa-label">Цвет волос<span>*</span></div>
 						<div class="anketa-val">
-							<select class="selectize">
+							<select class="selectize" name="color_2">
 								<option value="0"></option>
 								<option value="1">Test 1</option>
 								<option value="2">Test 2</option>
@@ -332,7 +333,7 @@
 					<div class="anketa-row anketa-row-selectize">
 						<div class="anketa-label">Цвет кожи<span>*</span></div>
 						<div class="anketa-val">
-							<select class="selectize">
+							<select class="selectize" name="color_3">
 								<option value="0"></option>
 								<option value="1">Test 1</option>
 								<option value="2">Test 2</option>
@@ -341,9 +342,9 @@
 					</div>
 
 				</div>
-			</div>
+			</form>
 
-			<div class="anketa-scene-3">
+			<form class="anketa-scene-3">
 
 				<div class="anketa-scene-3-wrp">
 
@@ -470,9 +471,9 @@
 					</ul>
 				</div>
 
-			</div>
+			</form>
 
-			<div class="anketa-scene-4">
+			<form class="anketa-scene-4">
 
 				<div class="anketa-scene-4-wrp">
 					<div class="anketa-subtitle">Загрузите фотографии:</div>
@@ -535,9 +536,9 @@
 					</div>
 				</div>
 
-			</div>
+			</form>
 
-			<div class="anketa-scene-5">
+			<form class="anketa-scene-5">
 				
 				<div class="anketa-row">
 					<div class="anketa-label">Пожелания<span>*</span></div>
@@ -553,9 +554,9 @@
 					</div>
 				</div>
 
-			</div>
+			</form>
 
-			<div class="anketa-scene-6">
+			<form class="anketa-scene-6">
 				<div class="order-header">
 					<div class="order-subtitle">Ваш заказ:</div>
 					<div class="order-add-more"><span>Хотите добавить еще?</span></div>
@@ -584,7 +585,7 @@
 
 				<div class="order-summ">ИТОГО: 27995 руб.</div>
 
-			</div>
+			</form>
 
 			<div class="anketa-scene-7">
 				<img src="i/s7/magazine.png" class="magazine">
