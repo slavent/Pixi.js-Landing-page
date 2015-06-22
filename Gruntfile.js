@@ -23,6 +23,7 @@ module.exports = function(grunt) {
                     "js/libs/ion.rangeSlider.min.js",
                     "js/libs/selectize.js",
                     "js/libs/jquery.mousewheel.min.js",
+                    "js/libs/SimpleAjaxUploader.js",
                     "js/app.js",
                     "js/SlideController.js",
                     "js/WheelController.js",

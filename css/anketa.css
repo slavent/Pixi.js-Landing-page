@@ -381,6 +381,8 @@
 	display: inline-block;
 	margin: 0 30px;
 	text-align: center;
+	cursor: pointer;
+	position: relative;
 }
 
 .anketa-row-item_loaded .anketa-row-photo{
@@ -607,6 +609,18 @@
 
 .anketa-btn-to-index {
 	display: none;
+}
+
+.upload-btn {
+	opacity: 0;
+	cursor: pointer;
+	position: absolute;
+	top: 0;
+	right: 0;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	z-index: 100;
 }
 
 /* END: Anketa */

@@ -43,7 +43,8 @@ App.Binder = function() {
 		App.NavController.setActive();
 	});
 
-	// For Anketa
+	// ------- START: FOR ANKETA ELEMENTS -------- 
+	/* START: Checkbox */
 	$(".icheckbox_minimal").iCheck({
 		checkboxClass: "icheckbox_minimal",
 		increaseArea: "20%"
@@ -56,13 +57,17 @@ App.Binder = function() {
 	$(".icheckbox_minimal").on('ifUnchecked', function(event){
 		$(".agree").val("");
 	});
+	/* END: Checkbox */
 
+	/* START: Season */
   	$(".anketa-season").on("click", function() {
   		$(".anketa-season").removeClass("anketa-season_selected");
   		$(this).addClass("anketa-season_selected");
   		$(".season").val($(this).text());
   	});
+  	/* END: Season */
 
+  	/* START: Carousel image */
   	$(".carousel-item-subtitle").on("click", function() {
   		var values 		= $(".images").val(),
   			current_val = $(this).text(),
@@ -90,13 +95,53 @@ App.Binder = function() {
   			});
   		}
   	});
+  	/* END: Carousel image */
 
+  	/* START: Range */
   	$(".age-range").ionRangeSlider();
+  	/* END: Range */
 
+  	/* START: Selects */
   	var $selects = $(".selectize").selectize();
 
   	$(".selectize").on("item_add", function(value, $item) {
   		console.log($(this), value);
   	});
+  	/* END: Selects */
+
+  	/* START: Load btns */
+  	var load_btns = [ "#upload-btn-1", "#upload-btn-2",  "#upload-btn-3",  "#upload-btn-4",  "#upload-btn-5",  "#upload-btn-6",  "#upload-btn-7",  "#upload-btn-8" ];
+
+  	for(var i = 0; i < load_btns.length; i++) {
+
+  		var uploader = new ss.SimpleUpload({
+			button 			: 	load_btns[i],
+			url 			: 	"file_upload.php",
+			name			: 	"uploadfile",
+			hoverClass		: 	"hover",
+			focusClass		: 	"focus",
+			responseType	: 	"json",
+			startXHR: function(filename, size) {
+				var $photos = $(".photos"),
+					values 	= $photos.val();
+
+				if( values == "" ) values = filename;
+  				else values = values + "," + filename;
+
+				$photos.val(values);
+			},
+			onSubmit: function() {
+
+			},
+			onComplete: function() {
+				
+			},
+			onError: function() {
+
+			}
+		});
+  	}
+  	/* END: Load btns */
+  	// -------- END: FOR ANKETA ELEMENTS --------
 
 };
