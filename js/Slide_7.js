@@ -56,7 +56,15 @@ App.managerService.slide_7 = {
 	Binder: {
 
 		init: function() {
-			$anketa_btn.on("click", App.managerService.slide_7.SceneController.moveTo);
+			$anketa_btn.on("click", function() {
+				if( active_scene == 7 ) {
+					active_slide = 1;
+					App.managerService.slide_7.destroy();
+					App.SlideController.init();
+				} else {
+					App.managerService.slide_7.SceneController.moveTo();
+				}
+			});
 		},
 
 		destroy: function() {
@@ -142,7 +150,6 @@ App.managerService.slide_7 = {
 
 			$anketa_btn.hide().html(btn_values["s" + active_scene]).fadeIn();
 			btn_width = $anketa_btn.width();
-			$anketa_btn.css({ "marginLeft" : -btn_width/2 });
 		},
 
 		destroy: function() {
@@ -198,8 +205,6 @@ App.managerService.slide_7 = {
 				}
 				i++;
 			}
-
-			console.log(anketa_data["s" + active_scene]);
 		}
 
 	},
@@ -397,6 +402,7 @@ App.managerService.slide_7 = {
 
 		init: function() {
 			$anketa.find(".anketa-scene-6").fadeIn();
+			$anketa_pay_systems.show();
 
 			var deferred = $.Deferred();
 
@@ -409,6 +415,7 @@ App.managerService.slide_7 = {
 
 		destroy: function() {
 			$anketa.find(".anketa-scene-6").hide();
+			$anketa_pay_systems.hide();
 		}
 
 	},

@@ -1,6 +1,5 @@
 /* START: Anketa */
 
-/* Scene 1 */
 .anketa {
 	display: none;
 	position: absolute;
@@ -150,16 +149,14 @@
 }
 
 .anketa-btn {
+	display: inline;
+	vertical-align: middle;
 	border: 1px solid #ff7d7a;
 	color: #ff7d7a;
 	font-size: 18px;
 	border-radius: 20px;
 	background: none;
 	padding: 2px 50px;
-	margin: 0 0 0 -50px;
-	position: absolute;
-	bottom: 50px;
-	left: 50%;
 	outline: none;
 	font-family: FiraSansRegular;
 	transition: background, color .3s;
@@ -172,19 +169,37 @@
 	cursor: pointer;
 }
 
-.anketa-error {
-	display: none;
-	color: red;
-	text-align: center;
+.anketa-btn-wrp {
 	position: absolute;
-	bottom: 110px;
-	left: 50%;
-	font-size: 16px;
-	font-family: "FiraSansRegular";
-	margin: 0 0 0 -70px;
+	bottom: 50px;
+	left: 0;
+	width: 100%;
+	text-align: center;
 }
 
-/* Scene 2 */
+.anketa-error {
+	display: inline;
+	color: red;
+	text-align: center;
+	font-size: 16px;
+	font-family: "FiraSansRegular";
+}
+
+.anketa-error-wrp {
+	position: absolute;
+	bottom: 120px;
+	left: 0;
+	width: 100%;
+	text-align: center;
+}
+
+.anketa-payment-systems {
+	display: none;
+	width: 550px;
+	vertical-align: middle;
+	margin: 0 20px 0 0;
+}
+
 .anketa-col-2 {
 	display: inline-block;
 	vertical-align: top;
@@ -199,7 +214,6 @@
 	text-align: left;
 }
 
-/* Scene 3 */
 .anketa-scene-3-wrp {
 	width: 1000px;
 	margin: auto;
@@ -362,7 +376,6 @@
   	right: -10px;
 }
 
-/* Scene 4 */
 .anketa-scene-4-wrp {
 	width: 1000px;
 	margin: auto;
@@ -448,7 +461,6 @@
 	-o-border-radius: 30px;
 }
 
-/* Slide 5 */
 .anketa-textarea {
 	width: 300px;
 	height: 120px;
@@ -472,7 +484,6 @@
 	top: 5px;
 }
 
-/* Slide 6 */
 .order-header {
 	width: 900px;
 	margin: 0 auto 15px auto;
@@ -562,7 +573,16 @@
 	margin: -11px 0 0 -11px;
 }
 
-/* slide 7 */
+.order-summ {
+	font-size: 26px;
+  	letter-spacing: 1px;
+	font-family: "FiraSansMedium";
+	color: #ff7d7a;
+	padding: 20px 0 0;
+	text-align: right;
+	text-transform: uppercase;
+}
+
 .magazine {
 	position: absolute;
 	top: 50%;
