@@ -39,7 +39,6 @@
 }
 
 .anketa-row {
-	opacity: 0;
 	min-height: 65px;
 }
 
@@ -366,7 +365,7 @@
 	position: relative;
 }
 
-.anketa-choice-item:after {
+.anketa-choice-del {
 	content: "";
 	width: 8px;
 	height: 8px;
@@ -560,6 +559,11 @@
 	vertical-align: middle;
 	width: 60px;
 	position: relative;
+}
+
+.order-del:hover {
+	opacity: .8;
+	cursor: pointer;
 }
 
 .order-del:after {

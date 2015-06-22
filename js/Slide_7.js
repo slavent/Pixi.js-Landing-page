@@ -28,7 +28,9 @@ App.managerService.slide_7 = {
 		console.log("Slide 7 destroy");
 
 		$cart.fadeOut();
-		$anketa.hide();
+		$anketa.fadeOut(function() {
+			$(this).find(".anketa-wrp").children().hide();
+		});
 		this.NavController.destroy();
 		this.Binder.destroy();
 		this.BtnController.destroy();
@@ -197,7 +199,7 @@ App.managerService.slide_7 = {
 				};
 
 			for( key in anketa_data["s" + active_scene] ) {
-				if( data[i]["value"] == "" ) {
+				if( data[i]["value"] == "" || data[i]["value"] == 0 ) {
 					App.managerService.slide_7.ErrorController.showError( anketa_data["s" + active_scene][key].errorText );
 					return false;
 				} else {
@@ -226,20 +228,7 @@ App.managerService.slide_7 = {
 		init: function() {
 			var data = DATA.slide_7;
 
-			$anketa.find(".anketa-scene-1").fadeIn(function() {
-				var row = $anketa.find(".anketa-row"),
-					delay = data.delay;
-
-				row.each(function() {
-					var that = $(this);
-
-					setTimeout(function() {
-						that.animate({ "opacity" : 1 }, data.speed);
-					}, delay);
-
-					delay += data.delay;
-				});
-			});
+			$anketa.find(".anketa-scene-1").fadeIn();
 
 			var deferred = $.Deferred();
 

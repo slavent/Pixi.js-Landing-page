@@ -13,6 +13,7 @@
 .irs-bar-edge,
 .irs-slider {
     background: url(../../i/s7/sprite-skin-flat.png) repeat-x;
+    cursor: move;
 }
 
 .irs {

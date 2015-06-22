@@ -82,7 +82,7 @@ App.Binder = function() {
   			else values = values + "," + current_val;
 
   			$images.val(values);
-  			$list.append("<li class=anketa-choice-item>" + current_val + "</li>");
+  			$list.append("<li class=anketa-choice-item>" + current_val + "<div class=anketa-choice-del></div></li>");
   		} else {
   			$(this).removeClass("active");
 
@@ -95,10 +95,15 @@ App.Binder = function() {
   			});
   		}
   	});
+
+  	$(".anketa-choice-del").on("click", function() {
+  		$(this).parent().remove();
+  	});
   	/* END: Carousel image */
 
   	/* START: Range */
   	$(".age-range").ionRangeSlider();
+  	$(".irs-single").css({ "left" : "6%" });
   	/* END: Range */
 
   	/* START: Selects */
@@ -142,6 +147,14 @@ App.Binder = function() {
 		});
   	}
   	/* END: Load btns */
+
+  	/* START: Order delete */
+  	$(".order-del").on("click", function() {
+  		$(this).parent().slideUp(function() {
+  			$(this).remove();
+  		});
+  	});
+  	/* END: Order delete */
   	// -------- END: FOR ANKETA ELEMENTS --------
 
 };
