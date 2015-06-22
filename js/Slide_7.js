@@ -168,7 +168,7 @@ App.managerService.slide_7 = {
 				anketa_data = {
 					s1: {
 						name	: { val: null, errorText: "Представьтесь пожалуйста" },
-						email	: { val: null, errorText: "Не указан email" },
+						email	: { val: null, errorText: "Не указан email", reg: /^\w+@\w+\.\w{2,4}$/i },
 						tel 	: { val: null, errorText: "Не указан телефон" },
 						age 	: { val: null, errorText: "Не указан возраст" },
 						season 	: { val: null, errorText: "Не выбран сезон" },
@@ -203,6 +203,15 @@ App.managerService.slide_7 = {
 					App.managerService.slide_7.ErrorController.showError( anketa_data["s" + active_scene][key].errorText );
 					return false;
 				} else {
+					if( anketa_data["s" + active_scene][key].hasOwnProperty("reg") ) {
+						var r = anketa_data["s" + active_scene][key].reg;
+
+						if( !r.test( data[i]["value"] ) ) {
+							App.managerService.slide_7.ErrorController.showError( anketa_data["s" + active_scene][key].errorText );
+							return false;
+						} 
+					}
+
 					anketa_data["s" + active_scene][key].val = data[i]["value"];
 				}
 				i++;
