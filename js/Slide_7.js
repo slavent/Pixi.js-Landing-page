@@ -237,7 +237,7 @@ App.managerService.slide_7 = {
 		init: function() {
 			var data = DATA.slide_7;
 
-			$anketa.find(".anketa-scene-1").fadeIn();
+			$anketa.find(".anketa-scene-1").addClass("animated fadeInDown").show();
 
 			var deferred = $.Deferred();
 
@@ -249,7 +249,7 @@ App.managerService.slide_7 = {
 		},
 
 		destroy: function() {
-			$anketa.find(".anketa-scene-1").hide();
+			$anketa.find(".anketa-scene-1").removeClass("animated fadeInDown").hide();
 		}
 
 	},
@@ -257,7 +257,7 @@ App.managerService.slide_7 = {
 	scene_2: {
 
 		init: function() {
-			$anketa.find(".anketa-scene-2").fadeIn();
+			$anketa.find(".anketa-scene-2").addClass("animated fadeInDown").show();
 
 			var deferred = $.Deferred();
 
@@ -269,7 +269,7 @@ App.managerService.slide_7 = {
 		},
 
 		destroy: function() {
-			$anketa.find(".anketa-scene-2").hide();
+			$anketa.find(".anketa-scene-2").removeClass("animated fadeInDown").hide();
 		}
 
 	},
@@ -277,7 +277,7 @@ App.managerService.slide_7 = {
 	scene_3: {
 
 		init: function() {
-			$anketa.find(".anketa-scene-3").fadeIn();
+			$anketa.find(".anketa-scene-3").addClass("animated fadeInDown").show();
 
 			$(".carousel-item-subtitle").on("click", function() {
 		  		var values 		= $(".images").val(),
@@ -399,7 +399,7 @@ App.managerService.slide_7 = {
 		},
 
 		destroy: function() {
-			$anketa.find(".anketa-scene-3").hide();
+			$anketa.find(".anketa-scene-3").removeClass("animated fadeInDown").hide();
 		}
 
 	},
@@ -407,7 +407,7 @@ App.managerService.slide_7 = {
 	scene_4: {
 
 		init: function() {
-			$anketa.find(".anketa-scene-4").fadeIn();
+			$anketa.find(".anketa-scene-4").addClass("animated fadeInDown").show();
 
 			var deferred = $.Deferred();
 
@@ -419,7 +419,7 @@ App.managerService.slide_7 = {
 		},
 
 		destroy: function() {
-			$anketa.find(".anketa-scene-4").hide();	
+			$anketa.find(".anketa-scene-4").removeClass("animated fadeInDown").hide();	
 		}
 
 	},
@@ -427,7 +427,7 @@ App.managerService.slide_7 = {
 	scene_5: {
 
 		init: function() {
-			$anketa.find(".anketa-scene-5").fadeIn();
+			$anketa.find(".anketa-scene-5").addClass("animated fadeInDown").show();
 
 			var deferred = $.Deferred();
 
@@ -439,7 +439,7 @@ App.managerService.slide_7 = {
 		},
 
 		destroy: function() {
-			$anketa.find(".anketa-scene-5").hide();
+			$anketa.find(".anketa-scene-5").removeClass("animated fadeInDown").hide();
 		}
 
 	},
@@ -447,7 +447,7 @@ App.managerService.slide_7 = {
 	scene_6: {
 
 		init: function() {
-			$anketa.find(".anketa-scene-6").fadeIn();
+			$anketa.find(".anketa-scene-6").addClass("animated fadeInDown").show();
 			$anketa_pay_systems.show();
 
 			var deferred = $.Deferred();
@@ -460,7 +460,7 @@ App.managerService.slide_7 = {
 		},
 
 		destroy: function() {
-			$anketa.find(".anketa-scene-6").hide();
+			$anketa.find(".anketa-scene-6").removeClass("animated fadeInDown").hide();
 			$anketa_pay_systems.hide();
 		}
 
@@ -469,7 +469,7 @@ App.managerService.slide_7 = {
 	scene_7: {
 
 		init: function() {
-			$anketa.find(".anketa-scene-7").fadeIn();
+			$anketa.find(".anketa-scene-7").addClass("animated fadeInDown").show();
 
 			var deferred = $.Deferred();
 
@@ -481,7 +481,7 @@ App.managerService.slide_7 = {
 		},
 
 		destroy: function() {
-			$anketa.find(".anketa-scene-7").hide();
+			$anketa.find(".anketa-scene-7").removeClass("animated fadeInDown").hide();
 		}
 
 	}
