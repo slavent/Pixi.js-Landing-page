@@ -126,6 +126,54 @@ App.managerService.slide_4 = {
 
 		},
 
+		generator: {
+
+			el: null,
+
+			init: function() {
+				var data = DATA.slide_4.generator,
+					style = {
+						font : data.font,
+					    fill : data.color
+					},
+					title = new PIXI.Text(data.text, style);
+
+				title.position.x = renderer.width * 2;
+				title.position.y = renderer.height / 2 + data.title_y;
+				title.anchor.set(data.anchor);
+
+				this.el = new PIXI.Graphics();
+				this.el.lineStyle(2, data.fill, 1);
+				this.el.beginFill(0xFF00BB, 0);
+				this.el.drawRoundedRect(data.x, data.y, data.width, data.height, data.r);
+				this.el.endFill();
+				this.el.buttonMode = true;
+				this.el.interactive = true;
+				this.el.on("click", function() {
+					App.SlideController.moveTo(active_slide, 7);
+					active_slide = 7;
+					App.NavController.setActive();
+				});
+
+				title.addChild(this.el);
+				slide_container_4.addChild(title);
+
+				createjs.Tween.get(title)
+					.wait(data.init_wait)
+					.to({ x: renderer.width / 2 + data.title_x }, data.speed, createjs.Ease.getPowInOut(4));
+
+			},
+
+			destroy: function() {
+
+			},
+
+			update: function() {
+
+			}
+
+		},
+
 		slider: {
 
 			el: 		null,

@@ -322,6 +322,22 @@
             "init_wait": 1500,
             "destroy_wait": 400
         },
+        "generator": {
+            "fill": "0xff7d7a",
+            "x": -25,
+            "y": -2,
+            "width": 200,
+            "height": 30,
+            "r": 10,
+            "font": "20px HelveticaNeueCyr-Light",
+            "color": "#ff7d7a",
+            "text": "Генератор стиля",
+            "anchor": 0,
+            "title_x": 475,
+            "title_y": -300,
+            "init_wait": 1000,
+            "speed": 1000
+        },
         "slider": {
             "slides": [
                 { "url_photo": "i/s4/slide_1.png", "url_video": "i/s4/slide_1.mp4", "title": "Casual", "description": "Одежда для настоящих\nмечтательниц" },
