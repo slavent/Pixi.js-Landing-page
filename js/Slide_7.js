@@ -223,11 +223,11 @@ App.managerService.slide_7 = {
 	ErrorController: {
 
 		showError: function(e) {
-			$anketa_error.html(e).fadeIn();
+			$anketa_error.html("<div class='animated bounceIn'>" + e + "</div>").show();
 		},
 
 		hideError: function() {
-			$anketa_error.hide();
+			$anketa_error.html("");
 		}
 
 	},
