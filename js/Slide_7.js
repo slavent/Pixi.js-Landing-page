@@ -279,6 +279,54 @@ App.managerService.slide_7 = {
 		init: function() {
 			$anketa.find(".anketa-scene-3").fadeIn();
 
+			$(".carousel-item-subtitle").on("click", function() {
+		  		var values 		= $(".images").val(),
+		  			current_val = $(this).text(),
+		  			$images 	= $(".images"),
+		  			$list 		= $(".anketa-choice-list");
+
+		  		if( !$(this).hasClass("active") ) {
+		  			$(this).addClass("active");
+
+		  			if( values == "" ) values = current_val;
+		  			else values = values + "," + current_val;
+
+		  			$images.val(values);
+		  			$list.append("<li class=anketa-choice-item>" + current_val + "<div class=anketa-choice-del></div></li>");
+		  			
+		  			bindDelBtn();
+		  		} else {
+		  			$(this).removeClass("active");
+
+		  			values = values.replace(current_val + ",", "");
+		  			values = values.replace(current_val, "");
+		  			$images.val(values);
+
+		  			$list.children().each(function() {
+		  				if( $(this).text() == current_val ) $(this).remove();
+		  			});
+		  		}
+		  	});
+
+		  	function bindDelBtn() {
+		  		$(".anketa-choice-del").one("click", function() {
+			  		var values 		= $(".images").val(),
+			  			val 		= $(this).parent().text(),
+			  			$images 	= $(".images");
+
+			  		values = values.replace(val + ",", "");
+		  			values = values.replace(val, "");
+		  			$images.val(values);
+
+			  		$(this).parent().remove();
+			  		$(".carousel-item-subtitle").each(function() {
+			  			if( $(this).text() == val ) {
+			  				$(this).removeClass("active");
+			  			}
+			  		});
+			  	});
+		  	}
+
 			/* START: Slider */
 			function Slider($el) {
 				this.$el 			= $el;

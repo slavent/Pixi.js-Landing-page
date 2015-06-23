@@ -67,40 +67,6 @@ App.Binder = function() {
   	});
   	/* END: Season */
 
-  	/* START: Carousel image */
-  	$(".carousel-item-subtitle").on("click", function() {
-  		var values 		= $(".images").val(),
-  			current_val = $(this).text(),
-
-  			$images 	= $(".images"),
-  			$list 		= $(".anketa-choice-list");
-
-  		if( !$(this).hasClass("active") ) {
-  			$(this).addClass("active");
-
-  			if( values == "" ) values = current_val;
-  			else values = values + "," + current_val;
-
-  			$images.val(values);
-  			$list.append("<li class=anketa-choice-item>" + current_val + "<div class=anketa-choice-del></div></li>");
-  		} else {
-  			$(this).removeClass("active");
-
-  			values = values.replace(current_val + ",", "");
-  			values = values.replace(current_val, "");
-  			$images.val(values);
-
-  			$list.children().each(function() {
-  				if( $(this).text() == current_val ) $(this).remove();
-  			});
-  		}
-  	});
-
-  	$(".anketa-choice-del").on("click", function() {
-  		$(this).parent().remove();
-  	});
-  	/* END: Carousel image */
-
   	/* START: Range */
   	$(".age-range").ionRangeSlider();
   	$(".irs-single").css({ "left" : "6%" });

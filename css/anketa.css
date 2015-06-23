@@ -375,6 +375,10 @@
   	right: -10px;
 }
 
+.anketa-choice-del:hover {
+	cursor: pointer;
+}
+
 .anketa-scene-4-wrp {
 	width: 1000px;
 	margin: auto;
