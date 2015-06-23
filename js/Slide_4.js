@@ -173,6 +173,31 @@ App.managerService.slide_4 = {
 					this.line.position.x = data.lines.x;
 					this.line.position.y = data.lines.y;
 
+					// Btn
+					var btn_title_style = {
+						font : data.btns.font,
+					    fill : data.btns.color
+					};
+
+					this.btn_title = new PIXI.Text(data.btns.text, btn_title_style);
+					this.btn_title.position.x = data.btns.title_x;
+					this.btn_title.position.y = data.btns.title_y;
+					this.btn_title.anchor.set(data.btns.anchor);
+
+					this.btn = new PIXI.Graphics();
+					this.btn.lineStyle(2, data.btns.fill, 1);
+					this.btn.beginFill(0xFF00BB, 0);
+					this.btn.drawRoundedRect(data.btns.x, data.btns.y, data.btns.width, data.btns.height, data.btns.r);
+					this.btn.endFill();
+					this.btn.addChild(this.btn_title);
+					this.btn.buttonMode = true;
+					this.btn.interactive = true;
+					this.btn.on("click", function() {
+						App.SlideController.moveTo(active_slide, 7);
+						active_slide = 7;
+						App.NavController.setActive();
+					});
+
 					// Description
 					var description_style = {
 						font : data.description.font,
@@ -242,6 +267,7 @@ App.managerService.slide_4 = {
 
 					this.sprite.addChild(this.title);
 					this.sprite.addChild(this.line);
+					this.sprite.addChild(this.btn);
 					this.sprite.addChild(this.description);
 					this.sprite.addChild(this.video_sprite);
 

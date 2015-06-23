@@ -346,6 +346,20 @@
                 "x": -50,
                 "y": 475
             },
+            "btns": {
+                "fill": "0xffffff",
+                "x": -65,
+                "y": 550,
+                "width": 130,
+                "height": 30,
+                "r": 10,
+                "font": "18px HelveticaNeueCyr-Light",
+                "color": "#ffffff",
+                "text": "Выбрать",
+                "anchor": 0.5,
+                "title_x": 0,
+                "title_y": 563
+            },
             "description": {
                 "font": "16px HelveticaNeueCyr-Light",
                 "fill": "#ffffff",
