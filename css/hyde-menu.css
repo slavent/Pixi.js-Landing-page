@@ -106,6 +106,13 @@
 	-webkit-transition: all .5s;
 }
 
+.hyde-menu-number {
+	font-size: 12px;
+	position: absolute;
+	top: 5px;
+	right: 5px;
+}
+
 .hyde-menu-color-map {
 	opacity: 0;
 	font: 18px "Helvetica";
