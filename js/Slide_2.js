@@ -212,73 +212,44 @@ App.managerService.slide_2 = {
 
 			init: function() {
 				var data = DATA.slide_2.info,
+					border = new PIXI.Graphics(),
 					style = {
-						font 	: data.font,
-					    fill 	: data.fill,
-					    align 	: data.align,
-					    padding : data.padding
-					};
+						font 	: data.text.font,
+					    fill 	: data.text.fill,
+					    align 	: data.text.align,
+					    padding : data.text.padding
+					};					
 
+				this.el = new PIXI.Text(data.text.text, style);
+				this.el.x = (renderer.width - this.el.width) / 2 + data.text.x;	
+				this.el.y = renderer.height + 200;
 
-				this.el = new PIXI.Text(data.text, style);
-				this.el.x = renderer.width;	
-				this.el.y = ((renderer.height - this.el.height) / 2) + data.y;
+				border.lineStyle(data.border.borderWidth, data.border.fill, 1);
+				border.beginFill(0x000000, 0);
+				border.drawRect(data.border.x, data.border.y, this.el.width + 40, this.el.height);
 
+				this.el.addChild(border);
 				slide_container_2.addChild(this.el);
 
 				createjs.Tween.get(this.el)
-					.wait(data.init_wait)
-					.to({ x: (renderer.width - this.el.width) / 2 + data.x }, data.speed, createjs.Ease.quadOut());
+					.wait(data.text.init_wait)
+					.to({ y: ((renderer.height - this.el.height) / 2) + data.text.y }, data.text.speed, createjs.Ease.quadOut());
 			},
 
 			update: function() {
 				var data = DATA.slide_2.info;
 
-				this.el.x = (renderer.width - this.el.width) / 2 + data.x
+				this.el.x = (renderer.width - this.el.width) / 2 + data.text.x;
 			},
 
 			destroy: function() {
 				var data = DATA.slide_2.info;
 
 				createjs.Tween.get(this.el)
-					.to({ x: renderer.width }, data.speed, createjs.Ease.quadOut())
+					.to({ y: renderer.height + 200 }, data.text.speed, createjs.Ease.quadOut())
 					.call(function() {
 						this.destroy();
 					});
-			}
-
-		},
-
-		border: {
-
-			el: null,
-
-			init: function() {
-				var data = DATA.slide_2.border;
-
-				this.el = new PIXI.Graphics();
-				this.el.lineStyle(data.borderWidth, data.fill, 1);
-				this.el.beginFill(0x000000, 0);
-				this.el.drawRect(-600 , renderer.height/2 + data.y , data.width , data.height);
-
-				slide_container_2.addChild(this.el);
-
-				createjs.Tween.get(this.el)
-					.wait(data.init_wait)
-					.to({ x: renderer.width/2 + data.x }, data.speed, createjs.Ease.quadOut());
-			},
-
-			update: function() {
-				var data = DATA.slide_2.border;
-
-				this.el.x = renderer.width/2 + data.x;
-			},
-
-			destroy: function() {
-				var data = DATA.slide_2.border;
-
-				createjs.Tween.get(this.el)
-					.to({ x: -560 }, data.speed, createjs.Ease.quadOut());
 			}
 
 		},
