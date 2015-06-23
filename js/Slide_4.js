@@ -135,41 +135,48 @@ App.managerService.slide_4 = {
 					style = {
 						font : data.font,
 					    fill : data.color
-					},
-					title = new PIXI.Text(data.text, style);
+					};
 
-				title.position.x = renderer.width * 2;
-				title.position.y = renderer.height / 2 + data.title_y;
-				title.anchor.set(data.anchor);
+				this.el = new PIXI.Text(data.text, style);
+				this.el.position.x = renderer.width * 2;
+				this.el.position.y = renderer.height / 2 + data.title_y;
+				this.el.anchor.set(data.anchor);
 
-				this.el = new PIXI.Graphics();
-				this.el.lineStyle(2, data.fill, 1);
-				this.el.beginFill(0xFF00BB, 0);
-				this.el.drawRoundedRect(data.x, data.y, data.width, data.height, data.r);
-				this.el.endFill();
-				this.el.buttonMode = true;
-				this.el.interactive = true;
-				this.el.on("click", function() {
+				var btn = new PIXI.Graphics();
+				btn.lineStyle(2, data.fill, 1);
+				btn.beginFill(0xFF00BB, 0);
+				btn.drawRoundedRect(data.x, data.y, data.width, data.height, data.r);
+				btn.endFill();
+				btn.buttonMode = true;
+				btn.interactive = true;
+				btn.on("click", function() {
 					App.SlideController.moveTo(active_slide, 7);
 					active_slide = 7;
 					App.NavController.setActive();
 				});
 
-				title.addChild(this.el);
-				slide_container_4.addChild(title);
+				this.el.addChild(btn);
+				slide_container_4.addChild(this.el);
 
-				createjs.Tween.get(title)
+				createjs.Tween.get(this.el)
 					.wait(data.init_wait)
 					.to({ x: renderer.width / 2 + data.title_x }, data.speed, createjs.Ease.getPowInOut(4));
 
 			},
 
 			destroy: function() {
+				var data = DATA.slide_4.generator;
+
+				createjs.Tween.get(this.el)
+					.to({ x: renderer.width * 2 }, data.speed, createjs.Ease.getPowInOut(4));
 
 			},
 
 			update: function() {
+				var data = DATA.slide_4.generator;
 
+				this.el.position.x = renderer.width / 2 + data.title_x;
+				this.el.position.y = renderer.height / 2 + data.title_y;
 			}
 
 		},
@@ -418,8 +425,8 @@ App.managerService.slide_4 = {
 					.call(function() {
 						for(var i = 0; i < this.children.length; i++) {
 							for(var j = 0; j < this.children[i].children.length; j++) {
-								if( j == 0 || j == 2) this.children[i].children[j].destroy(true); // text
-								if( j == 3 ) this.children[i].children[j].texture.destroy(); // video
+								if( j == 0 || j == 3) this.children[i].children[j].destroy(true); // text
+								if( j == 4 ) this.children[i].children[j].texture.destroy(); // video
 							}
 
 							this.children[i].texture.destroy(true, true);
