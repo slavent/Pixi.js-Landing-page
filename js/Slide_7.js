@@ -169,7 +169,7 @@ App.managerService.slide_7 = {
 					s1: {
 						name	: { val: null, errorText: "Представьтесь пожалуйста" },
 						email	: { val: null, errorText: "Не указан email", reg: /^\w+@\w+\.\w{2,4}$/i },
-						tel 	: { val: null, errorText: "Не указан телефон" },
+						tel 	: { val: null, errorText: "Не указан телефон", reg: /^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/ },
 						age 	: { val: null, errorText: "Не указан возраст" },
 						season 	: { val: null, errorText: "Не выбран сезон" },
 						agree 	: { val: null, errorText: "Необходимо принять условия пользовательского соглашения" }				
