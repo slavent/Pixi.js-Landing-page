@@ -87,7 +87,7 @@ App.managerService.slide_3 = {
 			});
 		},
 
-		moveTo: function(from, to) {
+		moveTo: function(from, to, direction) {
 			console.log("Scene: " + [from, to]);
 
 			App.managerService.slide_3.SwipeController.lockSwipe();
@@ -136,7 +136,7 @@ App.managerService.slide_3 = {
 
 			}
 
-			App.managerService.slide_3.NavController.setActive(top_pos, left_pos);
+			App.managerService.slide_3.NavController.setActive(top_pos, left_pos, direction);
 			App.managerService.slide_3.elems.menu["scene_" + from].destroy();
 			App.managerService.slide_3.elems.menu["scene_" + to].init().then(function() { 
 				App.managerService.slide_3.WheelController.unlockWheel();
@@ -153,11 +153,11 @@ App.managerService.slide_3 = {
 			if(event) {
 				if(event.deltaY < 0) {
 					// scroll top
-					if( active_scene < 6 ) App.managerService.slide_3.SceneController.moveTo(active_scene, ++active_scene);
+					if( active_scene < 6 ) App.managerService.slide_3.SceneController.moveTo(active_scene, ++active_scene, "next");
 					else App.SlideController.moveTo(active_slide, ++active_slide);
 				} else {
 					// scroll down
-					if( active_scene > 1 ) App.managerService.slide_3.SceneController.moveTo(active_scene, --active_scene);
+					if( active_scene > 1 ) App.managerService.slide_3.SceneController.moveTo(active_scene, --active_scene, "prev");
 					else App.SlideController.moveTo(active_slide, --active_slide);
 				}
 			}
@@ -196,12 +196,30 @@ App.managerService.slide_3 = {
 
 	NavController: {
 
-		setActive: function(top, left) {
+		setActive: function(top, left, direction) {
 			if( mobile_version == true ) {
 				$hyde_menu.children().removeClass("active").eq(active_scene - 1).addClass("active");
 			} else {
 				$hover.animate({ "top" : top, "left" : left }, function() {
-					$hyde_menu.children().removeClass("active").eq(active_scene - 1).addClass("active");
+					console.log("From: " + (active_scene - 1) + ", To: " + active_scene);
+
+					if( direction == "next" ) {
+
+						$hyde_menu.children().removeClass("on-top");
+						$hyde_menu.children().addClass("on-top");
+						$hyde_menu.children().eq(active_scene).removeClass("on-top");
+						$hyde_menu.children().eq(active_scene - 1).removeClass("on-top");
+						$hyde_menu.children().removeClass("active").eq(active_scene - 1).addClass("active");
+
+					} else if( direction == "prev" ) {
+
+						$hyde_menu.children().removeClass("on-top");
+						$hyde_menu.children().addClass("on-top");
+						$hyde_menu.children().eq(active_scene - 1).removeClass("on-top");
+						$hyde_menu.children().eq(active_scene - 2).removeClass("on-top");
+						$hyde_menu.children().removeClass("active").eq(active_scene - 1).addClass("active");
+
+					}
 				});
 			}
 		}

@@ -47,6 +47,10 @@
 	overflow: hidden;
 }
 
+.hyde-menu-item.on-top {
+	z-index: 100;
+}
+
 @media (max-width: 1000px) {
 	.hyde-menu-item {
 		display: block;
