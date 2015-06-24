@@ -50,7 +50,7 @@
         },
         "title": {
             "text": "ДОБРО ПОЖАЛОВАТЬ\nВ ЛАБОРАТОРИЮ СТИЛЯ\n«МОДНОГО ПРИГОВОРА»!",
-            "font": "65px HelveticaNeueCyr-Light",
+            "font": "65px HelveticaNeueCyr-Thin",
             "fill": "#fff",
             "align": "center",
             "lineHeight": 50,
