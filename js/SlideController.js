@@ -27,13 +27,6 @@ App.SlideController = {
 			return;
 		}
 
-		if( to == 7 && slide_7_complete == false ) {
-			App.managerService["slide_" + from].destroy();
-			App.managerService["slide_7"].init();
-
-			return;
-		}
-
 		App.managerService["slide_" + from].destroy();
 		App.managerService["slide_" + to].init().then(function() { 
 			App.WheelController.unlockWheel();

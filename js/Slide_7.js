@@ -5,7 +5,6 @@ App.managerService.slide_7 = {
 
 		slide_container_7 = new PIXI.Container();
 
-		$body.unbind("mousewheel");
 		$anketa.show();
 		$cart.fadeIn();
 		this.Binder.init();
@@ -13,15 +12,13 @@ App.managerService.slide_7 = {
 		this.SceneController.init();
 		this.BtnController.setValue();
 
-		if( slide_7_complete == true ) {
-			var deferred = $.Deferred();
+		var deferred = $.Deferred();
 
-			setTimeout(function() {
-				deferred.resolve();
-			}, SLIDE_ANIMATION_TIME_7);
+		setTimeout(function() {
+			deferred.resolve();
+		}, SLIDE_ANIMATION_TIME_7);
 
-			return deferred;
-		}
+		return deferred;
 	},
 
 	destroy: function() {
@@ -35,20 +32,17 @@ App.managerService.slide_7 = {
 		this.Binder.destroy();
 		this.BtnController.destroy();
 
-		if( active_scene == 7 ) slide_7_complete = true;
 		active_scene = 1;
 
 		slide_container_7 = null;
 
-		if( slide_7_complete == false ) {
-			var deferred = $.Deferred();
-			
-			setTimeout(function() {
-				deferred.resolve();
-			}, SLIDE_ANIMATION_TIME_7);
+		var deferred = $.Deferred();
+		
+		setTimeout(function() {
+			deferred.resolve();
+		}, SLIDE_ANIMATION_TIME_7);
 
-			return deferred;
-		}
+		return deferred;
 	},
 
 	update: function() {
