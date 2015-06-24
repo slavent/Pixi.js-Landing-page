@@ -7,10 +7,12 @@ App.Binder = function() {
         w_height = $(window).height();
         renderer.resize(w_width, w_height);
 
-		$hyde_menu.addClass("active").css({ 
-			"height" : $(window).height() - $main_menu.height(), 
-			"width" : (($(window).height() - $main_menu.height()) / 3) * 2 
-		});
+		if( active_slide == 3 ) {
+			$hyde_menu.css({ 
+				"height" : $(window).height() - $main_menu.height(), 
+				"width" : (($(window).height() - $main_menu.height()) / 3) * 2 
+			});
+		}
 	}));
 
 	$menu_icon.on("click", function() {
