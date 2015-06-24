@@ -56,7 +56,7 @@ App.managerService.slide_3 = {
 				var prev_scene = active_scene;
 				active_scene = $(this).index() + 1;
 				$(this).removeClass("hover");
-				App.managerService.slide_3.SceneController.moveTo(prev_scene, active_scene);							
+				App.managerService.slide_3.SceneController.moveTo(prev_scene, active_scene, false);							
 			});
 
 			$hyde_menu.addClass("complete").find(".hyde-menu-item").hover(
@@ -200,27 +200,26 @@ App.managerService.slide_3 = {
 			if( mobile_version == true ) {
 				$hyde_menu.children().removeClass("active").eq(active_scene - 1).addClass("active");
 			} else {
-				$hover.animate({ "top" : top, "left" : left }, function() {
-					console.log("From: " + (active_scene - 1) + ", To: " + active_scene);
+				
 
-					if( direction == "next" ) {
+				if( direction == "next" ) {
+					$hyde_menu.children().addClass("on-top");
+					$hyde_menu.children().eq(active_scene - 2).removeClass("on-top");
+					$hyde_menu.children().eq(active_scene - 1).removeClass("on-top");
 
-						$hyde_menu.children().removeClass("on-top");
-						$hyde_menu.children().addClass("on-top");
-						$hyde_menu.children().eq(active_scene).removeClass("on-top");
-						$hyde_menu.children().eq(active_scene - 1).removeClass("on-top");
-						$hyde_menu.children().removeClass("active").eq(active_scene - 1).addClass("active");
+				} else if( direction == "prev" ) {
+					$hyde_menu.children().addClass("on-top");
+					$hyde_menu.children().eq(active_scene - 1).removeClass("on-top");
+					$hyde_menu.children().eq(active_scene).removeClass("on-top");
 
-					} else if( direction == "prev" ) {
+				} else if( direction == false ) {
 
-						$hyde_menu.children().removeClass("on-top");
-						$hyde_menu.children().addClass("on-top");
-						$hyde_menu.children().eq(active_scene - 1).removeClass("on-top");
-						$hyde_menu.children().eq(active_scene - 2).removeClass("on-top");
-						$hyde_menu.children().removeClass("active").eq(active_scene - 1).addClass("active");
+					$hyde_menu.children().removeClass("on-top");
 
-					}
-				});
+				}
+
+				$hyde_menu.children().removeClass("active").eq(active_scene - 1).addClass("active");
+				$hover.animate({ "top" : top, "left" : left });
 			}
 		}
 
