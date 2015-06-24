@@ -678,14 +678,10 @@
             },
             "prevBtn": {
                 "url": "i/s8/prev.png",
-                "width": 45,
-                "height": 45,
                 "x": 150
             },
             "nextBtn": {
                 "url": "i/s8/next.png",
-                "width": 45,
-                "height": 45,
                 "x": -150
             }
         }

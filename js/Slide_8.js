@@ -90,8 +90,6 @@ App.managerService.slide_8 = {
 				var prev_btn_texture = PIXI.Texture.fromImage(data.prevBtn.url);
 
 				this.prev_btn = new PIXI.Sprite(prev_btn_texture);
-				this.prev_btn.width = data.prevBtn.width;
-				this.prev_btn.height = data.prevBtn.height;
 				this.prev_btn.x = data.prevBtn;
 				this.prev_btn.y = renderer.height / 2;
 				this.prev_btn.buttonMode = true;
@@ -116,8 +114,6 @@ App.managerService.slide_8 = {
 				var next_btn_texture = PIXI.Texture.fromImage(data.nextBtn.url);
 
 				this.next_btn = new PIXI.Sprite(next_btn_texture);
-				this.next_btn.width = data.nextBtn.width;
-				this.next_btn.height = data.nextBtn.height;
 				this.next_btn.x = renderer.width + data.nextBtn.x;
 				this.next_btn.y = renderer.height / 2;
 				this.next_btn.buttonMode = true;
