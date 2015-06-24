@@ -18,7 +18,7 @@ App.managerService.slide_3 = {
 				deferred.resolve();
 			}, SLIDE_ANIMATION_TIME_3);
 
-				return deferred;
+			return deferred;
 		}		
 
 	},
@@ -231,7 +231,7 @@ App.managerService.slide_3 = {
 
 			init: function() {
 				if( mobile_version == true ) $hyde_menu.addClass("active");
-				else $hyde_menu.addClass("active").css({ "height" : $(window).height() - $main_menu.height() });
+				else $hyde_menu.addClass("active").css({ "height" : $(window).height() - $main_menu.height(), "width" : (($(window).height() - $main_menu.height()) / 3) * 2 });
 			},
 
 			destroy: function() {
