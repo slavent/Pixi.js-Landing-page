@@ -3,7 +3,7 @@
         "slider": {
            "slides": [
                 {
-                    "url": "i/s1/slide_1.jpg",
+                    "url": "i/s1/slide_3.jpg",
                     "anchor": 0.5,
                     "scale": 1.2
                 },
@@ -13,7 +13,7 @@
                     "scale": 1.2
                 },
                 {
-                    "url": "i/s1/slide_3.jpg",
+                    "url": "i/s1/slide_1.jpg",
                     "anchor": 0.5,
                     "scale": 1.2
                 }
@@ -53,7 +53,7 @@
             "font": "65px HelveticaNeueCyr-Thin",
             "fill": "#fff",
             "align": "center",
-            "lineHeight": 50,
+            "lineHeight": 65,
             "padding": 50,
             "y": 310
         },
@@ -119,19 +119,19 @@
         },
         "info": {
             "text": {
-                "text": "Имидж-гайд – это ваша личная книга стиля. Десятки\nкрасочных иллюстраций, детальный разбор вашего\nгардероба и практические советы по улучшению\nвашего образа – все это на страницах\nперсонального имидж-гайда. ",
-                "font": "21px HelveticaNeueCyr-Light",
+                "text": "Имидж-гайд – это ваша\nличная книга стиля. Десятки\nкрасочных иллюстраций,\nдетальный разбор вашего\nгардероба и практические\nсоветы по улучшению вашего\nобраза – все это на\nстраницах персонального\nимидж-гайда. ",
+                "font": "50px HelveticaNeueCyr-Light",
                 "fill": "#fa6464",
                 "align": "center",
                 "padding": 20,
-                "y": 250,
+                "y": 350,
                 "x": 0,
                 "speed": 500,
                 "init_wait": 1000
             },
             "border": {
                 "fill": "0xfa6464",
-                "borderWidth": 3,
+                "borderWidth": 6,
                 "y": -20,
                 "x": -20
             }
