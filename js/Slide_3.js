@@ -256,16 +256,18 @@ App.managerService.slide_3 = {
 					return this.el;
 				};
 
-				for(var i = 0; i < data_lines.length; i++) {
-					var line = new Line( data_lines[i].color, data_lines[i].size, data_lines[i].x, data_lines[i].y );
+				if( mobile_version == false ) {
+					for(var i = 0; i < data_lines.length; i++) {
+						var line = new Line( data_lines[i].color, data_lines[i].size, data_lines[i].x, data_lines[i].y );
 
-					switch(data_lines[i].pos) {
-						case "top":
-							title_top.addChild(line);
-							break;
-						case "down":
-							title_down.addChild(line);
-							break;
+						switch(data_lines[i].pos) {
+							case "top":
+								title_top.addChild(line);
+								break;
+							case "down":
+								title_down.addChild(line);
+								break;
+						}
 					}
 				}
 

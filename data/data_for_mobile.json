@@ -295,7 +295,17 @@
             }
         },
         "orderBtn": {
-
+            "text": "ЗАКАЗАТЬ\nИМИДЖ-ГАЙД",
+            "font": "30px PlumbCondensed-Bold",
+            "fill": "#ffffff",
+            "align": "center",
+            "x": 25,
+            "y": -130,
+            "speed": 1000,
+            "circleFill": "0xff7d7a",
+            "circleX": 100,
+            "circleY": -100,
+            "circleR": 100
         }
     },
     "slide_4": {

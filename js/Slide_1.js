@@ -16,7 +16,8 @@ App.managerService.slide_1 = {
 			.to({ alpha: 1 }, 1200, createjs.Ease.getPowInOut(4))
 			.call(function() {
 				$main_menu.css({ "top" : -70 });
-				$menu_icon.show();
+				if( mobile_version == true ) $menu_icon.removeClass("red");
+				else $menu_icon.show();
 			});
 
 		return App.promise();
