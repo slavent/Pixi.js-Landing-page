@@ -279,6 +279,7 @@ App.managerService.slide_1 = {
 			el_1: null,
 			el_2: null,
 			step: 0,
+			timer: null,
 
 			init: function() {
 				var data = DATA.slide_1.spinner,
@@ -297,23 +298,44 @@ App.managerService.slide_1 = {
 
 				this.el_2 = new PIXI.Sprite(texture_2);
 				this.el_2.anchor.set(data.anchor);
+				this.el_2.position.y = -10;
 
 				this.el_1.addChild(this.el_2);
 				slide_container_1.addChild(this.el_1); 
+
+				var dir = "down",
+					that = this;
+
+				this.timer = setInterval(function() {
+					
+					switch(dir) {
+						case "down": 
+							createjs.Tween.get(that.el_2)
+								.to({ y: 5 }, 500, createjs.Ease.quadOut())
+								.to({ y: 10 }, 300, createjs.Ease.quadOut());
+
+							dir = "top";
+							break;
+						case "top": 
+							createjs.Tween.get(that.el_2)
+								.to({ y: -5 }, 500, createjs.Ease.quadOut())
+								.to({ y: -10 }, 300, createjs.Ease.quadOut());
+
+							dir = "down";
+							break;
+					}
+
+				}, 1000);
 			},
 
 			update: function() {
-				var data = DATA.slide_1.spinner;
 
-				this.step += 0.06;
-				this.el_1.position.x = renderer.width / 2 + data.x;
-				this.el_1.position.y = renderer.height / 2 + data.y;
-				this.el_2.position.y += Math.sin(this.step);
 			},
 
 			destroy: function() {
 				this.el_1.texture.destroy(true, true);
 				this.el_2.texture.destroy(true, true);
+				clearInterval(this.timer);
 			}
 
 		}
