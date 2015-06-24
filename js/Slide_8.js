@@ -51,7 +51,7 @@ App.managerService.slide_8 = {
 					this.sprite.anchor.set(data.anchor);
 					this.sprite.position.x = renderer.width / 2;
 					this.sprite.position.y = renderer.height / 2;
-					if( index != data_slides.length - 1 ) this.sprite.alpha = 0;
+					if( index != 0 ) this.sprite.alpha = 0;
 
 					// Title
 					var style = {

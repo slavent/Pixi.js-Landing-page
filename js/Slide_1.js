@@ -13,7 +13,7 @@ App.managerService.slide_1 = {
 		stage.addChild(slide_container_1);
 
 		createjs.Tween.get(slide_container_1)
-			.to({ alpha: 1 }, 500, createjs.Ease.getPowInOut(4))
+			.to({ alpha: 1 }, 1200, createjs.Ease.getPowInOut(4))
 			.call(function() {
 				$main_menu.css({ "top" : -70 });
 				$menu_icon.show();
@@ -85,11 +85,12 @@ App.managerService.slide_1 = {
 					this.sprite.scale.set(scale);
 					this.sprite.position.x = renderer.width / 2;
 					this.sprite.position.y = renderer.height / 2; 
+					if( index != 0 ) this.sprite.alpha = 0;
 					return this.sprite;
 				};
 
-				while(data_length--) {
-					var slide = new Slide( data_length, data[data_length].url, data[data_length].anchor, data[data_length].scale );
+				for(var i = 0; i < data_length; i++) {
+					var slide = new Slide( i, data[i].url, data[i].anchor, data[i].scale );
 					slides.addChild(slide);
 				}
 
@@ -118,8 +119,8 @@ App.managerService.slide_1 = {
 						for(var i = 0; i < slides.children.length; i++) {
 							if(i != index) {
 								createjs.Tween.get(slides.children[i])
-										.to({ alpha: 0}, 2000, createjs.Ease.getPowInOut(4));
-								}
+									.to({ alpha: 0}, 2000, createjs.Ease.getPowInOut(4));
+							}
 						}
 					});
 
