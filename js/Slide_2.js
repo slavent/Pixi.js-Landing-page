@@ -9,15 +9,7 @@ App.managerService.slide_2 = {
 		for (var key in this.elems) this.elems[key].init();
 		stage.addChild(slide_container_2);
 
-		var deferred = $.Deferred(),
-			that = this;
-
-		setTimeout(function() {
-			deferred.resolve();
-			that.update_flag = true;
-		}, SLIDE_ANIMATION_TIME_2);
-
-		return deferred;
+		return App.promise();
 	},
 
 	destroy: function() {
@@ -26,6 +18,8 @@ App.managerService.slide_2 = {
 		for (var key in this.elems) this.elems[key].destroy();
 		this.update_flag = false;
 		slide_container_2 = null;
+
+		return App.promise();
 	},
 
 	update: function() {

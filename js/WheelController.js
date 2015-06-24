@@ -2,8 +2,6 @@ App.WheelController = {
 
 	checkDirection: function(event) {
 
-		console.log(123);
-
 		if(event) {
 			if(event.deltaY < 0) {
 				// scroll down

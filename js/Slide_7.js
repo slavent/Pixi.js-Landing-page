@@ -12,13 +12,7 @@ App.managerService.slide_7 = {
 		this.SceneController.init();
 		this.BtnController.setValue();
 
-		var deferred = $.Deferred();
-
-		setTimeout(function() {
-			deferred.resolve();
-		}, SLIDE_ANIMATION_TIME_7);
-
-		return deferred;
+		return App.promise();
 	},
 
 	destroy: function() {
@@ -36,13 +30,7 @@ App.managerService.slide_7 = {
 
 		slide_container_7 = null;
 
-		var deferred = $.Deferred();
-		
-		setTimeout(function() {
-			deferred.resolve();
-		}, SLIDE_ANIMATION_TIME_7);
-
-		return deferred;
+		return App.promise();
 	},
 
 	update: function() {
@@ -233,13 +221,7 @@ App.managerService.slide_7 = {
 
 			$anketa.find(".anketa-scene-1").addClass("animated fadeInDown").show();
 
-			var deferred = $.Deferred();
-
-			setTimeout(function() {
-				deferred.resolve();
-			}, SLIDE_ANIMATION_TIME_6);
-
-			return deferred;
+			return App.promise();
 		},
 
 		destroy: function() {
@@ -255,11 +237,7 @@ App.managerService.slide_7 = {
 
 			var deferred = $.Deferred();
 
-			setTimeout(function() {
-				deferred.resolve();
-			}, SLIDE_ANIMATION_TIME_6);
-
-			return deferred;
+			return App.promise();
 		},
 
 		destroy: function() {
@@ -383,13 +361,7 @@ App.managerService.slide_7 = {
 				slider_3 = new Slider($(".carousel-row-3")).init();
 			/* END: Slider */
 
-			var deferred = $.Deferred();
-
-			setTimeout(function() {
-				deferred.resolve();
-			}, SLIDE_ANIMATION_TIME_6);
-
-			return deferred;
+			return App.promise();
 		},
 
 		destroy: function() {
@@ -403,13 +375,7 @@ App.managerService.slide_7 = {
 		init: function() {
 			$anketa.find(".anketa-scene-4").addClass("animated fadeInDown").show();
 
-			var deferred = $.Deferred();
-
-			setTimeout(function() {
-				deferred.resolve();
-			}, SLIDE_ANIMATION_TIME_6);
-
-			return deferred;
+			return App.promise();
 		},
 
 		destroy: function() {
@@ -423,13 +389,7 @@ App.managerService.slide_7 = {
 		init: function() {
 			$anketa.find(".anketa-scene-5").addClass("animated fadeInDown").show();
 
-			var deferred = $.Deferred();
-
-			setTimeout(function() {
-				deferred.resolve();
-			}, SLIDE_ANIMATION_TIME_6);
-
-			return deferred;
+			return App.promise();
 		},
 
 		destroy: function() {
@@ -444,13 +404,7 @@ App.managerService.slide_7 = {
 			$anketa.find(".anketa-scene-6").addClass("animated fadeInDown").show();
 			$anketa_pay_systems.show();
 
-			var deferred = $.Deferred();
-
-			setTimeout(function() {
-				deferred.resolve();
-			}, SLIDE_ANIMATION_TIME_6);
-
-			return deferred;
+			return App.promise();
 		},
 
 		destroy: function() {
@@ -465,13 +419,7 @@ App.managerService.slide_7 = {
 		init: function() {
 			$anketa.find(".anketa-scene-7").addClass("animated fadeInDown").show();
 
-			var deferred = $.Deferred();
-
-			setTimeout(function() {
-				deferred.resolve();
-			}, SLIDE_ANIMATION_TIME_6);
-
-			return deferred;
+			return App.promise();
 		},
 
 		destroy: function() {

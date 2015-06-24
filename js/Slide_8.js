@@ -8,13 +8,7 @@ App.managerService.slide_8 = {
 		for (var key in this.elems) this.elems[key].init();
 		stage.addChild(slide_container_8);
 
-		var deferred = $.Deferred();
-
-		setTimeout(function() {
-			deferred.resolve();
-		}, SLIDE_ANIMATION_TIME_8);
-
-		return deferred;
+		return App.promise();
 	},
 
 	destroy: function() {
@@ -23,6 +17,8 @@ App.managerService.slide_8 = {
 		for (var key in this.elems) this.elems[key].destroy();
 		stage.removeChild(slide_container_8);
 		slide_container_8 = null;
+
+		return App.promise();
 	},
 
 	update: function() {
@@ -139,17 +135,19 @@ App.managerService.slide_8 = {
 			},
 
 			update: function() {
-				var data = DATA.slide_8.slider;
+				if( this.slides != null ) {
+					var data = DATA.slide_8.slider;
 
-				for(var i = 0; i < this.slides.children.length; i++) {
-					this.slides.children[i].position.x = renderer.width / 2;
-					this.slides.children[i].position.y = renderer.height / 2;
+					for(var i = 0; i < this.slides.children.length; i++) {
+						this.slides.children[i].position.x = renderer.width / 2;
+						this.slides.children[i].position.y = renderer.height / 2;
+					}
+
+					this.prev_btn.x = data.prevBtn.x;
+					this.prev_btn.y = renderer.height / 2;
+					this.next_btn.x = renderer.width + data.nextBtn.x;
+					this.next_btn.y = renderer.height / 2;
 				}
-
-				this.prev_btn.x = data.prevBtn.x;
-				this.prev_btn.y = renderer.height / 2;
-				this.next_btn.x = renderer.width + data.nextBtn.x;
-				this.next_btn.y = renderer.height / 2;
 			},
 
 			destroy: function() {

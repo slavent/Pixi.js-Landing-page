@@ -44,7 +44,7 @@ var $body 				= $("body"),
 
 	mobile_version = false,
 
-	SLIDE_ANIMATION_TIME_1 = 500,
+	SLIDE_ANIMATION_TIME_1 = 1000,
 	SLIDE_ANIMATION_TIME_2 = 2000,
 	SLIDE_ANIMATION_TIME_3 = 2000,
 	SLIDE_ANIMATION_TIME_4 = 2500,
@@ -86,6 +86,18 @@ App.init = function() {
 	    .fail(function() {
 	    	console.log("FAIL: Can't get json data");
 	    });
+};
+
+App.promise = function() {
+	var deferred = $.Deferred(),
+		that = this;
+
+	setTimeout(function() {
+		deferred.resolve();
+		that.update_flag = true;
+	}, SLIDE_ANIMATION_TIME_1);
+
+	return deferred;
 };
 // END: App
 

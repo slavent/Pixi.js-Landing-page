@@ -19,15 +19,7 @@ App.managerService.slide_1 = {
 				$menu_icon.show();
 			});
 
-		var deferred = $.Deferred(),
-			that = this;
-
-		setTimeout(function() {
-			deferred.resolve();
-			that.update_flag = true;
-		}, SLIDE_ANIMATION_TIME_1);
-
-		return deferred;
+		return App.promise();
 	},
 
 	destroy: function() {
@@ -53,6 +45,8 @@ App.managerService.slide_1 = {
 			});
 
 		this.update_flag = false;
+
+		return App.promise();
 	},
 
 	update: function() {

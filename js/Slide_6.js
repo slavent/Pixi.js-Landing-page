@@ -1,7 +1,6 @@
 App.managerService.slide_6 = {
 
 	init: function(active) {
-
 		console.log("Slide 6 init");
 
 		slide_container_6 = new PIXI.Container();
@@ -13,20 +12,10 @@ App.managerService.slide_6 = {
 
 		stage.addChild(slide_container_6);
 
-		if( slide_6_complete == true ) {
-			var deferred = $.Deferred();
-
-			setTimeout(function() {
-				deferred.resolve();
-			}, SLIDE_ANIMATION_TIME_6);
-
-			return deferred;
-		}
-
+		if( slide_6_complete == true ) return App.promise();
 	},
 
 	destroy: function() {
-
 		console.log("Slide 6 destroy");
 
 		this.NavController.destroy();
@@ -37,16 +26,7 @@ App.managerService.slide_6 = {
 
 		slide_container_6 = null;
 		
-		if( slide_6_complete == false ) {
-			var deferred = $.Deferred();
-			
-			setTimeout(function() {
-				deferred.resolve();
-			}, SLIDE_ANIMATION_TIME_6);
-
-			return deferred;
-		}	
-
+		return App.promise();
 	},
 
 	update: function() {
@@ -352,13 +332,7 @@ App.managerService.slide_6 = {
 			slide_container_6.addChild(scene);
 			scene.init();
 
-			var deferred = $.Deferred();
-
-			setTimeout(function() {
-				deferred.resolve();
-			}, SLIDE_ANIMATION_TIME_6);
-
-			return deferred;
+			return App.promise();
 		},
 
 		destroy: function() {
@@ -407,13 +381,7 @@ App.managerService.slide_6 = {
 			slide_container_6.addChild(scene);
 			scene.init();
 
-			var deferred = $.Deferred();
-
-			setTimeout(function() {
-				deferred.resolve();
-			}, SLIDE_ANIMATION_TIME_6);
-
-				return deferred;
+			return App.promise();
 		},
 
 		destroy: function() {
@@ -462,13 +430,7 @@ App.managerService.slide_6 = {
 			slide_container_6.addChild(scene);
 			scene.init();
 
-			var deferred = $.Deferred();
-
-			setTimeout(function() {
-				deferred.resolve();
-			}, SLIDE_ANIMATION_TIME_6);
-
-				return deferred;
+			return App.promise();
 		},
 
 		destroy: function() {
@@ -517,13 +479,7 @@ App.managerService.slide_6 = {
 			slide_container_6.addChild(scene);
 			scene.init();
 
-			var deferred = $.Deferred();
-
-			setTimeout(function() {
-				deferred.resolve();
-			}, SLIDE_ANIMATION_TIME_6);
-
-				return deferred;
+			return App.promise();
 		},
 
 		destroy: function() {
@@ -572,13 +528,7 @@ App.managerService.slide_6 = {
 			slide_container_6.addChild(scene);
 			scene.init();
 
-			var deferred = $.Deferred();
-
-			setTimeout(function() {
-				deferred.resolve();
-			}, SLIDE_ANIMATION_TIME_6);
-
-				return deferred;
+			return App.promise();
 		},
 
 		destroy: function() {
@@ -627,13 +577,7 @@ App.managerService.slide_6 = {
 			slide_container_6.addChild(scene);
 			scene.init();
 
-			var deferred = $.Deferred();
-
-			setTimeout(function() {
-				deferred.resolve();
-			}, SLIDE_ANIMATION_TIME_6);
-
-				return deferred;
+			return App.promise();
 		},
 
 		destroy: function() {

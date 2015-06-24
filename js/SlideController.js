@@ -27,11 +27,13 @@ App.SlideController = {
 			return;
 		}
 
-		App.managerService["slide_" + from].destroy();
-		App.managerService["slide_" + to].init().then(function() { 
-			App.WheelController.unlockWheel();
-			App.SwipeController.unlockSwipe();
+		App.managerService["slide_" + from].destroy().then(function() {
+			App.managerService["slide_" + to].init().then(function() { 
+				App.WheelController.unlockWheel();
+				App.SwipeController.unlockSwipe();
+			});
 		});
+		
 	}
 
 };
