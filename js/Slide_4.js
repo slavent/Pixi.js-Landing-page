@@ -133,7 +133,7 @@ App.managerService.slide_4 = {
 
 				this.el = new PIXI.Text(data.text, style);
 				this.el.position.x = renderer.width * 2;
-				this.el.position.y = renderer.height / 2 + data.title_y;
+				this.el.position.y = data.title_y;
 				this.el.anchor.set(data.anchor);
 
 				var btn = new PIXI.Graphics();
@@ -154,7 +154,7 @@ App.managerService.slide_4 = {
 
 				createjs.Tween.get(this.el)
 					.wait(data.init_wait)
-					.to({ x: renderer.width / 2 + data.title_x }, data.speed, createjs.Ease.getPowInOut(4));
+					.to({ x: renderer.width - data.title_x }, data.speed, createjs.Ease.getPowInOut(4));
 
 			},
 
@@ -188,7 +188,15 @@ App.managerService.slide_4 = {
 					data_slides = data.slides,
 					slides = new PIXI.Container(),
 					slide_ind = 0,
-					slide_scale = 1;
+					params;
+
+				if( renderer.height > 1200 ) {
+					params = data.params.big;
+				} else if( renderer.height < 900 ) {
+					params = data.params.small;
+				} else {
+					params = data.params.default;
+				}
 
 				this.slides = slides;
 				slides.alpha = 0;
@@ -262,8 +270,8 @@ App.managerService.slide_4 = {
 					this.video_texture = PIXI.Texture.fromVideo(url_video);
 					this.video_sprite = new PIXI.Sprite(this.video_texture);
 					this.video_sprite.anchor.x = .5;
-					this.video_sprite.scale.x = slide_scale;
-					this.video_sprite.scale.y = slide_scale;
+					this.video_sprite.scale.x = params.scale;
+					this.video_sprite.scale.y = params.scale;
 					this.video_sprite.alpha = 0;
 					this.video_sprite.texture.baseTexture.source.loop = true;
 					this.video_sprite.buttonMode = true;
@@ -291,27 +299,22 @@ App.managerService.slide_4 = {
 					this.sprite.anchor.x = .5;
 					this.sprite.texture.baseTexture.source.loop = true;
 					this.sprite.position.y = renderer.height / 2;
-					this.sprite.scale.x = slide_scale;
-					this.sprite.scale.y = slide_scale;
+					this.sprite.scale.x = params.scale;
+					this.sprite.scale.y = params.scale;
+
 					switch(index) {
 						case 0:
-							this.sprite.position.x = renderer.width / 2 - 350;
+							this.sprite.position.x = renderer.width / 2 - params.margin;
 							break;
 						case 1:
 							this.sprite.position.x = renderer.width / 2;
 							break;
 						case 2:
-							this.sprite.position.x = renderer.width / 2 + 350;
+							this.sprite.position.x = renderer.width / 2 + params.margin;
 							break;
 						default: 
 							this.sprite.position.x = renderer.width * 2;
 							break;
-					}
-
-					if( renderer.height < 900 ) {
-						slide_scale = 0.7;
-						this.sprite.scale.x = slide_scale;
-						this.sprite.scale.y = slide_scale;
 					}
 
 					this.sprite.addChild(this.title);
@@ -337,7 +340,7 @@ App.managerService.slide_4 = {
 					.call(function() {
 						for(var i = 0; i < slides.children.length; i++) {
 							createjs.Tween.get(slides.children[i])
-								.to({ y: -400 * slide_scale }, data.speed, createjs.Ease.getPowInOut(4));
+								.to({ y: -400 * params.scale }, data.speed, createjs.Ease.getPowInOut(4));
 						}
 					});
 
