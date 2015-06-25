@@ -350,24 +350,30 @@
             "params": {
                 "default": {
                     "margin": 350,
-                    "scale": 1
+                    "scale": 0.7
                 },
                 "big": {
                     "margin": 600,
-                    "scale": 2
+                    "scale": 1
                 },
                 "small": {
                     "margin": 300,
-                    "scale": 0.7
+                    "scale": 0.5
                 }
             },
             "slides": [
-                { "url_photo": "i/s4/slide_1.png", "url_video": "i/s4/slide_1.mp4", "title": "Casual", "description": "Одежда для настоящих\nмечтательниц" },
-                { "url_photo": "i/s4/slide_2.png", "url_video": "i/s4/slide_1.mp4", "title": "Романтический", "description": "Одежда для настоящих\nмечтательниц" },
-                { "url_photo": "i/s4/slide_3.png", "url_video": "i/s4/slide_1.mp4", "title": "Классика", "description": "Одежда для настоящих\nмечтательниц" },
-                { "url_photo": "i/s4/slide_1.png", "url_video": "i/s4/slide_1.mp4", "title": "Casual", "description": "Одежда для настоящих\nмечтательниц" },
-                { "url_photo": "i/s4/slide_2.png", "url_video": "i/s4/slide_1.mp4", "title": "Романтический", "description": "Одежда для настоящих\nметчательниц" },
-                { "url_photo": "i/s4/slide_3.png", "url_video": "i/s4/slide_1.mp4", "title": "Классика", "description": "Одежда для настоящих\nмечтательниц" }
+                { "url_photo": "i/s4/1.png", "url_video": "i/s4/1.mp4", "title": "Casual", "description": "Одежда для настоящих\nмечтательниц" },
+                { "url_photo": "i/s4/2.png", "url_video": "i/s4/2.mp4", "title": "Романтический", "description": "Одежда для настоящих\nмечтательниц" },
+                { "url_photo": "i/s4/3.png", "url_video": "i/s4/3.mp4", "title": "Классика", "description": "Одежда для настоящих\nмечтательниц" },
+                { "url_photo": "i/s4/4.png", "url_video": "i/s4/4.mp4", "title": "Casual", "description": "Одежда для настоящих\nмечтательниц" },
+                { "url_photo": "i/s4/5.png", "url_video": "i/s4/5.mp4", "title": "Романтический", "description": "Одежда для настоящих\nметчательниц" },
+                { "url_photo": "i/s4/6.png", "url_video": "i/s4/6.mp4", "title": "Классика", "description": "Одежда для настоящих\nмечтательниц" },
+                { "url_photo": "i/s4/7.png", "url_video": "i/s4/7.mp4", "title": "Casual", "description": "Одежда для настоящих\nмечтательниц" },
+                { "url_photo": "i/s4/8.png", "url_video": "i/s4/8.mp4", "title": "Романтический", "description": "Одежда для настоящих\nмечтательниц" },
+                { "url_photo": "i/s4/9.png", "url_video": "i/s4/9.mp4", "title": "Классика", "description": "Одежда для настоящих\nмечтательниц" },
+                { "url_photo": "i/s4/10.png", "url_video": "i/s4/10.mp4", "title": "Casual", "description": "Одежда для настоящих\nмечтательниц" },
+                { "url_photo": "i/s4/11.png", "url_video": "i/s4/11.mp4", "title": "Романтический", "description": "Одежда для настоящих\nметчательниц" },
+                { "url_photo": "i/s4/12.png", "url_video": "i/s4/12.mp4", "title": "Классика", "description": "Одежда для настоящих\nмечтательниц" }
             ],
             "bg": {
                 "fill": "0xff7d7a",
