@@ -116,10 +116,12 @@ App.managerService.slide_3 = {
 			}
 
 			App.managerService.slide_3.NavController.setActive(top_pos, left_pos, direction);
-			App.managerService.slide_3.elems.menu["scene_" + from].destroy();
-			App.managerService.slide_3.elems.menu["scene_" + to].init().then(function() { 
-				App.managerService.slide_3.WheelController.unlockWheel();
-				App.managerService.slide_3.SwipeController.unlockSwipe();
+			App.managerService.slide_3.elems.menu["scene_" + from].destroy().then(function() {
+				App.clearCache();
+				App.managerService.slide_3.elems.menu["scene_" + to].init().then(function() { 
+					App.managerService.slide_3.WheelController.unlockWheel();
+					App.managerService.slide_3.SwipeController.unlockSwipe();
+				});
 			});
 
 		}
@@ -298,23 +300,14 @@ App.managerService.slide_3 = {
 
 				this.el.destroy = function(element) {
 					createjs.Tween.get(title_top)
-						.to({ x: data.titles.title_top.x }, 500, createjs.Ease.getPowInOut(4))
-						.call(function() {
-							this.destroy(true);
-						});
+						.to({ x: data.titles.title_top.x }, 500, createjs.Ease.getPowInOut(4));
 
 					createjs.Tween.get(title_down)
-						.to({ x: data.titles.title_down.x }, 500, createjs.Ease.getPowInOut(4))
-						.call(function() {
-							this.destroy(true);
-						});
+						.to({ x: data.titles.title_down.x }, 500, createjs.Ease.getPowInOut(4));
 
 					createjs.Tween.get(element)
 						.wait(200)
-						.to({ y: -renderer.height * 2 }, 1000, createjs.Ease.getPowInOut(4))
-						.call(function() {
-							this.texture.destroy(true, true);
-						});
+						.to({ y: -renderer.height * 2 }, 1000, createjs.Ease.getPowInOut(4));
 
 					App.managerService.slide_3.elems.menu["order_btn"].destroy();
 				}
@@ -337,6 +330,8 @@ App.managerService.slide_3 = {
 
 				destroy: function() {
 					this.el.destroy(this.el);
+
+					return App.promise();
 				}
 
 			},
@@ -355,6 +350,8 @@ App.managerService.slide_3 = {
 
 				destroy: function() {
 					this.el.destroy(this.el);
+
+					return App.promise();
 				}
 
 			},
@@ -373,6 +370,8 @@ App.managerService.slide_3 = {
 
 				destroy: function() {
 					this.el.destroy(this.el);
+
+					return App.promise();
 				}
 
 			},
@@ -391,6 +390,8 @@ App.managerService.slide_3 = {
 
 				destroy: function() {
 					this.el.destroy(this.el);
+
+					return App.promise();
 				}
 
 			},
@@ -409,6 +410,8 @@ App.managerService.slide_3 = {
 
 				destroy: function() {
 					this.el.destroy(this.el);
+
+					return App.promise();
 				}
 
 			},
@@ -427,6 +430,8 @@ App.managerService.slide_3 = {
 
 				destroy: function() {
 					this.el.destroy(this.el);
+
+					return App.promise();
 				}
 
 			},
@@ -473,10 +478,7 @@ App.managerService.slide_3 = {
 					var data = DATA.slide_3.orderBtn;
 
 					createjs.Tween.get(this.el)
-						.to({ y: renderer.height + 200 }, data.speed, createjs.Ease.getPowInOut(4))
-						.call(function() {
-							this.children[0].destroy(true);
-						});
+						.to({ y: renderer.height + 200 }, data.speed, createjs.Ease.getPowInOut(4));
 				}
 
 			}

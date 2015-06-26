@@ -140,7 +140,7 @@ App.managerService.slide_4 = {
 				var Slide = function(index, url_photo, url_video) {
 
 					// Video
-					this.video_texture = PIXI.Texture.fromVideo(url_video);
+					/*this.video_texture = PIXI.Texture.fromVideo(url_video);
 					this.video_sprite = new PIXI.Sprite(this.video_texture);
 					this.video_sprite.anchor.x = .5;
 					this.video_sprite.alpha = 0;
@@ -162,7 +162,7 @@ App.managerService.slide_4 = {
 
 						createjs.Tween.get(this)
 							.to({ alpha: 0}, 1000, createjs.Ease.getPowInOut(4));
-					});
+					});*/
 
 					// Photo
 					this.texture = PIXI.Texture.fromImage(url_photo);
@@ -189,7 +189,7 @@ App.managerService.slide_4 = {
 							break;
 					}
 
-					this.sprite.addChild(this.video_sprite);
+					//this.sprite.addChild(this.video_sprite);
 
 					return this.sprite;
 
@@ -214,7 +214,6 @@ App.managerService.slide_4 = {
 					prev_btn = new PIXI.Sprite(prev_btn_texture);
 
 				this.prev_btn = prev_btn;
-
 				prev_btn.anchor.set(data.prevBtn.anchor);
 				prev_btn.position.x = -200;
 				prev_btn.position.y = renderer.height / 2;
@@ -263,7 +262,6 @@ App.managerService.slide_4 = {
 					next_btn = new PIXI.Sprite(next_btn_texture);
 
 				this.next_btn = next_btn;
-
 				next_btn.anchor.set(data.nextBtn.anchor);
 				next_btn.position.x = renderer.width + 100;
 				next_btn.position.y = renderer.height / 2;
@@ -313,28 +311,16 @@ App.managerService.slide_4 = {
 				var data = DATA.slide_4.slider;
 
 				createjs.Tween.get(this.slides)
-					.to({ y: 2000 }, data.speed, createjs.Ease.getPowInOut(4))
-					.call(function() {
-						for(var i = 0; i < this.children.length; i++) {
-							for(var j = 0; j < this.children[i].children.length; j++) {
-								if( j == 4 ) this.children[i].children[j].texture.destroy(); // video
-							}
+					.to({ y: 2000 }, data.speed, createjs.Ease.getPowInOut(4));
 
-							this.children[i].texture.destroy(true, true);
-						}
-					});
+				createjs.Tween.get(this.slides_info)
+					.to({ y: 2000 }, data.speed, createjs.Ease.getPowInOut(4));
 
 				createjs.Tween.get(this.prev_btn)
-					.to({ x: -200 }, data.prevBtn.speed, createjs.Ease.getPowInOut(4))
-					.call(function() {
-						this.texture.destroy(true, true);
-					});
+					.to({ x: -200 }, data.prevBtn.speed, createjs.Ease.getPowInOut(4));
 
 				createjs.Tween.get(this.next_btn)
-					.to({ x: renderer.width + 200 }, data.nextBtn.speed, createjs.Ease.getPowInOut(4))
-					.call(function() {
-						this.texture.destroy(true, true);
-					});
+					.to({ x: renderer.width + 200 }, data.nextBtn.speed, createjs.Ease.getPowInOut(4));
 			},
 
 			update: function() {
@@ -411,10 +397,7 @@ App.managerService.slide_4 = {
 
 				createjs.Tween.get(this.el)
 					.wait(data.destroy_wait)
-					.to({ y: -100 }, data.speed, createjs.Ease.getPowInOut(4))
-					.call(function() {
-						this.destroy(true);
-					});
+					.to({ y: -100 }, data.speed, createjs.Ease.getPowInOut(4));
 			},
 
 			update: function() {
@@ -448,7 +431,7 @@ App.managerService.slide_4 = {
 
 				createjs.Tween.get(this.el)
 					.wait(data.init_wait)
-						.to({ y: data.y }, data.speed, createjs.Ease.getPowInOut(4));
+					.to({ y: data.y }, data.speed, createjs.Ease.getPowInOut(4));
 
 			},
 
@@ -457,10 +440,7 @@ App.managerService.slide_4 = {
 
 				createjs.Tween.get(this.el)
 					.wait(data.destroy_wait)
-					.to({ y: -100 }, data.speed, createjs.Ease.getPowInOut(4))
-					.call(function() {
-						this.destroy(true);
-					});
+					.to({ y: -100 }, data.speed, createjs.Ease.getPowInOut(4));
 			},
 
 			update: function() {

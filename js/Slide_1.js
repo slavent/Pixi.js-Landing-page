@@ -200,9 +200,7 @@ App.managerService.slide_1 = {
 			},
 
 			destroy: function() {
-				for(var i = 0; i < this.slides.children.length; i++) {
-					this.slides.children[i].texture.destroy(true, true);
-				}
+	
 			}
 
 		},
@@ -231,7 +229,7 @@ App.managerService.slide_1 = {
 			},
 
 			destroy: function() {
-				this.el.texture.destroy(true, true);
+				
 			}
 
 		},
@@ -265,7 +263,7 @@ App.managerService.slide_1 = {
 			},
 
 			destroy: function() {
-				this.el.destroy(true);
+				
 			}
 
 		},
@@ -329,8 +327,6 @@ App.managerService.slide_1 = {
 			},
 
 			destroy: function() {
-				this.el_1.texture.destroy(true, true);
-				this.el_2.texture.destroy(true, true);
 				clearInterval(this.timer);
 			}
 

@@ -151,12 +151,7 @@ App.managerService.slide_8 = {
 			},
 
 			destroy: function() {
-				this.prev_btn.texture.destroy(true, true);
-				this.next_btn.texture.destroy(true, true);
-
-				for(var i = 0; i < this.slides.children.length; i++) {
-					this.slides.children[i].texture.destroy(true, true);
-				}
+				
 			}
 
 		},

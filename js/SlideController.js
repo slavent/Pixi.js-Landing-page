@@ -28,6 +28,7 @@ App.SlideController = {
 		}
 
 		App.managerService["slide_" + from].destroy().then(function() {
+			App.clearCache();
 			App.managerService["slide_" + to].init().then(function() { 
 				App.WheelController.unlockWheel();
 				App.SwipeController.unlockSwipe();

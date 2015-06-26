@@ -63,10 +63,12 @@ App.managerService.slide_6 = {
 
 			App.managerService.slide_6.NavController.setActive();
 
-			App.managerService.slide_6["scene_" + from].destroy();
-			App.managerService.slide_6["scene_" + to].init().then(function() { 
-				App.managerService.slide_6.WheelController.unlockWheel();
-				App.managerService.slide_6.SwipeController.unlockSwipe();
+			App.managerService.slide_6["scene_" + from].destroy().then(function() {
+				App.clearCache();
+				App.managerService.slide_6["scene_" + to].init().then(function() { 
+					App.managerService.slide_6.WheelController.unlockWheel();
+					App.managerService.slide_6.SwipeController.unlockSwipe();
+				});
 			});
 		}
 
@@ -259,24 +261,15 @@ App.managerService.slide_6 = {
 		scene.destroy = function() {
 			// pic
 			createjs.Tween.get(Pic)
-				.to({ y: renderer.height*2 }, 1000, createjs.Ease.getPowInOut(4))
-				.call(function() {
-					this.texture.destroy(true, true);
-				})
+				.to({ y: renderer.height*2 }, 1000, createjs.Ease.getPowInOut(4));
 
 			// title
 			createjs.Tween.get(Title)
-				.to({ y: renderer.height*2 }, 1000, createjs.Ease.getPowInOut(4))
-				.call(function() {
-					this.destroy();
-				});
+				.to({ y: renderer.height*2 }, 1000, createjs.Ease.getPowInOut(4));
 
 			// info 
 			createjs.Tween.get(Info)
-				.to({ y: renderer.height*2 }, 1000, createjs.Ease.getPowInOut(4))
-				.call(function() {
-					this.destroy();
-				});
+				.to({ y: renderer.height*2 }, 1000, createjs.Ease.getPowInOut(4));
 
 			createjs.Tween.get(Border)
 				.to({ y: renderer.height*2 }, 1000, createjs.Ease.getPowInOut(4));
@@ -287,6 +280,9 @@ App.managerService.slide_6 = {
 
 			createjs.Tween.get(Btn_title)
 				.to({ y: renderer.height*2 }, 1000, createjs.Ease.getPowInOut(4));
+
+			// spinner
+			App.managerService.slide_6.spinner.destroy();
 		};
 
 		return scene;
@@ -337,6 +333,8 @@ App.managerService.slide_6 = {
 
 		destroy: function() {
 			this.el.destroy();
+
+			return App.promise();
 		}
 
 	},
@@ -386,6 +384,8 @@ App.managerService.slide_6 = {
 
 		destroy: function() {
 			this.el.destroy();
+
+			return App.promise();
 		}
 
 	},
@@ -435,6 +435,8 @@ App.managerService.slide_6 = {
 
 		destroy: function() {
 			this.el.destroy();
+
+			return App.promise();
 		}
 
 	},
@@ -484,6 +486,8 @@ App.managerService.slide_6 = {
 
 		destroy: function() {
 			this.el.destroy();
+
+			return App.promise();
 		}
 
 	},
@@ -533,6 +537,8 @@ App.managerService.slide_6 = {
 
 		destroy: function() {
 			this.el.destroy();
+
+			return App.promise();
 		}
 
 	},
@@ -582,6 +588,8 @@ App.managerService.slide_6 = {
 
 		destroy: function() {
 			this.el.destroy();
+
+			return App.promise();
 		}
 
 	},
@@ -641,14 +649,12 @@ App.managerService.slide_6 = {
 
 		update: function() {
 
-
 		},
 
 		destroy: function() {
-			this.el_1.alpha = 0;
-			this.el_2.alpha = 0;
-			this.el_1.texture.destroy(true, true);
-			this.el_2.texture.destroy(true, true);
+			createjs.Tween.get(this.el_1)
+				.to({ y: renderer.height*2, alpha: 0 }, 1000, createjs.Ease.getPowInOut(4));
+
 			clearInterval(this.timer);
 		}
 

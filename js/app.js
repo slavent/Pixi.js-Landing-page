@@ -99,6 +99,10 @@ App.promise = function() {
 
 	return deferred;
 };
+
+App.clearCache = function() {
+	for (var key in PIXI.utils.BaseTextureCache) PIXI.utils.BaseTextureCache[key].destroy();
+};
 // END: App
 
 
