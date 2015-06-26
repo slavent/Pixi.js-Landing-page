@@ -84,7 +84,7 @@ App.promise = function() {
 	setTimeout(function() {
 		deferred.resolve();
 		that.update_flag = true;
-	}, 1000);
+	}, 2000);
 
 	return deferred;
 };
