@@ -67,7 +67,7 @@ App.managerService.slide_4 = {
 
 					this.title = new PIXI.Text(title, title_style);
 					this.title.anchor.x = data.titles.anchor;
-					this.title.position.y = renderer.height - 200;
+					this.title.position.y = renderer.height + data.titles.y;
 					switch(index) {
 						case 0:
 							this.title.position.x = renderer.width / 2 - params.margin;
@@ -88,9 +88,9 @@ App.managerService.slide_4 = {
 					this.line.beginFill(0xffffff);
 					this.line.lineStyle(1, data.lines.fill, 1);
 					this.line.moveTo(0,0);
-					this.line.lineTo(100,0);
+					this.line.lineTo(data.lines.width ,0);
 					this.line.endFill();
-					this.line.position.x = data.lines.x;
+					this.line.position.x = data.lines.x - data.lines.width / 2;
 					this.line.position.y = data.lines.y;
 
 					// Btn
@@ -221,15 +221,24 @@ App.managerService.slide_4 = {
 				prev_btn.on("click", function() {
 					if(slide_ind != 0) {
 						createjs.Tween.get(slides.children[slide_ind - 1])
-								.to({ x: renderer.width / 2 - 350 }, data.animSpeed, createjs.Ease.getPowInOut(4));
+							.to({ x: renderer.width / 2 - 350 }, data.animSpeed, createjs.Ease.getPowInOut(4));
+
+						createjs.Tween.get(slides_info.children[slide_ind - 1])
+							.to({ x: renderer.width / 2 - 350 }, data.animSpeed, createjs.Ease.getPowInOut(4));
 
 						for(var i = slide_ind; i < slide_ind + 2; i++) {
 							createjs.Tween.get(slides.children[i])
 								.to({ x: slides.children[i].position.x + 350 }, data.animSpeed, createjs.Ease.getPowInOut(4));
+
+							createjs.Tween.get(slides_info.children[i])
+								.to({ x: slides_info.children[i].position.x + 350 }, data.animSpeed, createjs.Ease.getPowInOut(4));
 						}
 
 						createjs.Tween.get(slides.children[slide_ind + 2])
-								.to({ x: renderer.width * 2}, data.animSpeed, createjs.Ease.getPowInOut(4));
+							.to({ x: renderer.width * 2}, data.animSpeed, createjs.Ease.getPowInOut(4));
+
+						createjs.Tween.get(slides_info.children[slide_ind + 2])
+							.to({ x: renderer.width * 2}, data.animSpeed, createjs.Ease.getPowInOut(4));
 
 						slide_ind--;
 					}
@@ -255,15 +264,24 @@ App.managerService.slide_4 = {
 				next_btn.on("click", function() {
 					if(slide_ind != slides.children.length - 3) {
 						createjs.Tween.get(slides.children[slide_ind])
-								.to({ x: -renderer.width * 2 }, data.animSpeed, createjs.Ease.getPowInOut(4));
+							.to({ x: -renderer.width * 2 }, data.animSpeed, createjs.Ease.getPowInOut(4));
+
+						createjs.Tween.get(slides_info.children[slide_ind])
+							.to({ x: -renderer.width * 2 }, data.animSpeed, createjs.Ease.getPowInOut(4));
 
 						for(var i = slide_ind + 1; i < slide_ind + 3; i++) {
 							createjs.Tween.get(slides.children[i])
 								.to({ x: slides.children[i].position.x - 350 }, data.animSpeed, createjs.Ease.getPowInOut(4));
+
+							createjs.Tween.get(slides_info.children[i])
+								.to({ x: slides_info.children[i].position.x - 350 }, data.animSpeed, createjs.Ease.getPowInOut(4));
 						}
 
 						createjs.Tween.get(slides.children[slide_ind + 3])
-								.to({ x: renderer.width / 2 + 350}, data.animSpeed, createjs.Ease.getPowInOut(4));
+							.to({ x: renderer.width / 2 + 350}, data.animSpeed, createjs.Ease.getPowInOut(4));
+
+						createjs.Tween.get(slides_info.children[slide_ind + 3])
+							.to({ x: renderer.width / 2 + 350}, data.animSpeed, createjs.Ease.getPowInOut(4));
 
 						slide_ind++;
 					}
@@ -330,7 +348,7 @@ App.managerService.slide_4 = {
 				this.el.drawRect(0, 0, renderer.width, data.height);
 				this.el.y = renderer.height * 2;
 
-				slide_container_4.addChild(this.el);
+				slide_container_4.addChildAt(this.el, 1);
 
 				createjs.Tween.get(this.el)
 					.to({ y: renderer.height - 250 }, data.speed, createjs.Ease.getPowInOut(4));

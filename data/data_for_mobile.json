@@ -347,9 +347,19 @@
             "speed": 1000
         },
         "slider": {
-            "margins": {
-                "default": 350,
-                "big": 600
+            "params": {
+                "default": {
+                    "margin": 350,
+                    "scale": 0.7
+                },
+                "big": {
+                    "margin": 600,
+                    "scale": 1
+                },
+                "small": {
+                    "margin": 300,
+                    "scale": 0.5
+                }
             },
             "slides": [
                 { "url_photo": "i/s4/1.png", "url_video": "i/s4/1.mp4", "title": "Casual", "description": "Одежда для настоящих\nмечтательниц" },
@@ -367,39 +377,39 @@
             ],
             "bg": {
                 "fill": "0xff7d7a",
-                "height": 250,
-                "speed": 500
+                "height": 250
             },
             "titles": {
-                "font": "30px HelveticaNeueCyr-Light",
+                "font": "30px FiraSansRegular",
                 "fill": "#ffffff",
-                "y": 430,
+                "y": -200,
                 "anchor": 0.5
             },
             "lines": {
                 "fill": "0xffffff",
-                "x": -50,
-                "y": 475
+                "x": 0,
+                "y": 40,
+                "width": 100
             },
             "btns": {
                 "fill": "0xffffff",
                 "x": -65,
-                "y": 550,
+                "y": 120,
                 "width": 130,
                 "height": 30,
                 "r": 10,
-                "font": "18px HelveticaNeueCyr-Light",
+                "font": "18px FiraSansRegular",
                 "color": "#ffffff",
                 "text": "Выбрать",
                 "anchor": 0.5,
                 "title_x": 0,
-                "title_y": 563
+                "title_y": 134
             },
             "description": {
-                "font": "16px HelveticaNeueCyr-Light",
+                "font": "16px FiraSansRegular",
                 "fill": "#ffffff",
                 "align": "center",
-                "y": 485,
+                "y": 45,
                 "anchor": 0.5
             },
             "prevBtn": {
