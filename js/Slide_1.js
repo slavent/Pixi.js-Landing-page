@@ -65,16 +65,13 @@ App.managerService.slide_1 = {
 
 			init: function() {
 
-				var data = DATA.slide_1.slider.slides,
-					data_length = data.length,
-
-					dot_data = DATA.slide_1.slider.dotes,
+				var data 			= DATA.slide_1.slider.slides,
+					data_length 	= data.length,
+					dot_data 		= DATA.slide_1.slider.dotes,
 					dot_data_length = dot_data.length,
-
-					slides = new PIXI.Container(),
-					dotes = new PIXI.Container(),
-
-					slide_ind = 0;
+					slides 			= new PIXI.Container(),
+					dotes 			= new PIXI.Container(),
+					slide_ind 		= 0;
 
 				this.slides = slides;
 				this.el = dotes;
@@ -154,6 +151,7 @@ App.managerService.slide_1 = {
 
 			update: function() {
 
+				// zoom effect
 				if( this.slides != null) {
 					if( this.reverse == false ) {
 						if( this.slides.scale.x < 1.1 ) {
@@ -210,8 +208,9 @@ App.managerService.slide_1 = {
 			el: null,
 
 			init: function() {
-				var data = DATA.slide_1.logo,
+				var data 	= DATA.slide_1.logo,
 					texture = PIXI.Texture.fromImage(data.url);
+
 				this.el = new PIXI.Sprite(texture);
 				this.el.anchor.set(data.anchor);
 				this.el.position.x = renderer.width / 2;
@@ -239,14 +238,14 @@ App.managerService.slide_1 = {
 			el: null,
 
 			init: function() {
-				var data = DATA.slide_1.title,
-					style = {
-						font 		: data.font,
-					    fill 		: data.fill,
-					    align 		: data.align,
-					    lineHeight 	: data.lineHeight,
-					    padding 	: data.padding
-					};
+				var data 	= DATA.slide_1.title,
+					style 	= {
+								font 		: data.font,
+							    fill 		: data.fill,
+							    align 		: data.align,
+							    lineHeight 	: data.lineHeight,
+							    padding 	: data.padding
+							};
 
 				this.el = new PIXI.Text(data.text, style);
 				this.el.x = (renderer.width - this.el.width) / 2;
@@ -276,9 +275,11 @@ App.managerService.slide_1 = {
 			timer: null,
 
 			init: function() {
-				var data = DATA.slide_1.spinner,
-					texture_1 = PIXI.Texture.fromImage(data.url_1),
-					texture_2 = PIXI.Texture.fromImage(data.url_2);
+				var data 		= DATA.slide_1.spinner,
+					texture_1 	= PIXI.Texture.fromImage(data.url_1),
+					texture_2 	= PIXI.Texture.fromImage(data.url_2),
+					dir 		= "down",
+					that 		= this;
 
 				this.el_1 = new PIXI.Sprite(texture_1);
 				this.el_1.anchor.set(data.anchor);
@@ -297,28 +298,21 @@ App.managerService.slide_1 = {
 				this.el_1.addChild(this.el_2);
 				slide_container_1.addChild(this.el_1); 
 
-				var dir = "down",
-					that = this;
-
 				this.timer = setInterval(function() {
-					
 					switch(dir) {
 						case "down": 
 							createjs.Tween.get(that.el_2)
 								.to({ y: 5 }, 500, createjs.Ease.quadOut())
 								.to({ y: 10 }, 300, createjs.Ease.quadOut());
-
 							dir = "top";
 							break;
 						case "top": 
 							createjs.Tween.get(that.el_2)
 								.to({ y: -5 }, 500, createjs.Ease.quadOut())
 								.to({ y: -10 }, 300, createjs.Ease.quadOut());
-
 							dir = "down";
 							break;
 					}
-
 				}, 1000);
 			},
 

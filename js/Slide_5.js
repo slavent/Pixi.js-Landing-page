@@ -34,11 +34,10 @@ App.managerService.slide_5 = {
 			el: null,
 
 			init: function() {
-				var data = DATA.slide_5.magazine,
+				var data 	= DATA.slide_5.magazine,
 					texture = PIXI.Texture.fromImage(data.url);
 
 				this.el = new PIXI.Sprite(texture);
-
 				this.el.anchor.set(data.anchor);
 				this.el.position.x = renderer.width / 2;
 				this.el.position.y = renderer.height * 2;
@@ -76,9 +75,7 @@ App.managerService.slide_5 = {
 			},
 
 			destroy: function() {
-				
 				$order_btn.removeClass("active");
-
 			},
 
 			update: function() {
@@ -92,16 +89,15 @@ App.managerService.slide_5 = {
 			el: null,
 
 			init: function() {
-				var data = DATA.slide_5.title_1,
-					style = {
-						font 	: data.font,
-					    fill 	: data.fill,
-					    align 	: data.align,
-					    padding : data.padding
-					};
+				var data 	= DATA.slide_5.title_1,
+					style 	= {
+								font 	: data.font,
+							    fill 	: data.fill,
+							    align 	: data.align,
+							    padding : data.padding
+							};
 
 				this.el = new PIXI.Text(data.text, style);
-
 				this.el.x = (renderer.width - this.el.width) / 2 + data.x;	
 				this.el.y = -renderer.height;
 
@@ -135,14 +131,13 @@ App.managerService.slide_5 = {
 			el: null,
 
 			init: function() {
-				var data = DATA.slide_5.title_2,
-					style = {
-						font : data.font,
-					    fill : data.fill
-					};
+				var data 	= DATA.slide_5.title_2,
+					style 	= {
+								font : data.font,
+							    fill : data.fill
+							};
 
 				this.el = new PIXI.Text(data.text, style);
-
 				this.el.x = (renderer.width - this.el.width) / 2 + data.x;	
 				this.el.y = -renderer.height;
 
@@ -176,14 +171,13 @@ App.managerService.slide_5 = {
 			el: null,
 
 			init: function() {
-				var data = DATA.slide_5.title_3,
-					style = {
-						font : data.font,
-					    fill : data.fill
-					};
+				var data 	= DATA.slide_5.title_3,
+					style 	= {
+								font : data.font,
+							    fill : data.fill
+							};
 
 				this.el = new PIXI.Text(data.text, style);
-
 				this.el.x = (renderer.width - this.el.width) / 2 + data.x;	
 				this.el.y = -renderer.height;
 
@@ -217,14 +211,13 @@ App.managerService.slide_5 = {
 			el: null,
 
 			init: function() {
-				var data = DATA.slide_5.title_4,
-					style = {
-						font : data.font,
-					    fill : data.fill
-					};
+				var data 	= DATA.slide_5.title_4,
+					style 	= {
+								font : data.font,
+							    fill : data.fill
+							};
 
 				this.el = new PIXI.Text(data.text, style);
-
 				this.el.x = (renderer.width - this.el.width) / 2 + data.x;	
 				this.el.y = -renderer.height;
 
@@ -258,14 +251,13 @@ App.managerService.slide_5 = {
 			el: null,
 
 			init: function() {
-				var data = DATA.slide_5.price_1,
-					style = {
-						font : data.font,
-					    fill : data.fill
-					};
+				var data 	= DATA.slide_5.price_1,
+					style 	= {
+							font : data.font,
+						    fill : data.fill
+						};
 
 				this.el = new PIXI.Text(data.text, style);
-
 				this.el.x = (renderer.width - this.el.width) / 2 + data.x;	
 				this.el.y = -renderer.height;
 
@@ -298,14 +290,13 @@ App.managerService.slide_5 = {
 			el: null,
 
 			init: function() {
-				var data = DATA.slide_5.price_2,
-					style = {
-						font : data.font,
-					    fill : data.fill
-					};
+				var data 	= DATA.slide_5.price_2,
+					style 	= {
+								font : data.font,
+							    fill : data.fill
+							};
 
 				this.el = new PIXI.Text(data.text, style);
-
 				this.el.x = (renderer.width - this.el.width) / 2 + data.x;	
 				this.el.y = -renderer.height;
 
@@ -338,14 +329,13 @@ App.managerService.slide_5 = {
 			el: null,
 
 			init: function() {
-				var data = DATA.slide_5.price_3,
-					style = {
-						font : data.font,
-					    fill : data.fill
-					};
+				var data 	= DATA.slide_5.price_3,
+					style 	= {
+								font : data.font,
+							    fill : data.fill
+							};
 
 				this.el = new PIXI.Text(data.text, style);
-
 				this.el.x = (renderer.width - this.el.width) / 2 + data.x;	
 				this.el.y = -renderer.height;
 
@@ -378,14 +368,13 @@ App.managerService.slide_5 = {
 			el: null,
 
 			init: function() {
-				var data = DATA.slide_5.price_4,
-					style = {
-						font : data.font,
-					    fill : data.fill
-					};
+				var data 	= DATA.slide_5.price_4,
+					style 	= {
+								font : data.font,
+							    fill : data.fill
+							};
 
 				this.el = new PIXI.Text(data.text, style);
-
 				this.el.x = (renderer.width - this.el.width) / 2 + data.x;	
 				this.el.y = -renderer.height;
 
@@ -418,14 +407,13 @@ App.managerService.slide_5 = {
 			el: null,
 
 			init: function() {
-				var data = DATA.slide_5.time_1,
-					style = {
-						font : data.font,
-					    fill : data.fill
-					};
+				var data 	= DATA.slide_5.time_1,
+					style 	= {
+							font : data.font,
+						    fill : data.fill
+						};
 
 				this.el = new PIXI.Text(data.text, style);
-
 				this.el.x = (renderer.width - this.el.width) / 2 + data.x;	
 				this.el.y = -renderer.height;
 
@@ -458,14 +446,13 @@ App.managerService.slide_5 = {
 			el: null,
 
 			init: function() {
-				var data = DATA.slide_5.time_2,
-					style = {
-						font : data.font,
-					    fill : data.fill
-					};
+				var data 	= DATA.slide_5.time_2,
+					style 	= {
+								font : data.font,
+							    fill : data.fill
+							};
 
 				this.el = new PIXI.Text(data.text, style);
-
 				this.el.x = (renderer.width - this.el.width) / 2 + data.x;	
 				this.el.y = -renderer.height;
 

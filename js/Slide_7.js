@@ -27,7 +27,6 @@ App.managerService.slide_7 = {
 		this.BtnController.destroy();
 
 		active_scene = 1;
-
 		slide_container_7 = null;
 
 		return App.promise();
@@ -94,10 +93,7 @@ App.managerService.slide_7 = {
 			var that = this;
 
 			setTimeout(function() {
-				$step_pult
-					.html("")
-					.parent()
-					.addClass("active");
+				$step_pult.html("").parent().addClass("active");
 
 				for(var i = 0; i < 7; i++) {
 					$step_pult.append("<li class=step-pult-item>" + (i + 1) + "</li>");
@@ -122,15 +118,15 @@ App.managerService.slide_7 = {
 
 		setValue: function() {
 			var btn_values = {
-				s1: "Далее",
-				s2: "Далее",
-				s3: "Далее",
-				s4: "Далее",
-				s5: "Заказать",
-				s6: "Перейти к оплате",
-				s7: "Вернуться на главную"
-			}
-				btn_width = null;
+								s1: "Далее",
+								s2: "Далее",
+								s3: "Далее",
+								s4: "Далее",
+								s5: "Заказать",
+								s6: "Перейти к оплате",
+								s7: "Вернуться на главную"
+							},
+				btn_width 	= null;
 
 			$anketa_btn.hide().html(btn_values["s" + active_scene]).fadeIn();
 			btn_width = $anketa_btn.width();

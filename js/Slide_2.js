@@ -34,14 +34,14 @@ App.managerService.slide_2 = {
 			el: null,
 
 			init: function() {
-				var data = DATA.slide_2.title_1,
-					style = {
-						font 		: data.font,
-					    fill 		: data.fill,
-					    align 		: data.align,
-					    lineHeight 	: data.lineHeight,
-					    padding 	: data.padding
-					};
+				var data 	= DATA.slide_2.title_1,
+					style 	= {
+								font 		: data.font,
+							    fill 		: data.fill,
+							    align 		: data.align,
+							    lineHeight 	: data.lineHeight,
+							    padding 	: data.padding
+							};
 
 				this.el = new PIXI.Text(data.text, style);
 				this.el.x = (renderer.width - this.el.width) / 2;	
@@ -74,14 +74,14 @@ App.managerService.slide_2 = {
 			el: null,
 
 			init: function() {
-				var data = DATA.slide_2.title_2,
-					style = {
-						font 		: data.font,
-					    fill 		: data.fill,
-					    align 		: data.align,
-					    lineHeight 	: data.lineHeight,
-					    padding 	: data.padding
-					};
+				var data 	= DATA.slide_2.title_2,
+					style 	= {
+								font 		: data.font,
+							    fill 		: data.fill,
+							    align 		: data.align,
+							    lineHeight 	: data.lineHeight,
+							    padding 	: data.padding
+							};
 				
 				this.el = new PIXI.Text(data.text, style);
 				this.el.x = (renderer.width - this.el.width) / 2;	
@@ -92,7 +92,7 @@ App.managerService.slide_2 = {
 
 				createjs.Tween.get(this.el)
 					.wait(data.init_wait)
-						.to({ y: ((renderer.height - this.el.height) / 2) + data.y }, data.speed, createjs.Ease.linear());
+					.to({ y: ((renderer.height - this.el.height) / 2) + data.y }, data.speed, createjs.Ease.linear());
 			},
 
 			update: function() {
@@ -114,14 +114,14 @@ App.managerService.slide_2 = {
 			el: null,
 
 			init: function() {
-				var data = DATA.slide_2.title_3,
-					style = {
-						font 		: data.font,
-					    fill 		: data.fill,
-					    align 		: data.align,
-					    lineHeight 	: data.lineHeight,
-					    padding 	: data.padding
-					};
+				var data 	= DATA.slide_2.title_3,
+					style 	= {
+								font 		: data.font,
+							    fill 		: data.fill,
+							    align 		: data.align,
+							    lineHeight 	: data.lineHeight,
+							    padding 	: data.padding
+							};
 
 				this.el = new PIXI.Text(data.text, style);
 				this.el.x = (renderer.width - this.el.width) / 2;	
@@ -131,8 +131,8 @@ App.managerService.slide_2 = {
 
 				createjs.Tween.get(this.el)
 					.wait(data.init_wait)
-						.to({ y: ((renderer.height - this.el.height) / 2) + data.x1 }, data.speed, createjs.Ease.linear())
-						.to({ y: ((renderer.height - this.el.height) / 2) + data.x2 }, data.speed2, createjs.Ease.linear());
+					.to({ y: ((renderer.height - this.el.height) / 2) + data.x1 }, data.speed, createjs.Ease.linear())
+					.to({ y: ((renderer.height - this.el.height) / 2) + data.x2 }, data.speed2, createjs.Ease.linear());
 			},
 
 			update: function() {
@@ -154,14 +154,14 @@ App.managerService.slide_2 = {
 			el: null,
 
 			init: function() {
-				var data = DATA.slide_2.title_4,
-					style = {
-						font 		: data.font,
-					    fill 		: data.fill,
-					    align 		: data.align,
-					    lineHeight 	: data.lineHeight,
-					    padding 	: data.padding
-					};
+				var data 	= DATA.slide_2.title_4,
+					style 	= {
+								font 		: data.font,
+							    fill 		: data.fill,
+							    align 		: data.align,
+							    lineHeight 	: data.lineHeight,
+							    padding 	: data.padding
+							};
 
 				this.el = new PIXI.Text(data.text, style);
 				this.el.x = (renderer.width - this.el.width) / 2;	
@@ -193,14 +193,14 @@ App.managerService.slide_2 = {
 			el: null,
 
 			init: function() {
-				var data = DATA.slide_2.info,
-					border = new PIXI.Graphics(),
-					style = {
-						font 	: data.text.font,
-					    fill 	: data.text.fill,
-					    align 	: data.text.align,
-					    padding : data.text.padding
-					};					
+				var data 	= DATA.slide_2.info,
+					border 	= new PIXI.Graphics(),
+					style 	= {
+								font 	: data.text.font,
+							    fill 	: data.text.fill,
+							    align 	: data.text.align,
+							    padding : data.text.padding
+							};					
 
 				this.el = new PIXI.Text(data.text.text, style);
 				this.el.x = (renderer.width - this.el.width) / 2 + data.text.x;	
@@ -229,30 +229,6 @@ App.managerService.slide_2 = {
 
 				createjs.Tween.get(this.el)
 					.to({ y: renderer.height + 200 }, data.text.speed, createjs.Ease.quadOut());
-			}
-
-		},
-
-		arrowDown: {
-
-			element: null,
-
-			anim_params: {
-				speed: 300,
-				init_wait: 2000,
-				destroy_wait: 500
-			},
-
-			init: function() {
-
-			},
-
-			update: function() {
-
-			},
-
-			destroy: function() {
-
 			}
 
 		}

@@ -62,7 +62,6 @@ App.managerService.slide_6 = {
 			if( from == to ) return;
 
 			App.managerService.slide_6.NavController.setActive();
-
 			App.managerService.slide_6["scene_" + from].destroy().then(function() {
 				App.clearCache();
 				App.managerService.slide_6["scene_" + to].init().then(function() { 

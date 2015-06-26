@@ -18,6 +18,7 @@ App.managerService.slide_3 = {
 		this.elems.menu.destroy();
 		stage.removeChild(slide_container_3);
 		slide_container_3 = null;
+
 		if( active_scene == 6 ) slide_3_complete = true;
 		active_scene = 1;	
 
@@ -80,39 +81,27 @@ App.managerService.slide_3 = {
 				case 1: 
 					top_pos = 0;
 					left_pos = 0;
-
 					break;
-
 				case 2:
 					top_pos = 0;
 					left_pos = $hyde_menu.children().width();
-
 					break;
-
 				case 3:
 					top_pos = $hyde_menu.children().height();
 					left_pos = 0;
-
 					break;
-
 				case 4: 
 					top_pos = $hyde_menu.children().height();
 					left_pos = $hyde_menu.children().width();
-
 					break;
-
 				case 5:
 					top_pos = $hyde_menu.children().height() * 2;
 					left_pos = 0;
-
 					break;
-
 				case 6:
 					top_pos = $hyde_menu.children().height() * 2;
 					left_pos = $hyde_menu.children().width();
-
 					break;
-
 			}
 
 			App.managerService.slide_3.NavController.setActive(top_pos, left_pos, direction);
@@ -153,14 +142,11 @@ App.managerService.slide_3 = {
 	SwipeController: {
 
 		lockSwipe: function() {
-			
 			$$("body").off("swipeUp");
 			$$("body").off("swipeDown");
-
 		},
 
 		unlockSwipe: function() {
-			
 			$$("body").on("swipeUp", function() {
 				if( active_scene < 6 ) App.managerService.slide_3.SceneController.moveTo(active_scene, ++active_scene);
 				else App.SlideController.moveTo(active_slide, ++active_slide);
@@ -170,7 +156,6 @@ App.managerService.slide_3 = {
 				if( active_scene > 1 ) App.managerService.slide_3.SceneController.moveTo(active_scene, --active_scene);
 				else App.SlideController.moveTo(active_slide, --active_slide);
 			});
-
 		}
 
 	},
@@ -181,22 +166,16 @@ App.managerService.slide_3 = {
 			if( mobile_version == true ) {
 				$hyde_menu.children().removeClass("active").eq(active_scene - 1).addClass("active");
 			} else {
-				
-
 				if( direction == "next" ) {
 					$hyde_menu.children().addClass("on-top");
 					$hyde_menu.children().eq(active_scene - 2).removeClass("on-top");
 					$hyde_menu.children().eq(active_scene - 1).removeClass("on-top");
-
 				} else if( direction == "prev" ) {
 					$hyde_menu.children().addClass("on-top");
 					$hyde_menu.children().eq(active_scene - 1).removeClass("on-top");
 					$hyde_menu.children().eq(active_scene).removeClass("on-top");
-
 				} else if( direction == false ) {
-
 					$hyde_menu.children().removeClass("on-top");
-
 				}
 
 				$hyde_menu.children().removeClass("active").eq(active_scene - 1).addClass("active");
@@ -221,13 +200,13 @@ App.managerService.slide_3 = {
 
 			Scene: function(data) {
 				// Titles
-				var style = {
-					font 	: data.titles.font,
-				    fill 	: data.titles.fill,
-				    align 	: data.titles.align
-				},
-				title_top = new PIXI.Text(data.titles.title_top.text, style),
-				title_down = new PIXI.Text(data.titles.title_down.text, style);
+				var style 	= {
+								font 	: data.titles.font,
+							    fill 	: data.titles.fill,
+							    align 	: data.titles.align
+							},
+				title_top 	= new PIXI.Text(data.titles.title_top.text, style),
+				title_down 	= new PIXI.Text(data.titles.title_down.text, style);
 
 				title_top.x = data.titles.title_top.x;
 				title_top.y = data.titles.title_top.y;
@@ -442,13 +421,13 @@ App.managerService.slide_3 = {
 
 				init: function() {
 
-					var data = DATA.slide_3.orderBtn,
-						style = {
-							font 	: data.font,
-						    fill 	: data.fill,
-						    align 	: data.align
-						},
-						title = new PIXI.Text(data.text, style);
+					var data 	= DATA.slide_3.orderBtn,
+						style 	= {
+									font 	: data.font,
+								    fill 	: data.fill,
+								    align 	: data.align
+								},
+						title 	= new PIXI.Text(data.text, style);
 
 					title.x = renderer.width / 2 + data.x;
 					title.y = data.y;

@@ -37,10 +37,10 @@ App.managerService.slide_8 = {
 			prev_btn: null,
 
 			init: function() {
-				var	data = DATA.slide_8.slider,
+				var	data 		= DATA.slide_8.slider,
 					data_slides = data.slides,
-					slides = new PIXI.Container(),
-					slide_ind = 0;
+					slides 		= new PIXI.Container(),
+					slide_ind 	= 0;
 
 				this.slides = slides;
 
@@ -84,7 +84,6 @@ App.managerService.slide_8 = {
 
 				// Prev btn
 				var prev_btn_texture = PIXI.Texture.fromImage(data.prevBtn.url);
-
 				this.prev_btn = new PIXI.Sprite(prev_btn_texture);
 				this.prev_btn.x = data.prevBtn;
 				this.prev_btn.y = renderer.height / 2;
@@ -108,7 +107,6 @@ App.managerService.slide_8 = {
 
 				// Next btn
 				var next_btn_texture = PIXI.Texture.fromImage(data.nextBtn.url);
-
 				this.next_btn = new PIXI.Sprite(next_btn_texture);
 				this.next_btn.x = renderer.width + data.nextBtn.x;
 				this.next_btn.y = renderer.height / 2;
@@ -151,7 +149,7 @@ App.managerService.slide_8 = {
 			},
 
 			destroy: function() {
-				
+
 			}
 
 		},
@@ -159,15 +157,11 @@ App.managerService.slide_8 = {
 		orderBtn: {
 
 			init: function() {
-
 				$order_btn.addClass("active").addClass("white");
-
 			},
 
 			destroy: function() {
-
 				$order_btn.removeClass("active").removeClass("white");
-
 			},
 
 			update: function() {
@@ -179,15 +173,11 @@ App.managerService.slide_8 = {
 		footer: {
 
 			init: function() {
-
 				$footer.addClass("active");
-
 			},
 
 			destroy: function() {
-
 				$footer.removeClass("active");
-
 			},
 
 			update: function() {

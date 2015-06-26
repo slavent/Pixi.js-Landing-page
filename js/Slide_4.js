@@ -39,10 +39,10 @@ App.managerService.slide_4 = {
 
 			init: function() {
 
-				var data = DATA.slide_4.slider,
+				var data 		= DATA.slide_4.slider,
 					data_slides = data.slides,
-					slide_ind = 0,
-					slides = new PIXI.Container(),
+					slide_ind 	= 0,
+					slides 		= new PIXI.Container(),
 					slides_info = new PIXI.Container(),
 					params;
 
@@ -196,8 +196,8 @@ App.managerService.slide_4 = {
 				}
 
 				for(var i = 0; i < data_slides.length; i++) {
-					var slide = new Slide( i, data_slides[i].url_photo, data_slides[i].url_video );
-					var slide_info = new Slide_info( i, data_slides[i].title, data_slides[i].description );
+					var slide 		= new Slide( i, data_slides[i].url_photo, data_slides[i].url_video ),
+						slide_info 	= new Slide_info( i, data_slides[i].title, data_slides[i].description );
 					
 					slides.addChild(slide);
 					slides_info.addChild(slide_info);
@@ -207,11 +207,11 @@ App.managerService.slide_4 = {
 				slide_container_4.addChild(slides_info);
 
 				createjs.Tween.get(slides)
-						.to({ y: renderer.height - (250 + 700 * params.scale) }, data.speed, createjs.Ease.getPowInOut(4));
+					.to({ y: renderer.height - (250 + 700 * params.scale) }, data.speed, createjs.Ease.getPowInOut(4));
 
 				// Prev btn
-				var prev_btn_texture = PIXI.Texture.fromImage(data.prevBtn.url),
-					prev_btn = new PIXI.Sprite(prev_btn_texture);
+				var prev_btn_texture 	= PIXI.Texture.fromImage(data.prevBtn.url),
+					prev_btn 			= new PIXI.Sprite(prev_btn_texture);
 
 				this.prev_btn = prev_btn;
 				prev_btn.anchor.set(data.prevBtn.anchor);
@@ -258,8 +258,8 @@ App.managerService.slide_4 = {
 					.to({ x: data.prevBtn.x }, data.prevBtn.speed, createjs.Ease.getPowInOut(4));
 
 				// Next btn
-				var next_btn_texture = PIXI.Texture.fromImage(data.nextBtn.url),
-					next_btn = new PIXI.Sprite(next_btn_texture);
+				var next_btn_texture 	= PIXI.Texture.fromImage(data.nextBtn.url),
+					next_btn 			= new PIXI.Sprite(next_btn_texture);
 
 				this.next_btn = next_btn;
 				next_btn.anchor.set(data.nextBtn.anchor);
@@ -373,11 +373,11 @@ App.managerService.slide_4 = {
 
 			init: function() {
 
-				var data = DATA.slide_4.title,
-					style = {
-						font : data.font,
-					    fill : data.fill
-					};
+				var data 	= DATA.slide_4.title,
+					style 	= {
+								font : data.font,
+							    fill : data.fill
+							};
 
 				this.el = new PIXI.Text(data.text, style);
 				this.el.anchor.set(data.anchor);
@@ -415,12 +415,12 @@ App.managerService.slide_4 = {
 
 			init: function() {
 
-				var data = DATA.slide_4.info,
-					style = {
-						font 	: data.font,
-					    fill 	: data. fill,
-					    align	: data.align
-					};
+				var data 	= DATA.slide_4.info,
+					style 	= {
+								font 	: data.font,
+							    fill 	: data. fill,
+							    align	: data.align
+							};
 
 				this.el = new PIXI.Text(data.text, style);
 				this.el.anchor.set(data.anchor);
@@ -457,11 +457,11 @@ App.managerService.slide_4 = {
 			el: null,
 
 			init: function() {
-				var data = DATA.slide_4.generator,
-					style = {
-						font : data.font,
-					    fill : data.color
-					};
+				var data 	= DATA.slide_4.generator,
+					style 	= {
+								font : data.font,
+							    fill : data.color
+							};
 
 				this.el = new PIXI.Text(data.text, style);
 				this.el.position.x = renderer.width * 2;
