@@ -178,6 +178,8 @@ App.managerService.slide_4 = {
 							break;
 						case 1:
 							this.sprite.position.x = renderer.width / 2;
+							this.sprite.scale.set(params.scale + 0.1);
+							this.sprite.position.y = -50;
 							break;
 						case 2:
 							this.sprite.position.x = renderer.width / 2 + params.margin;
@@ -227,12 +229,18 @@ App.managerService.slide_4 = {
 							.to({ x: renderer.width / 2 - 350 }, data.animSpeed, createjs.Ease.getPowInOut(4));
 
 						for(var i = slide_ind; i < slide_ind + 2; i++) {
+							slides.children[i].scale.set(params.scale);
+							slides.children[i].position.y = 0;
+
 							createjs.Tween.get(slides.children[i])
 								.to({ x: slides.children[i].position.x + 350 }, data.animSpeed, createjs.Ease.getPowInOut(4));
 
 							createjs.Tween.get(slides_info.children[i])
 								.to({ x: slides_info.children[i].position.x + 350 }, data.animSpeed, createjs.Ease.getPowInOut(4));
 						}
+
+						slides.children[slide_ind].scale.set(params.scale + 0.1);
+						slides.children[slide_ind].position.y = -50;
 
 						createjs.Tween.get(slides.children[slide_ind + 2])
 							.to({ x: renderer.width * 2}, data.animSpeed, createjs.Ease.getPowInOut(4));
@@ -270,12 +278,18 @@ App.managerService.slide_4 = {
 							.to({ x: -renderer.width * 2 }, data.animSpeed, createjs.Ease.getPowInOut(4));
 
 						for(var i = slide_ind + 1; i < slide_ind + 3; i++) {
+							slides.children[i].scale.set(params.scale);
+							slides.children[i].position.y = 0;
+
 							createjs.Tween.get(slides.children[i])
 								.to({ x: slides.children[i].position.x - 350 }, data.animSpeed, createjs.Ease.getPowInOut(4));
 
 							createjs.Tween.get(slides_info.children[i])
 								.to({ x: slides_info.children[i].position.x - 350 }, data.animSpeed, createjs.Ease.getPowInOut(4));
 						}
+
+						slides.children[slide_ind + 2].scale.set(params.scale + 0.1);
+						slides.children[slide_ind + 2].position.y = -50;							
 
 						createjs.Tween.get(slides.children[slide_ind + 3])
 							.to({ x: renderer.width / 2 + 350}, data.animSpeed, createjs.Ease.getPowInOut(4));

@@ -350,7 +350,7 @@
             "params": {
                 "default": {
                     "margin": 350,
-                    "scale": 0.7
+                    "scale": 0.6
                 },
                 "big": {
                     "margin": 600,
