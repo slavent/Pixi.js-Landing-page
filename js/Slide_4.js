@@ -47,6 +47,8 @@ App.managerService.slide_4 = {
 					params;
 
 				this.slides = slides;
+				slides.position.y = renderer.height + 200;
+
 				this.slides_info = slides_info;
 
 				if( renderer.height > 1200 ) {
@@ -346,7 +348,7 @@ App.managerService.slide_4 = {
 				this.el.lineStyle(2, 0x0000FF, 0);
 				this.el.beginFill(data.fill, 1);
 				this.el.drawRect(0, 0, renderer.width, data.height);
-				this.el.y = renderer.height * 2;
+				this.el.y = renderer.height + 200;
 
 				slide_container_4.addChildAt(this.el, 1);
 

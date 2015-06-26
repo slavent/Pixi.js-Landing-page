@@ -258,7 +258,7 @@ App.managerService.slide_3 = {
 				this.el.scale.set(data.photo.scale);
 				this.el.anchor.set(data.photo.anchor);
 				this.el.position.x = renderer.width / 2;
-				this.el.position.y = renderer.height * 2;
+				this.el.position.y = renderer.height + 100;
 				this.el.addChild(title_top);
 				this.el.addChild(title_down);
 

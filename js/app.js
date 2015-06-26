@@ -42,18 +42,7 @@ var $body 				= $("body"),
 	slide_6_complete = false,
 	slide_7_complete = false,
 
-	mobile_version = false,
-
-	SLIDE_ANIMATION_TIME_1 = 1000,
-	SLIDE_ANIMATION_TIME_2 = 2000,
-	SLIDE_ANIMATION_TIME_3 = 2000,
-	SLIDE_ANIMATION_TIME_4 = 2500,
-	SLIDE_ANIMATION_TIME_5 = 2500,
-	SLIDE_ANIMATION_TIME_6 = 2500,
-	SLIDE_ANIMATION_TIME_7 = 2000,
-	SLIDE_ANIMATION_TIME_8 = 2000,
-
-	SCENE_ANIMATION_TIME = 1500;
+	mobile_version = false;
 // END: Variables
 
 
@@ -95,7 +84,7 @@ App.promise = function() {
 	setTimeout(function() {
 		deferred.resolve();
 		that.update_flag = true;
-	}, SLIDE_ANIMATION_TIME_1);
+	}, 1000);
 
 	return deferred;
 };
