@@ -4,8 +4,8 @@ App.Binder = function() {
 		console.log("resize");
 
 		w_width = $(window).width();
-        w_height = $(window).height();
-        renderer.resize(w_width, w_height);
+		w_height = $(window).height();
+		renderer.resize(w_width, w_height);
 
 		if( active_slide == 3 ) {
 			$hyde_menu.css({ 

@@ -83,9 +83,9 @@ App.init = function() {
 			App.Binder();
 			App.SlideController.init();
     	})
-	    .fail(function() {
-	    	console.log("FAIL: Can't get json data");
-	    });
+		.fail(function() {
+			console.log("FAIL: Can't get json data");
+		});
 };
 
 App.promise = function() {
