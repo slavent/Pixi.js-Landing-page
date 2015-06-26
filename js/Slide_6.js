@@ -166,10 +166,10 @@ App.managerService.slide_6 = {
 		// title
 		var style = {
 				font : '110px Plumb-Black',
-			    fill : '#fa6464',
-			    align : "center",
-			    padding : 20,
-			    lineHeight : 105
+				fill : '#fa6464',
+				align : "center",
+				padding : 20,
+				lineHeight : 105
 			},
 			Title = new PIXI.Text(title.text, style);
 		Title.x = title.x;	
@@ -180,8 +180,8 @@ App.managerService.slide_6 = {
 			// info
 		var style = {
 				font : '16px HelveticaNeueCyr-Light',
-			    fill : '#3c3c3c',
-			    align : "center"
+				fill : '#3c3c3c',
+				align : "center"
 			},
 			Info = new PIXI.Text(info.text, style);
 		Info.x = info.x;	
@@ -210,7 +210,7 @@ App.managerService.slide_6 = {
 
 		var style = {
 			font : '24px BebasRegular',
-		    fill : '#ffffff'
+			fill : '#ffffff'
 		},
 			Btn_title = new PIXI.Text(btn_title.text, style);
 		

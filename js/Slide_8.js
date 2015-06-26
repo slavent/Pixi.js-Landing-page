@@ -56,10 +56,10 @@ App.managerService.slide_8 = {
 					// Title
 					var style = {
 							font 		: data.titles.font,
-						    fill 		: data.titles.fill,
-						    lineHeight 	: data.titles.lineHeight,
-						    padding 	: data.titles.padding,
-						    align 		: data.titles.align
+							fill 		: data.titles.fill,
+							lineHeight 	: data.titles.lineHeight,
+							padding 	: data.titles.padding,
+							align 		: data.titles.align
 						};
 
 					this.title = new PIXI.Text(title, style);

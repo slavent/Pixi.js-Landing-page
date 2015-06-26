@@ -92,9 +92,9 @@ App.managerService.slide_5 = {
 				var data 	= DATA.slide_5.title_1,
 					style 	= {
 								font 	: data.font,
-							    fill 	: data.fill,
-							    align 	: data.align,
-							    padding : data.padding
+								fill 	: data.fill,
+								align 	: data.align,
+								padding : data.padding
 							};
 
 				this.el = new PIXI.Text(data.text, style);
@@ -134,7 +134,7 @@ App.managerService.slide_5 = {
 				var data 	= DATA.slide_5.title_2,
 					style 	= {
 								font : data.font,
-							    fill : data.fill
+								fill : data.fill
 							};
 
 				this.el = new PIXI.Text(data.text, style);
@@ -174,7 +174,7 @@ App.managerService.slide_5 = {
 				var data 	= DATA.slide_5.title_3,
 					style 	= {
 								font : data.font,
-							    fill : data.fill
+								fill : data.fill
 							};
 
 				this.el = new PIXI.Text(data.text, style);
@@ -214,7 +214,7 @@ App.managerService.slide_5 = {
 				var data 	= DATA.slide_5.title_4,
 					style 	= {
 								font : data.font,
-							    fill : data.fill
+								fill : data.fill
 							};
 
 				this.el = new PIXI.Text(data.text, style);
@@ -254,7 +254,7 @@ App.managerService.slide_5 = {
 				var data 	= DATA.slide_5.price_1,
 					style 	= {
 							font : data.font,
-						    fill : data.fill
+							fill : data.fill
 						};
 
 				this.el = new PIXI.Text(data.text, style);
@@ -293,7 +293,7 @@ App.managerService.slide_5 = {
 				var data 	= DATA.slide_5.price_2,
 					style 	= {
 								font : data.font,
-							    fill : data.fill
+								fill : data.fill
 							};
 
 				this.el = new PIXI.Text(data.text, style);
@@ -332,7 +332,7 @@ App.managerService.slide_5 = {
 				var data 	= DATA.slide_5.price_3,
 					style 	= {
 								font : data.font,
-							    fill : data.fill
+								fill : data.fill
 							};
 
 				this.el = new PIXI.Text(data.text, style);
@@ -371,7 +371,7 @@ App.managerService.slide_5 = {
 				var data 	= DATA.slide_5.price_4,
 					style 	= {
 								font : data.font,
-							    fill : data.fill
+								fill : data.fill
 							};
 
 				this.el = new PIXI.Text(data.text, style);
@@ -410,7 +410,7 @@ App.managerService.slide_5 = {
 				var data 	= DATA.slide_5.time_1,
 					style 	= {
 							font : data.font,
-						    fill : data.fill
+							fill : data.fill
 						};
 
 				this.el = new PIXI.Text(data.text, style);
@@ -449,7 +449,7 @@ App.managerService.slide_5 = {
 				var data 	= DATA.slide_5.time_2,
 					style 	= {
 								font : data.font,
-							    fill : data.fill
+								fill : data.fill
 							};
 
 				this.el = new PIXI.Text(data.text, style);

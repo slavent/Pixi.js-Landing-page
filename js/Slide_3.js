@@ -202,8 +202,8 @@ App.managerService.slide_3 = {
 				// Titles
 				var style 	= {
 								font 	: data.titles.font,
-							    fill 	: data.titles.fill,
-							    align 	: data.titles.align
+								fill 	: data.titles.fill,
+								align 	: data.titles.align
 							},
 				title_top 	= new PIXI.Text(data.titles.title_top.text, style),
 				title_down 	= new PIXI.Text(data.titles.title_down.text, style);
@@ -424,8 +424,8 @@ App.managerService.slide_3 = {
 					var data 	= DATA.slide_3.orderBtn,
 						style 	= {
 									font 	: data.font,
-								    fill 	: data.fill,
-								    align 	: data.align
+									fill 	: data.fill,
+									align 	: data.align
 								},
 						title 	= new PIXI.Text(data.text, style);
 

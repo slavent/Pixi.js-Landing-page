@@ -37,10 +37,10 @@ App.managerService.slide_2 = {
 				var data 	= DATA.slide_2.title_1,
 					style 	= {
 								font 		: data.font,
-							    fill 		: data.fill,
-							    align 		: data.align,
-							    lineHeight 	: data.lineHeight,
-							    padding 	: data.padding
+								fill 		: data.fill,
+								align 		: data.align,
+								lineHeight 	: data.lineHeight,
+								padding 	: data.padding
 							};
 
 				this.el = new PIXI.Text(data.text, style);
@@ -77,10 +77,10 @@ App.managerService.slide_2 = {
 				var data 	= DATA.slide_2.title_2,
 					style 	= {
 								font 		: data.font,
-							    fill 		: data.fill,
-							    align 		: data.align,
-							    lineHeight 	: data.lineHeight,
-							    padding 	: data.padding
+								fill 		: data.fill,
+								align 		: data.align,
+								lineHeight 	: data.lineHeight,
+								padding 	: data.padding
 							};
 				
 				this.el = new PIXI.Text(data.text, style);
@@ -117,10 +117,10 @@ App.managerService.slide_2 = {
 				var data 	= DATA.slide_2.title_3,
 					style 	= {
 								font 		: data.font,
-							    fill 		: data.fill,
-							    align 		: data.align,
-							    lineHeight 	: data.lineHeight,
-							    padding 	: data.padding
+								fill 		: data.fill,
+								align 		: data.align,
+								lineHeight 	: data.lineHeight,
+								padding 	: data.padding
 							};
 
 				this.el = new PIXI.Text(data.text, style);
@@ -157,10 +157,10 @@ App.managerService.slide_2 = {
 				var data 	= DATA.slide_2.title_4,
 					style 	= {
 								font 		: data.font,
-							    fill 		: data.fill,
-							    align 		: data.align,
-							    lineHeight 	: data.lineHeight,
-							    padding 	: data.padding
+								fill 		: data.fill,
+								align 		: data.align,
+								lineHeight 	: data.lineHeight,
+								padding 	: data.padding
 							};
 
 				this.el = new PIXI.Text(data.text, style);
@@ -197,9 +197,9 @@ App.managerService.slide_2 = {
 					border 	= new PIXI.Graphics(),
 					style 	= {
 								font 	: data.text.font,
-							    fill 	: data.text.fill,
-							    align 	: data.text.align,
-							    padding : data.text.padding
+								fill 	: data.text.fill,
+								align 	: data.text.align,
+								padding : data.text.padding
 							};					
 
 				this.el = new PIXI.Text(data.text.text, style);

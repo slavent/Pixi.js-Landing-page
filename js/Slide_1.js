@@ -241,10 +241,10 @@ App.managerService.slide_1 = {
 				var data 	= DATA.slide_1.title,
 					style 	= {
 								font 		: data.font,
-							    fill 		: data.fill,
-							    align 		: data.align,
-							    lineHeight 	: data.lineHeight,
-							    padding 	: data.padding
+								fill 		: data.fill,
+								align 		: data.align,
+								lineHeight 	: data.lineHeight,
+								padding 	: data.padding
 							};
 
 				this.el = new PIXI.Text(data.text, style);

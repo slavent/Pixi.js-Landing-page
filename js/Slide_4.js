@@ -62,7 +62,7 @@ App.managerService.slide_4 = {
 					// Title
 					var title_style = {
 						font : data.titles.font,
-					    fill : data.titles.fill
+						fill : data.titles.fill
 					};
 
 					this.title = new PIXI.Text(title, title_style);
@@ -96,7 +96,7 @@ App.managerService.slide_4 = {
 					// Btn
 					var btn_title_style = {
 						font : data.btns.font,
-					    fill : data.btns.color
+						fill : data.btns.color
 					};
 
 					this.btn_title = new PIXI.Text(data.btns.text, btn_title_style);
@@ -121,8 +121,8 @@ App.managerService.slide_4 = {
 					// Description
 					var description_style = {
 						font : data.description.font,
-					    fill : data.description.fill,
-					    align: data.description.align
+						fill : data.description.fill,
+						align: data.description.align
 					};
 
 					this.description = new PIXI.Text(description, description_style);
@@ -376,7 +376,7 @@ App.managerService.slide_4 = {
 				var data 	= DATA.slide_4.title,
 					style 	= {
 								font : data.font,
-							    fill : data.fill
+								fill : data.fill
 							};
 
 				this.el = new PIXI.Text(data.text, style);
@@ -418,8 +418,8 @@ App.managerService.slide_4 = {
 				var data 	= DATA.slide_4.info,
 					style 	= {
 								font 	: data.font,
-							    fill 	: data. fill,
-							    align	: data.align
+								fill 	: data. fill,
+								align	: data.align
 							};
 
 				this.el = new PIXI.Text(data.text, style);
@@ -460,7 +460,7 @@ App.managerService.slide_4 = {
 				var data 	= DATA.slide_4.generator,
 					style 	= {
 								font : data.font,
-							    fill : data.color
+								fill : data.color
 							};
 
 				this.el = new PIXI.Text(data.text, style);
